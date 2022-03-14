@@ -1,0 +1,59 @@
+{
+  "name": "fx-js-sdk",
+  "version": "0.0.1",
+  "description": "fx js sdk",
+  "main": "src/index.ts",
+  "files": [
+    "build/",
+    "*.md",
+    "!*.spec.*",
+    "!**/testdata/"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/functionx/fx-js-sdk.git"
+  },
+  "author": "zakir",
+  "license": "Apache-2.0",
+  "scripts": {
+    "lint": "eslint --max-warnings 0 \"./**/*.ts\" \"./*.js\"",
+    "lint-fix": "eslint --fix --max-warnings 0 \"./**/*.ts\" \"./*.js\"",
+    "format": "prettier --write --loglevel warn \"./src/**/*.ts\"",
+    "codegen": "./gen-proto.sh && yarn format",
+    "build": "rm -rf ./dist && tsc"
+  },
+  "dependencies": {
+    "@cosmjs/amino": "^0.28.4",
+    "@cosmjs/crypto": "^0.28.4",
+    "@cosmjs/encoding": "^0.28.4",
+    "@cosmjs/proto-signing": "^0.28.4",
+    "@cosmjs/stargate": "^0.28.4",
+    "cosmjs-types": "^0.4.0",
+    "ethers": "^5.6.4",
+    "long": "^4.0.0",
+    "protobufjs": "^6.11.2"
+  },
+  "devDependencies": {
+    "@types/jest": "^27.4.1",
+    "@types/long": "^4.0.1",
+    "@types/node": "^15.6.2",
+    "@typescript-eslint/eslint-plugin": "^5.15.0",
+    "@typescript-eslint/parser": "^5.15.0",
+    "eslint": "^7.5",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-import-resolver-node": "^0.3.4",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-prettier": "^3.4.0",
+    "eslint-plugin-simple-import-sort": "^7.0.0",
+    "glob": "^7.2.0",
+    "jest": "^27.5.1",
+    "prettier": "^2.4.1",
+    "ts-jest": "^27.1.3",
+    "ts-node": "^8",
+    "ts-proto": "^1.92.1",
+    "typescript": "~4.4",
+    "webpack": "^5.32.0",
+    "webpack-cli": "^4.6.0"
+  },
+  "stableVersion": "0.1.0"
+}
