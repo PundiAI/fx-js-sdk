@@ -1,14 +1,16 @@
+/* eslint-disable @typescript-eslint/naming-convention */
 import { AminoMsg } from "@cosmjs/amino";
+import { assertDefinedAndNotNull } from "@cosmjs/utils";
 import { Any } from "cosmjs-types/google/protobuf/any";
 
 import { UpdateChainOraclesProposal } from "../../fx/crosschain/v1/types";
 import { ProposalContentAminoConverter } from "../index";
-import { assert, assertDefinedAndNotNull } from "@cosmjs/utils";
 
+/* eslint-disable @typescript-eslint/no-use-before-define */
 export function crosschainProposalContentAminoConverters(): Record<string, ProposalContentAminoConverter> {
   return {
     "/fx.gravity.crosschain.v1.UpdateChainOraclesProposal": aminoConverterUpdateChainOraclesProposal(),
-    "crosschain/UpdateChainOraclesProposal": aminoConverterUpdateChainOraclesProposal()
+    "crosschain/UpdateChainOraclesProposal": aminoConverterUpdateChainOraclesProposal(),
   };
 }
 
@@ -42,8 +44,8 @@ function aminoConverterUpdateChainOraclesProposal(): ProposalContentAminoConvert
           title: proposal.title,
           description: proposal.description,
           oracles: proposal.oracles,
-          chain_name: proposal.chainName
-        }
+          chain_name: proposal.chainName,
+        },
       };
     },
     fromAmino: (content: AminoUpdateChainOraclesProposal): Any => {
@@ -58,9 +60,9 @@ function aminoConverterUpdateChainOraclesProposal(): ProposalContentAminoConvert
           title: proposal.title,
           description: proposal.description,
           oracles: proposal.oracles,
-          chainName: proposal.chain_name
-        }).finish()
+          chainName: proposal.chain_name,
+        }).finish(),
       });
-    }
+    },
   };
 }

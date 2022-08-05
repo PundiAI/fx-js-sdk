@@ -1,10 +1,11 @@
+/* eslint-disable @typescript-eslint/naming-convention */
 import { AminoMsg } from "@cosmjs/amino";
-import { assert } from "@cosmjs/utils";
 import { ParamChange, ParameterChangeProposal } from "cosmjs-types/cosmos/params/v1beta1/params";
 import { Any } from "cosmjs-types/google/protobuf/any";
 
 import { ProposalContentAminoConverter } from "../index";
 
+/* eslint-disable @typescript-eslint/no-use-before-define */
 export function paramsProposalContentAminoConverters(): Record<string, ProposalContentAminoConverter> {
   return {
     "/cosmos.params.v1beta1.ParameterChangeProposal": aminoConverterParameterChangeProposal(),

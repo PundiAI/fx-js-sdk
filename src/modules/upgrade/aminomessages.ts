@@ -1,5 +1,6 @@
+/* eslint-disable @typescript-eslint/naming-convention */
 import { AminoMsg } from "@cosmjs/amino";
-import { assert, assertDefinedAndNotNull } from "@cosmjs/utils";
+import { assertDefinedAndNotNull } from "@cosmjs/utils";
 import {
   CancelSoftwareUpgradeProposal,
   SoftwareUpgradeProposal,
@@ -10,6 +11,7 @@ import Long from "long";
 
 import { ProposalContentAminoConverter } from "../index";
 
+/* eslint-disable @typescript-eslint/no-use-before-define */
 export function upgradeProposalContentAminoConverters(): Record<string, ProposalContentAminoConverter> {
   return {
     "/cosmos.upgrade.v1beta1.SoftwareUpgradeProposal": aminoConverterSoftwareUpgradeProposal(),
@@ -47,7 +49,7 @@ function aminoConverterSoftwareUpgradeProposal(): ProposalContentAminoConverter 
         throw new Error(`Invalid proposal type: '${content.typeUrl}'`);
       }
       const proposal = SoftwareUpgradeProposal.decode(content.value);
-      assertDefinedAndNotNull(proposal.plan)
+      assertDefinedAndNotNull(proposal.plan);
       return {
         type: "cosmos-sdk/SoftwareUpgradeProposal",
         value: {
@@ -69,7 +71,7 @@ function aminoConverterSoftwareUpgradeProposal(): ProposalContentAminoConverter 
         throw new Error(`Invalid proposal type: '${content.type}'`);
       }
       const proposal = content.value;
-      assertDefinedAndNotNull(proposal.plan)
+      assertDefinedAndNotNull(proposal.plan);
       return Any.fromPartial({
         typeUrl: "/cosmos.upgrade.v1beta1.SoftwareUpgradeProposal",
         value: SoftwareUpgradeProposal.encode({

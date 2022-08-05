@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/naming-convention */
 import { AminoMsg } from "@cosmjs/amino";
 import { AminoConverter } from "@cosmjs/stargate/build/aminotypes";
 import Long from "long";
@@ -11,6 +12,7 @@ import {
 } from "../../fx/dex/v1/tx";
 import { toDecString, toProtoString } from "../index";
 
+/* eslint-disable @typescript-eslint/no-use-before-define */
 export function dexAminoConverters(precision: number): Record<string, AminoConverter> {
   if (precision == undefined || precision <= 0) {
     throw new Error("invalid params");

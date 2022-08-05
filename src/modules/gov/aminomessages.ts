@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import { AminoMsg } from "@cosmjs/amino";
 import { AminoConverters, AminoMsgSubmitProposal } from "@cosmjs/stargate";
-import { assert, assertDefinedAndNotNull } from "@cosmjs/utils";
+import { assertDefinedAndNotNull } from "@cosmjs/utils";
 import { TextProposal } from "cosmjs-types/cosmos/gov/v1beta1/gov";
 import { MsgSubmitProposal } from "cosmjs-types/cosmos/gov/v1beta1/tx";
 import { Any } from "cosmjs-types/google/protobuf/any";
@@ -41,6 +41,7 @@ export function createGovSubmitProposalAminoConverters(
   };
 }
 
+/* eslint-disable @typescript-eslint/no-use-before-define */
 export function govProposalContentAminoConverters(): Record<string, ProposalContentAminoConverter> {
   return {
     "/cosmos.gov.v1beta1.TextProposal": aminoConverterTextProposal(),

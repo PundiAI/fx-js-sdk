@@ -1,5 +1,5 @@
+/* eslint-disable @typescript-eslint/naming-convention */
 import { AminoMsg } from "@cosmjs/amino";
-import { assert } from "@cosmjs/utils";
 import { DenomUnit } from "cosmjs-types/cosmos/bank/v1beta1/bank";
 import { Any } from "cosmjs-types/google/protobuf/any";
 
@@ -11,6 +11,7 @@ import {
 } from "../../fx/erc20/v1/erc20";
 import { ProposalContentAminoConverter } from "../index";
 
+/* eslint-disable @typescript-eslint/no-use-before-define */
 export function erc20ProposalContentAminoConverters(): Record<string, ProposalContentAminoConverter> {
   return {
     "/fx.erc20.v1.RegisterCoinProposal": aminoConverterRegisterCoinProposal(),

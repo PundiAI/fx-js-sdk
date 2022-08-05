@@ -13,19 +13,19 @@ export interface AminoSigner {
   readonly signAmino: (signerAddress: string, signDoc: StdSignDoc) => Promise<AminoSignResponse>;
 }
 
-export type onlineSignCallback = (signer: string, signData: Uint8Array) => Promise<string>;
+export type OnlineSignCallback = (signer: string, signData: Uint8Array) => Promise<string>;
 
 export class OnlineWallet implements AminoSigner {
   private readonly pubkey: Uint8Array;
   private readonly prefix: string;
   private readonly algo: Algo;
-  private readonly onlineFunc: onlineSignCallback;
+  private readonly onlineFunc: OnlineSignCallback;
   public signDirect: any = undefined;
 
   public constructor(
     pubKey: Uint8Array | string,
     prefix: string,
-    onlineFunc: onlineSignCallback,
+    onlineFunc: OnlineSignCallback,
     algo: Algo = "eth_secp256k1",
     isDirectSign = false,
   ) {

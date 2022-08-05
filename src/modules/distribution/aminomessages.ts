@@ -1,11 +1,12 @@
+/* eslint-disable @typescript-eslint/naming-convention */
 import { AminoMsg } from "@cosmjs/amino";
-import { assert } from "@cosmjs/utils";
 import { Coin } from "cosmjs-types/cosmos/base/v1beta1/coin";
 import { CommunityPoolSpendProposal } from "cosmjs-types/cosmos/distribution/v1beta1/distribution";
 import { Any } from "cosmjs-types/google/protobuf/any";
 
 import { ProposalContentAminoConverter } from "../index";
 
+/* eslint-disable @typescript-eslint/no-use-before-define */
 export function distributionProposalContentAminoConverters(): Record<string, ProposalContentAminoConverter> {
   return {
     "/cosmos.distribution.v1beta1.CommunityPoolSpendProposal": aminoConverterCommunityPoolSpendProposal(),

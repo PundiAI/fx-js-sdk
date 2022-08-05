@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/naming-convention */
 import { StdSignature } from "@cosmjs/amino";
 import { serializeSignDoc, StdSignDoc } from "@cosmjs/amino";
 import { Secp256k1, Sha256 } from "@cosmjs/crypto";
@@ -62,6 +63,7 @@ export class EthSecp256k1Wallet implements AminoSigner {
     const signatureBytes = new Uint8Array([...signature.r(32), ...signature.s(32)]);
     return {
       signed: signDoc,
+      /* eslint-disable @typescript-eslint/no-use-before-define */
       signature: encodeEthSecp256k1Signature(this.pubkey, signatureBytes),
     };
   }

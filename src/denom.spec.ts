@@ -17,7 +17,7 @@ import Long from "long";
 
 import { EthSecp256k1Wallet } from "./ethsecp256k1wallet";
 import { Direction } from "./fx/dex/v1/tx";
-import { FxCoreTxConfig, FxDexTxConfig } from "./index";
+import { fxCoreTxConfig, fxDexTxConfig } from "./index";
 import { MsgCreateOrderEncodeObject, MsgIbcTransferEncodeObject } from "./modules";
 import { OnlineWallet } from "./onlinewallet";
 import { Algo } from "./signer";
@@ -52,7 +52,7 @@ describe("denom test", () => {
     const registry = new Registry([...defaultRegistryTypes]);
     const aminoTypes = new AminoTypes({ ...createBankAminoConverters() });
     const options = {
-      ...FxCoreTxConfig.options,
+      ...fxCoreTxConfig.options,
       registry: registry,
       aminoTypes: aminoTypes,
     };
@@ -81,7 +81,7 @@ describe("denom test", () => {
     let gasLimit = await client.simulate(sender, [...sendMsg], undefined);
     gasLimit = Math.round(gasLimit * 1.3);
     console.debug("gasLimit", gasLimit);
-    const gasPrice = FxCoreTxConfig.options.gasPrice;
+    const gasPrice = fxCoreTxConfig.options.gasPrice;
     const fees: StdFee = {
       amount: coins(gasPrice.amount.multiply(Uint64.fromNumber(gasLimit)).toString(), gasPrice.denom),
       gas: gasLimit.toString(),
@@ -94,13 +94,13 @@ describe("denom test", () => {
     const pubkey = "0x0342c931c630cf00eb9429bd2a0a5c6cfba6801fbe867772ece0e12ade462467bf";
     console.debug("pubkey", pubkey);
 
-    const wallet = new OnlineWallet(pubkey, FxDexTxConfig.options.prefix, onlineFunc);
+    const wallet = new OnlineWallet(pubkey, fxDexTxConfig.options.prefix, onlineFunc);
     console.debug("address", wallet.address);
 
     const client = await SigningFxClient.connectWithSigner(
       "http://127.0.0.1:26657",
       wallet,
-      FxDexTxConfig.options,
+      fxDexTxConfig.options,
     );
 
     const createOrderMsg: MsgCreateOrderEncodeObject = {
@@ -118,7 +118,7 @@ describe("denom test", () => {
     const gasLimit = await client.simulate(wallet.address, [createOrderMsg], undefined);
     console.debug("gasLimit", gasLimit);
 
-    const result = await client.signAndBroadcast(wallet.address, [createOrderMsg], FxDexTxConfig.fees);
+    const result = await client.signAndBroadcast(wallet.address, [createOrderMsg], fxDexTxConfig.fees);
     console.debug(result);
     if (result.code == 0) {
       console.debug(result.transactionHash);
@@ -133,14 +133,14 @@ describe("denom test", () => {
     const ethWallet = Wallet.fromMnemonic(mnemonic);
     const sender = ethWallet.address;
     console.debug("address", sender);
-    const wallet = await EthSecp256k1Wallet.fromKey(ethWallet.privateKey, FxDexTxConfig.options.prefix);
+    const wallet = await EthSecp256k1Wallet.fromKey(ethWallet.privateKey, fxDexTxConfig.options.prefix);
 
-    console.debug("options", FxDexTxConfig.options);
+    console.debug("options", fxDexTxConfig.options);
 
     const client = await SigningFxClient.connectWithSigner(
       "http://127.0.0.1:26657",
       wallet,
-      FxDexTxConfig.options,
+      fxDexTxConfig.options,
     );
 
     const createOrderMsg: MsgCreateOrderEncodeObject = {
@@ -158,7 +158,7 @@ describe("denom test", () => {
     const gasLimit = await client.simulate(sender, [createOrderMsg], undefined);
     console.debug("gasLimit", gasLimit);
 
-    const result = await client.signAndBroadcast(sender, [createOrderMsg], FxDexTxConfig.fees);
+    const result = await client.signAndBroadcast(sender, [createOrderMsg], fxDexTxConfig.fees);
     console.debug(result);
     if (result.code == 0) {
       console.debug(result.transactionHash);
@@ -170,17 +170,17 @@ describe("denom test", () => {
   it("send ibc transfer tx by mnemonic (fxdex to fxcore)", async () => {
     const pubkey = "0x0342c931c630cf00eb9429bd2a0a5c6cfba6801fbe867772ece0e12ade462467bf";
 
-    const wallet = new OnlineWallet(pubkey, FxDexTxConfig.options.prefix, onlineFunc);
+    const wallet = new OnlineWallet(pubkey, fxDexTxConfig.options.prefix, onlineFunc);
 
     const sender = wallet.address;
     console.debug("address", sender);
 
-    console.debug("options", FxDexTxConfig.options);
+    console.debug("options", fxDexTxConfig.options);
 
     const client = await SigningFxClient.connectWithSigner(
       "http://127.0.0.01:26657",
       wallet,
-      FxDexTxConfig.options,
+      fxDexTxConfig.options,
     );
 
     const timeout = new Date();
@@ -193,7 +193,7 @@ describe("denom test", () => {
         sourceChannel: "channel-2",
         token: {
           denom: "USDT",
-          amount: "10" + "0".repeat(FxDexTxConfig.precision),
+          amount: "10" + "0".repeat(fxDexTxConfig.precision),
         },
         sender: sender,
         receiver: "fx1vx7jqvys34jcm4dzzwwjcya02ku38rhmjm2kch",
@@ -213,7 +213,7 @@ describe("denom test", () => {
     const gasLimit = await client.simulate(sender, [ibcTransferMsg], undefined);
     console.debug("gasLimit", gasLimit);
 
-    const result = await client.signAndBroadcast(sender, [ibcTransferMsg], FxDexTxConfig.fees);
+    const result = await client.signAndBroadcast(sender, [ibcTransferMsg], fxDexTxConfig.fees);
     console.debug(result);
     if (result.code == 0) {
       console.debug(result.transactionHash);
@@ -227,18 +227,18 @@ describe("denom test", () => {
 
     const wallet = new OnlineWallet(
       pubkey,
-      FxCoreTxConfig.options.prefix,
+      fxCoreTxConfig.options.prefix,
       onlineFunc,
-      FxCoreTxConfig.algo as Algo,
+      fxCoreTxConfig.algo as Algo,
     );
     const sender = wallet.address;
     console.debug("address", sender);
 
-    console.debug("options", FxCoreTxConfig.options);
+    console.debug("options", fxCoreTxConfig.options);
     const client = await SigningFxClient.connectWithSigner(
       "http://127.0.0.1:26657",
       wallet,
-      FxCoreTxConfig.options,
+      fxCoreTxConfig.options,
     );
     const balances = await client.getAllBalances(sender);
     console.debug("balances", balances);
@@ -273,7 +273,7 @@ describe("denom test", () => {
     let gasLimit = await client.simulate(sender, [ibcTransferMsg], undefined);
     gasLimit = Math.round(gasLimit * 1.3);
     console.debug("gasLimit", gasLimit);
-    const gasPrice = FxCoreTxConfig.options.gasPrice;
+    const gasPrice = fxCoreTxConfig.options.gasPrice;
     const fees: StdFee = {
       amount: coins(gasPrice.amount.multiply(Uint64.fromNumber(gasLimit)).toString(), gasPrice.denom),
       gas: gasLimit.toString(),

@@ -1,10 +1,10 @@
 import { calculateFee } from "@cosmjs/stargate";
 
-import { FxDexTxConfig } from "./config";
+import { fxDexTxConfig } from "./config";
 
 describe("config", () => {
   it("gas price", () => {
-    expect(calculateFee(5000000, FxDexTxConfig.options.gasPrice)).toStrictEqual({
+    expect(calculateFee(5000000, fxDexTxConfig.options.gasPrice)).toStrictEqual({
       amount: [
         {
           amount: "3000",

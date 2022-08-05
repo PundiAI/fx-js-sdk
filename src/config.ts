@@ -7,7 +7,7 @@ import { defaultSigningClientOptions } from "@cosmjs/stargate/build/testutils.sp
 import { accountFromAny } from "./accounts";
 import { dexAminoConverters, dexTypes, ibcAminoConverters, ibcTypes } from "./modules";
 
-export const FxDexTxConfig = {
+export const fxDexTxConfig = {
   options: {
     ...defaultSigningClientOptions,
     prefix: "0x",
@@ -28,7 +28,7 @@ export const FxDexTxConfig = {
   precision: 6,
 };
 
-export const FxCoreTxConfigClassic = {
+export const fxCoreTxConfigClassic = {
   options: {
     ...defaultSigningClientOptions,
     prefix: "fx",
@@ -45,7 +45,7 @@ export const FxCoreTxConfigClassic = {
   precision: 18,
 };
 
-export const FxCoreTxConfig = {
+export const fxCoreTxConfig = {
   options: {
     ...defaultSigningClientOptions,
     prefix: "fx",

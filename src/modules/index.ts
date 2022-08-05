@@ -1,6 +1,6 @@
 import { Any } from "cosmjs-types/google/protobuf/any";
-import Long from "long";
 
+/* eslint-disable import/no-cycle */
 export { dexAminoConverters } from "./dex/aminomessages";
 export { AminoMsgCreateOrder, isAminoMsgCreateOrder } from "./dex/aminomessages";
 export { AminoMsgCancelOrder, isAminoMsgCancelOrder } from "./dex/aminomessages";
@@ -16,6 +16,7 @@ export { AminoMsgIbcTransfer, isAminoMsgIbcTransfer } from "./ibc/aminomessages"
 export { ibcTypes } from "./ibc/messages";
 export { isMsgIbcTransferEncodeObject, MsgIbcTransferEncodeObject } from "./ibc/messages";
 
+/* eslint-disable no-param-reassign */
 export function toDecString(dec: string | undefined, precision: number): string {
   dec = dec?.trim();
   if (dec == undefined || dec?.length <= 0) {

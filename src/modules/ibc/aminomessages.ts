@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/naming-convention */
 import { AminoMsg, Coin } from "@cosmjs/amino";
 import { AminoConverter } from "@cosmjs/stargate/build/aminotypes";
 import Long from "long";
@@ -6,6 +7,7 @@ import { MsgTransfer } from "../../fx/ibc/applications/transfer/v1/tx";
 
 // ibc client proposal `ClientUpdateProposal` `UpgradeProposal` not support amino encode
 
+/* eslint-disable @typescript-eslint/no-use-before-define */
 export function ibcAminoConverters(): Record<string, AminoConverter> {
   return {
     "/fx.ibc.applications.transfer.v1.MsgTransfer": aminoConverterMsgIbcTransfer(),

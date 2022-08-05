@@ -1,4 +1,4 @@
-export { FxCoreTxConfig, FxDexTxConfig } from "./config";
+export { fxCoreTxConfig, fxDexTxConfig } from "./config";
 export { FxClient } from "./fxclient";
 export { OnlineWallet } from "./onlinewallet";
 export { hexAddressToBech32, pubKeyToAddress } from "./pubkey";
