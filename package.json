@@ -25,7 +25,8 @@
     "lint-fix": "eslint --fix --max-warnings 0 \"./**/*.ts\" \"./*.js\"",
     "format": "prettier --write --loglevel warn \"./src/**/*.ts\"",
     "codegen": "./gen-proto.sh && yarn format",
-    "build": "rm -rf ./build && tsc"
+    "build": "rm -rf ./build && tsc",
+    "pack-web": "yarn build && webpack --mode development --config webpack.web.config.js"
   },
   "dependencies": {
     "@cosmjs/amino": "^0.28.4",
