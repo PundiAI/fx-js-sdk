@@ -1,6 +1,6 @@
 {
   "name": "fx-js-sdk",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "fx js sdk",
   "main": "src/index.ts",
   "files": [
