@@ -6,12 +6,7 @@ import { SignDoc } from "cosmjs-types/cosmos/tx/v1beta1/tx";
 
 import { encodeEthSecp256k1Signature } from "./ethsecp256k1wallet";
 import { pubKeyToAddress } from "./pubkey";
-import { AccountData, Algo } from "./signer";
-
-export interface AminoSigner {
-  readonly getAccounts: () => Promise<readonly AccountData[]>;
-  readonly signAmino: (signerAddress: string, signDoc: StdSignDoc) => Promise<AminoSignResponse>;
-}
+import { AccountData, Algo, AminoSigner } from "./signer";
 
 export type OnlineSignCallback = (signer: string, signData: Uint8Array) => Promise<string>;
 

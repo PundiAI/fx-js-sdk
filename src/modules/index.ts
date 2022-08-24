@@ -1,20 +1,80 @@
 import { Any } from "cosmjs-types/google/protobuf/any";
 
 /* eslint-disable import/no-cycle */
-export { dexAminoConverters } from "./dex/aminomessages";
-export { AminoMsgCreateOrder, isAminoMsgCreateOrder } from "./dex/aminomessages";
-export { AminoMsgCancelOrder, isAminoMsgCancelOrder } from "./dex/aminomessages";
-export { AminoMsgAddMargin, isAminoMsgAddMargin } from "./dex/aminomessages";
-export { AminoMsgClosePosition, isAminoMsgClosePosition } from "./dex/aminomessages";
-export { dexTypes } from "./dex/messages";
-export { isMsgCreateOrderEncodeObject, MsgCreateOrderEncodeObject } from "./dex/messages";
-export { isMsgCancelOrderEncodeObject, MsgCancelOrderEncodeObject } from "./dex/messages";
-export { isMsgAddMarginEncodeObject, MsgAddMarginEncodeObject } from "./dex/messages";
-export { isMsgClosePositionEncodeObject, MsgClosePositionEncodeObject } from "./dex/messages";
-export { ibcAminoConverters } from "./ibc/aminomessages";
-export { AminoMsgIbcTransfer, isAminoMsgIbcTransfer } from "./ibc/aminomessages";
-export { ibcTypes } from "./ibc/messages";
-export { isMsgIbcTransferEncodeObject, MsgIbcTransferEncodeObject } from "./ibc/messages";
+export {
+  AminoMsgSendToExternal,
+  AminoUpdateChainOraclesProposal,
+  crosschainProposalContentAminoConverters,
+  isAminoMsgSendToExternal,
+  isAminoUpdateChainOraclesProposal,
+} from "./crosschain/aminomessages";
+export {
+  crosschainTypes,
+  isMsgSendToExternalEncodeObject,
+  MsgSendToExternalEncodeObject,
+} from "./crosschain/messages";
+export {
+  AminoMsgAddMargin,
+  AminoMsgCancelOrder,
+  AminoMsgClosePosition,
+  AminoMsgCreateOrder,
+  dexAminoConverters,
+  isAminoMsgAddMargin,
+  isAminoMsgCancelOrder,
+  isAminoMsgClosePosition,
+  isAminoMsgCreateOrder,
+} from "./dex/aminomessages";
+export {
+  dexTypes,
+  isMsgAddMarginEncodeObject,
+  isMsgCancelOrderEncodeObject,
+  isMsgClosePositionEncodeObject,
+  isMsgCreateOrderEncodeObject,
+  MsgAddMarginEncodeObject,
+  MsgCancelOrderEncodeObject,
+  MsgClosePositionEncodeObject,
+  MsgCreateOrderEncodeObject,
+} from "./dex/messages";
+export {
+  AminoCommunityPoolSpendProposal,
+  distributionProposalContentAminoConverters,
+  isAminoCommunityPoolSpendProposal,
+} from "./distribution/aminomessages";
+export {
+  AminoRegisterCoinProposal,
+  AminoRegisterERC20Proposal,
+  AminoToggleTokenConversionProposal,
+  AminoUpdateDenomAliasProposal,
+  erc20ProposalContentAminoConverters,
+  isAminoRegisterCoinProposal,
+  isAminoRegisterERC20Proposal,
+  isAminoToggleTokenConversionProposal,
+  isAminoUpdateDenomAliasProposal,
+  Metadata,
+} from "./erc20/aminomessages";
+export {
+  AminoTextProposal,
+  createGovSubmitProposalAminoConverters,
+  govProposalContentAminoConverters,
+  isAminoTextProposal,
+} from "./gov/aminomessages";
+export { AminoMsgSendToEth, gravityAminoConverters, isAminoMsgSendToEth } from "./gravity/aminomessages";
+export { gravityTypes, isMsgSendToEthEncodeObject, MsgSendToEthEncodeObject } from "./gravity/messages";
+export { AminoMsgIbcTransfer, ibcAminoConverters, isAminoMsgIbcTransfer } from "./ibc/aminomessages";
+export { ibcTypes, isMsgIbcTransferEncodeObject, MsgIbcTransferEncodeObject } from "./ibc/messages";
+export {
+  AminoParameterChangeProposal,
+  isAminoParameterChangeProposal,
+  paramsProposalContentAminoConverters,
+} from "./params/aminomessages";
+export { setupTxExtension } from "./tx/queries";
+export {
+  AminoCancelSoftwareUpgradeProposal,
+  AminoSoftwareUpgradeProposal,
+  isAminoCancelSoftwareUpgradeProposal,
+  isAminoSoftwareUpgradeProposal,
+  upgradeProposalContentAminoConverters,
+} from "./upgrade/aminomessages";
 
 /* eslint-disable no-param-reassign */
 export function toDecString(dec: string | undefined, precision: number): string {
