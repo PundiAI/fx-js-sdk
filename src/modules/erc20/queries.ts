@@ -1,11 +1,12 @@
 import { createProtobufRpcClient, QueryClient } from "@cosmjs/stargate";
+import { PageRequest } from "cosmjs-types/cosmos/base/query/v1beta1/pagination";
 
 import { TokenPair } from "../../fx/erc20/v1/erc20";
-import { QueryClientImpl } from "../../fx/erc20/v1/query";
+import { QueryClientImpl, QueryTokenPairsResponse } from "../../fx/erc20/v1/query";
 
 export interface Erc20Extension {
   readonly erc20: {
-    readonly tokenPairs: () => Promise<TokenPair[] | null>;
+    readonly tokenPairs: (pagination?: PageRequest) => Promise<QueryTokenPairsResponse | null>;
     readonly tokenPair: (token: string) => Promise<TokenPair | null>;
     readonly denomAliases: (denom: string) => Promise<string[] | null>;
     readonly aliasDenom: (alias: string) => Promise<string | null>;
@@ -20,9 +21,8 @@ export function setupErc20Extension(base: QueryClient): Erc20Extension {
 
   return {
     erc20: {
-      tokenPairs: async function () {
-        const { tokenPairs } = await queryService.TokenPairs({});
-        return tokenPairs;
+      tokenPairs: async function (pagination?: PageRequest) {
+        return await queryService.TokenPairs({ pagination: pagination });
       },
       tokenPair: async function (token: string) {
         const response = await queryService.TokenPair({ token: token });
