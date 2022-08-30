@@ -5,7 +5,7 @@ import { QueryClientImpl } from "../../fx/other/query";
 
 export interface OtherExtension {
   readonly other: {
-    readonly gasPrice: (token: string) => Promise<Coin[] | null>;
+    readonly gasPrice: () => Promise<Coin[] | null>;
   };
 }
 
@@ -17,8 +17,8 @@ export function setupOtherExtension(base: QueryClient): OtherExtension {
 
   return {
     other: {
-      gasPrice: async function (erc20: string) {
-        const { gasPrices } = await queryService.GasPrice({ erc20: erc20 });
+      gasPrice: async function () {
+        const { gasPrices } = await queryService.GasPrice({});
         return gasPrices;
       },
     },
