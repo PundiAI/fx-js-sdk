@@ -1,0 +1,159 @@
+import { AminoMsg, Coin } from "@cosmjs/amino";
+import { EncodeObject, GeneratedType } from "@cosmjs/proto-signing";
+import { AminoConverter } from "@cosmjs/stargate/build/aminotypes";
+
+import { MsgConvertCoin, MsgConvertDenom, MsgConvertERC20 } from "../src/fx/erc20/v1/tx";
+
+export const erc20Types: ReadonlyArray<[string, GeneratedType]> = [
+  ["/fx.erc20.v1.MsgConvertCoin", MsgConvertCoin],
+  ["/fx.erc20.v1.MsgConvertERC20", MsgConvertERC20],
+  ["/fx.erc20.v1.MsgConvertDenom", MsgConvertDenom],
+];
+
+export interface MsgConvertCoinEncodeObject extends EncodeObject {
+  readonly typeUrl: "/fx.erc20.v1.MsgConvertCoin";
+  readonly value: Partial<MsgConvertCoin>;
+}
+
+export function isMsgConvertCoinEncodeObject(
+  encodeObject: EncodeObject,
+): encodeObject is MsgConvertCoinEncodeObject {
+  return (encodeObject as MsgConvertCoinEncodeObject).typeUrl === "/fx.erc20.v1.MsgConvertCoin";
+}
+
+export interface MsgConvertERC20EncodeObject extends EncodeObject {
+  readonly typeUrl: "/fx.erc20.v1.MsgConvertERC20";
+  readonly value: Partial<MsgConvertERC20>;
+}
+
+export function isMsgConvertERC20EncodeObject(
+  encodeObject: EncodeObject,
+): encodeObject is MsgConvertERC20EncodeObject {
+  return (encodeObject as MsgConvertERC20EncodeObject).typeUrl === "/fx.erc20.v1.MsgConvertERC20";
+}
+
+export interface MsgConvertDenomEncodeObject extends EncodeObject {
+  readonly typeUrl: "/fx.erc20.v1.MsgConvertDenom";
+  readonly value: Partial<MsgConvertDenom>;
+}
+
+export function isMsgConvertDenomEncodeObject(
+  encodeObject: EncodeObject,
+): encodeObject is MsgConvertDenomEncodeObject {
+  return (encodeObject as MsgConvertDenomEncodeObject).typeUrl === "/fx.erc20.v1.MsgConvertDenom";
+}
+
+export interface AminoMsgConvertCoin extends AminoMsg {
+  readonly type: "erc20/MsgConvertCoin";
+  readonly value: {
+    readonly sender: string;
+    readonly receiver: string;
+    readonly coin?: Coin;
+  };
+}
+
+export function isAminoMsgConvertCoin(msg: AminoMsg): msg is AminoMsgConvertCoin {
+  return msg.type === "erc20/MsgConvertCoin";
+}
+
+function aminoConverterMsgConvertCoin(): AminoConverter {
+  return {
+    aminoType: "erc20/MsgConvertCoin",
+    toAmino: ({ sender, receiver, coin }: MsgConvertCoin): AminoMsgConvertCoin["value"] => {
+      return {
+        sender: sender,
+        receiver: receiver,
+        coin: coin,
+      };
+    },
+    fromAmino: ({ sender, receiver, coin }: AminoMsgConvertCoin["value"]): MsgConvertCoin => {
+      return {
+        sender: sender,
+        receiver: receiver,
+        coin: coin,
+      };
+    },
+  };
+}
+
+export interface AminoMsgConvertERC20 extends AminoMsg {
+  readonly type: "erc20/MsgConvertERC20";
+  readonly value: {
+    readonly sender: string;
+    readonly receiver: string;
+    readonly contract_address: string;
+    readonly amount: string;
+  };
+}
+
+export function isAminoMsgConvertERC20(msg: AminoMsg): msg is AminoMsgConvertERC20 {
+  return msg.type === "erc20/MsgConvertERC20";
+}
+
+function aminoConverterMsgConvertERC20(): AminoConverter {
+  return {
+    aminoType: "erc20/MsgConvertERC20",
+    toAmino: ({
+      sender,
+      receiver,
+      contractAddress,
+      amount,
+    }: MsgConvertERC20): AminoMsgConvertERC20["value"] => {
+      return {
+        sender: sender,
+        receiver: receiver,
+        contract_address: contractAddress,
+        amount: amount,
+      };
+    },
+    fromAmino: ({
+      sender,
+      receiver,
+      contract_address,
+      amount,
+    }: AminoMsgConvertERC20["value"]): MsgConvertERC20 => {
+      return {
+        sender: sender,
+        receiver: receiver,
+        contractAddress: contract_address,
+        amount: amount,
+      };
+    },
+  };
+}
+
+export interface AminoMsgConvertDenom extends AminoMsg {
+  readonly type: "erc20/MsgConvertERC20";
+  readonly value: {
+    readonly sender: string;
+    readonly receiver: string;
+    readonly coin?: Coin;
+    readonly target: string;
+  };
+}
+
+export function isAminoMsgConvertDenom(msg: AminoMsg): msg is AminoMsgConvertDenom {
+  return msg.type === "erc20/MsgConvertDenom";
+}
+
+function aminoConverterMsgConvertDenom(): AminoConverter {
+  return {
+    aminoType: "erc20/MsgConvertDenom",
+    toAmino: ({ sender, receiver, coin, target }: MsgConvertDenom): AminoMsgConvertDenom["value"] => {
+      return {
+        sender: sender,
+        receiver: receiver,
+        coin: coin,
+        target: target,
+      };
+    },
+    fromAmino: ({ sender, receiver, coin, target }: AminoMsgConvertDenom["value"]): MsgConvertDenom => {
+      return {
+        sender: sender,
+        receiver: receiver,
+        coin: coin,
+        target: target,
+      };
+    },
+  };
+}

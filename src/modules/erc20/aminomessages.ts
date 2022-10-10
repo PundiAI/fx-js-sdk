@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import { AminoMsg } from "@cosmjs/amino";
-import { DenomUnit } from "cosmjs-types/cosmos/bank/v1beta1/bank";
 import { Any } from "cosmjs-types/google/protobuf/any";
 
 import {
@@ -33,13 +32,19 @@ export interface AminoRegisterCoinProposal extends AminoMsg {
   readonly value: {
     readonly title: string;
     readonly description: string;
-    readonly metadata?: Metadata;
+    readonly metadata?: AminoMetadata;
   };
 }
 
-export interface Metadata {
+export interface AminoDenomUnit {
+  readonly denom: string;
+  readonly exponent: number;
+  readonly aliases?: string[];
+}
+
+export interface AminoMetadata {
   readonly description: string;
-  readonly denom_units: readonly DenomUnit[];
+  readonly denom_units: readonly AminoDenomUnit[];
   readonly base: string;
   readonly display: string;
   readonly name: string;
@@ -65,7 +70,16 @@ function aminoConverterRegisterCoinProposal(): ProposalContentAminoConverter {
           metadata: proposal.metadata
             ? {
                 description: proposal.metadata.description,
-                denom_units: [...proposal.metadata.denomUnits],
+                denom_units: [...proposal.metadata.denomUnits].map((v) => {
+                  if (v.aliases.length === 0) {
+                    return {
+                      denom: v.denom,
+                      exponent: v.exponent,
+                    };
+                  } else {
+                    return v;
+                  }
+                }),
                 base: proposal.metadata.base,
                 display: proposal.metadata.display,
                 name: proposal.metadata.name,
@@ -88,7 +102,13 @@ function aminoConverterRegisterCoinProposal(): ProposalContentAminoConverter {
           metadata: proposal.metadata
             ? {
                 description: proposal.metadata.description,
-                denomUnits: [...proposal.metadata.denom_units],
+                denomUnits: [...proposal.metadata.denom_units].map((v) => {
+                  return {
+                    denom: v.denom,
+                    exponent: v.exponent,
+                    aliases: v.aliases ? v.aliases : [],
+                  };
+                }),
                 base: proposal.metadata.base,
                 display: proposal.metadata.display,
                 name: proposal.metadata.name,

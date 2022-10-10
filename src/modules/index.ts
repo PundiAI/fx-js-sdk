@@ -50,7 +50,8 @@ export {
   isAminoRegisterERC20Proposal,
   isAminoToggleTokenConversionProposal,
   isAminoUpdateDenomAliasProposal,
-  Metadata,
+  AminoMetadata,
+  AminoDenomUnit,
 } from "./erc20/aminomessages";
 export {
   AminoTextProposal,
