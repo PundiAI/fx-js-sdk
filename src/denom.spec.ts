@@ -2,23 +2,25 @@ import { coins, StdFee } from "@cosmjs/amino";
 import { Sha256 } from "@cosmjs/crypto";
 import { fromHex, fromUtf8, toHex } from "@cosmjs/encoding";
 import { Uint64 } from "@cosmjs/math";
-import { Registry } from "@cosmjs/proto-signing";
-import {
-  AminoTypes,
-  createBankAminoConverters,
-  defaultRegistryTypes,
-  MsgSendEncodeObject,
-} from "@cosmjs/stargate";
+import { EncodeObject, Registry } from "@cosmjs/proto-signing";
+import { AminoTypes, createBankAminoConverters, defaultRegistryTypes } from "@cosmjs/stargate";
 import { keccak256 } from "@ethersproject/keccak256";
 import { SigningKey } from "@ethersproject/signing-key";
 import { MsgSend } from "cosmjs-types/cosmos/bank/v1beta1/tx";
+import { MsgSubmitProposal } from "cosmjs-types/cosmos/gov/v1beta1/tx";
 import { Wallet } from "ethers";
 import Long from "long";
 
 import { EthSecp256k1Wallet } from "./ethsecp256k1wallet";
 import { Direction } from "./fx/dex/v1/tx";
+import { RegisterCoinProposal } from "./fx/erc20/v1/erc20";
 import { fxCoreTxConfig, fxDexTxConfig } from "./index";
-import { MsgCreateOrderEncodeObject, MsgIbcTransferEncodeObject } from "./modules";
+import {
+  createGovSubmitProposalAminoConverters,
+  erc20ProposalContentAminoConverters,
+  MsgCreateOrderEncodeObject,
+  MsgIbcTransferEncodeObject,
+} from "./modules";
 import { OnlineWallet } from "./onlinewallet";
 import { Algo } from "./signer";
 import { SigningFxClient } from "./signingfxclient";
@@ -50,7 +52,10 @@ describe("denom test", () => {
     const sender = wallet.address;
 
     const registry = new Registry([...defaultRegistryTypes]);
-    const aminoTypes = new AminoTypes({ ...createBankAminoConverters() });
+    const aminoTypes = new AminoTypes({
+      ...createBankAminoConverters(),
+      ...createGovSubmitProposalAminoConverters(erc20ProposalContentAminoConverters()),
+    });
     const options = {
       ...fxCoreTxConfig.options,
       registry: registry,
@@ -60,7 +65,7 @@ describe("denom test", () => {
     const account = await client.getAccount(sender);
     console.log("account", account);
 
-    const sendMsg: MsgSendEncodeObject[] = [
+    const sendMsg: EncodeObject[] = [
       {
         typeUrl: "/cosmos.bank.v1beta1.MsgSend",
         value: MsgSend.fromPartial({
@@ -75,6 +80,39 @@ describe("denom test", () => {
           fromAddress: sender,
           toAddress: sender,
           amount: coins("100", "FX"),
+        }),
+      },
+      {
+        typeUrl: "/cosmos.gov.v1beta1.MsgSubmitProposal",
+        value: MsgSubmitProposal.fromPartial({
+          proposer: sender,
+          initialDeposit: coins("1000000000000000000000", "FX"),
+          content: {
+            typeUrl: "/fx.erc20.v1.RegisterCoinProposal",
+            value: RegisterCoinProposal.encode({
+              title: "register coin test",
+              description: "test ...",
+              metadata: {
+                description: "test desc",
+                base: "test",
+                name: "test name",
+                symbol: "TEST",
+                display: "test",
+                denomUnits: [
+                  {
+                    denom: "test",
+                    exponent: 0,
+                    aliases: ["eth0x2870405E4ABF9FcCDc93d9cC83c09788296d8355"],
+                  },
+                  {
+                    denom: "TEST",
+                    exponent: 18,
+                    aliases: [],
+                  },
+                ],
+              },
+            }).finish(),
+          },
         }),
       },
     ];

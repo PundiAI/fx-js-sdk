@@ -38,8 +38,8 @@ export interface AminoRegisterCoinProposal extends AminoMsg {
 
 export interface AminoDenomUnit {
   readonly denom: string;
-  readonly exponent: number;
-  readonly aliases?: string[];
+  exponent?: number;
+  aliases?: string[];
 }
 
 export interface AminoMetadata {
@@ -71,14 +71,18 @@ function aminoConverterRegisterCoinProposal(): ProposalContentAminoConverter {
             ? {
                 description: proposal.metadata.description,
                 denom_units: [...proposal.metadata.denomUnits].map((v) => {
-                  if (v.aliases.length === 0) {
-                    return {
-                      denom: v.denom,
-                      exponent: v.exponent,
-                    };
-                  } else {
-                    return v;
+                  const denomUnit: AminoDenomUnit = {
+                    denom: v.denom,
+                    exponent: v.exponent,
+                    aliases: v.aliases,
+                  };
+                  if (denomUnit.aliases?.length === 0) {
+                    delete denomUnit.aliases;
                   }
+                  if (denomUnit.exponent === 0) {
+                    delete denomUnit.exponent;
+                  }
+                  return denomUnit;
                 }),
                 base: proposal.metadata.base,
                 display: proposal.metadata.display,
@@ -105,7 +109,7 @@ function aminoConverterRegisterCoinProposal(): ProposalContentAminoConverter {
                 denomUnits: [...proposal.metadata.denom_units].map((v) => {
                   return {
                     denom: v.denom,
-                    exponent: v.exponent,
+                    exponent: v.exponent ? v.exponent : 0,
                     aliases: v.aliases ? v.aliases : [],
                   };
                 }),

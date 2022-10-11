@@ -41,6 +41,8 @@ export {
   isAminoCommunityPoolSpendProposal,
 } from "./distribution/aminomessages";
 export {
+  AminoDenomUnit,
+  AminoMetadata,
   AminoRegisterCoinProposal,
   AminoRegisterERC20Proposal,
   AminoToggleTokenConversionProposal,
@@ -50,8 +52,6 @@ export {
   isAminoRegisterERC20Proposal,
   isAminoToggleTokenConversionProposal,
   isAminoUpdateDenomAliasProposal,
-  AminoMetadata,
-  AminoDenomUnit,
 } from "./erc20/aminomessages";
 export {
   AminoTextProposal,
