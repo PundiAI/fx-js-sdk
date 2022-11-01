@@ -22,7 +22,6 @@ import {
   MsgIbcTransferEncodeObject,
 } from "./modules";
 import { OnlineWallet } from "./onlinewallet";
-import { Algo } from "./signer";
 import { SigningFxClient } from "./signingfxclient";
 
 async function onlineFunc(signer: string, signData: Uint8Array): Promise<string> {
@@ -263,12 +262,7 @@ describe("denom test", () => {
   it("send ibc transfer tx by mnemonic (fxcore to fxdex)", async () => {
     const pubkey = "0x0342c931c630cf00eb9429bd2a0a5c6cfba6801fbe867772ece0e12ade462467bf";
 
-    const wallet = new OnlineWallet(
-      pubkey,
-      fxCoreTxConfig.options.prefix,
-      onlineFunc,
-      fxCoreTxConfig.algo as Algo,
-    );
+    const wallet = new OnlineWallet(pubkey, fxCoreTxConfig.options.prefix, onlineFunc, fxCoreTxConfig.algo);
     const sender = wallet.address;
     console.debug("address", sender);
 

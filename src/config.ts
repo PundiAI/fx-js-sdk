@@ -6,6 +6,7 @@ import { defaultSigningClientOptions } from "@cosmjs/stargate/build/testutils.sp
 
 import { accountFromAny } from "./accounts";
 import { dexAminoConverters, dexTypes, ibcAminoConverters, ibcTypes } from "./modules";
+import { Algo } from "./signer";
 
 export const fxDexTxConfig = {
   options: {
@@ -39,7 +40,7 @@ export const fxCoreTxConfigClassic = {
     gasPrice: new GasPrice(Decimal.fromUserInput("4000000000000", 18), "FX"),
     accountParser: accountFromAny,
   },
-  algo: "eth_secp256k1",
+  algo: "secp256k1" as Algo,
 
   fees: undefined,
   precision: 18,
@@ -56,7 +57,7 @@ export const fxCoreTxConfig = {
     gasPrice: new GasPrice(Decimal.fromUserInput("4000000000000", 18), "FX"),
     accountParser: accountFromAny,
   },
-  algo: "eth_secp256k1",
+  algo: "eth_secp256k1" as Algo,
 
   fees: undefined,
   precision: 18,
