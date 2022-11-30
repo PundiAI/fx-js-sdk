@@ -8,6 +8,8 @@ import Long from "long";
 
 import { encodePubkey } from "../../pubkey";
 
+export { TxExtension };
+
 export function setupTxExtension(base: QueryClient): TxExtension {
   // Use this service to get easy typed access to query methods
   // This cannot be used for proof verification
