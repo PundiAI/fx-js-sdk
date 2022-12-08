@@ -77,13 +77,13 @@ export class FxClient {
     return this.tmClient;
   }
 
-  protected getQueryClient():
+  public getQueryClient():
     | (QueryClient & AuthExtension & BankExtension & StakingExtension & TxExtension)
     | undefined {
     return this.queryClient;
   }
 
-  protected forceGetQueryClient(): QueryClient &
+  public forceGetQueryClient(): QueryClient &
     AuthExtension &
     BankExtension &
     StakingExtension &
