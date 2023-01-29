@@ -1,8 +1,8 @@
 /* eslint-disable */
 import Long from "long";
 import _m0 from "protobufjs/minimal";
-import { Any } from "cosmjs-types/google/protobuf/any";
 import { Coin } from "cosmjs-types/cosmos/base/v1beta1/coin";
+import { Any } from "cosmjs-types/google/protobuf/any";
 
 export const protobufPackage = "fx.gravity.crosschain.v1";
 
@@ -55,8 +55,9 @@ export function claimTypeToJSON(object: ClaimType): string {
       return "CLAIM_TYPE_BRIDGE_TOKEN";
     case ClaimType.CLAIM_TYPE_ORACLE_SET_UPDATED:
       return "CLAIM_TYPE_ORACLE_SET_UPDATED";
+    case ClaimType.UNRECOGNIZED:
     default:
-      return "UNKNOWN";
+      return "UNRECOGNIZED";
   }
 }
 
@@ -109,6 +110,7 @@ export interface LastObservedBlockHeight {
 export interface BridgeToken {
   token: string;
   denom: string;
+  /** Deprecated: after upgrade v3 */
   channelIbc: string;
 }
 
@@ -193,13 +195,13 @@ export interface Params {
   slashFraction: Uint8Array;
   oracleSetUpdatePowerChangePercent: Uint8Array;
   ibcTransferTimeoutHeight: Long;
-  /** Deprecated */
+  /** Deprecated: after block 5713000 */
   oracles: string[];
   delegateThreshold?: Coin;
   delegateMultiple: Long;
 }
 
-/** Deprecated */
+/** Deprecated: after block 5713000 */
 export interface InitCrossChainParamsProposal {
   title: string;
   description: string;
@@ -247,9 +249,7 @@ export const ProposalOracle = {
   },
 
   fromJSON(object: any): ProposalOracle {
-    return {
-      oracles: Array.isArray(object?.oracles) ? object.oracles.map((e: any) => String(e)) : [],
-    };
+    return { oracles: Array.isArray(object?.oracles) ? object.oracles.map((e: any) => String(e)) : [] };
   },
 
   toJSON(message: ProposalOracle): unknown {
@@ -356,10 +356,10 @@ export const Oracle = {
       bridgerAddress: isSet(object.bridgerAddress) ? String(object.bridgerAddress) : "",
       externalAddress: isSet(object.externalAddress) ? String(object.externalAddress) : "",
       delegateAmount: isSet(object.delegateAmount) ? String(object.delegateAmount) : "",
-      startHeight: isSet(object.startHeight) ? Long.fromString(object.startHeight) : Long.ZERO,
+      startHeight: isSet(object.startHeight) ? Long.fromValue(object.startHeight) : Long.ZERO,
       online: isSet(object.online) ? Boolean(object.online) : false,
       delegateValidator: isSet(object.delegateValidator) ? String(object.delegateValidator) : "",
-      slashTimes: isSet(object.slashTimes) ? Long.fromString(object.slashTimes) : Long.ZERO,
+      slashTimes: isSet(object.slashTimes) ? Long.fromValue(object.slashTimes) : Long.ZERO,
     };
   },
 
@@ -434,7 +434,7 @@ export const BridgeValidator = {
 
   fromJSON(object: any): BridgeValidator {
     return {
-      power: isSet(object.power) ? Long.fromString(object.power) : Long.UZERO,
+      power: isSet(object.power) ? Long.fromValue(object.power) : Long.UZERO,
       externalAddress: isSet(object.externalAddress) ? String(object.externalAddress) : "",
     };
   },
@@ -499,11 +499,11 @@ export const OracleSet = {
 
   fromJSON(object: any): OracleSet {
     return {
-      nonce: isSet(object.nonce) ? Long.fromString(object.nonce) : Long.UZERO,
+      nonce: isSet(object.nonce) ? Long.fromValue(object.nonce) : Long.UZERO,
       members: Array.isArray(object?.members)
         ? object.members.map((e: any) => BridgeValidator.fromJSON(e))
         : [],
-      height: isSet(object.height) ? Long.fromString(object.height) : Long.UZERO,
+      height: isSet(object.height) ? Long.fromValue(object.height) : Long.UZERO,
     };
   },
 
@@ -569,9 +569,9 @@ export const LastObservedBlockHeight = {
   fromJSON(object: any): LastObservedBlockHeight {
     return {
       externalBlockHeight: isSet(object.externalBlockHeight)
-        ? Long.fromString(object.externalBlockHeight)
+        ? Long.fromValue(object.externalBlockHeight)
         : Long.UZERO,
-      blockHeight: isSet(object.blockHeight) ? Long.fromString(object.blockHeight) : Long.UZERO,
+      blockHeight: isSet(object.blockHeight) ? Long.fromValue(object.blockHeight) : Long.UZERO,
     };
   },
 
@@ -716,7 +716,7 @@ export const Attestation = {
     return {
       observed: isSet(object.observed) ? Boolean(object.observed) : false,
       votes: Array.isArray(object?.votes) ? object.votes.map((e: any) => String(e)) : [],
-      height: isSet(object.height) ? Long.fromString(object.height) : Long.UZERO,
+      height: isSet(object.height) ? Long.fromValue(object.height) : Long.UZERO,
       claim: isSet(object.claim) ? Any.fromJSON(object.claim) : undefined,
     };
   },
@@ -815,13 +815,13 @@ export const OutgoingTxBatch = {
 
   fromJSON(object: any): OutgoingTxBatch {
     return {
-      batchNonce: isSet(object.batchNonce) ? Long.fromString(object.batchNonce) : Long.UZERO,
-      batchTimeout: isSet(object.batchTimeout) ? Long.fromString(object.batchTimeout) : Long.UZERO,
+      batchNonce: isSet(object.batchNonce) ? Long.fromValue(object.batchNonce) : Long.UZERO,
+      batchTimeout: isSet(object.batchTimeout) ? Long.fromValue(object.batchTimeout) : Long.UZERO,
       transactions: Array.isArray(object?.transactions)
         ? object.transactions.map((e: any) => OutgoingTransferTx.fromJSON(e))
         : [],
       tokenContract: isSet(object.tokenContract) ? String(object.tokenContract) : "",
-      block: isSet(object.block) ? Long.fromString(object.block) : Long.UZERO,
+      block: isSet(object.block) ? Long.fromValue(object.block) : Long.UZERO,
       feeReceive: isSet(object.feeReceive) ? String(object.feeReceive) : "",
     };
   },
@@ -917,7 +917,7 @@ export const OutgoingTransferTx = {
 
   fromJSON(object: any): OutgoingTransferTx {
     return {
-      id: isSet(object.id) ? Long.fromString(object.id) : Long.UZERO,
+      id: isSet(object.id) ? Long.fromValue(object.id) : Long.UZERO,
       sender: isSet(object.sender) ? String(object.sender) : "",
       destAddress: isSet(object.destAddress) ? String(object.destAddress) : "",
       token: isSet(object.token) ? ERC20Token.fromJSON(object.token) : undefined,
@@ -1046,9 +1046,7 @@ export const IDSet = {
   },
 
   fromJSON(object: any): IDSet {
-    return {
-      ids: Array.isArray(object?.ids) ? object.ids.map((e: any) => Long.fromString(e)) : [],
-    };
+    return { ids: Array.isArray(object?.ids) ? object.ids.map((e: any) => Long.fromValue(e)) : [] };
   },
 
   toJSON(message: IDSet): unknown {
@@ -1120,7 +1118,7 @@ export const BatchFees = {
     return {
       tokenContract: isSet(object.tokenContract) ? String(object.tokenContract) : "",
       totalFees: isSet(object.totalFees) ? String(object.totalFees) : "",
-      totalTxs: isSet(object.totalTxs) ? Long.fromString(object.totalTxs) : Long.UZERO,
+      totalTxs: isSet(object.totalTxs) ? Long.fromValue(object.totalTxs) : Long.UZERO,
       totalAmount: isSet(object.totalAmount) ? String(object.totalAmount) : "",
     };
   },
@@ -1310,28 +1308,26 @@ export const Params = {
   fromJSON(object: any): Params {
     return {
       gravityId: isSet(object.gravityId) ? String(object.gravityId) : "",
-      averageBlockTime: isSet(object.averageBlockTime)
-        ? Long.fromString(object.averageBlockTime)
-        : Long.UZERO,
+      averageBlockTime: isSet(object.averageBlockTime) ? Long.fromValue(object.averageBlockTime) : Long.UZERO,
       externalBatchTimeout: isSet(object.externalBatchTimeout)
-        ? Long.fromString(object.externalBatchTimeout)
+        ? Long.fromValue(object.externalBatchTimeout)
         : Long.UZERO,
       averageExternalBlockTime: isSet(object.averageExternalBlockTime)
-        ? Long.fromString(object.averageExternalBlockTime)
+        ? Long.fromValue(object.averageExternalBlockTime)
         : Long.UZERO,
-      signedWindow: isSet(object.signedWindow) ? Long.fromString(object.signedWindow) : Long.UZERO,
+      signedWindow: isSet(object.signedWindow) ? Long.fromValue(object.signedWindow) : Long.UZERO,
       slashFraction: isSet(object.slashFraction) ? bytesFromBase64(object.slashFraction) : new Uint8Array(),
       oracleSetUpdatePowerChangePercent: isSet(object.oracleSetUpdatePowerChangePercent)
         ? bytesFromBase64(object.oracleSetUpdatePowerChangePercent)
         : new Uint8Array(),
       ibcTransferTimeoutHeight: isSet(object.ibcTransferTimeoutHeight)
-        ? Long.fromString(object.ibcTransferTimeoutHeight)
+        ? Long.fromValue(object.ibcTransferTimeoutHeight)
         : Long.UZERO,
       oracles: Array.isArray(object?.oracles) ? object.oracles.map((e: any) => String(e)) : [],
       delegateThreshold: isSet(object.delegateThreshold)
         ? Coin.fromJSON(object.delegateThreshold)
         : undefined,
-      delegateMultiple: isSet(object.delegateMultiple) ? Long.fromString(object.delegateMultiple) : Long.ZERO,
+      delegateMultiple: isSet(object.delegateMultiple) ? Long.fromValue(object.delegateMultiple) : Long.ZERO,
     };
   },
 
@@ -1575,32 +1571,44 @@ declare var self: any | undefined;
 declare var window: any | undefined;
 declare var global: any | undefined;
 var globalThis: any = (() => {
-  if (typeof globalThis !== "undefined") return globalThis;
-  if (typeof self !== "undefined") return self;
-  if (typeof window !== "undefined") return window;
-  if (typeof global !== "undefined") return global;
+  if (typeof globalThis !== "undefined") {
+    return globalThis;
+  }
+  if (typeof self !== "undefined") {
+    return self;
+  }
+  if (typeof window !== "undefined") {
+    return window;
+  }
+  if (typeof global !== "undefined") {
+    return global;
+  }
   throw "Unable to locate global object";
 })();
 
-const atob: (b64: string) => string =
-  globalThis.atob || ((b64) => globalThis.Buffer.from(b64, "base64").toString("binary"));
 function bytesFromBase64(b64: string): Uint8Array {
-  const bin = atob(b64);
-  const arr = new Uint8Array(bin.length);
-  for (let i = 0; i < bin.length; ++i) {
-    arr[i] = bin.charCodeAt(i);
+  if (globalThis.Buffer) {
+    return Uint8Array.from(globalThis.Buffer.from(b64, "base64"));
+  } else {
+    const bin = globalThis.atob(b64);
+    const arr = new Uint8Array(bin.length);
+    for (let i = 0; i < bin.length; ++i) {
+      arr[i] = bin.charCodeAt(i);
+    }
+    return arr;
   }
-  return arr;
 }
 
-const btoa: (bin: string) => string =
-  globalThis.btoa || ((bin) => globalThis.Buffer.from(bin, "binary").toString("base64"));
 function base64FromBytes(arr: Uint8Array): string {
-  const bin: string[] = [];
-  for (const byte of arr) {
-    bin.push(String.fromCharCode(byte));
+  if (globalThis.Buffer) {
+    return globalThis.Buffer.from(arr).toString("base64");
+  } else {
+    const bin: string[] = [];
+    arr.forEach((byte) => {
+      bin.push(String.fromCharCode(byte));
+    });
+    return globalThis.btoa(bin.join(""));
   }
-  return btoa(bin.join(""));
 }
 
 type Builtin = Date | Function | Uint8Array | string | number | boolean | undefined;
@@ -1620,7 +1628,7 @@ export type DeepPartial<T> = T extends Builtin
 type KeysOfUnion<T> = T extends T ? keyof T : never;
 export type Exact<P, I extends P> = P extends Builtin
   ? P
-  : P & { [K in keyof P]: Exact<P[K], I[K]> } & Record<Exclude<keyof I, KeysOfUnion<P>>, never>;
+  : P & { [K in keyof P]: Exact<P[K], I[K]> } & { [K in Exclude<keyof I, KeysOfUnion<P>>]: never };
 
 if (_m0.util.Long !== Long) {
   _m0.util.Long = Long as any;

@@ -5,12 +5,12 @@ import Long from "long";
 
 import { MsgTransfer } from "../../fx/ibc/applications/transfer/v1/tx";
 
-// ibc client proposal `ClientUpdateProposal` `UpgradeProposal` not support amino encode
+// NOTE: ibc client proposal `ClientUpdateProposal` `UpgradeProposal` not support amino encode
 
 /* eslint-disable @typescript-eslint/no-use-before-define */
-export function ibcAminoConverters(): Record<string, AminoConverter> {
+export function fxibcAminoConverters(): Record<string, AminoConverter> {
   return {
-    "/fx.ibc.applications.transfer.v1.MsgTransfer": aminoConverterMsgIbcTransfer(),
+    "/fx.ibc.applications.transfer.v1.MsgTransfer": aminoConverterFxMsgIbcTransfer(),
   };
 }
 
@@ -35,8 +35,8 @@ function omitDefault<T extends string | number | Long>(input: T): T | undefined 
   throw new Error(`Got unsupported type '${typeof input}'`);
 }
 
-export interface AminoMsgIbcTransfer extends AminoMsg {
-  readonly type: "cosmos-sdk/MsgTransfer";
+export interface AminoFxMsgIbcTransfer extends AminoMsg {
+  readonly type: "fxtransfer/MsgTransfer";
   readonly value: {
     readonly source_port: string;
     readonly source_channel: string;
@@ -47,16 +47,17 @@ export interface AminoMsgIbcTransfer extends AminoMsg {
     readonly timeout_timestamp?: string;
     readonly router?: string;
     readonly fee?: Coin;
+    readonly memo: string;
   };
 }
 
-export function isAminoMsgIbcTransfer(msg: AminoMsg): msg is AminoMsgIbcTransfer {
-  return msg.type === "cosmos-sdk/MsgTransfer";
+export function isAminoFxMsgIbcTransfer(msg: AminoMsg): msg is AminoFxMsgIbcTransfer {
+  return msg.type === "fxtransfer/MsgTransfer";
 }
 
-function aminoConverterMsgIbcTransfer(): AminoConverter {
+function aminoConverterFxMsgIbcTransfer(): AminoConverter {
   return {
-    aminoType: "cosmos-sdk/MsgTransfer",
+    aminoType: "fxtransfer/MsgTransfer",
     toAmino: ({
       sourcePort,
       sourceChannel,
@@ -67,7 +68,8 @@ function aminoConverterMsgIbcTransfer(): AminoConverter {
       timeoutTimestamp,
       router,
       fee,
-    }: MsgTransfer): AminoMsgIbcTransfer["value"] => {
+      memo,
+    }: MsgTransfer): AminoFxMsgIbcTransfer["value"] => {
       return {
         source_port: sourcePort,
         source_channel: sourceChannel,
@@ -96,6 +98,7 @@ function aminoConverterMsgIbcTransfer(): AminoConverter {
               denom: "",
               amount: "0",
             },
+        memo: memo,
       };
     },
     fromAmino: ({
@@ -108,7 +111,8 @@ function aminoConverterMsgIbcTransfer(): AminoConverter {
       timeout_timestamp,
       router,
       fee,
-    }: AminoMsgIbcTransfer["value"]): MsgTransfer => {
+      memo,
+    }: AminoFxMsgIbcTransfer["value"]): MsgTransfer => {
       return {
         sourcePort: source_port,
         sourceChannel: source_channel,
@@ -135,6 +139,7 @@ function aminoConverterMsgIbcTransfer(): AminoConverter {
                 amount: fee.amount,
               }
             : undefined,
+        memo: memo,
       };
     },
   };

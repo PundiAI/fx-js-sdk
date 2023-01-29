@@ -1,17 +1,17 @@
 /* eslint-disable */
 import Long from "long";
 import _m0 from "protobufjs/minimal";
+import { MsgConfirmBatch, MsgOracleSetConfirm } from "./tx";
 import {
-  Params,
-  OracleSet,
-  OutgoingTxBatch,
-  Oracle,
-  MinBatchFee,
   BatchFees,
-  OutgoingTransferTx,
   BridgeToken,
-} from "../../../fx/crosschain/v1/types";
-import { MsgOracleSetConfirm, MsgConfirmBatch } from "../../../fx/crosschain/v1/tx";
+  MinBatchFee,
+  Oracle,
+  OracleSet,
+  OutgoingTransferTx,
+  OutgoingTxBatch,
+  Params,
+} from "./types";
 
 export const protobufPackage = "fx.gravity.crosschain.v1";
 
@@ -149,7 +149,6 @@ export interface QueryTokenToDenomRequest {
 
 export interface QueryTokenToDenomResponse {
   denom: string;
-  channelIbc: string;
 }
 
 export interface QueryDenomToTokenRequest {
@@ -159,7 +158,6 @@ export interface QueryDenomToTokenRequest {
 
 export interface QueryDenomToTokenResponse {
   token: string;
-  channelIbc: string;
 }
 
 export interface QueryOracleByAddrRequest {
@@ -265,9 +263,7 @@ export const QueryParamsRequest = {
   },
 
   fromJSON(object: any): QueryParamsRequest {
-    return {
-      chainName: isSet(object.chainName) ? String(object.chainName) : "",
-    };
+    return { chainName: isSet(object.chainName) ? String(object.chainName) : "" };
   },
 
   toJSON(message: QueryParamsRequest): unknown {
@@ -314,9 +310,7 @@ export const QueryParamsResponse = {
   },
 
   fromJSON(object: any): QueryParamsResponse {
-    return {
-      params: isSet(object.params) ? Params.fromJSON(object.params) : undefined,
-    };
+    return { params: isSet(object.params) ? Params.fromJSON(object.params) : undefined };
   },
 
   toJSON(message: QueryParamsResponse): unknown {
@@ -364,9 +358,7 @@ export const QueryCurrentOracleSetRequest = {
   },
 
   fromJSON(object: any): QueryCurrentOracleSetRequest {
-    return {
-      chainName: isSet(object.chainName) ? String(object.chainName) : "",
-    };
+    return { chainName: isSet(object.chainName) ? String(object.chainName) : "" };
   },
 
   toJSON(message: QueryCurrentOracleSetRequest): unknown {
@@ -415,9 +407,7 @@ export const QueryCurrentOracleSetResponse = {
   },
 
   fromJSON(object: any): QueryCurrentOracleSetResponse {
-    return {
-      oracleSet: isSet(object.oracleSet) ? OracleSet.fromJSON(object.oracleSet) : undefined,
-    };
+    return { oracleSet: isSet(object.oracleSet) ? OracleSet.fromJSON(object.oracleSet) : undefined };
   },
 
   toJSON(message: QueryCurrentOracleSetResponse): unknown {
@@ -478,7 +468,7 @@ export const QueryOracleSetRequestRequest = {
   fromJSON(object: any): QueryOracleSetRequestRequest {
     return {
       chainName: isSet(object.chainName) ? String(object.chainName) : "",
-      nonce: isSet(object.nonce) ? Long.fromString(object.nonce) : Long.UZERO,
+      nonce: isSet(object.nonce) ? Long.fromValue(object.nonce) : Long.UZERO,
     };
   },
 
@@ -531,9 +521,7 @@ export const QueryOracleSetRequestResponse = {
   },
 
   fromJSON(object: any): QueryOracleSetRequestResponse {
-    return {
-      oracleSet: isSet(object.oracleSet) ? OracleSet.fromJSON(object.oracleSet) : undefined,
-    };
+    return { oracleSet: isSet(object.oracleSet) ? OracleSet.fromJSON(object.oracleSet) : undefined };
   },
 
   toJSON(message: QueryOracleSetRequestResponse): unknown {
@@ -601,7 +589,7 @@ export const QueryOracleSetConfirmRequest = {
     return {
       chainName: isSet(object.chainName) ? String(object.chainName) : "",
       bridgerAddress: isSet(object.bridgerAddress) ? String(object.bridgerAddress) : "",
-      nonce: isSet(object.nonce) ? Long.fromString(object.nonce) : Long.UZERO,
+      nonce: isSet(object.nonce) ? Long.fromValue(object.nonce) : Long.UZERO,
     };
   },
 
@@ -656,9 +644,7 @@ export const QueryOracleSetConfirmResponse = {
   },
 
   fromJSON(object: any): QueryOracleSetConfirmResponse {
-    return {
-      confirm: isSet(object.confirm) ? MsgOracleSetConfirm.fromJSON(object.confirm) : undefined,
-    };
+    return { confirm: isSet(object.confirm) ? MsgOracleSetConfirm.fromJSON(object.confirm) : undefined };
   },
 
   toJSON(message: QueryOracleSetConfirmResponse): unknown {
@@ -722,7 +708,7 @@ export const QueryOracleSetConfirmsByNonceRequest = {
   fromJSON(object: any): QueryOracleSetConfirmsByNonceRequest {
     return {
       chainName: isSet(object.chainName) ? String(object.chainName) : "",
-      nonce: isSet(object.nonce) ? Long.fromString(object.nonce) : Long.UZERO,
+      nonce: isSet(object.nonce) ? Long.fromValue(object.nonce) : Long.UZERO,
     };
   },
 
@@ -835,9 +821,7 @@ export const QueryLastOracleSetRequestsRequest = {
   },
 
   fromJSON(object: any): QueryLastOracleSetRequestsRequest {
-    return {
-      chainName: isSet(object.chainName) ? String(object.chainName) : "",
-    };
+    return { chainName: isSet(object.chainName) ? String(object.chainName) : "" };
   },
 
   toJSON(message: QueryLastOracleSetRequestsRequest): unknown {
@@ -1251,9 +1235,7 @@ export const QueryLastPendingBatchRequestByAddrResponse = {
   },
 
   fromJSON(object: any): QueryLastPendingBatchRequestByAddrResponse {
-    return {
-      batch: isSet(object.batch) ? OutgoingTxBatch.fromJSON(object.batch) : undefined,
-    };
+    return { batch: isSet(object.batch) ? OutgoingTxBatch.fromJSON(object.batch) : undefined };
   },
 
   toJSON(message: QueryLastPendingBatchRequestByAddrResponse): unknown {
@@ -1306,9 +1288,7 @@ export const QueryOutgoingTxBatchesRequest = {
   },
 
   fromJSON(object: any): QueryOutgoingTxBatchesRequest {
-    return {
-      chainName: isSet(object.chainName) ? String(object.chainName) : "",
-    };
+    return { chainName: isSet(object.chainName) ? String(object.chainName) : "" };
   },
 
   toJSON(message: QueryOutgoingTxBatchesRequest): unknown {
@@ -1429,7 +1409,7 @@ export const QueryBatchRequestByNonceRequest = {
     return {
       chainName: isSet(object.chainName) ? String(object.chainName) : "",
       tokenContract: isSet(object.tokenContract) ? String(object.tokenContract) : "",
-      nonce: isSet(object.nonce) ? Long.fromString(object.nonce) : Long.UZERO,
+      nonce: isSet(object.nonce) ? Long.fromValue(object.nonce) : Long.UZERO,
     };
   },
 
@@ -1484,9 +1464,7 @@ export const QueryBatchRequestByNonceResponse = {
   },
 
   fromJSON(object: any): QueryBatchRequestByNonceResponse {
-    return {
-      batch: isSet(object.batch) ? OutgoingTxBatch.fromJSON(object.batch) : undefined,
-    };
+    return { batch: isSet(object.batch) ? OutgoingTxBatch.fromJSON(object.batch) : undefined };
   },
 
   toJSON(message: QueryBatchRequestByNonceResponse): unknown {
@@ -1561,7 +1539,7 @@ export const QueryBatchConfirmRequest = {
       chainName: isSet(object.chainName) ? String(object.chainName) : "",
       tokenContract: isSet(object.tokenContract) ? String(object.tokenContract) : "",
       bridgerAddress: isSet(object.bridgerAddress) ? String(object.bridgerAddress) : "",
-      nonce: isSet(object.nonce) ? Long.fromString(object.nonce) : Long.UZERO,
+      nonce: isSet(object.nonce) ? Long.fromValue(object.nonce) : Long.UZERO,
     };
   },
 
@@ -1618,9 +1596,7 @@ export const QueryBatchConfirmResponse = {
   },
 
   fromJSON(object: any): QueryBatchConfirmResponse {
-    return {
-      confirm: isSet(object.confirm) ? MsgConfirmBatch.fromJSON(object.confirm) : undefined,
-    };
+    return { confirm: isSet(object.confirm) ? MsgConfirmBatch.fromJSON(object.confirm) : undefined };
   },
 
   toJSON(message: QueryBatchConfirmResponse): unknown {
@@ -1688,7 +1664,7 @@ export const QueryBatchConfirmsRequest = {
     return {
       chainName: isSet(object.chainName) ? String(object.chainName) : "",
       tokenContract: isSet(object.tokenContract) ? String(object.tokenContract) : "",
-      nonce: isSet(object.nonce) ? Long.fromString(object.nonce) : Long.UZERO,
+      nonce: isSet(object.nonce) ? Long.fromValue(object.nonce) : Long.UZERO,
     };
   },
 
@@ -1860,9 +1836,7 @@ export const QueryLastEventNonceByAddrResponse = {
   },
 
   fromJSON(object: any): QueryLastEventNonceByAddrResponse {
-    return {
-      eventNonce: isSet(object.eventNonce) ? Long.fromString(object.eventNonce) : Long.UZERO,
-    };
+    return { eventNonce: isSet(object.eventNonce) ? Long.fromValue(object.eventNonce) : Long.UZERO };
   },
 
   toJSON(message: QueryLastEventNonceByAddrResponse): unknown {
@@ -1944,16 +1918,13 @@ export const QueryTokenToDenomRequest = {
 };
 
 function createBaseQueryTokenToDenomResponse(): QueryTokenToDenomResponse {
-  return { denom: "", channelIbc: "" };
+  return { denom: "" };
 }
 
 export const QueryTokenToDenomResponse = {
   encode(message: QueryTokenToDenomResponse, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.denom !== "") {
       writer.uint32(10).string(message.denom);
-    }
-    if (message.channelIbc !== "") {
-      writer.uint32(18).string(message.channelIbc);
     }
     return writer;
   },
@@ -1968,9 +1939,6 @@ export const QueryTokenToDenomResponse = {
         case 1:
           message.denom = reader.string();
           break;
-        case 2:
-          message.channelIbc = reader.string();
-          break;
         default:
           reader.skipType(tag & 7);
           break;
@@ -1980,16 +1948,12 @@ export const QueryTokenToDenomResponse = {
   },
 
   fromJSON(object: any): QueryTokenToDenomResponse {
-    return {
-      denom: isSet(object.denom) ? String(object.denom) : "",
-      channelIbc: isSet(object.channelIbc) ? String(object.channelIbc) : "",
-    };
+    return { denom: isSet(object.denom) ? String(object.denom) : "" };
   },
 
   toJSON(message: QueryTokenToDenomResponse): unknown {
     const obj: any = {};
     message.denom !== undefined && (obj.denom = message.denom);
-    message.channelIbc !== undefined && (obj.channelIbc = message.channelIbc);
     return obj;
   },
 
@@ -1998,7 +1962,6 @@ export const QueryTokenToDenomResponse = {
   ): QueryTokenToDenomResponse {
     const message = createBaseQueryTokenToDenomResponse();
     message.denom = object.denom ?? "";
-    message.channelIbc = object.channelIbc ?? "";
     return message;
   },
 };
@@ -2064,16 +2027,13 @@ export const QueryDenomToTokenRequest = {
 };
 
 function createBaseQueryDenomToTokenResponse(): QueryDenomToTokenResponse {
-  return { token: "", channelIbc: "" };
+  return { token: "" };
 }
 
 export const QueryDenomToTokenResponse = {
   encode(message: QueryDenomToTokenResponse, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.token !== "") {
       writer.uint32(10).string(message.token);
-    }
-    if (message.channelIbc !== "") {
-      writer.uint32(18).string(message.channelIbc);
     }
     return writer;
   },
@@ -2088,9 +2048,6 @@ export const QueryDenomToTokenResponse = {
         case 1:
           message.token = reader.string();
           break;
-        case 2:
-          message.channelIbc = reader.string();
-          break;
         default:
           reader.skipType(tag & 7);
           break;
@@ -2100,16 +2057,12 @@ export const QueryDenomToTokenResponse = {
   },
 
   fromJSON(object: any): QueryDenomToTokenResponse {
-    return {
-      token: isSet(object.token) ? String(object.token) : "",
-      channelIbc: isSet(object.channelIbc) ? String(object.channelIbc) : "",
-    };
+    return { token: isSet(object.token) ? String(object.token) : "" };
   },
 
   toJSON(message: QueryDenomToTokenResponse): unknown {
     const obj: any = {};
     message.token !== undefined && (obj.token = message.token);
-    message.channelIbc !== undefined && (obj.channelIbc = message.channelIbc);
     return obj;
   },
 
@@ -2118,7 +2071,6 @@ export const QueryDenomToTokenResponse = {
   ): QueryDenomToTokenResponse {
     const message = createBaseQueryDenomToTokenResponse();
     message.token = object.token ?? "";
-    message.channelIbc = object.channelIbc ?? "";
     return message;
   },
 };
@@ -2214,9 +2166,7 @@ export const QueryOracleResponse = {
   },
 
   fromJSON(object: any): QueryOracleResponse {
-    return {
-      oracle: isSet(object.oracle) ? Oracle.fromJSON(object.oracle) : undefined,
-    };
+    return { oracle: isSet(object.oracle) ? Oracle.fromJSON(object.oracle) : undefined };
   },
 
   toJSON(message: QueryOracleResponse): unknown {
@@ -2522,9 +2472,7 @@ export const QueryLastObservedBlockHeightRequest = {
   },
 
   fromJSON(object: any): QueryLastObservedBlockHeightRequest {
-    return {
-      chainName: isSet(object.chainName) ? String(object.chainName) : "",
-    };
+    return { chainName: isSet(object.chainName) ? String(object.chainName) : "" };
   },
 
   toJSON(message: QueryLastObservedBlockHeightRequest): unknown {
@@ -2584,9 +2532,9 @@ export const QueryLastObservedBlockHeightResponse = {
   fromJSON(object: any): QueryLastObservedBlockHeightResponse {
     return {
       externalBlockHeight: isSet(object.externalBlockHeight)
-        ? Long.fromString(object.externalBlockHeight)
+        ? Long.fromValue(object.externalBlockHeight)
         : Long.UZERO,
-      blockHeight: isSet(object.blockHeight) ? Long.fromString(object.blockHeight) : Long.UZERO,
+      blockHeight: isSet(object.blockHeight) ? Long.fromValue(object.blockHeight) : Long.UZERO,
     };
   },
 
@@ -2711,9 +2659,7 @@ export const QueryLastEventBlockHeightByAddrResponse = {
   },
 
   fromJSON(object: any): QueryLastEventBlockHeightByAddrResponse {
-    return {
-      blockHeight: isSet(object.blockHeight) ? Long.fromString(object.blockHeight) : Long.UZERO,
-    };
+    return { blockHeight: isSet(object.blockHeight) ? Long.fromValue(object.blockHeight) : Long.UZERO };
   },
 
   toJSON(message: QueryLastEventBlockHeightByAddrResponse): unknown {
@@ -2765,9 +2711,7 @@ export const QueryOraclesRequest = {
   },
 
   fromJSON(object: any): QueryOraclesRequest {
-    return {
-      chainName: isSet(object.chainName) ? String(object.chainName) : "",
-    };
+    return { chainName: isSet(object.chainName) ? String(object.chainName) : "" };
   },
 
   toJSON(message: QueryOraclesRequest): unknown {
@@ -2870,9 +2814,7 @@ export const QueryProjectedBatchTimeoutHeightRequest = {
   },
 
   fromJSON(object: any): QueryProjectedBatchTimeoutHeightRequest {
-    return {
-      chainName: isSet(object.chainName) ? String(object.chainName) : "",
-    };
+    return { chainName: isSet(object.chainName) ? String(object.chainName) : "" };
   },
 
   toJSON(message: QueryProjectedBatchTimeoutHeightRequest): unknown {
@@ -2924,9 +2866,7 @@ export const QueryProjectedBatchTimeoutHeightResponse = {
   },
 
   fromJSON(object: any): QueryProjectedBatchTimeoutHeightResponse {
-    return {
-      timeoutHeight: isSet(object.timeoutHeight) ? Long.fromString(object.timeoutHeight) : Long.UZERO,
-    };
+    return { timeoutHeight: isSet(object.timeoutHeight) ? Long.fromValue(object.timeoutHeight) : Long.UZERO };
   },
 
   toJSON(message: QueryProjectedBatchTimeoutHeightResponse): unknown {
@@ -2979,9 +2919,7 @@ export const QueryBridgeTokensRequest = {
   },
 
   fromJSON(object: any): QueryBridgeTokensRequest {
-    return {
-      chainName: isSet(object.chainName) ? String(object.chainName) : "",
-    };
+    return { chainName: isSet(object.chainName) ? String(object.chainName) : "" };
   },
 
   toJSON(message: QueryBridgeTokensRequest): unknown {
@@ -3105,7 +3043,9 @@ export interface Query {
 
 export class QueryClientImpl implements Query {
   private readonly rpc: Rpc;
-  constructor(rpc: Rpc) {
+  private readonly service: string;
+  constructor(rpc: Rpc, opts?: { service?: string }) {
+    this.service = opts?.service || "fx.gravity.crosschain.v1.Query";
     this.rpc = rpc;
     this.Params = this.Params.bind(this);
     this.CurrentOracleSet = this.CurrentOracleSet.bind(this);
@@ -3135,25 +3075,25 @@ export class QueryClientImpl implements Query {
   }
   Params(request: QueryParamsRequest): Promise<QueryParamsResponse> {
     const data = QueryParamsRequest.encode(request).finish();
-    const promise = this.rpc.request("fx.gravity.crosschain.v1.Query", "Params", data);
+    const promise = this.rpc.request(this.service, "Params", data);
     return promise.then((data) => QueryParamsResponse.decode(new _m0.Reader(data)));
   }
 
   CurrentOracleSet(request: QueryCurrentOracleSetRequest): Promise<QueryCurrentOracleSetResponse> {
     const data = QueryCurrentOracleSetRequest.encode(request).finish();
-    const promise = this.rpc.request("fx.gravity.crosschain.v1.Query", "CurrentOracleSet", data);
+    const promise = this.rpc.request(this.service, "CurrentOracleSet", data);
     return promise.then((data) => QueryCurrentOracleSetResponse.decode(new _m0.Reader(data)));
   }
 
   OracleSetRequest(request: QueryOracleSetRequestRequest): Promise<QueryOracleSetRequestResponse> {
     const data = QueryOracleSetRequestRequest.encode(request).finish();
-    const promise = this.rpc.request("fx.gravity.crosschain.v1.Query", "OracleSetRequest", data);
+    const promise = this.rpc.request(this.service, "OracleSetRequest", data);
     return promise.then((data) => QueryOracleSetRequestResponse.decode(new _m0.Reader(data)));
   }
 
   OracleSetConfirm(request: QueryOracleSetConfirmRequest): Promise<QueryOracleSetConfirmResponse> {
     const data = QueryOracleSetConfirmRequest.encode(request).finish();
-    const promise = this.rpc.request("fx.gravity.crosschain.v1.Query", "OracleSetConfirm", data);
+    const promise = this.rpc.request(this.service, "OracleSetConfirm", data);
     return promise.then((data) => QueryOracleSetConfirmResponse.decode(new _m0.Reader(data)));
   }
 
@@ -3161,7 +3101,7 @@ export class QueryClientImpl implements Query {
     request: QueryOracleSetConfirmsByNonceRequest,
   ): Promise<QueryOracleSetConfirmsByNonceResponse> {
     const data = QueryOracleSetConfirmsByNonceRequest.encode(request).finish();
-    const promise = this.rpc.request("fx.gravity.crosschain.v1.Query", "OracleSetConfirmsByNonce", data);
+    const promise = this.rpc.request(this.service, "OracleSetConfirmsByNonce", data);
     return promise.then((data) => QueryOracleSetConfirmsByNonceResponse.decode(new _m0.Reader(data)));
   }
 
@@ -3169,7 +3109,7 @@ export class QueryClientImpl implements Query {
     request: QueryLastOracleSetRequestsRequest,
   ): Promise<QueryLastOracleSetRequestsResponse> {
     const data = QueryLastOracleSetRequestsRequest.encode(request).finish();
-    const promise = this.rpc.request("fx.gravity.crosschain.v1.Query", "LastOracleSetRequests", data);
+    const promise = this.rpc.request(this.service, "LastOracleSetRequests", data);
     return promise.then((data) => QueryLastOracleSetRequestsResponse.decode(new _m0.Reader(data)));
   }
 
@@ -3177,11 +3117,7 @@ export class QueryClientImpl implements Query {
     request: QueryLastPendingOracleSetRequestByAddrRequest,
   ): Promise<QueryLastPendingOracleSetRequestByAddrResponse> {
     const data = QueryLastPendingOracleSetRequestByAddrRequest.encode(request).finish();
-    const promise = this.rpc.request(
-      "fx.gravity.crosschain.v1.Query",
-      "LastPendingOracleSetRequestByAddr",
-      data,
-    );
+    const promise = this.rpc.request(this.service, "LastPendingOracleSetRequestByAddr", data);
     return promise.then((data) =>
       QueryLastPendingOracleSetRequestByAddrResponse.decode(new _m0.Reader(data)),
     );
@@ -3191,7 +3127,7 @@ export class QueryClientImpl implements Query {
     request: QueryLastPendingBatchRequestByAddrRequest,
   ): Promise<QueryLastPendingBatchRequestByAddrResponse> {
     const data = QueryLastPendingBatchRequestByAddrRequest.encode(request).finish();
-    const promise = this.rpc.request("fx.gravity.crosschain.v1.Query", "LastPendingBatchRequestByAddr", data);
+    const promise = this.rpc.request(this.service, "LastPendingBatchRequestByAddr", data);
     return promise.then((data) => QueryLastPendingBatchRequestByAddrResponse.decode(new _m0.Reader(data)));
   }
 
@@ -3199,7 +3135,7 @@ export class QueryClientImpl implements Query {
     request: QueryLastEventNonceByAddrRequest,
   ): Promise<QueryLastEventNonceByAddrResponse> {
     const data = QueryLastEventNonceByAddrRequest.encode(request).finish();
-    const promise = this.rpc.request("fx.gravity.crosschain.v1.Query", "LastEventNonceByAddr", data);
+    const promise = this.rpc.request(this.service, "LastEventNonceByAddr", data);
     return promise.then((data) => QueryLastEventNonceByAddrResponse.decode(new _m0.Reader(data)));
   }
 
@@ -3207,13 +3143,13 @@ export class QueryClientImpl implements Query {
     request: QueryLastEventBlockHeightByAddrRequest,
   ): Promise<QueryLastEventBlockHeightByAddrResponse> {
     const data = QueryLastEventBlockHeightByAddrRequest.encode(request).finish();
-    const promise = this.rpc.request("fx.gravity.crosschain.v1.Query", "LastEventBlockHeightByAddr", data);
+    const promise = this.rpc.request(this.service, "LastEventBlockHeightByAddr", data);
     return promise.then((data) => QueryLastEventBlockHeightByAddrResponse.decode(new _m0.Reader(data)));
   }
 
   BatchFees(request: QueryBatchFeeRequest): Promise<QueryBatchFeeResponse> {
     const data = QueryBatchFeeRequest.encode(request).finish();
-    const promise = this.rpc.request("fx.gravity.crosschain.v1.Query", "BatchFees", data);
+    const promise = this.rpc.request(this.service, "BatchFees", data);
     return promise.then((data) => QueryBatchFeeResponse.decode(new _m0.Reader(data)));
   }
 
@@ -3221,61 +3157,61 @@ export class QueryClientImpl implements Query {
     request: QueryLastObservedBlockHeightRequest,
   ): Promise<QueryLastObservedBlockHeightResponse> {
     const data = QueryLastObservedBlockHeightRequest.encode(request).finish();
-    const promise = this.rpc.request("fx.gravity.crosschain.v1.Query", "LastObservedBlockHeight", data);
+    const promise = this.rpc.request(this.service, "LastObservedBlockHeight", data);
     return promise.then((data) => QueryLastObservedBlockHeightResponse.decode(new _m0.Reader(data)));
   }
 
   OutgoingTxBatches(request: QueryOutgoingTxBatchesRequest): Promise<QueryOutgoingTxBatchesResponse> {
     const data = QueryOutgoingTxBatchesRequest.encode(request).finish();
-    const promise = this.rpc.request("fx.gravity.crosschain.v1.Query", "OutgoingTxBatches", data);
+    const promise = this.rpc.request(this.service, "OutgoingTxBatches", data);
     return promise.then((data) => QueryOutgoingTxBatchesResponse.decode(new _m0.Reader(data)));
   }
 
   BatchRequestByNonce(request: QueryBatchRequestByNonceRequest): Promise<QueryBatchRequestByNonceResponse> {
     const data = QueryBatchRequestByNonceRequest.encode(request).finish();
-    const promise = this.rpc.request("fx.gravity.crosschain.v1.Query", "BatchRequestByNonce", data);
+    const promise = this.rpc.request(this.service, "BatchRequestByNonce", data);
     return promise.then((data) => QueryBatchRequestByNonceResponse.decode(new _m0.Reader(data)));
   }
 
   BatchConfirm(request: QueryBatchConfirmRequest): Promise<QueryBatchConfirmResponse> {
     const data = QueryBatchConfirmRequest.encode(request).finish();
-    const promise = this.rpc.request("fx.gravity.crosschain.v1.Query", "BatchConfirm", data);
+    const promise = this.rpc.request(this.service, "BatchConfirm", data);
     return promise.then((data) => QueryBatchConfirmResponse.decode(new _m0.Reader(data)));
   }
 
   BatchConfirms(request: QueryBatchConfirmsRequest): Promise<QueryBatchConfirmsResponse> {
     const data = QueryBatchConfirmsRequest.encode(request).finish();
-    const promise = this.rpc.request("fx.gravity.crosschain.v1.Query", "BatchConfirms", data);
+    const promise = this.rpc.request(this.service, "BatchConfirms", data);
     return promise.then((data) => QueryBatchConfirmsResponse.decode(new _m0.Reader(data)));
   }
 
   TokenToDenom(request: QueryTokenToDenomRequest): Promise<QueryTokenToDenomResponse> {
     const data = QueryTokenToDenomRequest.encode(request).finish();
-    const promise = this.rpc.request("fx.gravity.crosschain.v1.Query", "TokenToDenom", data);
+    const promise = this.rpc.request(this.service, "TokenToDenom", data);
     return promise.then((data) => QueryTokenToDenomResponse.decode(new _m0.Reader(data)));
   }
 
   DenomToToken(request: QueryDenomToTokenRequest): Promise<QueryDenomToTokenResponse> {
     const data = QueryDenomToTokenRequest.encode(request).finish();
-    const promise = this.rpc.request("fx.gravity.crosschain.v1.Query", "DenomToToken", data);
+    const promise = this.rpc.request(this.service, "DenomToToken", data);
     return promise.then((data) => QueryDenomToTokenResponse.decode(new _m0.Reader(data)));
   }
 
   GetOracleByAddr(request: QueryOracleByAddrRequest): Promise<QueryOracleResponse> {
     const data = QueryOracleByAddrRequest.encode(request).finish();
-    const promise = this.rpc.request("fx.gravity.crosschain.v1.Query", "GetOracleByAddr", data);
+    const promise = this.rpc.request(this.service, "GetOracleByAddr", data);
     return promise.then((data) => QueryOracleResponse.decode(new _m0.Reader(data)));
   }
 
   GetOracleByExternalAddr(request: QueryOracleByExternalAddrRequest): Promise<QueryOracleResponse> {
     const data = QueryOracleByExternalAddrRequest.encode(request).finish();
-    const promise = this.rpc.request("fx.gravity.crosschain.v1.Query", "GetOracleByExternalAddr", data);
+    const promise = this.rpc.request(this.service, "GetOracleByExternalAddr", data);
     return promise.then((data) => QueryOracleResponse.decode(new _m0.Reader(data)));
   }
 
   GetOracleByBridgerAddr(request: QueryOracleByBridgerAddrRequest): Promise<QueryOracleResponse> {
     const data = QueryOracleByBridgerAddrRequest.encode(request).finish();
-    const promise = this.rpc.request("fx.gravity.crosschain.v1.Query", "GetOracleByBridgerAddr", data);
+    const promise = this.rpc.request(this.service, "GetOracleByBridgerAddr", data);
     return promise.then((data) => QueryOracleResponse.decode(new _m0.Reader(data)));
   }
 
@@ -3283,13 +3219,13 @@ export class QueryClientImpl implements Query {
     request: QueryPendingSendToExternalRequest,
   ): Promise<QueryPendingSendToExternalResponse> {
     const data = QueryPendingSendToExternalRequest.encode(request).finish();
-    const promise = this.rpc.request("fx.gravity.crosschain.v1.Query", "GetPendingSendToExternal", data);
+    const promise = this.rpc.request(this.service, "GetPendingSendToExternal", data);
     return promise.then((data) => QueryPendingSendToExternalResponse.decode(new _m0.Reader(data)));
   }
 
   Oracles(request: QueryOraclesRequest): Promise<QueryOraclesResponse> {
     const data = QueryOraclesRequest.encode(request).finish();
-    const promise = this.rpc.request("fx.gravity.crosschain.v1.Query", "Oracles", data);
+    const promise = this.rpc.request(this.service, "Oracles", data);
     return promise.then((data) => QueryOraclesResponse.decode(new _m0.Reader(data)));
   }
 
@@ -3297,13 +3233,13 @@ export class QueryClientImpl implements Query {
     request: QueryProjectedBatchTimeoutHeightRequest,
   ): Promise<QueryProjectedBatchTimeoutHeightResponse> {
     const data = QueryProjectedBatchTimeoutHeightRequest.encode(request).finish();
-    const promise = this.rpc.request("fx.gravity.crosschain.v1.Query", "ProjectedBatchTimeoutHeight", data);
+    const promise = this.rpc.request(this.service, "ProjectedBatchTimeoutHeight", data);
     return promise.then((data) => QueryProjectedBatchTimeoutHeightResponse.decode(new _m0.Reader(data)));
   }
 
   BridgeTokens(request: QueryBridgeTokensRequest): Promise<QueryBridgeTokensResponse> {
     const data = QueryBridgeTokensRequest.encode(request).finish();
-    const promise = this.rpc.request("fx.gravity.crosschain.v1.Query", "BridgeTokens", data);
+    const promise = this.rpc.request(this.service, "BridgeTokens", data);
     return promise.then((data) => QueryBridgeTokensResponse.decode(new _m0.Reader(data)));
   }
 }
@@ -3329,7 +3265,7 @@ export type DeepPartial<T> = T extends Builtin
 type KeysOfUnion<T> = T extends T ? keyof T : never;
 export type Exact<P, I extends P> = P extends Builtin
   ? P
-  : P & { [K in keyof P]: Exact<P[K], I[K]> } & Record<Exclude<keyof I, KeysOfUnion<P>>, never>;
+  : P & { [K in keyof P]: Exact<P[K], I[K]> } & { [K in Exclude<keyof I, KeysOfUnion<P>>]: never };
 
 if (_m0.util.Long !== Long) {
   _m0.util.Long = Long as any;

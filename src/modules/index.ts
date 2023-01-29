@@ -59,10 +59,8 @@ export {
   govProposalContentAminoConverters,
   isAminoTextProposal,
 } from "./gov/aminomessages";
-export { AminoMsgSendToEth, gravityAminoConverters, isAminoMsgSendToEth } from "./gravity/aminomessages";
-export { gravityTypes, isMsgSendToEthEncodeObject, MsgSendToEthEncodeObject } from "./gravity/messages";
-export { AminoMsgIbcTransfer, ibcAminoConverters, isAminoMsgIbcTransfer } from "./ibc/aminomessages";
-export { ibcTypes, isMsgIbcTransferEncodeObject, MsgIbcTransferEncodeObject } from "./ibc/messages";
+export { AminoFxMsgIbcTransfer, fxibcAminoConverters, isAminoFxMsgIbcTransfer } from "./ibc/aminomessages";
+export { fxibcTypes, isMsgIbcTransferEncodeObject, FxMsgIbcTransferEncodeObject } from "./ibc/messages";
 export {
   AminoParameterChangeProposal,
   isAminoParameterChangeProposal,

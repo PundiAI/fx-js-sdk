@@ -14,11 +14,9 @@ if [ -d "$OUT_DIR/fx" ]; then
   rm -rf "$OUT_DIR/fx"
 fi
 
-perl -pi -e 's|ibc.core.client.v1.Height|.ibc.core.client.v1.Height|g' ./fx-core/proto/fx/ibc/applications/transfer/v1/tx.proto
-
-if [ -d "./ibc-go/proto/ibc/applications/transfer" ]; then
-  rm -rf "./ibc-go/proto/ibc/applications/transfer"
-fi
+perl -pi -e 's|ibc\.core\.client\.v1\.Height\.|.ibc.core.client.v1.Height.|g' ./fx-core/proto/fx/ibc/applications/transfer/v1/tx.proto
+perl -pi -e 's|ibc\.applications\.transfer\.v1\.|.ibc.applications.transfer.v1.|g' ./fx-core/proto/fx/ibc/applications/transfer/v1/tx.proto
+perl -pi -e 's|ibc\.applications\.transfer\.v1\.|.ibc.applications.transfer.v1.|g' ./fx-core/proto/fx/ibc/applications/transfer/v1/query.proto
 
 proto_dirs=$(find ./fx-core/proto/fx -path -prune -o -name '*.proto' -print0 | xargs -0 -n1 dirname | sort | uniq)
 for dir in $proto_dirs; do

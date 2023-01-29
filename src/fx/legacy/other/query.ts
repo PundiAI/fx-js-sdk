@@ -5,8 +5,10 @@ import { Coin } from "cosmjs-types/cosmos/base/v1beta1/coin";
 
 export const protobufPackage = "fx.other";
 
+/** Deprecated: GasPriceRequest */
 export interface GasPriceRequest {}
 
+/** Deprecated: GasPriceResponse */
 export interface GasPriceResponse {
   gasPrices: Coin[];
 }
@@ -103,20 +105,32 @@ export const GasPriceResponse = {
   },
 };
 
+/** Deprecated: Query */
 export interface Query {
-  /** Deprecated */
+  /** Deprecated: Please use base query.GetGasPrice */
+  FxGasPrice(request: GasPriceRequest): Promise<GasPriceResponse>;
+  /** Deprecated: Please use base query.GetGasPrice */
   GasPrice(request: GasPriceRequest): Promise<GasPriceResponse>;
 }
 
 export class QueryClientImpl implements Query {
   private readonly rpc: Rpc;
-  constructor(rpc: Rpc) {
+  private readonly service: string;
+  constructor(rpc: Rpc, opts?: { service?: string }) {
+    this.service = opts?.service || "fx.other.Query";
     this.rpc = rpc;
+    this.FxGasPrice = this.FxGasPrice.bind(this);
     this.GasPrice = this.GasPrice.bind(this);
   }
+  FxGasPrice(request: GasPriceRequest): Promise<GasPriceResponse> {
+    const data = GasPriceRequest.encode(request).finish();
+    const promise = this.rpc.request(this.service, "FxGasPrice", data);
+    return promise.then((data) => GasPriceResponse.decode(new _m0.Reader(data)));
+  }
+
   GasPrice(request: GasPriceRequest): Promise<GasPriceResponse> {
     const data = GasPriceRequest.encode(request).finish();
-    const promise = this.rpc.request("fx.other.Query", "GasPrice", data);
+    const promise = this.rpc.request(this.service, "GasPrice", data);
     return promise.then((data) => GasPriceResponse.decode(new _m0.Reader(data)));
   }
 }
@@ -142,7 +156,7 @@ export type DeepPartial<T> = T extends Builtin
 type KeysOfUnion<T> = T extends T ? keyof T : never;
 export type Exact<P, I extends P> = P extends Builtin
   ? P
-  : P & { [K in keyof P]: Exact<P[K], I[K]> } & Record<Exclude<keyof I, KeysOfUnion<P>>, never>;
+  : P & { [K in keyof P]: Exact<P[K], I[K]> } & { [K in Exclude<keyof I, KeysOfUnion<P>>]: never };
 
 if (_m0.util.Long !== Long) {
   _m0.util.Long = Long as any;

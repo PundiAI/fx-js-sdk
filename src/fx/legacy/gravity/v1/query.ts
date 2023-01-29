@@ -1,211 +1,246 @@
 /* eslint-disable */
 import Long from "long";
 import _m0 from "protobufjs/minimal";
-import { Params } from "../../../fx/gravity/v1/genesis";
-import { Valset, ERC20ToDenom } from "../../../fx/gravity/v1/types";
-import { MsgValsetConfirm, MsgConfirmBatch } from "../../../fx/gravity/v1/tx";
-import { OutgoingTxBatch, OutgoingTransferTx } from "../../../fx/gravity/v1/batch";
-import { MinBatchFee, BatchFees } from "../../../fx/gravity/v1/pool";
+import { Params } from "./genesis";
+import { MsgConfirmBatch, MsgValsetConfirm } from "./tx";
+import { BatchFees, ERC20ToDenom, MinBatchFee, OutgoingTransferTx, OutgoingTxBatch, Valset } from "./types";
 
 export const protobufPackage = "fx.gravity.v1";
 
+/** Deprecated: after upgrade v3 */
 export interface QueryParamsRequest {}
 
+/** Deprecated: after upgrade v3 */
 export interface QueryParamsResponse {
   params?: Params;
 }
 
+/** Deprecated: after upgrade v3 */
 export interface QueryCurrentValsetRequest {}
 
+/** Deprecated: after upgrade v3 */
 export interface QueryCurrentValsetResponse {
   valset?: Valset;
 }
 
+/** Deprecated: after upgrade v3 */
 export interface QueryValsetRequestRequest {
   nonce: Long;
 }
 
+/** Deprecated: after upgrade v3 */
 export interface QueryValsetRequestResponse {
   valset?: Valset;
 }
 
+/** Deprecated: after upgrade v3 */
 export interface QueryValsetConfirmRequest {
   nonce: Long;
   address: string;
 }
 
+/** Deprecated: after upgrade v3 */
 export interface QueryValsetConfirmResponse {
   confirm?: MsgValsetConfirm;
 }
 
+/** Deprecated: after upgrade v3 */
 export interface QueryValsetConfirmsByNonceRequest {
   nonce: Long;
 }
 
+/** Deprecated: after upgrade v3 */
 export interface QueryValsetConfirmsByNonceResponse {
   confirms: MsgValsetConfirm[];
 }
 
+/** Deprecated: after upgrade v3 */
 export interface QueryLastValsetRequestsRequest {}
 
+/** Deprecated: after upgrade v3 */
 export interface QueryLastValsetRequestsResponse {
   valsets: Valset[];
 }
 
+/** Deprecated: after upgrade v3 */
 export interface QueryLastPendingValsetRequestByAddrRequest {
   address: string;
 }
 
+/** Deprecated: after upgrade v3 */
 export interface QueryLastPendingValsetRequestByAddrResponse {
   valsets: Valset[];
 }
 
+/** Deprecated: after upgrade v3 */
 export interface QueryBatchFeeRequest {
   minBatchFees: MinBatchFee[];
 }
 
+/** Deprecated: after upgrade v3 */
 export interface QueryBatchFeeResponse {
   batchFees: BatchFees[];
 }
 
+/** Deprecated: after upgrade v3 */
 export interface QueryLastPendingBatchRequestByAddrRequest {
   address: string;
 }
 
+/** Deprecated: after upgrade v3 */
 export interface QueryLastPendingBatchRequestByAddrResponse {
   batch?: OutgoingTxBatch;
 }
 
+/** Deprecated: after upgrade v3 */
 export interface QueryOutgoingTxBatchesRequest {}
 
+/** Deprecated: after upgrade v3 */
 export interface QueryOutgoingTxBatchesResponse {
   batches: OutgoingTxBatch[];
 }
 
+/** Deprecated: after upgrade v3 */
 export interface QueryBatchRequestByNonceRequest {
   nonce: Long;
   tokenContract: string;
 }
 
+/** Deprecated: after upgrade v3 */
 export interface QueryBatchRequestByNonceResponse {
   batch?: OutgoingTxBatch;
 }
 
+/** Deprecated: after upgrade v3 */
 export interface QueryBatchConfirmRequest {
   nonce: Long;
   tokenContract: string;
   address: string;
 }
 
+/** Deprecated: after upgrade v3 */
 export interface QueryBatchConfirmResponse {
   confirm?: MsgConfirmBatch;
 }
 
+/** Deprecated: after upgrade v3 */
 export interface QueryBatchConfirmsRequest {
   nonce: Long;
   tokenContract: string;
 }
 
+/** Deprecated: after upgrade v3 */
 export interface QueryBatchConfirmsResponse {
   confirms: MsgConfirmBatch[];
 }
 
+/** Deprecated: after upgrade v3 */
 export interface QueryLastEventNonceByAddrRequest {
   address: string;
 }
 
+/** Deprecated: after upgrade v3 */
 export interface QueryLastEventNonceByAddrResponse {
   eventNonce: Long;
 }
 
+/** Deprecated: after upgrade v3 */
 export interface QueryERC20ToDenomRequest {
   erc20: string;
 }
 
+/** Deprecated: after upgrade v3 */
 export interface QueryERC20ToDenomResponse {
   denom: string;
   fxOriginated: boolean;
 }
 
+/** Deprecated: after upgrade v3 */
 export interface QueryDenomToERC20Request {
   denom: string;
 }
 
+/** Deprecated: after upgrade v3 */
 export interface QueryDenomToERC20Response {
   erc20: string;
   fxOriginated: boolean;
 }
 
+/** Deprecated: after upgrade v3 */
 export interface QueryDelegateKeyByValidatorRequest {
   validatorAddress: string;
 }
 
+/** Deprecated: after upgrade v3 */
 export interface QueryDelegateKeyByValidatorResponse {
   ethAddress: string;
   orchestratorAddress: string;
 }
 
+/** Deprecated: after upgrade v3 */
 export interface QueryDelegateKeyByEthRequest {
   ethAddress: string;
 }
 
+/** Deprecated: after upgrade v3 */
 export interface QueryDelegateKeyByEthResponse {
   validatorAddress: string;
   orchestratorAddress: string;
 }
 
+/** Deprecated: after upgrade v3 */
 export interface QueryDelegateKeyByOrchestratorRequest {
   orchestratorAddress: string;
 }
 
+/** Deprecated: after upgrade v3 */
 export interface QueryDelegateKeyByOrchestratorResponse {
   validatorAddress: string;
   ethAddress: string;
 }
 
+/** Deprecated: after upgrade v3 */
 export interface QueryPendingSendToEthRequest {
   senderAddress: string;
 }
 
+/** Deprecated: after upgrade v3 */
 export interface QueryPendingSendToEthResponse {
   transfersInBatches: OutgoingTransferTx[];
   unbatchedTransfers: OutgoingTransferTx[];
 }
 
-export interface QueryIbcSequenceHeightRequest {
-  sourcePort: string;
-  sourceChannel: string;
-  sequence: Long;
-}
-
-export interface QueryIbcSequenceHeightResponse {
-  found: boolean;
-  height: Long;
-}
-
+/** Deprecated: after upgrade v3 */
 export interface QueryLastObservedBlockHeightRequest {}
 
+/** Deprecated: after upgrade v3 */
 export interface QueryLastObservedBlockHeightResponse {
   ethBlockHeight: Long;
   blockHeight: Long;
 }
 
+/** Deprecated: after upgrade v3 */
 export interface QueryLastEventBlockHeightByAddrRequest {
   address: string;
 }
 
+/** Deprecated: after upgrade v3 */
 export interface QueryLastEventBlockHeightByAddrResponse {
   blockHeight: Long;
 }
 
+/** Deprecated: after upgrade v3 */
 export interface QueryProjectedBatchTimeoutHeightRequest {}
 
+/** Deprecated: after upgrade v3 */
 export interface QueryProjectedBatchTimeoutHeightResponse {
   timeoutHeight: Long;
 }
 
+/** Deprecated: after upgrade v3 */
 export interface QueryBridgeTokensRequest {}
 
+/** Deprecated: after upgrade v3 */
 export interface QueryBridgeTokensResponse {
   bridgeTokens: ERC20ToDenom[];
 }
@@ -280,9 +315,7 @@ export const QueryParamsResponse = {
   },
 
   fromJSON(object: any): QueryParamsResponse {
-    return {
-      params: isSet(object.params) ? Params.fromJSON(object.params) : undefined,
-    };
+    return { params: isSet(object.params) ? Params.fromJSON(object.params) : undefined };
   },
 
   toJSON(message: QueryParamsResponse): unknown {
@@ -369,9 +402,7 @@ export const QueryCurrentValsetResponse = {
   },
 
   fromJSON(object: any): QueryCurrentValsetResponse {
-    return {
-      valset: isSet(object.valset) ? Valset.fromJSON(object.valset) : undefined,
-    };
+    return { valset: isSet(object.valset) ? Valset.fromJSON(object.valset) : undefined };
   },
 
   toJSON(message: QueryCurrentValsetResponse): unknown {
@@ -421,9 +452,7 @@ export const QueryValsetRequestRequest = {
   },
 
   fromJSON(object: any): QueryValsetRequestRequest {
-    return {
-      nonce: isSet(object.nonce) ? Long.fromString(object.nonce) : Long.UZERO,
-    };
+    return { nonce: isSet(object.nonce) ? Long.fromValue(object.nonce) : Long.UZERO };
   },
 
   toJSON(message: QueryValsetRequestRequest): unknown {
@@ -473,9 +502,7 @@ export const QueryValsetRequestResponse = {
   },
 
   fromJSON(object: any): QueryValsetRequestResponse {
-    return {
-      valset: isSet(object.valset) ? Valset.fromJSON(object.valset) : undefined,
-    };
+    return { valset: isSet(object.valset) ? Valset.fromJSON(object.valset) : undefined };
   },
 
   toJSON(message: QueryValsetRequestResponse): unknown {
@@ -532,7 +559,7 @@ export const QueryValsetConfirmRequest = {
 
   fromJSON(object: any): QueryValsetConfirmRequest {
     return {
-      nonce: isSet(object.nonce) ? Long.fromString(object.nonce) : Long.UZERO,
+      nonce: isSet(object.nonce) ? Long.fromValue(object.nonce) : Long.UZERO,
       address: isSet(object.address) ? String(object.address) : "",
     };
   },
@@ -586,9 +613,7 @@ export const QueryValsetConfirmResponse = {
   },
 
   fromJSON(object: any): QueryValsetConfirmResponse {
-    return {
-      confirm: isSet(object.confirm) ? MsgValsetConfirm.fromJSON(object.confirm) : undefined,
-    };
+    return { confirm: isSet(object.confirm) ? MsgValsetConfirm.fromJSON(object.confirm) : undefined };
   },
 
   toJSON(message: QueryValsetConfirmResponse): unknown {
@@ -641,9 +666,7 @@ export const QueryValsetConfirmsByNonceRequest = {
   },
 
   fromJSON(object: any): QueryValsetConfirmsByNonceRequest {
-    return {
-      nonce: isSet(object.nonce) ? Long.fromString(object.nonce) : Long.UZERO,
-    };
+    return { nonce: isSet(object.nonce) ? Long.fromValue(object.nonce) : Long.UZERO };
   },
 
   toJSON(message: QueryValsetConfirmsByNonceRequest): unknown {
@@ -849,9 +872,7 @@ export const QueryLastPendingValsetRequestByAddrRequest = {
   },
 
   fromJSON(object: any): QueryLastPendingValsetRequestByAddrRequest {
-    return {
-      address: isSet(object.address) ? String(object.address) : "",
-    };
+    return { address: isSet(object.address) ? String(object.address) : "" };
   },
 
   toJSON(message: QueryLastPendingValsetRequestByAddrRequest): unknown {
@@ -1071,9 +1092,7 @@ export const QueryLastPendingBatchRequestByAddrRequest = {
   },
 
   fromJSON(object: any): QueryLastPendingBatchRequestByAddrRequest {
-    return {
-      address: isSet(object.address) ? String(object.address) : "",
-    };
+    return { address: isSet(object.address) ? String(object.address) : "" };
   },
 
   toJSON(message: QueryLastPendingBatchRequestByAddrRequest): unknown {
@@ -1125,9 +1144,7 @@ export const QueryLastPendingBatchRequestByAddrResponse = {
   },
 
   fromJSON(object: any): QueryLastPendingBatchRequestByAddrResponse {
-    return {
-      batch: isSet(object.batch) ? OutgoingTxBatch.fromJSON(object.batch) : undefined,
-    };
+    return { batch: isSet(object.batch) ? OutgoingTxBatch.fromJSON(object.batch) : undefined };
   },
 
   toJSON(message: QueryLastPendingBatchRequestByAddrResponse): unknown {
@@ -1285,7 +1302,7 @@ export const QueryBatchRequestByNonceRequest = {
 
   fromJSON(object: any): QueryBatchRequestByNonceRequest {
     return {
-      nonce: isSet(object.nonce) ? Long.fromString(object.nonce) : Long.UZERO,
+      nonce: isSet(object.nonce) ? Long.fromValue(object.nonce) : Long.UZERO,
       tokenContract: isSet(object.tokenContract) ? String(object.tokenContract) : "",
     };
   },
@@ -1339,9 +1356,7 @@ export const QueryBatchRequestByNonceResponse = {
   },
 
   fromJSON(object: any): QueryBatchRequestByNonceResponse {
-    return {
-      batch: isSet(object.batch) ? OutgoingTxBatch.fromJSON(object.batch) : undefined,
-    };
+    return { batch: isSet(object.batch) ? OutgoingTxBatch.fromJSON(object.batch) : undefined };
   },
 
   toJSON(message: QueryBatchRequestByNonceResponse): unknown {
@@ -1407,7 +1422,7 @@ export const QueryBatchConfirmRequest = {
 
   fromJSON(object: any): QueryBatchConfirmRequest {
     return {
-      nonce: isSet(object.nonce) ? Long.fromString(object.nonce) : Long.UZERO,
+      nonce: isSet(object.nonce) ? Long.fromValue(object.nonce) : Long.UZERO,
       tokenContract: isSet(object.tokenContract) ? String(object.tokenContract) : "",
       address: isSet(object.address) ? String(object.address) : "",
     };
@@ -1464,9 +1479,7 @@ export const QueryBatchConfirmResponse = {
   },
 
   fromJSON(object: any): QueryBatchConfirmResponse {
-    return {
-      confirm: isSet(object.confirm) ? MsgConfirmBatch.fromJSON(object.confirm) : undefined,
-    };
+    return { confirm: isSet(object.confirm) ? MsgConfirmBatch.fromJSON(object.confirm) : undefined };
   },
 
   toJSON(message: QueryBatchConfirmResponse): unknown {
@@ -1526,7 +1539,7 @@ export const QueryBatchConfirmsRequest = {
 
   fromJSON(object: any): QueryBatchConfirmsRequest {
     return {
-      nonce: isSet(object.nonce) ? Long.fromString(object.nonce) : Long.UZERO,
+      nonce: isSet(object.nonce) ? Long.fromValue(object.nonce) : Long.UZERO,
       tokenContract: isSet(object.tokenContract) ? String(object.tokenContract) : "",
     };
   },
@@ -1637,9 +1650,7 @@ export const QueryLastEventNonceByAddrRequest = {
   },
 
   fromJSON(object: any): QueryLastEventNonceByAddrRequest {
-    return {
-      address: isSet(object.address) ? String(object.address) : "",
-    };
+    return { address: isSet(object.address) ? String(object.address) : "" };
   },
 
   toJSON(message: QueryLastEventNonceByAddrRequest): unknown {
@@ -1688,9 +1699,7 @@ export const QueryLastEventNonceByAddrResponse = {
   },
 
   fromJSON(object: any): QueryLastEventNonceByAddrResponse {
-    return {
-      eventNonce: isSet(object.eventNonce) ? Long.fromString(object.eventNonce) : Long.UZERO,
-    };
+    return { eventNonce: isSet(object.eventNonce) ? Long.fromValue(object.eventNonce) : Long.UZERO };
   },
 
   toJSON(message: QueryLastEventNonceByAddrResponse): unknown {
@@ -1742,9 +1751,7 @@ export const QueryERC20ToDenomRequest = {
   },
 
   fromJSON(object: any): QueryERC20ToDenomRequest {
-    return {
-      erc20: isSet(object.erc20) ? String(object.erc20) : "",
-    };
+    return { erc20: isSet(object.erc20) ? String(object.erc20) : "" };
   },
 
   toJSON(message: QueryERC20ToDenomRequest): unknown {
@@ -1853,9 +1860,7 @@ export const QueryDenomToERC20Request = {
   },
 
   fromJSON(object: any): QueryDenomToERC20Request {
-    return {
-      denom: isSet(object.denom) ? String(object.denom) : "",
-    };
+    return { denom: isSet(object.denom) ? String(object.denom) : "" };
   },
 
   toJSON(message: QueryDenomToERC20Request): unknown {
@@ -1964,9 +1969,7 @@ export const QueryDelegateKeyByValidatorRequest = {
   },
 
   fromJSON(object: any): QueryDelegateKeyByValidatorRequest {
-    return {
-      validatorAddress: isSet(object.validatorAddress) ? String(object.validatorAddress) : "",
-    };
+    return { validatorAddress: isSet(object.validatorAddress) ? String(object.validatorAddress) : "" };
   },
 
   toJSON(message: QueryDelegateKeyByValidatorRequest): unknown {
@@ -2075,9 +2078,7 @@ export const QueryDelegateKeyByEthRequest = {
   },
 
   fromJSON(object: any): QueryDelegateKeyByEthRequest {
-    return {
-      ethAddress: isSet(object.ethAddress) ? String(object.ethAddress) : "",
-    };
+    return { ethAddress: isSet(object.ethAddress) ? String(object.ethAddress) : "" };
   },
 
   toJSON(message: QueryDelegateKeyByEthRequest): unknown {
@@ -2303,9 +2304,7 @@ export const QueryPendingSendToEthRequest = {
   },
 
   fromJSON(object: any): QueryPendingSendToEthRequest {
-    return {
-      senderAddress: isSet(object.senderAddress) ? String(object.senderAddress) : "",
-    };
+    return { senderAddress: isSet(object.senderAddress) ? String(object.senderAddress) : "" };
   },
 
   toJSON(message: QueryPendingSendToEthRequest): unknown {
@@ -2401,139 +2400,6 @@ export const QueryPendingSendToEthResponse = {
   },
 };
 
-function createBaseQueryIbcSequenceHeightRequest(): QueryIbcSequenceHeightRequest {
-  return { sourcePort: "", sourceChannel: "", sequence: Long.UZERO };
-}
-
-export const QueryIbcSequenceHeightRequest = {
-  encode(message: QueryIbcSequenceHeightRequest, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (message.sourcePort !== "") {
-      writer.uint32(10).string(message.sourcePort);
-    }
-    if (message.sourceChannel !== "") {
-      writer.uint32(18).string(message.sourceChannel);
-    }
-    if (!message.sequence.isZero()) {
-      writer.uint32(24).uint64(message.sequence);
-    }
-    return writer;
-  },
-
-  decode(input: _m0.Reader | Uint8Array, length?: number): QueryIbcSequenceHeightRequest {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
-    const message = createBaseQueryIbcSequenceHeightRequest();
-    while (reader.pos < end) {
-      const tag = reader.uint32();
-      switch (tag >>> 3) {
-        case 1:
-          message.sourcePort = reader.string();
-          break;
-        case 2:
-          message.sourceChannel = reader.string();
-          break;
-        case 3:
-          message.sequence = reader.uint64() as Long;
-          break;
-        default:
-          reader.skipType(tag & 7);
-          break;
-      }
-    }
-    return message;
-  },
-
-  fromJSON(object: any): QueryIbcSequenceHeightRequest {
-    return {
-      sourcePort: isSet(object.sourcePort) ? String(object.sourcePort) : "",
-      sourceChannel: isSet(object.sourceChannel) ? String(object.sourceChannel) : "",
-      sequence: isSet(object.sequence) ? Long.fromString(object.sequence) : Long.UZERO,
-    };
-  },
-
-  toJSON(message: QueryIbcSequenceHeightRequest): unknown {
-    const obj: any = {};
-    message.sourcePort !== undefined && (obj.sourcePort = message.sourcePort);
-    message.sourceChannel !== undefined && (obj.sourceChannel = message.sourceChannel);
-    message.sequence !== undefined && (obj.sequence = (message.sequence || Long.UZERO).toString());
-    return obj;
-  },
-
-  fromPartial<I extends Exact<DeepPartial<QueryIbcSequenceHeightRequest>, I>>(
-    object: I,
-  ): QueryIbcSequenceHeightRequest {
-    const message = createBaseQueryIbcSequenceHeightRequest();
-    message.sourcePort = object.sourcePort ?? "";
-    message.sourceChannel = object.sourceChannel ?? "";
-    message.sequence =
-      object.sequence !== undefined && object.sequence !== null
-        ? Long.fromValue(object.sequence)
-        : Long.UZERO;
-    return message;
-  },
-};
-
-function createBaseQueryIbcSequenceHeightResponse(): QueryIbcSequenceHeightResponse {
-  return { found: false, height: Long.UZERO };
-}
-
-export const QueryIbcSequenceHeightResponse = {
-  encode(message: QueryIbcSequenceHeightResponse, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (message.found === true) {
-      writer.uint32(8).bool(message.found);
-    }
-    if (!message.height.isZero()) {
-      writer.uint32(16).uint64(message.height);
-    }
-    return writer;
-  },
-
-  decode(input: _m0.Reader | Uint8Array, length?: number): QueryIbcSequenceHeightResponse {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
-    const message = createBaseQueryIbcSequenceHeightResponse();
-    while (reader.pos < end) {
-      const tag = reader.uint32();
-      switch (tag >>> 3) {
-        case 1:
-          message.found = reader.bool();
-          break;
-        case 2:
-          message.height = reader.uint64() as Long;
-          break;
-        default:
-          reader.skipType(tag & 7);
-          break;
-      }
-    }
-    return message;
-  },
-
-  fromJSON(object: any): QueryIbcSequenceHeightResponse {
-    return {
-      found: isSet(object.found) ? Boolean(object.found) : false,
-      height: isSet(object.height) ? Long.fromString(object.height) : Long.UZERO,
-    };
-  },
-
-  toJSON(message: QueryIbcSequenceHeightResponse): unknown {
-    const obj: any = {};
-    message.found !== undefined && (obj.found = message.found);
-    message.height !== undefined && (obj.height = (message.height || Long.UZERO).toString());
-    return obj;
-  },
-
-  fromPartial<I extends Exact<DeepPartial<QueryIbcSequenceHeightResponse>, I>>(
-    object: I,
-  ): QueryIbcSequenceHeightResponse {
-    const message = createBaseQueryIbcSequenceHeightResponse();
-    message.found = object.found ?? false;
-    message.height =
-      object.height !== undefined && object.height !== null ? Long.fromValue(object.height) : Long.UZERO;
-    return message;
-  },
-};
-
 function createBaseQueryLastObservedBlockHeightRequest(): QueryLastObservedBlockHeightRequest {
   return {};
 }
@@ -2616,8 +2482,8 @@ export const QueryLastObservedBlockHeightResponse = {
 
   fromJSON(object: any): QueryLastObservedBlockHeightResponse {
     return {
-      ethBlockHeight: isSet(object.ethBlockHeight) ? Long.fromString(object.ethBlockHeight) : Long.UZERO,
-      blockHeight: isSet(object.blockHeight) ? Long.fromString(object.blockHeight) : Long.UZERO,
+      ethBlockHeight: isSet(object.ethBlockHeight) ? Long.fromValue(object.ethBlockHeight) : Long.UZERO,
+      blockHeight: isSet(object.blockHeight) ? Long.fromValue(object.blockHeight) : Long.UZERO,
     };
   },
 
@@ -2679,9 +2545,7 @@ export const QueryLastEventBlockHeightByAddrRequest = {
   },
 
   fromJSON(object: any): QueryLastEventBlockHeightByAddrRequest {
-    return {
-      address: isSet(object.address) ? String(object.address) : "",
-    };
+    return { address: isSet(object.address) ? String(object.address) : "" };
   },
 
   toJSON(message: QueryLastEventBlockHeightByAddrRequest): unknown {
@@ -2733,9 +2597,7 @@ export const QueryLastEventBlockHeightByAddrResponse = {
   },
 
   fromJSON(object: any): QueryLastEventBlockHeightByAddrResponse {
-    return {
-      blockHeight: isSet(object.blockHeight) ? Long.fromString(object.blockHeight) : Long.UZERO,
-    };
+    return { blockHeight: isSet(object.blockHeight) ? Long.fromValue(object.blockHeight) : Long.UZERO };
   },
 
   toJSON(message: QueryLastEventBlockHeightByAddrResponse): unknown {
@@ -2831,9 +2693,7 @@ export const QueryProjectedBatchTimeoutHeightResponse = {
   },
 
   fromJSON(object: any): QueryProjectedBatchTimeoutHeightResponse {
-    return {
-      timeoutHeight: isSet(object.timeoutHeight) ? Long.fromString(object.timeoutHeight) : Long.UZERO,
-    };
+    return { timeoutHeight: isSet(object.timeoutHeight) ? Long.fromValue(object.timeoutHeight) : Long.UZERO };
   },
 
   toJSON(message: QueryProjectedBatchTimeoutHeightResponse): unknown {
@@ -2951,57 +2811,79 @@ export const QueryBridgeTokensResponse = {
   },
 };
 
-/** Query defines the gRPC querier service */
+/** Deprecated: after upgrade v3 */
 export interface Query {
-  /** Deployments queries deployments */
+  /** Deprecated: Please use crosschain query.Params */
   Params(request: QueryParamsRequest): Promise<QueryParamsResponse>;
+  /** Deprecated: Please use crosschain query.CurrentOracleSet */
   CurrentValset(request: QueryCurrentValsetRequest): Promise<QueryCurrentValsetResponse>;
+  /** Deprecated: Please use crosschain query.OracleSetRequest */
   ValsetRequest(request: QueryValsetRequestRequest): Promise<QueryValsetRequestResponse>;
+  /** Deprecated: Please use crosschain query.OracleSetConfirm */
   ValsetConfirm(request: QueryValsetConfirmRequest): Promise<QueryValsetConfirmResponse>;
+  /** Deprecated: Please use crosschain query.OracleSetConfirmsByNonce */
   ValsetConfirmsByNonce(
     request: QueryValsetConfirmsByNonceRequest,
   ): Promise<QueryValsetConfirmsByNonceResponse>;
+  /** Deprecated: Please use crosschain query.LastOracleSetRequests */
   LastValsetRequests(request: QueryLastValsetRequestsRequest): Promise<QueryLastValsetRequestsResponse>;
+  /** Deprecated: Please use crosschain query.LastPendingOracleSetRequestByAddr */
   LastPendingValsetRequestByAddr(
     request: QueryLastPendingValsetRequestByAddrRequest,
   ): Promise<QueryLastPendingValsetRequestByAddrResponse>;
+  /** Deprecated: Please use crosschain query.LastPendingBatchRequestByAddr */
   LastPendingBatchRequestByAddr(
     request: QueryLastPendingBatchRequestByAddrRequest,
   ): Promise<QueryLastPendingBatchRequestByAddrResponse>;
+  /** Deprecated: Please use crosschain query.LastEventNonceByAddr */
   LastEventNonceByAddr(request: QueryLastEventNonceByAddrRequest): Promise<QueryLastEventNonceByAddrResponse>;
+  /** Deprecated: Please use crosschain query.LastEventBlockHeightByAddr */
   LastEventBlockHeightByAddr(
     request: QueryLastEventBlockHeightByAddrRequest,
   ): Promise<QueryLastEventBlockHeightByAddrResponse>;
+  /** Deprecated: Please use crosschain query.BatchFees */
   BatchFees(request: QueryBatchFeeRequest): Promise<QueryBatchFeeResponse>;
+  /** Deprecated: Please use crosschain query.LastObservedBlockHeight */
   LastObservedBlockHeight(
     request: QueryLastObservedBlockHeightRequest,
   ): Promise<QueryLastObservedBlockHeightResponse>;
+  /** Deprecated: Please use crosschain query.OutgoingTxBatches */
   OutgoingTxBatches(request: QueryOutgoingTxBatchesRequest): Promise<QueryOutgoingTxBatchesResponse>;
+  /** Deprecated: Please use crosschain query.BatchRequestByNonce */
   BatchRequestByNonce(request: QueryBatchRequestByNonceRequest): Promise<QueryBatchRequestByNonceResponse>;
+  /** Deprecated: Please use crosschain query.BatchConfirm */
   BatchConfirm(request: QueryBatchConfirmRequest): Promise<QueryBatchConfirmResponse>;
+  /** Deprecated: Please use crosschain query.BatchConfirms */
   BatchConfirms(request: QueryBatchConfirmsRequest): Promise<QueryBatchConfirmsResponse>;
+  /** Deprecated: Please use crosschain query.TokenToDenom */
   ERC20ToDenom(request: QueryERC20ToDenomRequest): Promise<QueryERC20ToDenomResponse>;
+  /** Deprecated: Please use crosschain query.DenomToToken */
   DenomToERC20(request: QueryDenomToERC20Request): Promise<QueryDenomToERC20Response>;
+  /** Deprecated: Please use crosschain query.GetOracleByAddr */
   GetDelegateKeyByValidator(
     request: QueryDelegateKeyByValidatorRequest,
   ): Promise<QueryDelegateKeyByValidatorResponse>;
+  /** Deprecated: Please use crosschain query.GetOracleByExternalAddr */
   GetDelegateKeyByEth(request: QueryDelegateKeyByEthRequest): Promise<QueryDelegateKeyByEthResponse>;
+  /** Deprecated: Please use crosschain query.GetOracleByBridgerAddr */
   GetDelegateKeyByOrchestrator(
     request: QueryDelegateKeyByOrchestratorRequest,
   ): Promise<QueryDelegateKeyByOrchestratorResponse>;
+  /** Deprecated: Please use crosschain query.GetPendingSendToExternal */
   GetPendingSendToEth(request: QueryPendingSendToEthRequest): Promise<QueryPendingSendToEthResponse>;
-  GetIbcSequenceHeightByChannel(
-    request: QueryIbcSequenceHeightRequest,
-  ): Promise<QueryIbcSequenceHeightResponse>;
+  /** Deprecated: Please use crosschain query.ProjectedBatchTimeoutHeight */
   ProjectedBatchTimeoutHeight(
     request: QueryProjectedBatchTimeoutHeightRequest,
   ): Promise<QueryProjectedBatchTimeoutHeightResponse>;
+  /** Deprecated: Please use crosschain query.BridgeTokens */
   BridgeTokens(request: QueryBridgeTokensRequest): Promise<QueryBridgeTokensResponse>;
 }
 
 export class QueryClientImpl implements Query {
   private readonly rpc: Rpc;
-  constructor(rpc: Rpc) {
+  private readonly service: string;
+  constructor(rpc: Rpc, opts?: { service?: string }) {
+    this.service = opts?.service || "fx.gravity.v1.Query";
     this.rpc = rpc;
     this.Params = this.Params.bind(this);
     this.CurrentValset = this.CurrentValset.bind(this);
@@ -3025,31 +2907,30 @@ export class QueryClientImpl implements Query {
     this.GetDelegateKeyByEth = this.GetDelegateKeyByEth.bind(this);
     this.GetDelegateKeyByOrchestrator = this.GetDelegateKeyByOrchestrator.bind(this);
     this.GetPendingSendToEth = this.GetPendingSendToEth.bind(this);
-    this.GetIbcSequenceHeightByChannel = this.GetIbcSequenceHeightByChannel.bind(this);
     this.ProjectedBatchTimeoutHeight = this.ProjectedBatchTimeoutHeight.bind(this);
     this.BridgeTokens = this.BridgeTokens.bind(this);
   }
   Params(request: QueryParamsRequest): Promise<QueryParamsResponse> {
     const data = QueryParamsRequest.encode(request).finish();
-    const promise = this.rpc.request("fx.gravity.v1.Query", "Params", data);
+    const promise = this.rpc.request(this.service, "Params", data);
     return promise.then((data) => QueryParamsResponse.decode(new _m0.Reader(data)));
   }
 
   CurrentValset(request: QueryCurrentValsetRequest): Promise<QueryCurrentValsetResponse> {
     const data = QueryCurrentValsetRequest.encode(request).finish();
-    const promise = this.rpc.request("fx.gravity.v1.Query", "CurrentValset", data);
+    const promise = this.rpc.request(this.service, "CurrentValset", data);
     return promise.then((data) => QueryCurrentValsetResponse.decode(new _m0.Reader(data)));
   }
 
   ValsetRequest(request: QueryValsetRequestRequest): Promise<QueryValsetRequestResponse> {
     const data = QueryValsetRequestRequest.encode(request).finish();
-    const promise = this.rpc.request("fx.gravity.v1.Query", "ValsetRequest", data);
+    const promise = this.rpc.request(this.service, "ValsetRequest", data);
     return promise.then((data) => QueryValsetRequestResponse.decode(new _m0.Reader(data)));
   }
 
   ValsetConfirm(request: QueryValsetConfirmRequest): Promise<QueryValsetConfirmResponse> {
     const data = QueryValsetConfirmRequest.encode(request).finish();
-    const promise = this.rpc.request("fx.gravity.v1.Query", "ValsetConfirm", data);
+    const promise = this.rpc.request(this.service, "ValsetConfirm", data);
     return promise.then((data) => QueryValsetConfirmResponse.decode(new _m0.Reader(data)));
   }
 
@@ -3057,13 +2938,13 @@ export class QueryClientImpl implements Query {
     request: QueryValsetConfirmsByNonceRequest,
   ): Promise<QueryValsetConfirmsByNonceResponse> {
     const data = QueryValsetConfirmsByNonceRequest.encode(request).finish();
-    const promise = this.rpc.request("fx.gravity.v1.Query", "ValsetConfirmsByNonce", data);
+    const promise = this.rpc.request(this.service, "ValsetConfirmsByNonce", data);
     return promise.then((data) => QueryValsetConfirmsByNonceResponse.decode(new _m0.Reader(data)));
   }
 
   LastValsetRequests(request: QueryLastValsetRequestsRequest): Promise<QueryLastValsetRequestsResponse> {
     const data = QueryLastValsetRequestsRequest.encode(request).finish();
-    const promise = this.rpc.request("fx.gravity.v1.Query", "LastValsetRequests", data);
+    const promise = this.rpc.request(this.service, "LastValsetRequests", data);
     return promise.then((data) => QueryLastValsetRequestsResponse.decode(new _m0.Reader(data)));
   }
 
@@ -3071,7 +2952,7 @@ export class QueryClientImpl implements Query {
     request: QueryLastPendingValsetRequestByAddrRequest,
   ): Promise<QueryLastPendingValsetRequestByAddrResponse> {
     const data = QueryLastPendingValsetRequestByAddrRequest.encode(request).finish();
-    const promise = this.rpc.request("fx.gravity.v1.Query", "LastPendingValsetRequestByAddr", data);
+    const promise = this.rpc.request(this.service, "LastPendingValsetRequestByAddr", data);
     return promise.then((data) => QueryLastPendingValsetRequestByAddrResponse.decode(new _m0.Reader(data)));
   }
 
@@ -3079,7 +2960,7 @@ export class QueryClientImpl implements Query {
     request: QueryLastPendingBatchRequestByAddrRequest,
   ): Promise<QueryLastPendingBatchRequestByAddrResponse> {
     const data = QueryLastPendingBatchRequestByAddrRequest.encode(request).finish();
-    const promise = this.rpc.request("fx.gravity.v1.Query", "LastPendingBatchRequestByAddr", data);
+    const promise = this.rpc.request(this.service, "LastPendingBatchRequestByAddr", data);
     return promise.then((data) => QueryLastPendingBatchRequestByAddrResponse.decode(new _m0.Reader(data)));
   }
 
@@ -3087,7 +2968,7 @@ export class QueryClientImpl implements Query {
     request: QueryLastEventNonceByAddrRequest,
   ): Promise<QueryLastEventNonceByAddrResponse> {
     const data = QueryLastEventNonceByAddrRequest.encode(request).finish();
-    const promise = this.rpc.request("fx.gravity.v1.Query", "LastEventNonceByAddr", data);
+    const promise = this.rpc.request(this.service, "LastEventNonceByAddr", data);
     return promise.then((data) => QueryLastEventNonceByAddrResponse.decode(new _m0.Reader(data)));
   }
 
@@ -3095,13 +2976,13 @@ export class QueryClientImpl implements Query {
     request: QueryLastEventBlockHeightByAddrRequest,
   ): Promise<QueryLastEventBlockHeightByAddrResponse> {
     const data = QueryLastEventBlockHeightByAddrRequest.encode(request).finish();
-    const promise = this.rpc.request("fx.gravity.v1.Query", "LastEventBlockHeightByAddr", data);
+    const promise = this.rpc.request(this.service, "LastEventBlockHeightByAddr", data);
     return promise.then((data) => QueryLastEventBlockHeightByAddrResponse.decode(new _m0.Reader(data)));
   }
 
   BatchFees(request: QueryBatchFeeRequest): Promise<QueryBatchFeeResponse> {
     const data = QueryBatchFeeRequest.encode(request).finish();
-    const promise = this.rpc.request("fx.gravity.v1.Query", "BatchFees", data);
+    const promise = this.rpc.request(this.service, "BatchFees", data);
     return promise.then((data) => QueryBatchFeeResponse.decode(new _m0.Reader(data)));
   }
 
@@ -3109,43 +2990,43 @@ export class QueryClientImpl implements Query {
     request: QueryLastObservedBlockHeightRequest,
   ): Promise<QueryLastObservedBlockHeightResponse> {
     const data = QueryLastObservedBlockHeightRequest.encode(request).finish();
-    const promise = this.rpc.request("fx.gravity.v1.Query", "LastObservedBlockHeight", data);
+    const promise = this.rpc.request(this.service, "LastObservedBlockHeight", data);
     return promise.then((data) => QueryLastObservedBlockHeightResponse.decode(new _m0.Reader(data)));
   }
 
   OutgoingTxBatches(request: QueryOutgoingTxBatchesRequest): Promise<QueryOutgoingTxBatchesResponse> {
     const data = QueryOutgoingTxBatchesRequest.encode(request).finish();
-    const promise = this.rpc.request("fx.gravity.v1.Query", "OutgoingTxBatches", data);
+    const promise = this.rpc.request(this.service, "OutgoingTxBatches", data);
     return promise.then((data) => QueryOutgoingTxBatchesResponse.decode(new _m0.Reader(data)));
   }
 
   BatchRequestByNonce(request: QueryBatchRequestByNonceRequest): Promise<QueryBatchRequestByNonceResponse> {
     const data = QueryBatchRequestByNonceRequest.encode(request).finish();
-    const promise = this.rpc.request("fx.gravity.v1.Query", "BatchRequestByNonce", data);
+    const promise = this.rpc.request(this.service, "BatchRequestByNonce", data);
     return promise.then((data) => QueryBatchRequestByNonceResponse.decode(new _m0.Reader(data)));
   }
 
   BatchConfirm(request: QueryBatchConfirmRequest): Promise<QueryBatchConfirmResponse> {
     const data = QueryBatchConfirmRequest.encode(request).finish();
-    const promise = this.rpc.request("fx.gravity.v1.Query", "BatchConfirm", data);
+    const promise = this.rpc.request(this.service, "BatchConfirm", data);
     return promise.then((data) => QueryBatchConfirmResponse.decode(new _m0.Reader(data)));
   }
 
   BatchConfirms(request: QueryBatchConfirmsRequest): Promise<QueryBatchConfirmsResponse> {
     const data = QueryBatchConfirmsRequest.encode(request).finish();
-    const promise = this.rpc.request("fx.gravity.v1.Query", "BatchConfirms", data);
+    const promise = this.rpc.request(this.service, "BatchConfirms", data);
     return promise.then((data) => QueryBatchConfirmsResponse.decode(new _m0.Reader(data)));
   }
 
   ERC20ToDenom(request: QueryERC20ToDenomRequest): Promise<QueryERC20ToDenomResponse> {
     const data = QueryERC20ToDenomRequest.encode(request).finish();
-    const promise = this.rpc.request("fx.gravity.v1.Query", "ERC20ToDenom", data);
+    const promise = this.rpc.request(this.service, "ERC20ToDenom", data);
     return promise.then((data) => QueryERC20ToDenomResponse.decode(new _m0.Reader(data)));
   }
 
   DenomToERC20(request: QueryDenomToERC20Request): Promise<QueryDenomToERC20Response> {
     const data = QueryDenomToERC20Request.encode(request).finish();
-    const promise = this.rpc.request("fx.gravity.v1.Query", "DenomToERC20", data);
+    const promise = this.rpc.request(this.service, "DenomToERC20", data);
     return promise.then((data) => QueryDenomToERC20Response.decode(new _m0.Reader(data)));
   }
 
@@ -3153,13 +3034,13 @@ export class QueryClientImpl implements Query {
     request: QueryDelegateKeyByValidatorRequest,
   ): Promise<QueryDelegateKeyByValidatorResponse> {
     const data = QueryDelegateKeyByValidatorRequest.encode(request).finish();
-    const promise = this.rpc.request("fx.gravity.v1.Query", "GetDelegateKeyByValidator", data);
+    const promise = this.rpc.request(this.service, "GetDelegateKeyByValidator", data);
     return promise.then((data) => QueryDelegateKeyByValidatorResponse.decode(new _m0.Reader(data)));
   }
 
   GetDelegateKeyByEth(request: QueryDelegateKeyByEthRequest): Promise<QueryDelegateKeyByEthResponse> {
     const data = QueryDelegateKeyByEthRequest.encode(request).finish();
-    const promise = this.rpc.request("fx.gravity.v1.Query", "GetDelegateKeyByEth", data);
+    const promise = this.rpc.request(this.service, "GetDelegateKeyByEth", data);
     return promise.then((data) => QueryDelegateKeyByEthResponse.decode(new _m0.Reader(data)));
   }
 
@@ -3167,35 +3048,27 @@ export class QueryClientImpl implements Query {
     request: QueryDelegateKeyByOrchestratorRequest,
   ): Promise<QueryDelegateKeyByOrchestratorResponse> {
     const data = QueryDelegateKeyByOrchestratorRequest.encode(request).finish();
-    const promise = this.rpc.request("fx.gravity.v1.Query", "GetDelegateKeyByOrchestrator", data);
+    const promise = this.rpc.request(this.service, "GetDelegateKeyByOrchestrator", data);
     return promise.then((data) => QueryDelegateKeyByOrchestratorResponse.decode(new _m0.Reader(data)));
   }
 
   GetPendingSendToEth(request: QueryPendingSendToEthRequest): Promise<QueryPendingSendToEthResponse> {
     const data = QueryPendingSendToEthRequest.encode(request).finish();
-    const promise = this.rpc.request("fx.gravity.v1.Query", "GetPendingSendToEth", data);
+    const promise = this.rpc.request(this.service, "GetPendingSendToEth", data);
     return promise.then((data) => QueryPendingSendToEthResponse.decode(new _m0.Reader(data)));
-  }
-
-  GetIbcSequenceHeightByChannel(
-    request: QueryIbcSequenceHeightRequest,
-  ): Promise<QueryIbcSequenceHeightResponse> {
-    const data = QueryIbcSequenceHeightRequest.encode(request).finish();
-    const promise = this.rpc.request("fx.gravity.v1.Query", "GetIbcSequenceHeightByChannel", data);
-    return promise.then((data) => QueryIbcSequenceHeightResponse.decode(new _m0.Reader(data)));
   }
 
   ProjectedBatchTimeoutHeight(
     request: QueryProjectedBatchTimeoutHeightRequest,
   ): Promise<QueryProjectedBatchTimeoutHeightResponse> {
     const data = QueryProjectedBatchTimeoutHeightRequest.encode(request).finish();
-    const promise = this.rpc.request("fx.gravity.v1.Query", "ProjectedBatchTimeoutHeight", data);
+    const promise = this.rpc.request(this.service, "ProjectedBatchTimeoutHeight", data);
     return promise.then((data) => QueryProjectedBatchTimeoutHeightResponse.decode(new _m0.Reader(data)));
   }
 
   BridgeTokens(request: QueryBridgeTokensRequest): Promise<QueryBridgeTokensResponse> {
     const data = QueryBridgeTokensRequest.encode(request).finish();
-    const promise = this.rpc.request("fx.gravity.v1.Query", "BridgeTokens", data);
+    const promise = this.rpc.request(this.service, "BridgeTokens", data);
     return promise.then((data) => QueryBridgeTokensResponse.decode(new _m0.Reader(data)));
   }
 }
@@ -3221,7 +3094,7 @@ export type DeepPartial<T> = T extends Builtin
 type KeysOfUnion<T> = T extends T ? keyof T : never;
 export type Exact<P, I extends P> = P extends Builtin
   ? P
-  : P & { [K in keyof P]: Exact<P[K], I[K]> } & Record<Exclude<keyof I, KeysOfUnion<P>>, never>;
+  : P & { [K in keyof P]: Exact<P[K], I[K]> } & { [K in Exclude<keyof I, KeysOfUnion<P>>]: never };
 
 if (_m0.util.Long !== Long) {
   _m0.util.Long = Long as any;

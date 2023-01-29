@@ -407,7 +407,9 @@ export interface Msg {
 
 export class MsgClientImpl implements Msg {
   private readonly rpc: Rpc;
-  constructor(rpc: Rpc) {
+  private readonly service: string;
+  constructor(rpc: Rpc, opts?: { service?: string }) {
+    this.service = opts?.service || "fx.erc20.v1.Msg";
     this.rpc = rpc;
     this.ConvertCoin = this.ConvertCoin.bind(this);
     this.ConvertERC20 = this.ConvertERC20.bind(this);
@@ -415,19 +417,19 @@ export class MsgClientImpl implements Msg {
   }
   ConvertCoin(request: MsgConvertCoin): Promise<MsgConvertCoinResponse> {
     const data = MsgConvertCoin.encode(request).finish();
-    const promise = this.rpc.request("fx.erc20.v1.Msg", "ConvertCoin", data);
+    const promise = this.rpc.request(this.service, "ConvertCoin", data);
     return promise.then((data) => MsgConvertCoinResponse.decode(new _m0.Reader(data)));
   }
 
   ConvertERC20(request: MsgConvertERC20): Promise<MsgConvertERC20Response> {
     const data = MsgConvertERC20.encode(request).finish();
-    const promise = this.rpc.request("fx.erc20.v1.Msg", "ConvertERC20", data);
+    const promise = this.rpc.request(this.service, "ConvertERC20", data);
     return promise.then((data) => MsgConvertERC20Response.decode(new _m0.Reader(data)));
   }
 
   ConvertDenom(request: MsgConvertDenom): Promise<MsgConvertDenomResponse> {
     const data = MsgConvertDenom.encode(request).finish();
-    const promise = this.rpc.request("fx.erc20.v1.Msg", "ConvertDenom", data);
+    const promise = this.rpc.request(this.service, "ConvertDenom", data);
     return promise.then((data) => MsgConvertDenomResponse.decode(new _m0.Reader(data)));
   }
 }
@@ -453,7 +455,7 @@ export type DeepPartial<T> = T extends Builtin
 type KeysOfUnion<T> = T extends T ? keyof T : never;
 export type Exact<P, I extends P> = P extends Builtin
   ? P
-  : P & { [K in keyof P]: Exact<P[K], I[K]> } & Record<Exclude<keyof I, KeysOfUnion<P>>, never>;
+  : P & { [K in keyof P]: Exact<P[K], I[K]> } & { [K in Exclude<keyof I, KeysOfUnion<P>>]: never };
 
 if (_m0.util.Long !== Long) {
   _m0.util.Long = Long as any;

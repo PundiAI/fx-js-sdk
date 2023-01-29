@@ -2,7 +2,7 @@
 import Long from "long";
 import _m0 from "protobufjs/minimal";
 import { Coin } from "cosmjs-types/cosmos/base/v1beta1/coin";
-import { BridgeValidator } from "../../../fx/crosschain/v1/types";
+import { BridgeValidator } from "./types";
 
 export const protobufPackage = "fx.gravity.crosschain.v1";
 
@@ -25,13 +25,21 @@ export interface MsgAddDelegate {
 
 export interface MsgAddDelegateResponse {}
 
-export interface MsgEditOracle {
+export interface MsgReDelegate {
   chainName: string;
   oracleAddress: string;
   validatorAddress: string;
 }
 
-export interface MsgEditOracleResponse {}
+export interface MsgReDelegateResponse {}
+
+export interface MsgEditBridger {
+  chainName: string;
+  oracleAddress: string;
+  bridgerAddress: string;
+}
+
+export interface MsgEditBridgerResponse {}
 
 export interface MsgUnbondedOracle {
   chainName: string;
@@ -224,6 +232,22 @@ export interface MsgBridgeTokenClaim {
 }
 
 export interface MsgBridgeTokenClaimResponse {}
+
+/** Deprecated: after block 5713000 */
+export interface MsgSetOrchestratorAddress {
+  oracleAddress: string;
+  bridgerAddress: string;
+  externalAddress: string;
+  deposit?: Coin;
+  chainName: string;
+}
+
+/** Deprecated: after block 5713000 */
+export interface MsgAddOracleDeposit {
+  oracleAddress: string;
+  amount?: Coin;
+  chainName: string;
+}
 
 function createBaseMsgBondedOracle(): MsgBondedOracle {
   return {
@@ -476,12 +500,12 @@ export const MsgAddDelegateResponse = {
   },
 };
 
-function createBaseMsgEditOracle(): MsgEditOracle {
+function createBaseMsgReDelegate(): MsgReDelegate {
   return { chainName: "", oracleAddress: "", validatorAddress: "" };
 }
 
-export const MsgEditOracle = {
-  encode(message: MsgEditOracle, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+export const MsgReDelegate = {
+  encode(message: MsgReDelegate, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.chainName !== "") {
       writer.uint32(10).string(message.chainName);
     }
@@ -494,10 +518,10 @@ export const MsgEditOracle = {
     return writer;
   },
 
-  decode(input: _m0.Reader | Uint8Array, length?: number): MsgEditOracle {
+  decode(input: _m0.Reader | Uint8Array, length?: number): MsgReDelegate {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = createBaseMsgEditOracle();
+    const message = createBaseMsgReDelegate();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -518,7 +542,7 @@ export const MsgEditOracle = {
     return message;
   },
 
-  fromJSON(object: any): MsgEditOracle {
+  fromJSON(object: any): MsgReDelegate {
     return {
       chainName: isSet(object.chainName) ? String(object.chainName) : "",
       oracleAddress: isSet(object.oracleAddress) ? String(object.oracleAddress) : "",
@@ -526,7 +550,7 @@ export const MsgEditOracle = {
     };
   },
 
-  toJSON(message: MsgEditOracle): unknown {
+  toJSON(message: MsgReDelegate): unknown {
     const obj: any = {};
     message.chainName !== undefined && (obj.chainName = message.chainName);
     message.oracleAddress !== undefined && (obj.oracleAddress = message.oracleAddress);
@@ -534,8 +558,8 @@ export const MsgEditOracle = {
     return obj;
   },
 
-  fromPartial<I extends Exact<DeepPartial<MsgEditOracle>, I>>(object: I): MsgEditOracle {
-    const message = createBaseMsgEditOracle();
+  fromPartial<I extends Exact<DeepPartial<MsgReDelegate>, I>>(object: I): MsgReDelegate {
+    const message = createBaseMsgReDelegate();
     message.chainName = object.chainName ?? "";
     message.oracleAddress = object.oracleAddress ?? "";
     message.validatorAddress = object.validatorAddress ?? "";
@@ -543,19 +567,19 @@ export const MsgEditOracle = {
   },
 };
 
-function createBaseMsgEditOracleResponse(): MsgEditOracleResponse {
+function createBaseMsgReDelegateResponse(): MsgReDelegateResponse {
   return {};
 }
 
-export const MsgEditOracleResponse = {
-  encode(_: MsgEditOracleResponse, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+export const MsgReDelegateResponse = {
+  encode(_: MsgReDelegateResponse, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     return writer;
   },
 
-  decode(input: _m0.Reader | Uint8Array, length?: number): MsgEditOracleResponse {
+  decode(input: _m0.Reader | Uint8Array, length?: number): MsgReDelegateResponse {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = createBaseMsgEditOracleResponse();
+    const message = createBaseMsgReDelegateResponse();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -567,17 +591,123 @@ export const MsgEditOracleResponse = {
     return message;
   },
 
-  fromJSON(_: any): MsgEditOracleResponse {
+  fromJSON(_: any): MsgReDelegateResponse {
     return {};
   },
 
-  toJSON(_: MsgEditOracleResponse): unknown {
+  toJSON(_: MsgReDelegateResponse): unknown {
     const obj: any = {};
     return obj;
   },
 
-  fromPartial<I extends Exact<DeepPartial<MsgEditOracleResponse>, I>>(_: I): MsgEditOracleResponse {
-    const message = createBaseMsgEditOracleResponse();
+  fromPartial<I extends Exact<DeepPartial<MsgReDelegateResponse>, I>>(_: I): MsgReDelegateResponse {
+    const message = createBaseMsgReDelegateResponse();
+    return message;
+  },
+};
+
+function createBaseMsgEditBridger(): MsgEditBridger {
+  return { chainName: "", oracleAddress: "", bridgerAddress: "" };
+}
+
+export const MsgEditBridger = {
+  encode(message: MsgEditBridger, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    if (message.chainName !== "") {
+      writer.uint32(10).string(message.chainName);
+    }
+    if (message.oracleAddress !== "") {
+      writer.uint32(18).string(message.oracleAddress);
+    }
+    if (message.bridgerAddress !== "") {
+      writer.uint32(26).string(message.bridgerAddress);
+    }
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): MsgEditBridger {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseMsgEditBridger();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.chainName = reader.string();
+          break;
+        case 2:
+          message.oracleAddress = reader.string();
+          break;
+        case 3:
+          message.bridgerAddress = reader.string();
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): MsgEditBridger {
+    return {
+      chainName: isSet(object.chainName) ? String(object.chainName) : "",
+      oracleAddress: isSet(object.oracleAddress) ? String(object.oracleAddress) : "",
+      bridgerAddress: isSet(object.bridgerAddress) ? String(object.bridgerAddress) : "",
+    };
+  },
+
+  toJSON(message: MsgEditBridger): unknown {
+    const obj: any = {};
+    message.chainName !== undefined && (obj.chainName = message.chainName);
+    message.oracleAddress !== undefined && (obj.oracleAddress = message.oracleAddress);
+    message.bridgerAddress !== undefined && (obj.bridgerAddress = message.bridgerAddress);
+    return obj;
+  },
+
+  fromPartial<I extends Exact<DeepPartial<MsgEditBridger>, I>>(object: I): MsgEditBridger {
+    const message = createBaseMsgEditBridger();
+    message.chainName = object.chainName ?? "";
+    message.oracleAddress = object.oracleAddress ?? "";
+    message.bridgerAddress = object.bridgerAddress ?? "";
+    return message;
+  },
+};
+
+function createBaseMsgEditBridgerResponse(): MsgEditBridgerResponse {
+  return {};
+}
+
+export const MsgEditBridgerResponse = {
+  encode(_: MsgEditBridgerResponse, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): MsgEditBridgerResponse {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseMsgEditBridgerResponse();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(_: any): MsgEditBridgerResponse {
+    return {};
+  },
+
+  toJSON(_: MsgEditBridgerResponse): unknown {
+    const obj: any = {};
+    return obj;
+  },
+
+  fromPartial<I extends Exact<DeepPartial<MsgEditBridgerResponse>, I>>(_: I): MsgEditBridgerResponse {
+    const message = createBaseMsgEditBridgerResponse();
     return message;
   },
 };
@@ -832,7 +962,7 @@ export const MsgOracleSetConfirm = {
 
   fromJSON(object: any): MsgOracleSetConfirm {
     return {
-      nonce: isSet(object.nonce) ? Long.fromString(object.nonce) : Long.UZERO,
+      nonce: isSet(object.nonce) ? Long.fromValue(object.nonce) : Long.UZERO,
       bridgerAddress: isSet(object.bridgerAddress) ? String(object.bridgerAddress) : "",
       externalAddress: isSet(object.externalAddress) ? String(object.externalAddress) : "",
       signature: isSet(object.signature) ? String(object.signature) : "",
@@ -972,9 +1102,9 @@ export const MsgOracleSetUpdatedClaim = {
 
   fromJSON(object: any): MsgOracleSetUpdatedClaim {
     return {
-      eventNonce: isSet(object.eventNonce) ? Long.fromString(object.eventNonce) : Long.UZERO,
-      blockHeight: isSet(object.blockHeight) ? Long.fromString(object.blockHeight) : Long.UZERO,
-      oracleSetNonce: isSet(object.oracleSetNonce) ? Long.fromString(object.oracleSetNonce) : Long.UZERO,
+      eventNonce: isSet(object.eventNonce) ? Long.fromValue(object.eventNonce) : Long.UZERO,
+      blockHeight: isSet(object.blockHeight) ? Long.fromValue(object.blockHeight) : Long.UZERO,
+      oracleSetNonce: isSet(object.oracleSetNonce) ? Long.fromValue(object.oracleSetNonce) : Long.UZERO,
       members: Array.isArray(object?.members)
         ? object.members.map((e: any) => BridgeValidator.fromJSON(e))
         : [],
@@ -1153,8 +1283,8 @@ export const MsgSendToFxClaim = {
 
   fromJSON(object: any): MsgSendToFxClaim {
     return {
-      eventNonce: isSet(object.eventNonce) ? Long.fromString(object.eventNonce) : Long.UZERO,
-      blockHeight: isSet(object.blockHeight) ? Long.fromString(object.blockHeight) : Long.UZERO,
+      eventNonce: isSet(object.eventNonce) ? Long.fromValue(object.eventNonce) : Long.UZERO,
+      blockHeight: isSet(object.blockHeight) ? Long.fromValue(object.blockHeight) : Long.UZERO,
       tokenContract: isSet(object.tokenContract) ? String(object.tokenContract) : "",
       amount: isSet(object.amount) ? String(object.amount) : "",
       sender: isSet(object.sender) ? String(object.sender) : "",
@@ -1360,9 +1490,7 @@ export const MsgSendToExternalResponse = {
   },
 
   fromJSON(object: any): MsgSendToExternalResponse {
-    return {
-      outgoingTxId: isSet(object.outgoingTxId) ? Long.fromString(object.outgoingTxId) : Long.UZERO,
-    };
+    return { outgoingTxId: isSet(object.outgoingTxId) ? Long.fromValue(object.outgoingTxId) : Long.UZERO };
   },
 
   toJSON(message: MsgSendToExternalResponse): unknown {
@@ -1428,7 +1556,7 @@ export const MsgCancelSendToExternal = {
 
   fromJSON(object: any): MsgCancelSendToExternal {
     return {
-      transactionId: isSet(object.transactionId) ? Long.fromString(object.transactionId) : Long.UZERO,
+      transactionId: isSet(object.transactionId) ? Long.fromValue(object.transactionId) : Long.UZERO,
       sender: isSet(object.sender) ? String(object.sender) : "",
       chainName: isSet(object.chainName) ? String(object.chainName) : "",
     };
@@ -1621,9 +1749,7 @@ export const MsgRequestBatchResponse = {
   },
 
   fromJSON(object: any): MsgRequestBatchResponse {
-    return {
-      batchNonce: isSet(object.batchNonce) ? Long.fromString(object.batchNonce) : Long.UZERO,
-    };
+    return { batchNonce: isSet(object.batchNonce) ? Long.fromValue(object.batchNonce) : Long.UZERO };
   },
 
   toJSON(message: MsgRequestBatchResponse): unknown {
@@ -1711,7 +1837,7 @@ export const MsgConfirmBatch = {
 
   fromJSON(object: any): MsgConfirmBatch {
     return {
-      nonce: isSet(object.nonce) ? Long.fromString(object.nonce) : Long.UZERO,
+      nonce: isSet(object.nonce) ? Long.fromValue(object.nonce) : Long.UZERO,
       tokenContract: isSet(object.tokenContract) ? String(object.tokenContract) : "",
       bridgerAddress: isSet(object.bridgerAddress) ? String(object.bridgerAddress) : "",
       externalAddress: isSet(object.externalAddress) ? String(object.externalAddress) : "",
@@ -1852,9 +1978,9 @@ export const MsgSendToExternalClaim = {
 
   fromJSON(object: any): MsgSendToExternalClaim {
     return {
-      eventNonce: isSet(object.eventNonce) ? Long.fromString(object.eventNonce) : Long.UZERO,
-      blockHeight: isSet(object.blockHeight) ? Long.fromString(object.blockHeight) : Long.UZERO,
-      batchNonce: isSet(object.batchNonce) ? Long.fromString(object.batchNonce) : Long.UZERO,
+      eventNonce: isSet(object.eventNonce) ? Long.fromValue(object.eventNonce) : Long.UZERO,
+      blockHeight: isSet(object.blockHeight) ? Long.fromValue(object.blockHeight) : Long.UZERO,
+      batchNonce: isSet(object.batchNonce) ? Long.fromValue(object.batchNonce) : Long.UZERO,
       tokenContract: isSet(object.tokenContract) ? String(object.tokenContract) : "",
       bridgerAddress: isSet(object.bridgerAddress) ? String(object.bridgerAddress) : "",
       chainName: isSet(object.chainName) ? String(object.chainName) : "",
@@ -2024,12 +2150,12 @@ export const MsgBridgeTokenClaim = {
 
   fromJSON(object: any): MsgBridgeTokenClaim {
     return {
-      eventNonce: isSet(object.eventNonce) ? Long.fromString(object.eventNonce) : Long.UZERO,
-      blockHeight: isSet(object.blockHeight) ? Long.fromString(object.blockHeight) : Long.UZERO,
+      eventNonce: isSet(object.eventNonce) ? Long.fromValue(object.eventNonce) : Long.UZERO,
+      blockHeight: isSet(object.blockHeight) ? Long.fromValue(object.blockHeight) : Long.UZERO,
       tokenContract: isSet(object.tokenContract) ? String(object.tokenContract) : "",
       name: isSet(object.name) ? String(object.name) : "",
       symbol: isSet(object.symbol) ? String(object.symbol) : "",
-      decimals: isSet(object.decimals) ? Long.fromString(object.decimals) : Long.UZERO,
+      decimals: isSet(object.decimals) ? Long.fromValue(object.decimals) : Long.UZERO,
       bridgerAddress: isSet(object.bridgerAddress) ? String(object.bridgerAddress) : "",
       channelIbc: isSet(object.channelIbc) ? String(object.channelIbc) : "",
       chainName: isSet(object.chainName) ? String(object.chainName) : "",
@@ -2115,11 +2241,169 @@ export const MsgBridgeTokenClaimResponse = {
   },
 };
 
+function createBaseMsgSetOrchestratorAddress(): MsgSetOrchestratorAddress {
+  return { oracleAddress: "", bridgerAddress: "", externalAddress: "", deposit: undefined, chainName: "" };
+}
+
+export const MsgSetOrchestratorAddress = {
+  encode(message: MsgSetOrchestratorAddress, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    if (message.oracleAddress !== "") {
+      writer.uint32(10).string(message.oracleAddress);
+    }
+    if (message.bridgerAddress !== "") {
+      writer.uint32(18).string(message.bridgerAddress);
+    }
+    if (message.externalAddress !== "") {
+      writer.uint32(26).string(message.externalAddress);
+    }
+    if (message.deposit !== undefined) {
+      Coin.encode(message.deposit, writer.uint32(34).fork()).ldelim();
+    }
+    if (message.chainName !== "") {
+      writer.uint32(42).string(message.chainName);
+    }
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): MsgSetOrchestratorAddress {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseMsgSetOrchestratorAddress();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.oracleAddress = reader.string();
+          break;
+        case 2:
+          message.bridgerAddress = reader.string();
+          break;
+        case 3:
+          message.externalAddress = reader.string();
+          break;
+        case 4:
+          message.deposit = Coin.decode(reader, reader.uint32());
+          break;
+        case 5:
+          message.chainName = reader.string();
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): MsgSetOrchestratorAddress {
+    return {
+      oracleAddress: isSet(object.oracleAddress) ? String(object.oracleAddress) : "",
+      bridgerAddress: isSet(object.bridgerAddress) ? String(object.bridgerAddress) : "",
+      externalAddress: isSet(object.externalAddress) ? String(object.externalAddress) : "",
+      deposit: isSet(object.deposit) ? Coin.fromJSON(object.deposit) : undefined,
+      chainName: isSet(object.chainName) ? String(object.chainName) : "",
+    };
+  },
+
+  toJSON(message: MsgSetOrchestratorAddress): unknown {
+    const obj: any = {};
+    message.oracleAddress !== undefined && (obj.oracleAddress = message.oracleAddress);
+    message.bridgerAddress !== undefined && (obj.bridgerAddress = message.bridgerAddress);
+    message.externalAddress !== undefined && (obj.externalAddress = message.externalAddress);
+    message.deposit !== undefined &&
+      (obj.deposit = message.deposit ? Coin.toJSON(message.deposit) : undefined);
+    message.chainName !== undefined && (obj.chainName = message.chainName);
+    return obj;
+  },
+
+  fromPartial<I extends Exact<DeepPartial<MsgSetOrchestratorAddress>, I>>(
+    object: I,
+  ): MsgSetOrchestratorAddress {
+    const message = createBaseMsgSetOrchestratorAddress();
+    message.oracleAddress = object.oracleAddress ?? "";
+    message.bridgerAddress = object.bridgerAddress ?? "";
+    message.externalAddress = object.externalAddress ?? "";
+    message.deposit =
+      object.deposit !== undefined && object.deposit !== null ? Coin.fromPartial(object.deposit) : undefined;
+    message.chainName = object.chainName ?? "";
+    return message;
+  },
+};
+
+function createBaseMsgAddOracleDeposit(): MsgAddOracleDeposit {
+  return { oracleAddress: "", amount: undefined, chainName: "" };
+}
+
+export const MsgAddOracleDeposit = {
+  encode(message: MsgAddOracleDeposit, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    if (message.oracleAddress !== "") {
+      writer.uint32(10).string(message.oracleAddress);
+    }
+    if (message.amount !== undefined) {
+      Coin.encode(message.amount, writer.uint32(18).fork()).ldelim();
+    }
+    if (message.chainName !== "") {
+      writer.uint32(26).string(message.chainName);
+    }
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): MsgAddOracleDeposit {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseMsgAddOracleDeposit();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.oracleAddress = reader.string();
+          break;
+        case 2:
+          message.amount = Coin.decode(reader, reader.uint32());
+          break;
+        case 3:
+          message.chainName = reader.string();
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): MsgAddOracleDeposit {
+    return {
+      oracleAddress: isSet(object.oracleAddress) ? String(object.oracleAddress) : "",
+      amount: isSet(object.amount) ? Coin.fromJSON(object.amount) : undefined,
+      chainName: isSet(object.chainName) ? String(object.chainName) : "",
+    };
+  },
+
+  toJSON(message: MsgAddOracleDeposit): unknown {
+    const obj: any = {};
+    message.oracleAddress !== undefined && (obj.oracleAddress = message.oracleAddress);
+    message.amount !== undefined && (obj.amount = message.amount ? Coin.toJSON(message.amount) : undefined);
+    message.chainName !== undefined && (obj.chainName = message.chainName);
+    return obj;
+  },
+
+  fromPartial<I extends Exact<DeepPartial<MsgAddOracleDeposit>, I>>(object: I): MsgAddOracleDeposit {
+    const message = createBaseMsgAddOracleDeposit();
+    message.oracleAddress = object.oracleAddress ?? "";
+    message.amount =
+      object.amount !== undefined && object.amount !== null ? Coin.fromPartial(object.amount) : undefined;
+    message.chainName = object.chainName ?? "";
+    return message;
+  },
+};
+
 /** Msg defines the state transitions possible within gravity */
 export interface Msg {
   BondedOracle(request: MsgBondedOracle): Promise<MsgBondedOracleResponse>;
   AddDelegate(request: MsgAddDelegate): Promise<MsgAddDelegateResponse>;
-  EditOracle(request: MsgEditOracle): Promise<MsgEditOracleResponse>;
+  ReDelegate(request: MsgReDelegate): Promise<MsgReDelegateResponse>;
+  EditBridger(request: MsgEditBridger): Promise<MsgEditBridgerResponse>;
   WithdrawReward(request: MsgWithdrawReward): Promise<MsgWithdrawRewardResponse>;
   UnbondedOracle(request: MsgUnbondedOracle): Promise<MsgUnbondedOracleResponse>;
   OracleSetConfirm(request: MsgOracleSetConfirm): Promise<MsgOracleSetConfirmResponse>;
@@ -2135,11 +2419,14 @@ export interface Msg {
 
 export class MsgClientImpl implements Msg {
   private readonly rpc: Rpc;
-  constructor(rpc: Rpc) {
+  private readonly service: string;
+  constructor(rpc: Rpc, opts?: { service?: string }) {
+    this.service = opts?.service || "fx.gravity.crosschain.v1.Msg";
     this.rpc = rpc;
     this.BondedOracle = this.BondedOracle.bind(this);
     this.AddDelegate = this.AddDelegate.bind(this);
-    this.EditOracle = this.EditOracle.bind(this);
+    this.ReDelegate = this.ReDelegate.bind(this);
+    this.EditBridger = this.EditBridger.bind(this);
     this.WithdrawReward = this.WithdrawReward.bind(this);
     this.UnbondedOracle = this.UnbondedOracle.bind(this);
     this.OracleSetConfirm = this.OracleSetConfirm.bind(this);
@@ -2154,85 +2441,91 @@ export class MsgClientImpl implements Msg {
   }
   BondedOracle(request: MsgBondedOracle): Promise<MsgBondedOracleResponse> {
     const data = MsgBondedOracle.encode(request).finish();
-    const promise = this.rpc.request("fx.gravity.crosschain.v1.Msg", "BondedOracle", data);
+    const promise = this.rpc.request(this.service, "BondedOracle", data);
     return promise.then((data) => MsgBondedOracleResponse.decode(new _m0.Reader(data)));
   }
 
   AddDelegate(request: MsgAddDelegate): Promise<MsgAddDelegateResponse> {
     const data = MsgAddDelegate.encode(request).finish();
-    const promise = this.rpc.request("fx.gravity.crosschain.v1.Msg", "AddDelegate", data);
+    const promise = this.rpc.request(this.service, "AddDelegate", data);
     return promise.then((data) => MsgAddDelegateResponse.decode(new _m0.Reader(data)));
   }
 
-  EditOracle(request: MsgEditOracle): Promise<MsgEditOracleResponse> {
-    const data = MsgEditOracle.encode(request).finish();
-    const promise = this.rpc.request("fx.gravity.crosschain.v1.Msg", "EditOracle", data);
-    return promise.then((data) => MsgEditOracleResponse.decode(new _m0.Reader(data)));
+  ReDelegate(request: MsgReDelegate): Promise<MsgReDelegateResponse> {
+    const data = MsgReDelegate.encode(request).finish();
+    const promise = this.rpc.request(this.service, "ReDelegate", data);
+    return promise.then((data) => MsgReDelegateResponse.decode(new _m0.Reader(data)));
+  }
+
+  EditBridger(request: MsgEditBridger): Promise<MsgEditBridgerResponse> {
+    const data = MsgEditBridger.encode(request).finish();
+    const promise = this.rpc.request(this.service, "EditBridger", data);
+    return promise.then((data) => MsgEditBridgerResponse.decode(new _m0.Reader(data)));
   }
 
   WithdrawReward(request: MsgWithdrawReward): Promise<MsgWithdrawRewardResponse> {
     const data = MsgWithdrawReward.encode(request).finish();
-    const promise = this.rpc.request("fx.gravity.crosschain.v1.Msg", "WithdrawReward", data);
+    const promise = this.rpc.request(this.service, "WithdrawReward", data);
     return promise.then((data) => MsgWithdrawRewardResponse.decode(new _m0.Reader(data)));
   }
 
   UnbondedOracle(request: MsgUnbondedOracle): Promise<MsgUnbondedOracleResponse> {
     const data = MsgUnbondedOracle.encode(request).finish();
-    const promise = this.rpc.request("fx.gravity.crosschain.v1.Msg", "UnbondedOracle", data);
+    const promise = this.rpc.request(this.service, "UnbondedOracle", data);
     return promise.then((data) => MsgUnbondedOracleResponse.decode(new _m0.Reader(data)));
   }
 
   OracleSetConfirm(request: MsgOracleSetConfirm): Promise<MsgOracleSetConfirmResponse> {
     const data = MsgOracleSetConfirm.encode(request).finish();
-    const promise = this.rpc.request("fx.gravity.crosschain.v1.Msg", "OracleSetConfirm", data);
+    const promise = this.rpc.request(this.service, "OracleSetConfirm", data);
     return promise.then((data) => MsgOracleSetConfirmResponse.decode(new _m0.Reader(data)));
   }
 
   OracleSetUpdateClaim(request: MsgOracleSetUpdatedClaim): Promise<MsgOracleSetUpdatedClaimResponse> {
     const data = MsgOracleSetUpdatedClaim.encode(request).finish();
-    const promise = this.rpc.request("fx.gravity.crosschain.v1.Msg", "OracleSetUpdateClaim", data);
+    const promise = this.rpc.request(this.service, "OracleSetUpdateClaim", data);
     return promise.then((data) => MsgOracleSetUpdatedClaimResponse.decode(new _m0.Reader(data)));
   }
 
   BridgeTokenClaim(request: MsgBridgeTokenClaim): Promise<MsgBridgeTokenClaimResponse> {
     const data = MsgBridgeTokenClaim.encode(request).finish();
-    const promise = this.rpc.request("fx.gravity.crosschain.v1.Msg", "BridgeTokenClaim", data);
+    const promise = this.rpc.request(this.service, "BridgeTokenClaim", data);
     return promise.then((data) => MsgBridgeTokenClaimResponse.decode(new _m0.Reader(data)));
   }
 
   SendToFxClaim(request: MsgSendToFxClaim): Promise<MsgSendToFxClaimResponse> {
     const data = MsgSendToFxClaim.encode(request).finish();
-    const promise = this.rpc.request("fx.gravity.crosschain.v1.Msg", "SendToFxClaim", data);
+    const promise = this.rpc.request(this.service, "SendToFxClaim", data);
     return promise.then((data) => MsgSendToFxClaimResponse.decode(new _m0.Reader(data)));
   }
 
   SendToExternal(request: MsgSendToExternal): Promise<MsgSendToExternalResponse> {
     const data = MsgSendToExternal.encode(request).finish();
-    const promise = this.rpc.request("fx.gravity.crosschain.v1.Msg", "SendToExternal", data);
+    const promise = this.rpc.request(this.service, "SendToExternal", data);
     return promise.then((data) => MsgSendToExternalResponse.decode(new _m0.Reader(data)));
   }
 
   CancelSendToExternal(request: MsgCancelSendToExternal): Promise<MsgCancelSendToExternalResponse> {
     const data = MsgCancelSendToExternal.encode(request).finish();
-    const promise = this.rpc.request("fx.gravity.crosschain.v1.Msg", "CancelSendToExternal", data);
+    const promise = this.rpc.request(this.service, "CancelSendToExternal", data);
     return promise.then((data) => MsgCancelSendToExternalResponse.decode(new _m0.Reader(data)));
   }
 
   SendToExternalClaim(request: MsgSendToExternalClaim): Promise<MsgSendToExternalClaimResponse> {
     const data = MsgSendToExternalClaim.encode(request).finish();
-    const promise = this.rpc.request("fx.gravity.crosschain.v1.Msg", "SendToExternalClaim", data);
+    const promise = this.rpc.request(this.service, "SendToExternalClaim", data);
     return promise.then((data) => MsgSendToExternalClaimResponse.decode(new _m0.Reader(data)));
   }
 
   RequestBatch(request: MsgRequestBatch): Promise<MsgRequestBatchResponse> {
     const data = MsgRequestBatch.encode(request).finish();
-    const promise = this.rpc.request("fx.gravity.crosschain.v1.Msg", "RequestBatch", data);
+    const promise = this.rpc.request(this.service, "RequestBatch", data);
     return promise.then((data) => MsgRequestBatchResponse.decode(new _m0.Reader(data)));
   }
 
   ConfirmBatch(request: MsgConfirmBatch): Promise<MsgConfirmBatchResponse> {
     const data = MsgConfirmBatch.encode(request).finish();
-    const promise = this.rpc.request("fx.gravity.crosschain.v1.Msg", "ConfirmBatch", data);
+    const promise = this.rpc.request(this.service, "ConfirmBatch", data);
     return promise.then((data) => MsgConfirmBatchResponse.decode(new _m0.Reader(data)));
   }
 }
@@ -2258,7 +2551,7 @@ export type DeepPartial<T> = T extends Builtin
 type KeysOfUnion<T> = T extends T ? keyof T : never;
 export type Exact<P, I extends P> = P extends Builtin
   ? P
-  : P & { [K in keyof P]: Exact<P[K], I[K]> } & Record<Exclude<keyof I, KeysOfUnion<P>>, never>;
+  : P & { [K in keyof P]: Exact<P[K], I[K]> } & { [K in Exclude<keyof I, KeysOfUnion<P>>]: never };
 
 if (_m0.util.Long !== Long) {
   _m0.util.Long = Long as any;

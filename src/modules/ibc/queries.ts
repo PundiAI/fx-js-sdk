@@ -2,7 +2,7 @@ import { createProtobufRpcClient, QueryClient } from "@cosmjs/stargate";
 import { PageRequest } from "cosmjs-types/cosmos/base/query/v1beta1/pagination";
 import { DenomTrace } from "cosmjs-types/ibc/applications/transfer/v1/transfer";
 
-import { QueryClientImpl, QueryDenomTracesResponse } from "../../fx/ibc/applications/transfer/v1/query";
+import { QueryClientImpl, QueryDenomTracesResponse } from "cosmjs-types/ibc/applications/transfer/v1/query";
 
 export interface FxIbcExtension {
   readonly fxibc: {

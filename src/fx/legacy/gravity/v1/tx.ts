@@ -2,50 +2,11 @@
 import Long from "long";
 import _m0 from "protobufjs/minimal";
 import { Coin } from "cosmjs-types/cosmos/base/v1beta1/coin";
-import { BridgeValidator } from "../../../fx/gravity/v1/types";
+import { BridgeValidator } from "./types";
 
 export const protobufPackage = "fx.gravity.v1";
 
-/**
- * MsgSetOrchestratorAddress
- * this message allows validators to delegate their voting responsibilities
- * to a given key. This key is then used as an optional authentication method
- * for sigining oracle claims
- * VALIDATOR
- * The validator field is a cosmosvaloper1... string (i.e. sdk.ValAddress)
- * that references a validator in the active set
- * ORCHESTRATOR
- * The orchestrator field is a cosmos1... string  (i.e. sdk.AccAddress) that
- * references the key that is being delegated to
- * ETH_ADDRESS
- * This is a hex encoded 0x Ethereum public key that will be used by this
- * validator on Ethereum
- */
-export interface MsgSetOrchestratorAddress {
-  validator: string;
-  orchestrator: string;
-  ethAddress: string;
-}
-
-export interface MsgSetOrchestratorAddressResponse {}
-
-/**
- * MsgValsetConfirm
- * this is the message sent by the validators when they wish to submit their
- * signatures over the validator set at a given block height. A validator must
- * first call MsgSetEthAddress to set their Ethereum address to be used for
- * signing. Then someone (anyone) must make a ValsetRequest, the request is
- * essentially a messaging mechanism to determine which block all validators
- * should submit signatures over. Finally validators sign the validator set,
- * powers, and Ethereum addresses of the entire validator set at the height of a
- * ValsetRequest and submit that signature with this message.
- *
- * If a sufficient number of validators (66% of voting power) (A) have set
- * Ethereum addresses and (B) submit ValsetConfirm messages with their
- * signatures it is then possible for anyone to view these signatures in the
- * chain store and submit them to Ethereum to update the validator set
- * -------------
- */
+/** Deprecated: after upgrade v3 */
 export interface MsgValsetConfirm {
   nonce: Long;
   orchestrator: string;
@@ -53,22 +14,10 @@ export interface MsgValsetConfirm {
   signature: string;
 }
 
+/** Deprecated: after upgrade v3 */
 export interface MsgValsetConfirmResponse {}
 
-/**
- * MsgSendToEth
- * This is the message that a user calls when they want to bridge an asset
- * it will later be removed when it is included in a batch and successfully
- * submitted tokens are removed from the users balance immediately
- * -------------
- * AMOUNT:
- * the coin to send across the bridge, note the restriction that this is a
- * single coin not a set of coins that is normal in other Cosmos messages
- * FEE:
- * the fee paid for the bridge, distinct from the fee paid to the chain to
- * actually send this message in the first place. So a successful send has
- * two layers of fees for the user
- */
+/** Deprecated: after upgrade v3 */
 export interface MsgSendToEth {
   sender: string;
   ethDest: string;
@@ -76,8 +25,10 @@ export interface MsgSendToEth {
   bridgeFee?: Coin;
 }
 
+/** Deprecated: after upgrade v3 */
 export interface MsgSendToEthResponse {}
 
+/** Deprecated: after upgrade v3 */
 export interface MsgRequestBatch {
   sender: string;
   denom: string;
@@ -86,18 +37,10 @@ export interface MsgRequestBatch {
   baseFee: string;
 }
 
+/** Deprecated: after upgrade v3 */
 export interface MsgRequestBatchResponse {}
 
-/**
- * MsgConfirmBatch
- * When validators observe a MsgRequestBatch they form a batch by ordering
- * transactions currently in the txqueue in order of highest to lowest fee,
- * cutting off when the batch either reaches a hardcoded maximum size (to be
- * decided, probably around 100) or when transactions stop being profitable
- * (determine this without nondeterminism) This message includes the batch
- * as well as an Ethereum signature over this batch by the validator
- * -------------
- */
+/** Deprecated: after upgrade v3 */
 export interface MsgConfirmBatch {
   nonce: Long;
   tokenContract: string;
@@ -106,15 +49,10 @@ export interface MsgConfirmBatch {
   signature: string;
 }
 
+/** Deprecated: after upgrade v3 */
 export interface MsgConfirmBatchResponse {}
 
-/**
- * EthereumBridgeDepositClaim
- * When more than 66% of the active validator set has
- * claimed to have seen the deposit enter the ethereum blockchain coins are
- * issued to the Cosmos address in question
- * -------------
- */
+/** Deprecated: after upgrade v3 */
 export interface MsgDepositClaim {
   eventNonce: Long;
   blockHeight: Long;
@@ -126,12 +64,10 @@ export interface MsgDepositClaim {
   orchestrator: string;
 }
 
+/** Deprecated: after upgrade v3 */
 export interface MsgDepositClaimResponse {}
 
-/**
- * WithdrawClaim claims that a batch of withdrawal
- * operations on the bridge contract was executed.
- */
+/** Deprecated: after upgrade v3 */
 export interface MsgWithdrawClaim {
   eventNonce: Long;
   blockHeight: Long;
@@ -140,20 +76,41 @@ export interface MsgWithdrawClaim {
   orchestrator: string;
 }
 
+/** Deprecated: after upgrade v3 */
 export interface MsgWithdrawClaimResponse {}
 
-/**
- * This call allows the sender (and only the sender)
- * to cancel a given MsgSendToEth and recieve a refund
- * of the tokens
- */
+/** Deprecated: after upgrade v3 */
 export interface MsgCancelSendToEth {
   transactionId: Long;
   sender: string;
 }
 
+/** Deprecated: after upgrade v3 */
 export interface MsgCancelSendToEthResponse {}
 
+/** Deprecated: after upgrade v3 */
+export interface MsgValsetUpdatedClaim {
+  eventNonce: Long;
+  blockHeight: Long;
+  valsetNonce: Long;
+  members: BridgeValidator[];
+  orchestrator: string;
+}
+
+/** Deprecated: after upgrade v3 */
+export interface MsgValsetUpdatedClaimResponse {}
+
+/** Deprecated: after upgrade v3 */
+export interface MsgSetOrchestratorAddress {
+  validator: string;
+  orchestrator: string;
+  ethAddress: string;
+}
+
+/** Deprecated: after upgrade v3 */
+export interface MsgSetOrchestratorAddressResponse {}
+
+/** Deprecated: after upgrade v3 */
 export interface MsgFxOriginatedTokenClaim {
   eventNonce: Long;
   blockHeight: Long;
@@ -164,131 +121,8 @@ export interface MsgFxOriginatedTokenClaim {
   orchestrator: string;
 }
 
+/** Deprecated: after upgrade v3 */
 export interface MsgFxOriginatedTokenClaimResponse {}
-
-/**
- * This informs the Cosmos module that a validator
- * set has been updated.
- */
-export interface MsgValsetUpdatedClaim {
-  eventNonce: Long;
-  blockHeight: Long;
-  valsetNonce: Long;
-  members: BridgeValidator[];
-  orchestrator: string;
-}
-
-export interface MsgValsetUpdatedClaimResponse {}
-
-function createBaseMsgSetOrchestratorAddress(): MsgSetOrchestratorAddress {
-  return { validator: "", orchestrator: "", ethAddress: "" };
-}
-
-export const MsgSetOrchestratorAddress = {
-  encode(message: MsgSetOrchestratorAddress, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (message.validator !== "") {
-      writer.uint32(10).string(message.validator);
-    }
-    if (message.orchestrator !== "") {
-      writer.uint32(18).string(message.orchestrator);
-    }
-    if (message.ethAddress !== "") {
-      writer.uint32(26).string(message.ethAddress);
-    }
-    return writer;
-  },
-
-  decode(input: _m0.Reader | Uint8Array, length?: number): MsgSetOrchestratorAddress {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
-    const message = createBaseMsgSetOrchestratorAddress();
-    while (reader.pos < end) {
-      const tag = reader.uint32();
-      switch (tag >>> 3) {
-        case 1:
-          message.validator = reader.string();
-          break;
-        case 2:
-          message.orchestrator = reader.string();
-          break;
-        case 3:
-          message.ethAddress = reader.string();
-          break;
-        default:
-          reader.skipType(tag & 7);
-          break;
-      }
-    }
-    return message;
-  },
-
-  fromJSON(object: any): MsgSetOrchestratorAddress {
-    return {
-      validator: isSet(object.validator) ? String(object.validator) : "",
-      orchestrator: isSet(object.orchestrator) ? String(object.orchestrator) : "",
-      ethAddress: isSet(object.ethAddress) ? String(object.ethAddress) : "",
-    };
-  },
-
-  toJSON(message: MsgSetOrchestratorAddress): unknown {
-    const obj: any = {};
-    message.validator !== undefined && (obj.validator = message.validator);
-    message.orchestrator !== undefined && (obj.orchestrator = message.orchestrator);
-    message.ethAddress !== undefined && (obj.ethAddress = message.ethAddress);
-    return obj;
-  },
-
-  fromPartial<I extends Exact<DeepPartial<MsgSetOrchestratorAddress>, I>>(
-    object: I,
-  ): MsgSetOrchestratorAddress {
-    const message = createBaseMsgSetOrchestratorAddress();
-    message.validator = object.validator ?? "";
-    message.orchestrator = object.orchestrator ?? "";
-    message.ethAddress = object.ethAddress ?? "";
-    return message;
-  },
-};
-
-function createBaseMsgSetOrchestratorAddressResponse(): MsgSetOrchestratorAddressResponse {
-  return {};
-}
-
-export const MsgSetOrchestratorAddressResponse = {
-  encode(_: MsgSetOrchestratorAddressResponse, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    return writer;
-  },
-
-  decode(input: _m0.Reader | Uint8Array, length?: number): MsgSetOrchestratorAddressResponse {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
-    const message = createBaseMsgSetOrchestratorAddressResponse();
-    while (reader.pos < end) {
-      const tag = reader.uint32();
-      switch (tag >>> 3) {
-        default:
-          reader.skipType(tag & 7);
-          break;
-      }
-    }
-    return message;
-  },
-
-  fromJSON(_: any): MsgSetOrchestratorAddressResponse {
-    return {};
-  },
-
-  toJSON(_: MsgSetOrchestratorAddressResponse): unknown {
-    const obj: any = {};
-    return obj;
-  },
-
-  fromPartial<I extends Exact<DeepPartial<MsgSetOrchestratorAddressResponse>, I>>(
-    _: I,
-  ): MsgSetOrchestratorAddressResponse {
-    const message = createBaseMsgSetOrchestratorAddressResponse();
-    return message;
-  },
-};
 
 function createBaseMsgValsetConfirm(): MsgValsetConfirm {
   return { nonce: Long.UZERO, orchestrator: "", ethAddress: "", signature: "" };
@@ -340,7 +174,7 @@ export const MsgValsetConfirm = {
 
   fromJSON(object: any): MsgValsetConfirm {
     return {
-      nonce: isSet(object.nonce) ? Long.fromString(object.nonce) : Long.UZERO,
+      nonce: isSet(object.nonce) ? Long.fromValue(object.nonce) : Long.UZERO,
       orchestrator: isSet(object.orchestrator) ? String(object.orchestrator) : "",
       ethAddress: isSet(object.ethAddress) ? String(object.ethAddress) : "",
       signature: isSet(object.signature) ? String(object.signature) : "",
@@ -706,7 +540,7 @@ export const MsgConfirmBatch = {
 
   fromJSON(object: any): MsgConfirmBatch {
     return {
-      nonce: isSet(object.nonce) ? Long.fromString(object.nonce) : Long.UZERO,
+      nonce: isSet(object.nonce) ? Long.fromValue(object.nonce) : Long.UZERO,
       tokenContract: isSet(object.tokenContract) ? String(object.tokenContract) : "",
       ethSigner: isSet(object.ethSigner) ? String(object.ethSigner) : "",
       orchestrator: isSet(object.orchestrator) ? String(object.orchestrator) : "",
@@ -858,8 +692,8 @@ export const MsgDepositClaim = {
 
   fromJSON(object: any): MsgDepositClaim {
     return {
-      eventNonce: isSet(object.eventNonce) ? Long.fromString(object.eventNonce) : Long.UZERO,
-      blockHeight: isSet(object.blockHeight) ? Long.fromString(object.blockHeight) : Long.UZERO,
+      eventNonce: isSet(object.eventNonce) ? Long.fromValue(object.eventNonce) : Long.UZERO,
+      blockHeight: isSet(object.blockHeight) ? Long.fromValue(object.blockHeight) : Long.UZERO,
       tokenContract: isSet(object.tokenContract) ? String(object.tokenContract) : "",
       amount: isSet(object.amount) ? String(object.amount) : "",
       ethSender: isSet(object.ethSender) ? String(object.ethSender) : "",
@@ -1003,9 +837,9 @@ export const MsgWithdrawClaim = {
 
   fromJSON(object: any): MsgWithdrawClaim {
     return {
-      eventNonce: isSet(object.eventNonce) ? Long.fromString(object.eventNonce) : Long.UZERO,
-      blockHeight: isSet(object.blockHeight) ? Long.fromString(object.blockHeight) : Long.UZERO,
-      batchNonce: isSet(object.batchNonce) ? Long.fromString(object.batchNonce) : Long.UZERO,
+      eventNonce: isSet(object.eventNonce) ? Long.fromValue(object.eventNonce) : Long.UZERO,
+      blockHeight: isSet(object.blockHeight) ? Long.fromValue(object.blockHeight) : Long.UZERO,
+      batchNonce: isSet(object.batchNonce) ? Long.fromValue(object.batchNonce) : Long.UZERO,
       tokenContract: isSet(object.tokenContract) ? String(object.tokenContract) : "",
       orchestrator: isSet(object.orchestrator) ? String(object.orchestrator) : "",
     };
@@ -1118,7 +952,7 @@ export const MsgCancelSendToEth = {
 
   fromJSON(object: any): MsgCancelSendToEth {
     return {
-      transactionId: isSet(object.transactionId) ? Long.fromString(object.transactionId) : Long.UZERO,
+      transactionId: isSet(object.transactionId) ? Long.fromValue(object.transactionId) : Long.UZERO,
       sender: isSet(object.sender) ? String(object.sender) : "",
     };
   },
@@ -1177,169 +1011,6 @@ export const MsgCancelSendToEthResponse = {
 
   fromPartial<I extends Exact<DeepPartial<MsgCancelSendToEthResponse>, I>>(_: I): MsgCancelSendToEthResponse {
     const message = createBaseMsgCancelSendToEthResponse();
-    return message;
-  },
-};
-
-function createBaseMsgFxOriginatedTokenClaim(): MsgFxOriginatedTokenClaim {
-  return {
-    eventNonce: Long.UZERO,
-    blockHeight: Long.UZERO,
-    tokenContract: "",
-    name: "",
-    symbol: "",
-    decimals: Long.UZERO,
-    orchestrator: "",
-  };
-}
-
-export const MsgFxOriginatedTokenClaim = {
-  encode(message: MsgFxOriginatedTokenClaim, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (!message.eventNonce.isZero()) {
-      writer.uint32(8).uint64(message.eventNonce);
-    }
-    if (!message.blockHeight.isZero()) {
-      writer.uint32(16).uint64(message.blockHeight);
-    }
-    if (message.tokenContract !== "") {
-      writer.uint32(26).string(message.tokenContract);
-    }
-    if (message.name !== "") {
-      writer.uint32(34).string(message.name);
-    }
-    if (message.symbol !== "") {
-      writer.uint32(42).string(message.symbol);
-    }
-    if (!message.decimals.isZero()) {
-      writer.uint32(48).uint64(message.decimals);
-    }
-    if (message.orchestrator !== "") {
-      writer.uint32(58).string(message.orchestrator);
-    }
-    return writer;
-  },
-
-  decode(input: _m0.Reader | Uint8Array, length?: number): MsgFxOriginatedTokenClaim {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
-    const message = createBaseMsgFxOriginatedTokenClaim();
-    while (reader.pos < end) {
-      const tag = reader.uint32();
-      switch (tag >>> 3) {
-        case 1:
-          message.eventNonce = reader.uint64() as Long;
-          break;
-        case 2:
-          message.blockHeight = reader.uint64() as Long;
-          break;
-        case 3:
-          message.tokenContract = reader.string();
-          break;
-        case 4:
-          message.name = reader.string();
-          break;
-        case 5:
-          message.symbol = reader.string();
-          break;
-        case 6:
-          message.decimals = reader.uint64() as Long;
-          break;
-        case 7:
-          message.orchestrator = reader.string();
-          break;
-        default:
-          reader.skipType(tag & 7);
-          break;
-      }
-    }
-    return message;
-  },
-
-  fromJSON(object: any): MsgFxOriginatedTokenClaim {
-    return {
-      eventNonce: isSet(object.eventNonce) ? Long.fromString(object.eventNonce) : Long.UZERO,
-      blockHeight: isSet(object.blockHeight) ? Long.fromString(object.blockHeight) : Long.UZERO,
-      tokenContract: isSet(object.tokenContract) ? String(object.tokenContract) : "",
-      name: isSet(object.name) ? String(object.name) : "",
-      symbol: isSet(object.symbol) ? String(object.symbol) : "",
-      decimals: isSet(object.decimals) ? Long.fromString(object.decimals) : Long.UZERO,
-      orchestrator: isSet(object.orchestrator) ? String(object.orchestrator) : "",
-    };
-  },
-
-  toJSON(message: MsgFxOriginatedTokenClaim): unknown {
-    const obj: any = {};
-    message.eventNonce !== undefined && (obj.eventNonce = (message.eventNonce || Long.UZERO).toString());
-    message.blockHeight !== undefined && (obj.blockHeight = (message.blockHeight || Long.UZERO).toString());
-    message.tokenContract !== undefined && (obj.tokenContract = message.tokenContract);
-    message.name !== undefined && (obj.name = message.name);
-    message.symbol !== undefined && (obj.symbol = message.symbol);
-    message.decimals !== undefined && (obj.decimals = (message.decimals || Long.UZERO).toString());
-    message.orchestrator !== undefined && (obj.orchestrator = message.orchestrator);
-    return obj;
-  },
-
-  fromPartial<I extends Exact<DeepPartial<MsgFxOriginatedTokenClaim>, I>>(
-    object: I,
-  ): MsgFxOriginatedTokenClaim {
-    const message = createBaseMsgFxOriginatedTokenClaim();
-    message.eventNonce =
-      object.eventNonce !== undefined && object.eventNonce !== null
-        ? Long.fromValue(object.eventNonce)
-        : Long.UZERO;
-    message.blockHeight =
-      object.blockHeight !== undefined && object.blockHeight !== null
-        ? Long.fromValue(object.blockHeight)
-        : Long.UZERO;
-    message.tokenContract = object.tokenContract ?? "";
-    message.name = object.name ?? "";
-    message.symbol = object.symbol ?? "";
-    message.decimals =
-      object.decimals !== undefined && object.decimals !== null
-        ? Long.fromValue(object.decimals)
-        : Long.UZERO;
-    message.orchestrator = object.orchestrator ?? "";
-    return message;
-  },
-};
-
-function createBaseMsgFxOriginatedTokenClaimResponse(): MsgFxOriginatedTokenClaimResponse {
-  return {};
-}
-
-export const MsgFxOriginatedTokenClaimResponse = {
-  encode(_: MsgFxOriginatedTokenClaimResponse, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    return writer;
-  },
-
-  decode(input: _m0.Reader | Uint8Array, length?: number): MsgFxOriginatedTokenClaimResponse {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
-    const message = createBaseMsgFxOriginatedTokenClaimResponse();
-    while (reader.pos < end) {
-      const tag = reader.uint32();
-      switch (tag >>> 3) {
-        default:
-          reader.skipType(tag & 7);
-          break;
-      }
-    }
-    return message;
-  },
-
-  fromJSON(_: any): MsgFxOriginatedTokenClaimResponse {
-    return {};
-  },
-
-  toJSON(_: MsgFxOriginatedTokenClaimResponse): unknown {
-    const obj: any = {};
-    return obj;
-  },
-
-  fromPartial<I extends Exact<DeepPartial<MsgFxOriginatedTokenClaimResponse>, I>>(
-    _: I,
-  ): MsgFxOriginatedTokenClaimResponse {
-    const message = createBaseMsgFxOriginatedTokenClaimResponse();
     return message;
   },
 };
@@ -1406,9 +1077,9 @@ export const MsgValsetUpdatedClaim = {
 
   fromJSON(object: any): MsgValsetUpdatedClaim {
     return {
-      eventNonce: isSet(object.eventNonce) ? Long.fromString(object.eventNonce) : Long.UZERO,
-      blockHeight: isSet(object.blockHeight) ? Long.fromString(object.blockHeight) : Long.UZERO,
-      valsetNonce: isSet(object.valsetNonce) ? Long.fromString(object.valsetNonce) : Long.UZERO,
+      eventNonce: isSet(object.eventNonce) ? Long.fromValue(object.eventNonce) : Long.UZERO,
+      blockHeight: isSet(object.blockHeight) ? Long.fromValue(object.blockHeight) : Long.UZERO,
+      valsetNonce: isSet(object.valsetNonce) ? Long.fromValue(object.valsetNonce) : Long.UZERO,
       members: Array.isArray(object?.members)
         ? object.members.map((e: any) => BridgeValidator.fromJSON(e))
         : [],
@@ -1491,23 +1162,304 @@ export const MsgValsetUpdatedClaimResponse = {
   },
 };
 
-/** Msg defines the state transitions possible within gravity */
+function createBaseMsgSetOrchestratorAddress(): MsgSetOrchestratorAddress {
+  return { validator: "", orchestrator: "", ethAddress: "" };
+}
+
+export const MsgSetOrchestratorAddress = {
+  encode(message: MsgSetOrchestratorAddress, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    if (message.validator !== "") {
+      writer.uint32(10).string(message.validator);
+    }
+    if (message.orchestrator !== "") {
+      writer.uint32(18).string(message.orchestrator);
+    }
+    if (message.ethAddress !== "") {
+      writer.uint32(26).string(message.ethAddress);
+    }
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): MsgSetOrchestratorAddress {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseMsgSetOrchestratorAddress();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.validator = reader.string();
+          break;
+        case 2:
+          message.orchestrator = reader.string();
+          break;
+        case 3:
+          message.ethAddress = reader.string();
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): MsgSetOrchestratorAddress {
+    return {
+      validator: isSet(object.validator) ? String(object.validator) : "",
+      orchestrator: isSet(object.orchestrator) ? String(object.orchestrator) : "",
+      ethAddress: isSet(object.ethAddress) ? String(object.ethAddress) : "",
+    };
+  },
+
+  toJSON(message: MsgSetOrchestratorAddress): unknown {
+    const obj: any = {};
+    message.validator !== undefined && (obj.validator = message.validator);
+    message.orchestrator !== undefined && (obj.orchestrator = message.orchestrator);
+    message.ethAddress !== undefined && (obj.ethAddress = message.ethAddress);
+    return obj;
+  },
+
+  fromPartial<I extends Exact<DeepPartial<MsgSetOrchestratorAddress>, I>>(
+    object: I,
+  ): MsgSetOrchestratorAddress {
+    const message = createBaseMsgSetOrchestratorAddress();
+    message.validator = object.validator ?? "";
+    message.orchestrator = object.orchestrator ?? "";
+    message.ethAddress = object.ethAddress ?? "";
+    return message;
+  },
+};
+
+function createBaseMsgSetOrchestratorAddressResponse(): MsgSetOrchestratorAddressResponse {
+  return {};
+}
+
+export const MsgSetOrchestratorAddressResponse = {
+  encode(_: MsgSetOrchestratorAddressResponse, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): MsgSetOrchestratorAddressResponse {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseMsgSetOrchestratorAddressResponse();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(_: any): MsgSetOrchestratorAddressResponse {
+    return {};
+  },
+
+  toJSON(_: MsgSetOrchestratorAddressResponse): unknown {
+    const obj: any = {};
+    return obj;
+  },
+
+  fromPartial<I extends Exact<DeepPartial<MsgSetOrchestratorAddressResponse>, I>>(
+    _: I,
+  ): MsgSetOrchestratorAddressResponse {
+    const message = createBaseMsgSetOrchestratorAddressResponse();
+    return message;
+  },
+};
+
+function createBaseMsgFxOriginatedTokenClaim(): MsgFxOriginatedTokenClaim {
+  return {
+    eventNonce: Long.UZERO,
+    blockHeight: Long.UZERO,
+    tokenContract: "",
+    name: "",
+    symbol: "",
+    decimals: Long.UZERO,
+    orchestrator: "",
+  };
+}
+
+export const MsgFxOriginatedTokenClaim = {
+  encode(message: MsgFxOriginatedTokenClaim, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    if (!message.eventNonce.isZero()) {
+      writer.uint32(8).uint64(message.eventNonce);
+    }
+    if (!message.blockHeight.isZero()) {
+      writer.uint32(16).uint64(message.blockHeight);
+    }
+    if (message.tokenContract !== "") {
+      writer.uint32(26).string(message.tokenContract);
+    }
+    if (message.name !== "") {
+      writer.uint32(34).string(message.name);
+    }
+    if (message.symbol !== "") {
+      writer.uint32(42).string(message.symbol);
+    }
+    if (!message.decimals.isZero()) {
+      writer.uint32(48).uint64(message.decimals);
+    }
+    if (message.orchestrator !== "") {
+      writer.uint32(58).string(message.orchestrator);
+    }
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): MsgFxOriginatedTokenClaim {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseMsgFxOriginatedTokenClaim();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.eventNonce = reader.uint64() as Long;
+          break;
+        case 2:
+          message.blockHeight = reader.uint64() as Long;
+          break;
+        case 3:
+          message.tokenContract = reader.string();
+          break;
+        case 4:
+          message.name = reader.string();
+          break;
+        case 5:
+          message.symbol = reader.string();
+          break;
+        case 6:
+          message.decimals = reader.uint64() as Long;
+          break;
+        case 7:
+          message.orchestrator = reader.string();
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): MsgFxOriginatedTokenClaim {
+    return {
+      eventNonce: isSet(object.eventNonce) ? Long.fromValue(object.eventNonce) : Long.UZERO,
+      blockHeight: isSet(object.blockHeight) ? Long.fromValue(object.blockHeight) : Long.UZERO,
+      tokenContract: isSet(object.tokenContract) ? String(object.tokenContract) : "",
+      name: isSet(object.name) ? String(object.name) : "",
+      symbol: isSet(object.symbol) ? String(object.symbol) : "",
+      decimals: isSet(object.decimals) ? Long.fromValue(object.decimals) : Long.UZERO,
+      orchestrator: isSet(object.orchestrator) ? String(object.orchestrator) : "",
+    };
+  },
+
+  toJSON(message: MsgFxOriginatedTokenClaim): unknown {
+    const obj: any = {};
+    message.eventNonce !== undefined && (obj.eventNonce = (message.eventNonce || Long.UZERO).toString());
+    message.blockHeight !== undefined && (obj.blockHeight = (message.blockHeight || Long.UZERO).toString());
+    message.tokenContract !== undefined && (obj.tokenContract = message.tokenContract);
+    message.name !== undefined && (obj.name = message.name);
+    message.symbol !== undefined && (obj.symbol = message.symbol);
+    message.decimals !== undefined && (obj.decimals = (message.decimals || Long.UZERO).toString());
+    message.orchestrator !== undefined && (obj.orchestrator = message.orchestrator);
+    return obj;
+  },
+
+  fromPartial<I extends Exact<DeepPartial<MsgFxOriginatedTokenClaim>, I>>(
+    object: I,
+  ): MsgFxOriginatedTokenClaim {
+    const message = createBaseMsgFxOriginatedTokenClaim();
+    message.eventNonce =
+      object.eventNonce !== undefined && object.eventNonce !== null
+        ? Long.fromValue(object.eventNonce)
+        : Long.UZERO;
+    message.blockHeight =
+      object.blockHeight !== undefined && object.blockHeight !== null
+        ? Long.fromValue(object.blockHeight)
+        : Long.UZERO;
+    message.tokenContract = object.tokenContract ?? "";
+    message.name = object.name ?? "";
+    message.symbol = object.symbol ?? "";
+    message.decimals =
+      object.decimals !== undefined && object.decimals !== null
+        ? Long.fromValue(object.decimals)
+        : Long.UZERO;
+    message.orchestrator = object.orchestrator ?? "";
+    return message;
+  },
+};
+
+function createBaseMsgFxOriginatedTokenClaimResponse(): MsgFxOriginatedTokenClaimResponse {
+  return {};
+}
+
+export const MsgFxOriginatedTokenClaimResponse = {
+  encode(_: MsgFxOriginatedTokenClaimResponse, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): MsgFxOriginatedTokenClaimResponse {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseMsgFxOriginatedTokenClaimResponse();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(_: any): MsgFxOriginatedTokenClaimResponse {
+    return {};
+  },
+
+  toJSON(_: MsgFxOriginatedTokenClaimResponse): unknown {
+    const obj: any = {};
+    return obj;
+  },
+
+  fromPartial<I extends Exact<DeepPartial<MsgFxOriginatedTokenClaimResponse>, I>>(
+    _: I,
+  ): MsgFxOriginatedTokenClaimResponse {
+    const message = createBaseMsgFxOriginatedTokenClaimResponse();
+    return message;
+  },
+};
+
+/** Deprecated: after upgrade v3 */
 export interface Msg {
+  /** Deprecated: Please use crosschain Msg.OracleSetConfirm */
   ValsetConfirm(request: MsgValsetConfirm): Promise<MsgValsetConfirmResponse>;
+  /** Deprecated: Please use crosschain Msg.SendToExternal */
   SendToEth(request: MsgSendToEth): Promise<MsgSendToEthResponse>;
+  /** Deprecated: Please use crosschain Msg.RequestBatch */
   RequestBatch(request: MsgRequestBatch): Promise<MsgRequestBatchResponse>;
+  /** Deprecated: Please use crosschain Msg.ConfirmBatch */
   ConfirmBatch(request: MsgConfirmBatch): Promise<MsgConfirmBatchResponse>;
+  /** Deprecated: Please use crosschain Msg.SendToFxClaim */
   DepositClaim(request: MsgDepositClaim): Promise<MsgDepositClaimResponse>;
+  /** Deprecated: Please use crosschain Msg.SendToExternalClaim */
   WithdrawClaim(request: MsgWithdrawClaim): Promise<MsgWithdrawClaimResponse>;
-  ValsetUpdateClaim(request: MsgValsetUpdatedClaim): Promise<MsgValsetUpdatedClaimResponse>;
-  SetOrchestratorAddress(request: MsgSetOrchestratorAddress): Promise<MsgSetOrchestratorAddressResponse>;
+  /** Deprecated: Please use crosschain Msg.CancelSendToExternal */
   CancelSendToEth(request: MsgCancelSendToEth): Promise<MsgCancelSendToEthResponse>;
-  FxOriginatedTokenClaim(request: MsgFxOriginatedTokenClaim): Promise<MsgFxOriginatedTokenClaimResponse>;
+  /** Deprecated: Please use crosschain Msg.OracleSetUpdateClaim */
+  ValsetUpdateClaim(request: MsgValsetUpdatedClaim): Promise<MsgValsetUpdatedClaimResponse>;
 }
 
 export class MsgClientImpl implements Msg {
   private readonly rpc: Rpc;
-  constructor(rpc: Rpc) {
+  private readonly service: string;
+  constructor(rpc: Rpc, opts?: { service?: string }) {
+    this.service = opts?.service || "fx.gravity.v1.Msg";
     this.rpc = rpc;
     this.ValsetConfirm = this.ValsetConfirm.bind(this);
     this.SendToEth = this.SendToEth.bind(this);
@@ -1515,69 +1467,55 @@ export class MsgClientImpl implements Msg {
     this.ConfirmBatch = this.ConfirmBatch.bind(this);
     this.DepositClaim = this.DepositClaim.bind(this);
     this.WithdrawClaim = this.WithdrawClaim.bind(this);
-    this.ValsetUpdateClaim = this.ValsetUpdateClaim.bind(this);
-    this.SetOrchestratorAddress = this.SetOrchestratorAddress.bind(this);
     this.CancelSendToEth = this.CancelSendToEth.bind(this);
-    this.FxOriginatedTokenClaim = this.FxOriginatedTokenClaim.bind(this);
+    this.ValsetUpdateClaim = this.ValsetUpdateClaim.bind(this);
   }
   ValsetConfirm(request: MsgValsetConfirm): Promise<MsgValsetConfirmResponse> {
     const data = MsgValsetConfirm.encode(request).finish();
-    const promise = this.rpc.request("fx.gravity.v1.Msg", "ValsetConfirm", data);
+    const promise = this.rpc.request(this.service, "ValsetConfirm", data);
     return promise.then((data) => MsgValsetConfirmResponse.decode(new _m0.Reader(data)));
   }
 
   SendToEth(request: MsgSendToEth): Promise<MsgSendToEthResponse> {
     const data = MsgSendToEth.encode(request).finish();
-    const promise = this.rpc.request("fx.gravity.v1.Msg", "SendToEth", data);
+    const promise = this.rpc.request(this.service, "SendToEth", data);
     return promise.then((data) => MsgSendToEthResponse.decode(new _m0.Reader(data)));
   }
 
   RequestBatch(request: MsgRequestBatch): Promise<MsgRequestBatchResponse> {
     const data = MsgRequestBatch.encode(request).finish();
-    const promise = this.rpc.request("fx.gravity.v1.Msg", "RequestBatch", data);
+    const promise = this.rpc.request(this.service, "RequestBatch", data);
     return promise.then((data) => MsgRequestBatchResponse.decode(new _m0.Reader(data)));
   }
 
   ConfirmBatch(request: MsgConfirmBatch): Promise<MsgConfirmBatchResponse> {
     const data = MsgConfirmBatch.encode(request).finish();
-    const promise = this.rpc.request("fx.gravity.v1.Msg", "ConfirmBatch", data);
+    const promise = this.rpc.request(this.service, "ConfirmBatch", data);
     return promise.then((data) => MsgConfirmBatchResponse.decode(new _m0.Reader(data)));
   }
 
   DepositClaim(request: MsgDepositClaim): Promise<MsgDepositClaimResponse> {
     const data = MsgDepositClaim.encode(request).finish();
-    const promise = this.rpc.request("fx.gravity.v1.Msg", "DepositClaim", data);
+    const promise = this.rpc.request(this.service, "DepositClaim", data);
     return promise.then((data) => MsgDepositClaimResponse.decode(new _m0.Reader(data)));
   }
 
   WithdrawClaim(request: MsgWithdrawClaim): Promise<MsgWithdrawClaimResponse> {
     const data = MsgWithdrawClaim.encode(request).finish();
-    const promise = this.rpc.request("fx.gravity.v1.Msg", "WithdrawClaim", data);
+    const promise = this.rpc.request(this.service, "WithdrawClaim", data);
     return promise.then((data) => MsgWithdrawClaimResponse.decode(new _m0.Reader(data)));
-  }
-
-  ValsetUpdateClaim(request: MsgValsetUpdatedClaim): Promise<MsgValsetUpdatedClaimResponse> {
-    const data = MsgValsetUpdatedClaim.encode(request).finish();
-    const promise = this.rpc.request("fx.gravity.v1.Msg", "ValsetUpdateClaim", data);
-    return promise.then((data) => MsgValsetUpdatedClaimResponse.decode(new _m0.Reader(data)));
-  }
-
-  SetOrchestratorAddress(request: MsgSetOrchestratorAddress): Promise<MsgSetOrchestratorAddressResponse> {
-    const data = MsgSetOrchestratorAddress.encode(request).finish();
-    const promise = this.rpc.request("fx.gravity.v1.Msg", "SetOrchestratorAddress", data);
-    return promise.then((data) => MsgSetOrchestratorAddressResponse.decode(new _m0.Reader(data)));
   }
 
   CancelSendToEth(request: MsgCancelSendToEth): Promise<MsgCancelSendToEthResponse> {
     const data = MsgCancelSendToEth.encode(request).finish();
-    const promise = this.rpc.request("fx.gravity.v1.Msg", "CancelSendToEth", data);
+    const promise = this.rpc.request(this.service, "CancelSendToEth", data);
     return promise.then((data) => MsgCancelSendToEthResponse.decode(new _m0.Reader(data)));
   }
 
-  FxOriginatedTokenClaim(request: MsgFxOriginatedTokenClaim): Promise<MsgFxOriginatedTokenClaimResponse> {
-    const data = MsgFxOriginatedTokenClaim.encode(request).finish();
-    const promise = this.rpc.request("fx.gravity.v1.Msg", "FxOriginatedTokenClaim", data);
-    return promise.then((data) => MsgFxOriginatedTokenClaimResponse.decode(new _m0.Reader(data)));
+  ValsetUpdateClaim(request: MsgValsetUpdatedClaim): Promise<MsgValsetUpdatedClaimResponse> {
+    const data = MsgValsetUpdatedClaim.encode(request).finish();
+    const promise = this.rpc.request(this.service, "ValsetUpdateClaim", data);
+    return promise.then((data) => MsgValsetUpdatedClaimResponse.decode(new _m0.Reader(data)));
   }
 }
 
@@ -1602,7 +1540,7 @@ export type DeepPartial<T> = T extends Builtin
 type KeysOfUnion<T> = T extends T ? keyof T : never;
 export type Exact<P, I extends P> = P extends Builtin
   ? P
-  : P & { [K in keyof P]: Exact<P[K], I[K]> } & Record<Exclude<keyof I, KeysOfUnion<P>>, never>;
+  : P & { [K in keyof P]: Exact<P[K], I[K]> } & { [K in Exclude<keyof I, KeysOfUnion<P>>]: never };
 
 if (_m0.util.Long !== Long) {
   _m0.util.Long = Long as any;

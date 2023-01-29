@@ -1,7 +1,7 @@
 /* eslint-disable */
 import Long from "long";
 import _m0 from "protobufjs/minimal";
-import { MigrateRecord } from "../../../fx/migrate/v1/migrate";
+import { MigrateRecord } from "./migrate";
 
 export const protobufPackage = "fx.migrate.v1";
 
@@ -56,9 +56,7 @@ export const QueryMigrateRecordRequest = {
   },
 
   fromJSON(object: any): QueryMigrateRecordRequest {
-    return {
-      address: isSet(object.address) ? String(object.address) : "",
-    };
+    return { address: isSet(object.address) ? String(object.address) : "" };
   },
 
   toJSON(message: QueryMigrateRecordRequest): unknown {
@@ -250,20 +248,22 @@ export interface Query {
 
 export class QueryClientImpl implements Query {
   private readonly rpc: Rpc;
-  constructor(rpc: Rpc) {
+  private readonly service: string;
+  constructor(rpc: Rpc, opts?: { service?: string }) {
+    this.service = opts?.service || "fx.migrate.v1.Query";
     this.rpc = rpc;
     this.MigrateRecord = this.MigrateRecord.bind(this);
     this.MigrateCheckAccount = this.MigrateCheckAccount.bind(this);
   }
   MigrateRecord(request: QueryMigrateRecordRequest): Promise<QueryMigrateRecordResponse> {
     const data = QueryMigrateRecordRequest.encode(request).finish();
-    const promise = this.rpc.request("fx.migrate.v1.Query", "MigrateRecord", data);
+    const promise = this.rpc.request(this.service, "MigrateRecord", data);
     return promise.then((data) => QueryMigrateRecordResponse.decode(new _m0.Reader(data)));
   }
 
   MigrateCheckAccount(request: QueryMigrateCheckAccountRequest): Promise<QueryMigrateCheckAccountResponse> {
     const data = QueryMigrateCheckAccountRequest.encode(request).finish();
-    const promise = this.rpc.request("fx.migrate.v1.Query", "MigrateCheckAccount", data);
+    const promise = this.rpc.request(this.service, "MigrateCheckAccount", data);
     return promise.then((data) => QueryMigrateCheckAccountResponse.decode(new _m0.Reader(data)));
   }
 }
@@ -289,7 +289,7 @@ export type DeepPartial<T> = T extends Builtin
 type KeysOfUnion<T> = T extends T ? keyof T : never;
 export type Exact<P, I extends P> = P extends Builtin
   ? P
-  : P & { [K in keyof P]: Exact<P[K], I[K]> } & Record<Exclude<keyof I, KeysOfUnion<P>>, never>;
+  : P & { [K in keyof P]: Exact<P[K], I[K]> } & { [K in Exclude<keyof I, KeysOfUnion<P>>]: never };
 
 if (_m0.util.Long !== Long) {
   _m0.util.Long = Long as any;

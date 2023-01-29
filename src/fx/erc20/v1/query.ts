@@ -2,8 +2,8 @@
 import Long from "long";
 import _m0 from "protobufjs/minimal";
 import { PageRequest, PageResponse } from "cosmjs-types/cosmos/base/query/v1beta1/pagination";
-import { TokenPair } from "../../../fx/erc20/v1/erc20";
-import { Params } from "../../../fx/erc20/v1/genesis";
+import { TokenPair } from "./erc20";
+import { Params } from "./genesis";
 
 export const protobufPackage = "fx.erc20.v1";
 
@@ -117,9 +117,7 @@ export const QueryTokenPairsRequest = {
   },
 
   fromJSON(object: any): QueryTokenPairsRequest {
-    return {
-      pagination: isSet(object.pagination) ? PageRequest.fromJSON(object.pagination) : undefined,
-    };
+    return { pagination: isSet(object.pagination) ? PageRequest.fromJSON(object.pagination) : undefined };
   },
 
   toJSON(message: QueryTokenPairsRequest): unknown {
@@ -238,9 +236,7 @@ export const QueryTokenPairRequest = {
   },
 
   fromJSON(object: any): QueryTokenPairRequest {
-    return {
-      token: isSet(object.token) ? String(object.token) : "",
-    };
+    return { token: isSet(object.token) ? String(object.token) : "" };
   },
 
   toJSON(message: QueryTokenPairRequest): unknown {
@@ -287,9 +283,7 @@ export const QueryTokenPairResponse = {
   },
 
   fromJSON(object: any): QueryTokenPairResponse {
-    return {
-      tokenPair: isSet(object.tokenPair) ? TokenPair.fromJSON(object.tokenPair) : undefined,
-    };
+    return { tokenPair: isSet(object.tokenPair) ? TokenPair.fromJSON(object.tokenPair) : undefined };
   },
 
   toJSON(message: QueryTokenPairResponse): unknown {
@@ -379,9 +373,7 @@ export const QueryParamsResponse = {
   },
 
   fromJSON(object: any): QueryParamsResponse {
-    return {
-      params: isSet(object.params) ? Params.fromJSON(object.params) : undefined,
-    };
+    return { params: isSet(object.params) ? Params.fromJSON(object.params) : undefined };
   },
 
   toJSON(message: QueryParamsResponse): unknown {
@@ -429,9 +421,7 @@ export const QueryDenomAliasesRequest = {
   },
 
   fromJSON(object: any): QueryDenomAliasesRequest {
-    return {
-      denom: isSet(object.denom) ? String(object.denom) : "",
-    };
+    return { denom: isSet(object.denom) ? String(object.denom) : "" };
   },
 
   toJSON(message: QueryDenomAliasesRequest): unknown {
@@ -480,9 +470,7 @@ export const QueryDenomAliasesResponse = {
   },
 
   fromJSON(object: any): QueryDenomAliasesResponse {
-    return {
-      aliases: Array.isArray(object?.aliases) ? object.aliases.map((e: any) => String(e)) : [],
-    };
+    return { aliases: Array.isArray(object?.aliases) ? object.aliases.map((e: any) => String(e)) : [] };
   },
 
   toJSON(message: QueryDenomAliasesResponse): unknown {
@@ -535,9 +523,7 @@ export const QueryAliasDenomRequest = {
   },
 
   fromJSON(object: any): QueryAliasDenomRequest {
-    return {
-      alias: isSet(object.alias) ? String(object.alias) : "",
-    };
+    return { alias: isSet(object.alias) ? String(object.alias) : "" };
   },
 
   toJSON(message: QueryAliasDenomRequest): unknown {
@@ -584,9 +570,7 @@ export const QueryAliasDenomResponse = {
   },
 
   fromJSON(object: any): QueryAliasDenomResponse {
-    return {
-      denom: isSet(object.denom) ? String(object.denom) : "",
-    };
+    return { denom: isSet(object.denom) ? String(object.denom) : "" };
   },
 
   toJSON(message: QueryAliasDenomResponse): unknown {
@@ -618,7 +602,9 @@ export interface Query {
 
 export class QueryClientImpl implements Query {
   private readonly rpc: Rpc;
-  constructor(rpc: Rpc) {
+  private readonly service: string;
+  constructor(rpc: Rpc, opts?: { service?: string }) {
+    this.service = opts?.service || "fx.erc20.v1.Query";
     this.rpc = rpc;
     this.TokenPairs = this.TokenPairs.bind(this);
     this.TokenPair = this.TokenPair.bind(this);
@@ -628,31 +614,31 @@ export class QueryClientImpl implements Query {
   }
   TokenPairs(request: QueryTokenPairsRequest): Promise<QueryTokenPairsResponse> {
     const data = QueryTokenPairsRequest.encode(request).finish();
-    const promise = this.rpc.request("fx.erc20.v1.Query", "TokenPairs", data);
+    const promise = this.rpc.request(this.service, "TokenPairs", data);
     return promise.then((data) => QueryTokenPairsResponse.decode(new _m0.Reader(data)));
   }
 
   TokenPair(request: QueryTokenPairRequest): Promise<QueryTokenPairResponse> {
     const data = QueryTokenPairRequest.encode(request).finish();
-    const promise = this.rpc.request("fx.erc20.v1.Query", "TokenPair", data);
+    const promise = this.rpc.request(this.service, "TokenPair", data);
     return promise.then((data) => QueryTokenPairResponse.decode(new _m0.Reader(data)));
   }
 
   Params(request: QueryParamsRequest): Promise<QueryParamsResponse> {
     const data = QueryParamsRequest.encode(request).finish();
-    const promise = this.rpc.request("fx.erc20.v1.Query", "Params", data);
+    const promise = this.rpc.request(this.service, "Params", data);
     return promise.then((data) => QueryParamsResponse.decode(new _m0.Reader(data)));
   }
 
   DenomAliases(request: QueryDenomAliasesRequest): Promise<QueryDenomAliasesResponse> {
     const data = QueryDenomAliasesRequest.encode(request).finish();
-    const promise = this.rpc.request("fx.erc20.v1.Query", "DenomAliases", data);
+    const promise = this.rpc.request(this.service, "DenomAliases", data);
     return promise.then((data) => QueryDenomAliasesResponse.decode(new _m0.Reader(data)));
   }
 
   AliasDenom(request: QueryAliasDenomRequest): Promise<QueryAliasDenomResponse> {
     const data = QueryAliasDenomRequest.encode(request).finish();
-    const promise = this.rpc.request("fx.erc20.v1.Query", "AliasDenom", data);
+    const promise = this.rpc.request(this.service, "AliasDenom", data);
     return promise.then((data) => QueryAliasDenomResponse.decode(new _m0.Reader(data)));
   }
 }
@@ -678,7 +664,7 @@ export type DeepPartial<T> = T extends Builtin
 type KeysOfUnion<T> = T extends T ? keyof T : never;
 export type Exact<P, I extends P> = P extends Builtin
   ? P
-  : P & { [K in keyof P]: Exact<P[K], I[K]> } & Record<Exclude<keyof I, KeysOfUnion<P>>, never>;
+  : P & { [K in keyof P]: Exact<P[K], I[K]> } & { [K in Exclude<keyof I, KeysOfUnion<P>>]: never };
 
 if (_m0.util.Long !== Long) {
   _m0.util.Long = Long as any;

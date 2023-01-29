@@ -19,7 +19,7 @@ import {
   createGovSubmitProposalAminoConverters,
   erc20ProposalContentAminoConverters,
   MsgCreateOrderEncodeObject,
-  MsgIbcTransferEncodeObject,
+  FxMsgIbcTransferEncodeObject,
 } from "./modules";
 import { OnlineWallet } from "./onlinewallet";
 import { SigningFxClient } from "./signingfxclient";
@@ -223,7 +223,7 @@ describe("denom test", () => {
     const timeout = new Date();
     timeout.setDate(timeout.getDate() + 1);
 
-    const ibcTransferMsg: MsgIbcTransferEncodeObject = {
+    const ibcTransferMsg: FxMsgIbcTransferEncodeObject = {
       typeUrl: "/fx.ibc.applications.transfer.v1.MsgTransfer",
       value: {
         sourcePort: "transfer",
@@ -244,6 +244,7 @@ describe("denom test", () => {
           denom: "USDT",
           amount: "0",
         },
+        memo: "",
       },
     };
 
@@ -278,7 +279,7 @@ describe("denom test", () => {
     const timeout = new Date();
     timeout.setDate(timeout.getDate() + 1);
 
-    const ibcTransferMsg: MsgIbcTransferEncodeObject = {
+    const ibcTransferMsg: FxMsgIbcTransferEncodeObject = {
       typeUrl: "/fx.ibc.applications.transfer.v1.MsgTransfer",
       value: {
         sourcePort: "transfer",
@@ -299,6 +300,7 @@ describe("denom test", () => {
           denom: "FX",
           amount: "0",
         },
+        memo: "",
       },
     };
 

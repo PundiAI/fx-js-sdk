@@ -51,8 +51,9 @@ export function directionToJSON(object: Direction): string {
       return "MarketBuy";
     case Direction.MarketSell:
       return "MarketSell";
+    case Direction.UNRECOGNIZED:
     default:
-      return "UNKNOWN";
+      return "UNRECOGNIZED";
   }
 }
 
@@ -185,7 +186,7 @@ export const MsgCreateOrder = {
       direction: isSet(object.direction) ? directionFromJSON(object.direction) : 0,
       price: isSet(object.price) ? String(object.price) : "",
       baseQuantity: isSet(object.baseQuantity) ? String(object.baseQuantity) : "",
-      leverage: isSet(object.leverage) ? Long.fromString(object.leverage) : Long.ZERO,
+      leverage: isSet(object.leverage) ? Long.fromValue(object.leverage) : Long.ZERO,
     };
   },
 
@@ -943,7 +944,9 @@ export interface Msg {
 
 export class MsgClientImpl implements Msg {
   private readonly rpc: Rpc;
-  constructor(rpc: Rpc) {
+  private readonly service: string;
+  constructor(rpc: Rpc, opts?: { service?: string }) {
+    this.service = opts?.service || "fx.dex.v1.Msg";
     this.rpc = rpc;
     this.CreateOrder = this.CreateOrder.bind(this);
     this.CancelOrder = this.CancelOrder.bind(this);
@@ -955,43 +958,43 @@ export class MsgClientImpl implements Msg {
   }
   CreateOrder(request: MsgCreateOrder): Promise<MsgCreateOrderResponse> {
     const data = MsgCreateOrder.encode(request).finish();
-    const promise = this.rpc.request("fx.dex.v1.Msg", "CreateOrder", data);
+    const promise = this.rpc.request(this.service, "CreateOrder", data);
     return promise.then((data) => MsgCreateOrderResponse.decode(new _m0.Reader(data)));
   }
 
   CancelOrder(request: MsgCancelOrder): Promise<MsgCancelOrderResponse> {
     const data = MsgCancelOrder.encode(request).finish();
-    const promise = this.rpc.request("fx.dex.v1.Msg", "CancelOrder", data);
+    const promise = this.rpc.request(this.service, "CancelOrder", data);
     return promise.then((data) => MsgCancelOrderResponse.decode(new _m0.Reader(data)));
   }
 
   AddMargin(request: MsgAddMargin): Promise<MsgAddMarginResp> {
     const data = MsgAddMargin.encode(request).finish();
-    const promise = this.rpc.request("fx.dex.v1.Msg", "AddMargin", data);
+    const promise = this.rpc.request(this.service, "AddMargin", data);
     return promise.then((data) => MsgAddMarginResp.decode(new _m0.Reader(data)));
   }
 
   ReduceMargin(request: MsgReduceMargin): Promise<ReduceMarginResp> {
     const data = MsgReduceMargin.encode(request).finish();
-    const promise = this.rpc.request("fx.dex.v1.Msg", "ReduceMargin", data);
+    const promise = this.rpc.request(this.service, "ReduceMargin", data);
     return promise.then((data) => ReduceMarginResp.decode(new _m0.Reader(data)));
   }
 
   ClosePosition(request: MsgClosePosition): Promise<MsgClosePositionResp> {
     const data = MsgClosePosition.encode(request).finish();
-    const promise = this.rpc.request("fx.dex.v1.Msg", "ClosePosition", data);
+    const promise = this.rpc.request(this.service, "ClosePosition", data);
     return promise.then((data) => MsgClosePositionResp.decode(new _m0.Reader(data)));
   }
 
   LiquidationPosition(request: MsgLiquidationPosition): Promise<MsgLiquidationPositionResp> {
     const data = MsgLiquidationPosition.encode(request).finish();
-    const promise = this.rpc.request("fx.dex.v1.Msg", "LiquidationPosition", data);
+    const promise = this.rpc.request(this.service, "LiquidationPosition", data);
     return promise.then((data) => MsgLiquidationPositionResp.decode(new _m0.Reader(data)));
   }
 
   FundDexPool(request: MsgFundDexPool): Promise<MsgFundDexPoolResp> {
     const data = MsgFundDexPool.encode(request).finish();
-    const promise = this.rpc.request("fx.dex.v1.Msg", "FundDexPool", data);
+    const promise = this.rpc.request(this.service, "FundDexPool", data);
     return promise.then((data) => MsgFundDexPoolResp.decode(new _m0.Reader(data)));
   }
 }
@@ -1017,7 +1020,7 @@ export type DeepPartial<T> = T extends Builtin
 type KeysOfUnion<T> = T extends T ? keyof T : never;
 export type Exact<P, I extends P> = P extends Builtin
   ? P
-  : P & { [K in keyof P]: Exact<P[K], I[K]> } & Record<Exclude<keyof I, KeysOfUnion<P>>, never>;
+  : P & { [K in keyof P]: Exact<P[K], I[K]> } & { [K in Exclude<keyof I, KeysOfUnion<P>>]: never };
 
 if (_m0.util.Long !== Long) {
   _m0.util.Long = Long as any;

@@ -2,6 +2,7 @@
 import Long from "long";
 import _m0 from "protobufjs/minimal";
 import { Coin } from "cosmjs-types/cosmos/base/v1beta1/coin";
+import { MsgTransferResponse } from "cosmjs-types/ibc/applications/transfer/v1/tx";
 import { Height } from "cosmjs-types/ibc/core/client/v1/client";
 
 export const protobufPackage = "fx.ibc.applications.transfer.v1";
@@ -36,10 +37,9 @@ export interface MsgTransfer {
   router: string;
   /** the tokens to be destination fee */
   fee?: Coin;
+  /** optional memo */
+  memo: string;
 }
-
-/** MsgTransferResponse defines the Msg/Transfer response type. */
-export interface MsgTransferResponse {}
 
 function createBaseMsgTransfer(): MsgTransfer {
   return {
@@ -52,6 +52,7 @@ function createBaseMsgTransfer(): MsgTransfer {
     timeoutTimestamp: Long.UZERO,
     router: "",
     fee: undefined,
+    memo: "",
   };
 }
 
@@ -83,6 +84,9 @@ export const MsgTransfer = {
     }
     if (message.fee !== undefined) {
       Coin.encode(message.fee, writer.uint32(74).fork()).ldelim();
+    }
+    if (message.memo !== "") {
+      writer.uint32(82).string(message.memo);
     }
     return writer;
   },
@@ -121,6 +125,9 @@ export const MsgTransfer = {
         case 9:
           message.fee = Coin.decode(reader, reader.uint32());
           break;
+        case 10:
+          message.memo = reader.string();
+          break;
         default:
           reader.skipType(tag & 7);
           break;
@@ -137,11 +144,10 @@ export const MsgTransfer = {
       sender: isSet(object.sender) ? String(object.sender) : "",
       receiver: isSet(object.receiver) ? String(object.receiver) : "",
       timeoutHeight: isSet(object.timeoutHeight) ? Height.fromJSON(object.timeoutHeight) : undefined,
-      timeoutTimestamp: isSet(object.timeoutTimestamp)
-        ? Long.fromString(object.timeoutTimestamp)
-        : Long.UZERO,
+      timeoutTimestamp: isSet(object.timeoutTimestamp) ? Long.fromValue(object.timeoutTimestamp) : Long.UZERO,
       router: isSet(object.router) ? String(object.router) : "",
       fee: isSet(object.fee) ? Coin.fromJSON(object.fee) : undefined,
+      memo: isSet(object.memo) ? String(object.memo) : "",
     };
   },
 
@@ -158,6 +164,7 @@ export const MsgTransfer = {
       (obj.timeoutTimestamp = (message.timeoutTimestamp || Long.UZERO).toString());
     message.router !== undefined && (obj.router = message.router);
     message.fee !== undefined && (obj.fee = message.fee ? Coin.toJSON(message.fee) : undefined);
+    message.memo !== undefined && (obj.memo = message.memo);
     return obj;
   },
 
@@ -179,45 +186,7 @@ export const MsgTransfer = {
         : Long.UZERO;
     message.router = object.router ?? "";
     message.fee = object.fee !== undefined && object.fee !== null ? Coin.fromPartial(object.fee) : undefined;
-    return message;
-  },
-};
-
-function createBaseMsgTransferResponse(): MsgTransferResponse {
-  return {};
-}
-
-export const MsgTransferResponse = {
-  encode(_: MsgTransferResponse, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    return writer;
-  },
-
-  decode(input: _m0.Reader | Uint8Array, length?: number): MsgTransferResponse {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
-    const message = createBaseMsgTransferResponse();
-    while (reader.pos < end) {
-      const tag = reader.uint32();
-      switch (tag >>> 3) {
-        default:
-          reader.skipType(tag & 7);
-          break;
-      }
-    }
-    return message;
-  },
-
-  fromJSON(_: any): MsgTransferResponse {
-    return {};
-  },
-
-  toJSON(_: MsgTransferResponse): unknown {
-    const obj: any = {};
-    return obj;
-  },
-
-  fromPartial<I extends Exact<DeepPartial<MsgTransferResponse>, I>>(_: I): MsgTransferResponse {
-    const message = createBaseMsgTransferResponse();
+    message.memo = object.memo ?? "";
     return message;
   },
 };
@@ -230,13 +199,15 @@ export interface Msg {
 
 export class MsgClientImpl implements Msg {
   private readonly rpc: Rpc;
-  constructor(rpc: Rpc) {
+  private readonly service: string;
+  constructor(rpc: Rpc, opts?: { service?: string }) {
+    this.service = opts?.service || "fx.ibc.applications.transfer.v1.Msg";
     this.rpc = rpc;
     this.Transfer = this.Transfer.bind(this);
   }
   Transfer(request: MsgTransfer): Promise<MsgTransferResponse> {
     const data = MsgTransfer.encode(request).finish();
-    const promise = this.rpc.request("fx.ibc.applications.transfer.v1.Msg", "Transfer", data);
+    const promise = this.rpc.request(this.service, "Transfer", data);
     return promise.then((data) => MsgTransferResponse.decode(new _m0.Reader(data)));
   }
 }
@@ -262,7 +233,7 @@ export type DeepPartial<T> = T extends Builtin
 type KeysOfUnion<T> = T extends T ? keyof T : never;
 export type Exact<P, I extends P> = P extends Builtin
   ? P
-  : P & { [K in keyof P]: Exact<P[K], I[K]> } & Record<Exclude<keyof I, KeysOfUnion<P>>, never>;
+  : P & { [K in keyof P]: Exact<P[K], I[K]> } & { [K in Exclude<keyof I, KeysOfUnion<P>>]: never };
 
 if (_m0.util.Long !== Long) {
   _m0.util.Long = Long as any;

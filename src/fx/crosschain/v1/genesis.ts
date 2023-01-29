@@ -1,17 +1,18 @@
 /* eslint-disable */
 import Long from "long";
 import _m0 from "protobufjs/minimal";
+import { MsgConfirmBatch, MsgOracleSetConfirm } from "./tx";
 import {
-  Params,
+  Attestation,
+  BridgeToken,
   LastObservedBlockHeight,
   Oracle,
   OracleSet,
-  BridgeToken,
   OutgoingTransferTx,
   OutgoingTxBatch,
-  Attestation,
-} from "../../../fx/crosschain/v1/types";
-import { MsgOracleSetConfirm, MsgConfirmBatch } from "../../../fx/crosschain/v1/tx";
+  Params,
+  ProposalOracle,
+} from "./types";
 
 export const protobufPackage = "fx.gravity.crosschain.v1";
 
@@ -28,6 +29,10 @@ export interface GenesisState {
   oracleSetConfirms: MsgOracleSetConfirm[];
   batchConfirms: MsgConfirmBatch[];
   attestations: Attestation[];
+  proposalOracle?: ProposalOracle;
+  lastObservedOracleSet?: OracleSet;
+  lastSlashedBatchBlock: Long;
+  lastSlashedOracleSetNonce: Long;
 }
 
 function createBaseGenesisState(): GenesisState {
@@ -43,6 +48,10 @@ function createBaseGenesisState(): GenesisState {
     oracleSetConfirms: [],
     batchConfirms: [],
     attestations: [],
+    proposalOracle: undefined,
+    lastObservedOracleSet: undefined,
+    lastSlashedBatchBlock: Long.UZERO,
+    lastSlashedOracleSetNonce: Long.UZERO,
   };
 }
 
@@ -80,6 +89,18 @@ export const GenesisState = {
     }
     for (const v of message.attestations) {
       Attestation.encode(v!, writer.uint32(90).fork()).ldelim();
+    }
+    if (message.proposalOracle !== undefined) {
+      ProposalOracle.encode(message.proposalOracle, writer.uint32(98).fork()).ldelim();
+    }
+    if (message.lastObservedOracleSet !== undefined) {
+      OracleSet.encode(message.lastObservedOracleSet, writer.uint32(106).fork()).ldelim();
+    }
+    if (!message.lastSlashedBatchBlock.isZero()) {
+      writer.uint32(112).uint64(message.lastSlashedBatchBlock);
+    }
+    if (!message.lastSlashedOracleSetNonce.isZero()) {
+      writer.uint32(120).uint64(message.lastSlashedOracleSetNonce);
     }
     return writer;
   },
@@ -124,6 +145,18 @@ export const GenesisState = {
         case 11:
           message.attestations.push(Attestation.decode(reader, reader.uint32()));
           break;
+        case 12:
+          message.proposalOracle = ProposalOracle.decode(reader, reader.uint32());
+          break;
+        case 13:
+          message.lastObservedOracleSet = OracleSet.decode(reader, reader.uint32());
+          break;
+        case 14:
+          message.lastSlashedBatchBlock = reader.uint64() as Long;
+          break;
+        case 15:
+          message.lastSlashedOracleSetNonce = reader.uint64() as Long;
+          break;
         default:
           reader.skipType(tag & 7);
           break;
@@ -136,7 +169,7 @@ export const GenesisState = {
     return {
       params: isSet(object.params) ? Params.fromJSON(object.params) : undefined,
       lastObservedEventNonce: isSet(object.lastObservedEventNonce)
-        ? Long.fromString(object.lastObservedEventNonce)
+        ? Long.fromValue(object.lastObservedEventNonce)
         : Long.UZERO,
       lastObservedBlockHeight: isSet(object.lastObservedBlockHeight)
         ? LastObservedBlockHeight.fromJSON(object.lastObservedBlockHeight)
@@ -163,6 +196,18 @@ export const GenesisState = {
       attestations: Array.isArray(object?.attestations)
         ? object.attestations.map((e: any) => Attestation.fromJSON(e))
         : [],
+      proposalOracle: isSet(object.proposalOracle)
+        ? ProposalOracle.fromJSON(object.proposalOracle)
+        : undefined,
+      lastObservedOracleSet: isSet(object.lastObservedOracleSet)
+        ? OracleSet.fromJSON(object.lastObservedOracleSet)
+        : undefined,
+      lastSlashedBatchBlock: isSet(object.lastSlashedBatchBlock)
+        ? Long.fromValue(object.lastSlashedBatchBlock)
+        : Long.UZERO,
+      lastSlashedOracleSetNonce: isSet(object.lastSlashedOracleSetNonce)
+        ? Long.fromValue(object.lastSlashedOracleSetNonce)
+        : Long.UZERO,
     };
   },
 
@@ -219,6 +264,18 @@ export const GenesisState = {
     } else {
       obj.attestations = [];
     }
+    message.proposalOracle !== undefined &&
+      (obj.proposalOracle = message.proposalOracle
+        ? ProposalOracle.toJSON(message.proposalOracle)
+        : undefined);
+    message.lastObservedOracleSet !== undefined &&
+      (obj.lastObservedOracleSet = message.lastObservedOracleSet
+        ? OracleSet.toJSON(message.lastObservedOracleSet)
+        : undefined);
+    message.lastSlashedBatchBlock !== undefined &&
+      (obj.lastSlashedBatchBlock = (message.lastSlashedBatchBlock || Long.UZERO).toString());
+    message.lastSlashedOracleSetNonce !== undefined &&
+      (obj.lastSlashedOracleSetNonce = (message.lastSlashedOracleSetNonce || Long.UZERO).toString());
     return obj;
   },
 
@@ -244,6 +301,22 @@ export const GenesisState = {
       object.oracleSetConfirms?.map((e) => MsgOracleSetConfirm.fromPartial(e)) || [];
     message.batchConfirms = object.batchConfirms?.map((e) => MsgConfirmBatch.fromPartial(e)) || [];
     message.attestations = object.attestations?.map((e) => Attestation.fromPartial(e)) || [];
+    message.proposalOracle =
+      object.proposalOracle !== undefined && object.proposalOracle !== null
+        ? ProposalOracle.fromPartial(object.proposalOracle)
+        : undefined;
+    message.lastObservedOracleSet =
+      object.lastObservedOracleSet !== undefined && object.lastObservedOracleSet !== null
+        ? OracleSet.fromPartial(object.lastObservedOracleSet)
+        : undefined;
+    message.lastSlashedBatchBlock =
+      object.lastSlashedBatchBlock !== undefined && object.lastSlashedBatchBlock !== null
+        ? Long.fromValue(object.lastSlashedBatchBlock)
+        : Long.UZERO;
+    message.lastSlashedOracleSetNonce =
+      object.lastSlashedOracleSetNonce !== undefined && object.lastSlashedOracleSetNonce !== null
+        ? Long.fromValue(object.lastSlashedOracleSetNonce)
+        : Long.UZERO;
     return message;
   },
 };
@@ -265,7 +338,7 @@ export type DeepPartial<T> = T extends Builtin
 type KeysOfUnion<T> = T extends T ? keyof T : never;
 export type Exact<P, I extends P> = P extends Builtin
   ? P
-  : P & { [K in keyof P]: Exact<P[K], I[K]> } & Record<Exclude<keyof I, KeysOfUnion<P>>, never>;
+  : P & { [K in keyof P]: Exact<P[K], I[K]> } & { [K in Exclude<keyof I, KeysOfUnion<P>>]: never };
 
 if (_m0.util.Long !== Long) {
   _m0.util.Long = Long as any;

@@ -1,19 +1,19 @@
 /* eslint-disable */
 import Long from "long";
 import _m0 from "protobufjs/minimal";
-import { LastObservedEthereumBlockHeight, Valset, ERC20ToDenom } from "../../../fx/gravity/v1/types";
-import { MsgSetOrchestratorAddress, MsgConfirmBatch, MsgValsetConfirm } from "../../../fx/gravity/v1/tx";
-import { OutgoingTransferTx, OutgoingTxBatch } from "../../../fx/gravity/v1/batch";
-import { Attestation } from "../../../fx/gravity/v1/attestation";
+import { MsgConfirmBatch, MsgSetOrchestratorAddress, MsgValsetConfirm } from "./tx";
+import {
+  Attestation,
+  ERC20ToDenom,
+  LastObservedEthereumBlockHeight,
+  OutgoingTransferTx,
+  OutgoingTxBatch,
+  Valset,
+} from "./types";
 
 export const protobufPackage = "fx.gravity.v1";
 
-/**
- * valset_update_power_change_percent
- *
- * If power change between validators of CurrentValset and latest valset request
- * is > 10%
- */
+/** Deprecated: after upgrade v3 */
 export interface Params {
   gravityId: string;
   contractSourceHash: string;
@@ -34,7 +34,7 @@ export interface Params {
   valsetUpdatePowerChangePercent: Uint8Array;
 }
 
-/** GenesisState struct */
+/** Deprecated: after upgrade v3 */
 export interface GenesisState {
   params?: Params;
   lastObservedNonce: Long;
@@ -47,6 +47,11 @@ export interface GenesisState {
   batchConfirms: MsgConfirmBatch[];
   valsetConfirms: MsgValsetConfirm[];
   attestations: Attestation[];
+  lastObservedValset?: Valset;
+  lastSlashedBatchBlock: Long;
+  lastSlashedValsetNonce: Long;
+  lastTxPoolId: Long;
+  lastBatchId: Long;
 }
 
 function createBaseParams(): Params {
@@ -198,24 +203,22 @@ export const Params = {
       gravityId: isSet(object.gravityId) ? String(object.gravityId) : "",
       contractSourceHash: isSet(object.contractSourceHash) ? String(object.contractSourceHash) : "",
       bridgeEthAddress: isSet(object.bridgeEthAddress) ? String(object.bridgeEthAddress) : "",
-      bridgeChainId: isSet(object.bridgeChainId) ? Long.fromString(object.bridgeChainId) : Long.UZERO,
+      bridgeChainId: isSet(object.bridgeChainId) ? Long.fromValue(object.bridgeChainId) : Long.UZERO,
       signedValsetsWindow: isSet(object.signedValsetsWindow)
-        ? Long.fromString(object.signedValsetsWindow)
+        ? Long.fromValue(object.signedValsetsWindow)
         : Long.UZERO,
       signedBatchesWindow: isSet(object.signedBatchesWindow)
-        ? Long.fromString(object.signedBatchesWindow)
+        ? Long.fromValue(object.signedBatchesWindow)
         : Long.UZERO,
       signedClaimsWindow: isSet(object.signedClaimsWindow)
-        ? Long.fromString(object.signedClaimsWindow)
+        ? Long.fromValue(object.signedClaimsWindow)
         : Long.UZERO,
       targetBatchTimeout: isSet(object.targetBatchTimeout)
-        ? Long.fromString(object.targetBatchTimeout)
+        ? Long.fromValue(object.targetBatchTimeout)
         : Long.UZERO,
-      averageBlockTime: isSet(object.averageBlockTime)
-        ? Long.fromString(object.averageBlockTime)
-        : Long.UZERO,
+      averageBlockTime: isSet(object.averageBlockTime) ? Long.fromValue(object.averageBlockTime) : Long.UZERO,
       averageEthBlockTime: isSet(object.averageEthBlockTime)
-        ? Long.fromString(object.averageEthBlockTime)
+        ? Long.fromValue(object.averageEthBlockTime)
         : Long.UZERO,
       slashFractionValset: isSet(object.slashFractionValset)
         ? bytesFromBase64(object.slashFractionValset)
@@ -230,10 +233,10 @@ export const Params = {
         ? bytesFromBase64(object.slashFractionConflictingClaim)
         : new Uint8Array(),
       unbondSlashingValsetsWindow: isSet(object.unbondSlashingValsetsWindow)
-        ? Long.fromString(object.unbondSlashingValsetsWindow)
+        ? Long.fromValue(object.unbondSlashingValsetsWindow)
         : Long.UZERO,
       ibcTransferTimeoutHeight: isSet(object.ibcTransferTimeoutHeight)
-        ? Long.fromString(object.ibcTransferTimeoutHeight)
+        ? Long.fromValue(object.ibcTransferTimeoutHeight)
         : Long.UZERO,
       valsetUpdatePowerChangePercent: isSet(object.valsetUpdatePowerChangePercent)
         ? bytesFromBase64(object.valsetUpdatePowerChangePercent)
@@ -354,6 +357,11 @@ function createBaseGenesisState(): GenesisState {
     batchConfirms: [],
     valsetConfirms: [],
     attestations: [],
+    lastObservedValset: undefined,
+    lastSlashedBatchBlock: Long.UZERO,
+    lastSlashedValsetNonce: Long.UZERO,
+    lastTxPoolId: Long.UZERO,
+    lastBatchId: Long.UZERO,
   };
 }
 
@@ -394,6 +402,21 @@ export const GenesisState = {
     }
     for (const v of message.attestations) {
       Attestation.encode(v!, writer.uint32(90).fork()).ldelim();
+    }
+    if (message.lastObservedValset !== undefined) {
+      Valset.encode(message.lastObservedValset, writer.uint32(98).fork()).ldelim();
+    }
+    if (!message.lastSlashedBatchBlock.isZero()) {
+      writer.uint32(104).uint64(message.lastSlashedBatchBlock);
+    }
+    if (!message.lastSlashedValsetNonce.isZero()) {
+      writer.uint32(112).uint64(message.lastSlashedValsetNonce);
+    }
+    if (!message.lastTxPoolId.isZero()) {
+      writer.uint32(120).uint64(message.lastTxPoolId);
+    }
+    if (!message.lastBatchId.isZero()) {
+      writer.uint32(128).uint64(message.lastBatchId);
     }
     return writer;
   },
@@ -438,6 +461,21 @@ export const GenesisState = {
         case 11:
           message.attestations.push(Attestation.decode(reader, reader.uint32()));
           break;
+        case 12:
+          message.lastObservedValset = Valset.decode(reader, reader.uint32());
+          break;
+        case 13:
+          message.lastSlashedBatchBlock = reader.uint64() as Long;
+          break;
+        case 14:
+          message.lastSlashedValsetNonce = reader.uint64() as Long;
+          break;
+        case 15:
+          message.lastTxPoolId = reader.uint64() as Long;
+          break;
+        case 16:
+          message.lastBatchId = reader.uint64() as Long;
+          break;
         default:
           reader.skipType(tag & 7);
           break;
@@ -450,7 +488,7 @@ export const GenesisState = {
     return {
       params: isSet(object.params) ? Params.fromJSON(object.params) : undefined,
       lastObservedNonce: isSet(object.lastObservedNonce)
-        ? Long.fromString(object.lastObservedNonce)
+        ? Long.fromValue(object.lastObservedNonce)
         : Long.UZERO,
       lastObservedBlockHeight: isSet(object.lastObservedBlockHeight)
         ? LastObservedEthereumBlockHeight.fromJSON(object.lastObservedBlockHeight)
@@ -477,6 +515,17 @@ export const GenesisState = {
       attestations: Array.isArray(object?.attestations)
         ? object.attestations.map((e: any) => Attestation.fromJSON(e))
         : [],
+      lastObservedValset: isSet(object.lastObservedValset)
+        ? Valset.fromJSON(object.lastObservedValset)
+        : undefined,
+      lastSlashedBatchBlock: isSet(object.lastSlashedBatchBlock)
+        ? Long.fromValue(object.lastSlashedBatchBlock)
+        : Long.UZERO,
+      lastSlashedValsetNonce: isSet(object.lastSlashedValsetNonce)
+        ? Long.fromValue(object.lastSlashedValsetNonce)
+        : Long.UZERO,
+      lastTxPoolId: isSet(object.lastTxPoolId) ? Long.fromValue(object.lastTxPoolId) : Long.UZERO,
+      lastBatchId: isSet(object.lastBatchId) ? Long.fromValue(object.lastBatchId) : Long.UZERO,
     };
   },
 
@@ -533,6 +582,17 @@ export const GenesisState = {
     } else {
       obj.attestations = [];
     }
+    message.lastObservedValset !== undefined &&
+      (obj.lastObservedValset = message.lastObservedValset
+        ? Valset.toJSON(message.lastObservedValset)
+        : undefined);
+    message.lastSlashedBatchBlock !== undefined &&
+      (obj.lastSlashedBatchBlock = (message.lastSlashedBatchBlock || Long.UZERO).toString());
+    message.lastSlashedValsetNonce !== undefined &&
+      (obj.lastSlashedValsetNonce = (message.lastSlashedValsetNonce || Long.UZERO).toString());
+    message.lastTxPoolId !== undefined &&
+      (obj.lastTxPoolId = (message.lastTxPoolId || Long.UZERO).toString());
+    message.lastBatchId !== undefined && (obj.lastBatchId = (message.lastBatchId || Long.UZERO).toString());
     return obj;
   },
 
@@ -557,6 +617,26 @@ export const GenesisState = {
     message.batchConfirms = object.batchConfirms?.map((e) => MsgConfirmBatch.fromPartial(e)) || [];
     message.valsetConfirms = object.valsetConfirms?.map((e) => MsgValsetConfirm.fromPartial(e)) || [];
     message.attestations = object.attestations?.map((e) => Attestation.fromPartial(e)) || [];
+    message.lastObservedValset =
+      object.lastObservedValset !== undefined && object.lastObservedValset !== null
+        ? Valset.fromPartial(object.lastObservedValset)
+        : undefined;
+    message.lastSlashedBatchBlock =
+      object.lastSlashedBatchBlock !== undefined && object.lastSlashedBatchBlock !== null
+        ? Long.fromValue(object.lastSlashedBatchBlock)
+        : Long.UZERO;
+    message.lastSlashedValsetNonce =
+      object.lastSlashedValsetNonce !== undefined && object.lastSlashedValsetNonce !== null
+        ? Long.fromValue(object.lastSlashedValsetNonce)
+        : Long.UZERO;
+    message.lastTxPoolId =
+      object.lastTxPoolId !== undefined && object.lastTxPoolId !== null
+        ? Long.fromValue(object.lastTxPoolId)
+        : Long.UZERO;
+    message.lastBatchId =
+      object.lastBatchId !== undefined && object.lastBatchId !== null
+        ? Long.fromValue(object.lastBatchId)
+        : Long.UZERO;
     return message;
   },
 };
@@ -565,32 +645,44 @@ declare var self: any | undefined;
 declare var window: any | undefined;
 declare var global: any | undefined;
 var globalThis: any = (() => {
-  if (typeof globalThis !== "undefined") return globalThis;
-  if (typeof self !== "undefined") return self;
-  if (typeof window !== "undefined") return window;
-  if (typeof global !== "undefined") return global;
+  if (typeof globalThis !== "undefined") {
+    return globalThis;
+  }
+  if (typeof self !== "undefined") {
+    return self;
+  }
+  if (typeof window !== "undefined") {
+    return window;
+  }
+  if (typeof global !== "undefined") {
+    return global;
+  }
   throw "Unable to locate global object";
 })();
 
-const atob: (b64: string) => string =
-  globalThis.atob || ((b64) => globalThis.Buffer.from(b64, "base64").toString("binary"));
 function bytesFromBase64(b64: string): Uint8Array {
-  const bin = atob(b64);
-  const arr = new Uint8Array(bin.length);
-  for (let i = 0; i < bin.length; ++i) {
-    arr[i] = bin.charCodeAt(i);
+  if (globalThis.Buffer) {
+    return Uint8Array.from(globalThis.Buffer.from(b64, "base64"));
+  } else {
+    const bin = globalThis.atob(b64);
+    const arr = new Uint8Array(bin.length);
+    for (let i = 0; i < bin.length; ++i) {
+      arr[i] = bin.charCodeAt(i);
+    }
+    return arr;
   }
-  return arr;
 }
 
-const btoa: (bin: string) => string =
-  globalThis.btoa || ((bin) => globalThis.Buffer.from(bin, "binary").toString("base64"));
 function base64FromBytes(arr: Uint8Array): string {
-  const bin: string[] = [];
-  for (const byte of arr) {
-    bin.push(String.fromCharCode(byte));
+  if (globalThis.Buffer) {
+    return globalThis.Buffer.from(arr).toString("base64");
+  } else {
+    const bin: string[] = [];
+    arr.forEach((byte) => {
+      bin.push(String.fromCharCode(byte));
+    });
+    return globalThis.btoa(bin.join(""));
   }
-  return btoa(bin.join(""));
 }
 
 type Builtin = Date | Function | Uint8Array | string | number | boolean | undefined;
@@ -610,7 +702,7 @@ export type DeepPartial<T> = T extends Builtin
 type KeysOfUnion<T> = T extends T ? keyof T : never;
 export type Exact<P, I extends P> = P extends Builtin
   ? P
-  : P & { [K in keyof P]: Exact<P[K], I[K]> } & Record<Exclude<keyof I, KeysOfUnion<P>>, never>;
+  : P & { [K in keyof P]: Exact<P[K], I[K]> } & { [K in Exclude<keyof I, KeysOfUnion<P>>]: never };
 
 if (_m0.util.Long !== Long) {
   _m0.util.Long = Long as any;

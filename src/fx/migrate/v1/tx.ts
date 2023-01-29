@@ -125,13 +125,15 @@ export interface Msg {
 
 export class MsgClientImpl implements Msg {
   private readonly rpc: Rpc;
-  constructor(rpc: Rpc) {
+  private readonly service: string;
+  constructor(rpc: Rpc, opts?: { service?: string }) {
+    this.service = opts?.service || "fx.migrate.v1.Msg";
     this.rpc = rpc;
     this.MigrateAccount = this.MigrateAccount.bind(this);
   }
   MigrateAccount(request: MsgMigrateAccount): Promise<MsgMigrateAccountResponse> {
     const data = MsgMigrateAccount.encode(request).finish();
-    const promise = this.rpc.request("fx.migrate.v1.Msg", "MigrateAccount", data);
+    const promise = this.rpc.request(this.service, "MigrateAccount", data);
     return promise.then((data) => MsgMigrateAccountResponse.decode(new _m0.Reader(data)));
   }
 }
@@ -157,7 +159,7 @@ export type DeepPartial<T> = T extends Builtin
 type KeysOfUnion<T> = T extends T ? keyof T : never;
 export type Exact<P, I extends P> = P extends Builtin
   ? P
-  : P & { [K in keyof P]: Exact<P[K], I[K]> } & Record<Exclude<keyof I, KeysOfUnion<P>>, never>;
+  : P & { [K in keyof P]: Exact<P[K], I[K]> } & { [K in Exclude<keyof I, KeysOfUnion<P>>]: never };
 
 if (_m0.util.Long !== Long) {
   _m0.util.Long = Long as any;
