@@ -8,9 +8,9 @@ import { MsgTransfer } from "../../fx/ibc/applications/transfer/v1/tx";
 // NOTE: ibc client proposal `ClientUpdateProposal` `UpgradeProposal` not support amino encode
 
 /* eslint-disable @typescript-eslint/no-use-before-define */
-export function fxibcAminoConverters(): Record<string, AminoConverter> {
+export function fxibcAminoConverters(aminoType?: string): Record<string, AminoConverter> {
   return {
-    "/fx.ibc.applications.transfer.v1.MsgTransfer": aminoConverterFxMsgIbcTransfer(),
+    "/fx.ibc.applications.transfer.v1.MsgTransfer": aminoConverterFxMsgIbcTransfer(aminoType),
   };
 }
 
@@ -52,12 +52,12 @@ export interface AminoFxMsgIbcTransfer extends AminoMsg {
 }
 
 export function isAminoFxMsgIbcTransfer(msg: AminoMsg): msg is AminoFxMsgIbcTransfer {
-  return msg.type === "fxtransfer/MsgTransfer";
+  return msg.type === "fxtransfer/MsgTransfer" || msg.type === "cosmos-sdk/MsgTransfer";
 }
 
-function aminoConverterFxMsgIbcTransfer(): AminoConverter {
+function aminoConverterFxMsgIbcTransfer(aminoType?: string): AminoConverter {
   return {
-    aminoType: "fxtransfer/MsgTransfer",
+    aminoType: aminoType ? aminoType : "fxtransfer/MsgTransfer",
     toAmino: ({
       sourcePort,
       sourceChannel,

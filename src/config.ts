@@ -15,7 +15,7 @@ export const fxDexTxConfig = {
     registry: new Registry([...dexTypes, ...fxibcTypes]),
     aminoTypes: new AminoTypes({
       ...dexAminoConverters(6),
-      ...fxibcAminoConverters(),
+      ...fxibcAminoConverters("cosmos-sdk/MsgTransfer"),
     }),
     gasPrice: GasPrice.fromString("0.0006USDT"),
     accountParser: accountFromAny,
