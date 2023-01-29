@@ -31,7 +31,7 @@ import { Coin } from "cosmjs-types/cosmos/base/v1beta1/coin";
 import { QueryDelegatorDelegationsResponse } from "cosmjs-types/cosmos/staking/v1beta1/query";
 import { DelegationResponse } from "cosmjs-types/cosmos/staking/v1beta1/staking";
 
-import { setupTxExtension } from "./modules/tx/queries";
+import { setupTxExtension } from "./modules";
 
 export class FxClient {
   private readonly tmClient: Tendermint34Client | undefined;
@@ -178,16 +178,11 @@ export class FxClient {
       startAtKey = pagination?.nextKey;
     } while (startAtKey !== undefined && startAtKey.length !== 0);
 
-    const sumValues = allDelegations.reduce(
-      (previousValue: Coin | null, currentValue: DelegationResponse): Coin => {
-        // Safe because field is set to non-nullable (https://github.com/cosmos/cosmos-sdk/blob/v0.45.3/proto/cosmos/staking/v1beta1/staking.proto#L295)
-        assert(currentValue.balance);
-        return previousValue !== null ? addCoins(previousValue, currentValue.balance) : currentValue.balance;
-      },
-      null,
-    );
-
-    return sumValues;
+    return allDelegations.reduce((previousValue: Coin | null, currentValue: DelegationResponse): Coin => {
+      // Safe because field is set to non-nullable (https://github.com/cosmos/cosmos-sdk/blob/v0.45.3/proto/cosmos/staking/v1beta1/staking.proto#L295)
+      assert(currentValue.balance);
+      return previousValue !== null ? addCoins(previousValue, currentValue.balance) : currentValue.balance;
+    }, null);
   }
 
   public async getDelegation(delegatorAddress: string, validatorAddress: string): Promise<Coin | null> {
@@ -245,8 +240,7 @@ export class FxClient {
       throw new Error("Unknown query type");
     }
 
-    const filtered = txs.filter((tx) => tx.height >= minHeight && tx.height <= maxHeight);
-    return filtered;
+    return txs.filter((tx) => tx.height >= minHeight && tx.height <= maxHeight);
   }
 
   public disconnect(): void {
@@ -289,6 +283,7 @@ export class FxClient {
         ? {
             code: result.code,
             height: result.height,
+            events: result.events,
             rawLog: result.rawLog,
             transactionHash: txId,
             gasUsed: result.gasUsed,
@@ -309,6 +304,7 @@ export class FxClient {
         resolve({
           code: broadcasted.code,
           height: -1,
+          events: [],
           rawLog: broadcasted.log,
           transactionHash: transactionId,
           gasUsed: broadcasted.gasUsed,
@@ -337,6 +333,7 @@ export class FxClient {
         height: tx.height,
         hash: toHex(tx.hash).toUpperCase(),
         code: tx.result.code,
+        events: [],
         rawLog: tx.result.log || "",
         tx: tx.tx,
         gasUsed: tx.result.gasUsed,

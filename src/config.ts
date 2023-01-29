@@ -2,7 +2,6 @@ import { coins } from "@cosmjs/amino";
 import { Decimal } from "@cosmjs/math";
 import { Registry } from "@cosmjs/proto-signing";
 import { AminoTypes, GasPrice } from "@cosmjs/stargate";
-import { defaultSigningClientOptions } from "@cosmjs/stargate/build/testutils.spec";
 
 import { accountFromAny } from "./accounts";
 import { dexAminoConverters, dexTypes, ibcAminoConverters, ibcTypes } from "./modules";
@@ -10,7 +9,8 @@ import { Algo } from "./signer";
 
 export const fxDexTxConfig = {
   options: {
-    ...defaultSigningClientOptions,
+    broadcastPollIntervalMs: 300,
+    broadcastTimeoutMs: 8_000,
     prefix: "0x",
     registry: new Registry([...dexTypes, ...ibcTypes]),
     aminoTypes: new AminoTypes({
@@ -31,7 +31,8 @@ export const fxDexTxConfig = {
 
 export const fxCoreTxConfigClassic = {
   options: {
-    ...defaultSigningClientOptions,
+    broadcastPollIntervalMs: 300,
+    broadcastTimeoutMs: 8_000,
     prefix: "fx",
     registry: new Registry([...ibcTypes]),
     aminoTypes: new AminoTypes({
@@ -48,7 +49,8 @@ export const fxCoreTxConfigClassic = {
 
 export const fxCoreTxConfig = {
   options: {
-    ...defaultSigningClientOptions,
+    broadcastPollIntervalMs: 300,
+    broadcastTimeoutMs: 8_000,
     prefix: "fx",
     registry: new Registry([...ibcTypes]),
     aminoTypes: new AminoTypes({

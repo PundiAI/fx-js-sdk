@@ -21,7 +21,7 @@ import {
   createAuthzAminoConverters,
   createBankAminoConverters,
   createDistributionAminoConverters,
-  createFreegrantAminoConverters,
+  createFeegrantAminoConverters,
   createGovAminoConverters,
   createIbcAminoConverters,
   createStakingAminoConverters,
@@ -68,7 +68,7 @@ function createDefaultTypes(prefix: string): AminoConverters {
     ...createGovAminoConverters(),
     ...createStakingAminoConverters(prefix),
     ...createIbcAminoConverters(),
-    ...createFreegrantAminoConverters(),
+    ...createFeegrantAminoConverters(),
   };
 }
 
@@ -232,6 +232,8 @@ export class SigningFxClient extends FxClient {
       [{ pubkey, sequence: signedSequence }],
       signed.fee.amount,
       signedGasLimit,
+      signed.fee.granter,
+      signed.fee.payer,
       signMode,
     );
     return TxRaw.fromPartial({
@@ -265,7 +267,13 @@ export class SigningFxClient extends FxClient {
     };
     const txBodyBytes = this.registry.encode(txBodyEncodeObject);
     const gasLimit = Int53.fromString(fee.gas).toNumber();
-    const authInfoBytes = makeAuthInfoBytes([{ pubkey, sequence }], fee.amount, gasLimit);
+    const authInfoBytes = makeAuthInfoBytes(
+      [{ pubkey, sequence }],
+      fee.amount,
+      gasLimit,
+      fee.granter,
+      fee.payer,
+    );
     const signDoc = makeSignDoc(txBodyBytes, authInfoBytes, chainId, accountNumber);
     const { signature, signed } = await this.signer.signDirect(signerAddress, signDoc);
     return TxRaw.fromPartial({
