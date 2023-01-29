@@ -1,6 +1,6 @@
 {
   "name": "fx-js-sdk",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "fx js sdk",
   "main": "build/index.js",
   "types": "build/index.d.ts",
@@ -26,6 +26,7 @@
     "format": "prettier --write --loglevel warn \"./src/**/*.ts\"",
     "codegen": "./gen-proto.sh && yarn format",
     "build": "rm -rf ./build && tsc",
+    "publish": "yarn build && npm publish",
     "pack-web": "yarn build && webpack --mode development --config webpack.web.config.js"
   },
   "dependencies": {
@@ -59,7 +60,7 @@
     "ts-proto": "^1.92.1",
     "typescript": "~4.9.4",
     "webpack": "^5.32.0",
-    "webpack-cli": "^5.0.1"
+    "webpack-cli": "^4.6.0"
   },
   "stableVersion": "0.1.0"
 }
