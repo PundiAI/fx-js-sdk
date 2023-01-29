@@ -47,7 +47,7 @@ export interface AminoFxMsgIbcTransfer extends AminoMsg {
     readonly timeout_timestamp?: string;
     readonly router?: string;
     readonly fee?: Coin;
-    readonly memo: string;
+    readonly memo?: string;
   };
 }
 
@@ -98,7 +98,7 @@ function aminoConverterFxMsgIbcTransfer(): AminoConverter {
               denom: "",
               amount: "0",
             },
-        memo: memo,
+        memo: memo === "" ? undefined : memo,
       };
     },
     fromAmino: ({
@@ -139,7 +139,7 @@ function aminoConverterFxMsgIbcTransfer(): AminoConverter {
                 amount: fee.amount,
               }
             : undefined,
-        memo: memo,
+        memo: memo === undefined ? "" : memo,
       };
     },
   };
