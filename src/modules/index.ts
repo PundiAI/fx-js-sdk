@@ -66,7 +66,6 @@ export {
   isAminoParameterChangeProposal,
   paramsProposalContentAminoConverters,
 } from "./params/aminomessages";
-export { setupTxExtension } from "./tx/queries";
 export {
   AminoCancelSoftwareUpgradeProposal,
   AminoSoftwareUpgradeProposal,
@@ -74,6 +73,12 @@ export {
   isAminoSoftwareUpgradeProposal,
   upgradeProposalContentAminoConverters,
 } from "./upgrade/aminomessages";
+
+export { setupBaseExtension } from "./base/queries";
+export { setupCrosschainExtension } from "./crosschain/queries";
+export { setupErc20Extension } from "./erc20/queries";
+export { setupFxIbcExtension } from "./ibc/queries";
+export { setupTxExtension } from "./tx/queries";
 
 /* eslint-disable no-param-reassign */
 export function toDecString(dec: string | undefined, precision: number): string {

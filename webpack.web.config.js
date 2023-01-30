@@ -8,12 +8,11 @@ const distdir = path.join(__dirname, "dist", "web");
 
 module.exports = [
   {
-    // bundle used for Karma tests
     target: target,
-    entry: glob.sync("./build/**/*.spec.js"),
+    entry: glob.sync("./build/**/*.js"),
     output: {
       path: distdir,
-      filename: "tests.js",
+      filename: "fx-js-sdk.js",
     },
     plugins: [
       new webpack.EnvironmentPlugin({

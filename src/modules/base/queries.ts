@@ -9,7 +9,7 @@ export interface FxBaseExtension {
   };
 }
 
-export function setupOtherExtension(base: QueryClient): FxBaseExtension {
+export function setupBaseExtension(base: QueryClient): FxBaseExtension {
   const rpc = createProtobufRpcClient(base);
   // Use this service to get easy typed access to query methods
   // This cannot be used for proof verification
