@@ -1,6 +1,6 @@
 {
   "name": "fx-js-sdk",
-  "version": "0.1.6",
+  "version": "0.2.0",
   "description": "fx js sdk",
   "main": "build/index.js",
   "types": "build/index.d.ts",
@@ -30,15 +30,15 @@
     "pack-web": "yarn build && webpack --mode development --config webpack.web.config.js"
   },
   "dependencies": {
-    "@cosmjs/amino": "^0.29.5",
-    "@cosmjs/crypto": "^0.29.5",
-    "@cosmjs/encoding": "^0.29.5",
-    "@cosmjs/proto-signing": "^0.29.5",
-    "@cosmjs/stargate": "^0.29.5",
-    "cosmjs-types": "^0.6.0",
+    "@cosmjs/amino": "^0.30.1",
+    "@cosmjs/crypto": "^0.30.1",
+    "@cosmjs/encoding": "^0.30.1",
+    "@cosmjs/proto-signing": "^0.30.1",
+    "@cosmjs/stargate": "^0.30.1",
+    "cosmjs-types": "^0.7.1",
     "ethers": "^5.6.4",
     "long": "^4.0.0",
-    "protobufjs": "^7.1.2"
+    "protobufjs": "^6.11.3"
   },
   "devDependencies": {
     "@types/jest": "^29.2.4",

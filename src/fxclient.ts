@@ -283,6 +283,7 @@ export class FxClient {
         ? {
             code: result.code,
             height: result.height,
+            txIndex: result.txIndex,
             events: result.events,
             rawLog: result.rawLog,
             transactionHash: txId,
@@ -303,6 +304,7 @@ export class FxClient {
       return new Promise((resolve) => {
         resolve({
           code: broadcasted.code,
+          txIndex: -1,
           height: -1,
           events: [],
           rawLog: broadcasted.log,
@@ -332,6 +334,7 @@ export class FxClient {
       return {
         height: tx.height,
         hash: toHex(tx.hash).toUpperCase(),
+        txIndex: tx.index,
         code: tx.result.code,
         events: [],
         rawLog: tx.result.log || "",

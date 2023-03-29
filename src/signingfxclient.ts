@@ -56,17 +56,13 @@ export const defaultRegistryTypes: ReadonlyArray<[string, GeneratedType]> = [
   ...ibcTypes,
 ];
 
-function createDefaultRegistry(): Registry {
-  return new Registry(defaultRegistryTypes);
-}
-
-function createDefaultTypes(prefix: string): AminoConverters {
+export function createDefaultAminoConverters(): AminoConverters {
   return {
     ...createAuthzAminoConverters(),
     ...createBankAminoConverters(),
     ...createDistributionAminoConverters(),
     ...createGovAminoConverters(),
-    ...createStakingAminoConverters(prefix),
+    ...createStakingAminoConverters(),
     ...createIbcAminoConverters(),
     ...createFeegrantAminoConverters(),
   };
@@ -112,10 +108,10 @@ export class SigningFxClient extends FxClient {
     options: SigningStargateClientOptions,
   ) {
     super(tmClient, options);
-    // TODO: do we really want to set a default here? Ideally we could get it from the signer such that users only have to set it once.
-    const prefix = options.prefix ?? "cosmos";
-    const { registry = createDefaultRegistry(), aminoTypes = new AminoTypes(createDefaultTypes(prefix)) } =
-      options;
+    const {
+      registry = new Registry(defaultRegistryTypes),
+      aminoTypes = new AminoTypes(createDefaultAminoConverters()),
+    } = options;
     this.registry = registry;
     this.aminoTypes = aminoTypes;
     this.signer = signer;
