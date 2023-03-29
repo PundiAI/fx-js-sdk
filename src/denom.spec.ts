@@ -17,9 +17,8 @@ import { RegisterCoinProposal } from "./fx/erc20/v1/erc20";
 import { fxCoreTxConfig, fxDexTxConfig } from "./index";
 import {
   createGovSubmitProposalAminoConverters,
-  erc20ProposalContentAminoConverters,
-  MsgCreateOrderEncodeObject,
   FxMsgIbcTransferEncodeObject,
+  MsgCreateOrderEncodeObject,
 } from "./modules";
 import { OnlineWallet } from "./onlinewallet";
 import { SigningFxClient } from "./signingfxclient";
@@ -53,7 +52,7 @@ describe("denom test", () => {
     const registry = new Registry([...defaultRegistryTypes]);
     const aminoTypes = new AminoTypes({
       ...createBankAminoConverters(),
-      ...createGovSubmitProposalAminoConverters(erc20ProposalContentAminoConverters()),
+      ...createGovSubmitProposalAminoConverters(),
     });
     const options = {
       ...fxCoreTxConfig.options,

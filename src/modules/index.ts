@@ -1,18 +1,18 @@
 import { Any } from "cosmjs-types/google/protobuf/any";
 
 /* eslint-disable import/no-cycle */
+export { setupBaseExtension } from "./base/queries";
 export {
   AminoMsgSendToExternal,
-  AminoUpdateChainOraclesProposal,
-  crosschainProposalContentAminoConverters,
+  crosschainAminoConverters,
   isAminoMsgSendToExternal,
-  isAminoUpdateChainOraclesProposal,
 } from "./crosschain/aminomessages";
 export {
   crosschainTypes,
   isMsgSendToExternalEncodeObject,
   MsgSendToExternalEncodeObject,
 } from "./crosschain/messages";
+export { setupCrosschainExtension } from "./crosschain/queries";
 export {
   AminoMsgAddMargin,
   AminoMsgCancelOrder,
@@ -35,48 +35,10 @@ export {
   MsgClosePositionEncodeObject,
   MsgCreateOrderEncodeObject,
 } from "./dex/messages";
-export {
-  AminoCommunityPoolSpendProposal,
-  distributionProposalContentAminoConverters,
-  isAminoCommunityPoolSpendProposal,
-} from "./distribution/aminomessages";
-export {
-  AminoDenomUnit,
-  AminoMetadata,
-  AminoRegisterCoinProposal,
-  AminoRegisterERC20Proposal,
-  AminoToggleTokenConversionProposal,
-  AminoUpdateDenomAliasProposal,
-  erc20ProposalContentAminoConverters,
-  isAminoRegisterCoinProposal,
-  isAminoRegisterERC20Proposal,
-  isAminoToggleTokenConversionProposal,
-  isAminoUpdateDenomAliasProposal,
-} from "./erc20/aminomessages";
-export {
-  AminoTextProposal,
-  createGovSubmitProposalAminoConverters,
-  govProposalContentAminoConverters,
-  isAminoTextProposal,
-} from "./gov/aminomessages";
-export { AminoFxMsgIbcTransfer, fxibcAminoConverters, isAminoFxMsgIbcTransfer } from "./ibc/aminomessages";
-export { fxibcTypes, isMsgIbcTransferEncodeObject, FxMsgIbcTransferEncodeObject } from "./ibc/messages";
-export {
-  AminoParameterChangeProposal,
-  isAminoParameterChangeProposal,
-  paramsProposalContentAminoConverters,
-} from "./params/aminomessages";
-export {
-  AminoCancelSoftwareUpgradeProposal,
-  AminoSoftwareUpgradeProposal,
-  isAminoCancelSoftwareUpgradeProposal,
-  isAminoSoftwareUpgradeProposal,
-  upgradeProposalContentAminoConverters,
-} from "./upgrade/aminomessages";
-
-export { setupBaseExtension } from "./base/queries";
-export { setupCrosschainExtension } from "./crosschain/queries";
 export { setupErc20Extension } from "./erc20/queries";
+export { createGovSubmitProposalAminoConverters } from "./gov/aminomessages";
+export { AminoFxMsgIbcTransfer, fxibcAminoConverters, isAminoFxMsgIbcTransfer } from "./ibc/aminomessages";
+export { fxibcTypes, FxMsgIbcTransferEncodeObject, isMsgIbcTransferEncodeObject } from "./ibc/messages";
 export { setupFxIbcExtension } from "./ibc/queries";
 export { setupTxExtension } from "./tx/queries";
 
