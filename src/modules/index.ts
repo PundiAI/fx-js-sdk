@@ -2,43 +2,14 @@ import { Any } from "cosmjs-types/google/protobuf/any";
 
 /* eslint-disable import/no-cycle */
 export { setupBaseExtension } from "./base/queries";
-export {
-  AminoMsgSendToExternal,
-  crosschainAminoConverters,
-  isAminoMsgSendToExternal,
-} from "./crosschain/aminomessages";
-export {
-  crosschainTypes,
-  isMsgSendToExternalEncodeObject,
-  MsgSendToExternalEncodeObject,
-} from "./crosschain/messages";
+export { crosschainAminoConverters } from "./crosschain/aminomessages";
 export { setupCrosschainExtension } from "./crosschain/queries";
-export {
-  AminoMsgAddMargin,
-  AminoMsgCancelOrder,
-  AminoMsgClosePosition,
-  AminoMsgCreateOrder,
-  dexAminoConverters,
-  isAminoMsgAddMargin,
-  isAminoMsgCancelOrder,
-  isAminoMsgClosePosition,
-  isAminoMsgCreateOrder,
-} from "./dex/aminomessages";
-export {
-  dexTypes,
-  isMsgAddMarginEncodeObject,
-  isMsgCancelOrderEncodeObject,
-  isMsgClosePositionEncodeObject,
-  isMsgCreateOrderEncodeObject,
-  MsgAddMarginEncodeObject,
-  MsgCancelOrderEncodeObject,
-  MsgClosePositionEncodeObject,
-  MsgCreateOrderEncodeObject,
-} from "./dex/messages";
+export { dexAminoConverters } from "./dex/aminomessages";
+export { dexTypes } from "./dex/messages";
 export { setupErc20Extension } from "./erc20/queries";
-export { createGovSubmitProposalAminoConverters } from "./gov/aminomessages";
-export { AminoFxMsgIbcTransfer, fxibcAminoConverters, isAminoFxMsgIbcTransfer } from "./ibc/aminomessages";
-export { fxibcTypes, FxMsgIbcTransferEncodeObject, isMsgIbcTransferEncodeObject } from "./ibc/messages";
+export { fxgovSubmitProposalAminoConverters } from "./gov/aminomessages";
+export { fxibcAminoConverters } from "./ibc/aminomessages";
+export { fxibcTypes } from "./ibc/messages";
 export { setupFxIbcExtension } from "./ibc/queries";
 export { setupTxExtension } from "./tx/queries";
 

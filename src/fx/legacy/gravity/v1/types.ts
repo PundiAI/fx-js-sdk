@@ -145,22 +145,31 @@ export const BridgeValidator = {
   },
 
   decode(input: _m0.Reader | Uint8Array, length?: number): BridgeValidator {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseBridgeValidator();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
+          if (tag != 8) {
+            break;
+          }
+
           message.power = reader.uint64() as Long;
-          break;
+          continue;
         case 2:
+          if (tag != 18) {
+            break;
+          }
+
           message.ethAddress = reader.string();
-          break;
-        default:
-          reader.skipType(tag & 7);
-          break;
+          continue;
       }
+      if ((tag & 7) == 4 || tag == 0) {
+        break;
+      }
+      reader.skipType(tag & 7);
     }
     return message;
   },
@@ -179,10 +188,13 @@ export const BridgeValidator = {
     return obj;
   },
 
+  create<I extends Exact<DeepPartial<BridgeValidator>, I>>(base?: I): BridgeValidator {
+    return BridgeValidator.fromPartial(base ?? {});
+  },
+
   fromPartial<I extends Exact<DeepPartial<BridgeValidator>, I>>(object: I): BridgeValidator {
     const message = createBaseBridgeValidator();
-    message.power =
-      object.power !== undefined && object.power !== null ? Long.fromValue(object.power) : Long.UZERO;
+    message.power = (object.power !== undefined && object.power !== null) ? Long.fromValue(object.power) : Long.UZERO;
     message.ethAddress = object.ethAddress ?? "";
     return message;
   },
@@ -207,25 +219,38 @@ export const Valset = {
   },
 
   decode(input: _m0.Reader | Uint8Array, length?: number): Valset {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseValset();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
+          if (tag != 8) {
+            break;
+          }
+
           message.nonce = reader.uint64() as Long;
-          break;
+          continue;
         case 2:
+          if (tag != 18) {
+            break;
+          }
+
           message.members.push(BridgeValidator.decode(reader, reader.uint32()));
-          break;
+          continue;
         case 3:
+          if (tag != 24) {
+            break;
+          }
+
           message.height = reader.uint64() as Long;
-          break;
-        default:
-          reader.skipType(tag & 7);
-          break;
+          continue;
       }
+      if ((tag & 7) == 4 || tag == 0) {
+        break;
+      }
+      reader.skipType(tag & 7);
     }
     return message;
   },
@@ -233,9 +258,7 @@ export const Valset = {
   fromJSON(object: any): Valset {
     return {
       nonce: isSet(object.nonce) ? Long.fromValue(object.nonce) : Long.UZERO,
-      members: Array.isArray(object?.members)
-        ? object.members.map((e: any) => BridgeValidator.fromJSON(e))
-        : [],
+      members: Array.isArray(object?.members) ? object.members.map((e: any) => BridgeValidator.fromJSON(e)) : [],
       height: isSet(object.height) ? Long.fromValue(object.height) : Long.UZERO,
     };
   },
@@ -244,7 +267,7 @@ export const Valset = {
     const obj: any = {};
     message.nonce !== undefined && (obj.nonce = (message.nonce || Long.UZERO).toString());
     if (message.members) {
-      obj.members = message.members.map((e) => (e ? BridgeValidator.toJSON(e) : undefined));
+      obj.members = message.members.map((e) => e ? BridgeValidator.toJSON(e) : undefined);
     } else {
       obj.members = [];
     }
@@ -252,13 +275,17 @@ export const Valset = {
     return obj;
   },
 
+  create<I extends Exact<DeepPartial<Valset>, I>>(base?: I): Valset {
+    return Valset.fromPartial(base ?? {});
+  },
+
   fromPartial<I extends Exact<DeepPartial<Valset>, I>>(object: I): Valset {
     const message = createBaseValset();
-    message.nonce =
-      object.nonce !== undefined && object.nonce !== null ? Long.fromValue(object.nonce) : Long.UZERO;
+    message.nonce = (object.nonce !== undefined && object.nonce !== null) ? Long.fromValue(object.nonce) : Long.UZERO;
     message.members = object.members?.map((e) => BridgeValidator.fromPartial(e)) || [];
-    message.height =
-      object.height !== undefined && object.height !== null ? Long.fromValue(object.height) : Long.UZERO;
+    message.height = (object.height !== undefined && object.height !== null)
+      ? Long.fromValue(object.height)
+      : Long.UZERO;
     return message;
   },
 };
@@ -279,22 +306,31 @@ export const LastObservedEthereumBlockHeight = {
   },
 
   decode(input: _m0.Reader | Uint8Array, length?: number): LastObservedEthereumBlockHeight {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseLastObservedEthereumBlockHeight();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
+          if (tag != 8) {
+            break;
+          }
+
           message.fxBlockHeight = reader.uint64() as Long;
-          break;
+          continue;
         case 2:
+          if (tag != 16) {
+            break;
+          }
+
           message.ethBlockHeight = reader.uint64() as Long;
-          break;
-        default:
-          reader.skipType(tag & 7);
-          break;
+          continue;
       }
+      if ((tag & 7) == 4 || tag == 0) {
+        break;
+      }
+      reader.skipType(tag & 7);
     }
     return message;
   },
@@ -308,25 +344,25 @@ export const LastObservedEthereumBlockHeight = {
 
   toJSON(message: LastObservedEthereumBlockHeight): unknown {
     const obj: any = {};
-    message.fxBlockHeight !== undefined &&
-      (obj.fxBlockHeight = (message.fxBlockHeight || Long.UZERO).toString());
-    message.ethBlockHeight !== undefined &&
-      (obj.ethBlockHeight = (message.ethBlockHeight || Long.UZERO).toString());
+    message.fxBlockHeight !== undefined && (obj.fxBlockHeight = (message.fxBlockHeight || Long.UZERO).toString());
+    message.ethBlockHeight !== undefined && (obj.ethBlockHeight = (message.ethBlockHeight || Long.UZERO).toString());
     return obj;
+  },
+
+  create<I extends Exact<DeepPartial<LastObservedEthereumBlockHeight>, I>>(base?: I): LastObservedEthereumBlockHeight {
+    return LastObservedEthereumBlockHeight.fromPartial(base ?? {});
   },
 
   fromPartial<I extends Exact<DeepPartial<LastObservedEthereumBlockHeight>, I>>(
     object: I,
   ): LastObservedEthereumBlockHeight {
     const message = createBaseLastObservedEthereumBlockHeight();
-    message.fxBlockHeight =
-      object.fxBlockHeight !== undefined && object.fxBlockHeight !== null
-        ? Long.fromValue(object.fxBlockHeight)
-        : Long.UZERO;
-    message.ethBlockHeight =
-      object.ethBlockHeight !== undefined && object.ethBlockHeight !== null
-        ? Long.fromValue(object.ethBlockHeight)
-        : Long.UZERO;
+    message.fxBlockHeight = (object.fxBlockHeight !== undefined && object.fxBlockHeight !== null)
+      ? Long.fromValue(object.fxBlockHeight)
+      : Long.UZERO;
+    message.ethBlockHeight = (object.ethBlockHeight !== undefined && object.ethBlockHeight !== null)
+      ? Long.fromValue(object.ethBlockHeight)
+      : Long.UZERO;
     return message;
   },
 };
@@ -347,22 +383,31 @@ export const ERC20ToDenom = {
   },
 
   decode(input: _m0.Reader | Uint8Array, length?: number): ERC20ToDenom {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseERC20ToDenom();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
+          if (tag != 10) {
+            break;
+          }
+
           message.erc20 = reader.string();
-          break;
+          continue;
         case 2:
+          if (tag != 18) {
+            break;
+          }
+
           message.denom = reader.string();
-          break;
-        default:
-          reader.skipType(tag & 7);
-          break;
+          continue;
       }
+      if ((tag & 7) == 4 || tag == 0) {
+        break;
+      }
+      reader.skipType(tag & 7);
     }
     return message;
   },
@@ -379,6 +424,10 @@ export const ERC20ToDenom = {
     message.erc20 !== undefined && (obj.erc20 = message.erc20);
     message.denom !== undefined && (obj.denom = message.denom);
     return obj;
+  },
+
+  create<I extends Exact<DeepPartial<ERC20ToDenom>, I>>(base?: I): ERC20ToDenom {
+    return ERC20ToDenom.fromPartial(base ?? {});
   },
 
   fromPartial<I extends Exact<DeepPartial<ERC20ToDenom>, I>>(object: I): ERC20ToDenom {
@@ -405,22 +454,31 @@ export const ERC20Token = {
   },
 
   decode(input: _m0.Reader | Uint8Array, length?: number): ERC20Token {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseERC20Token();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
+          if (tag != 10) {
+            break;
+          }
+
           message.contract = reader.string();
-          break;
+          continue;
         case 2:
+          if (tag != 18) {
+            break;
+          }
+
           message.amount = reader.string();
-          break;
-        default:
-          reader.skipType(tag & 7);
-          break;
+          continue;
       }
+      if ((tag & 7) == 4 || tag == 0) {
+        break;
+      }
+      reader.skipType(tag & 7);
     }
     return message;
   },
@@ -437,6 +495,10 @@ export const ERC20Token = {
     message.contract !== undefined && (obj.contract = message.contract);
     message.amount !== undefined && (obj.amount = message.amount);
     return obj;
+  },
+
+  create<I extends Exact<DeepPartial<ERC20Token>, I>>(base?: I): ERC20Token {
+    return ERC20Token.fromPartial(base ?? {});
   },
 
   fromPartial<I extends Exact<DeepPartial<ERC20Token>, I>>(object: I): ERC20Token {
@@ -469,28 +531,45 @@ export const Attestation = {
   },
 
   decode(input: _m0.Reader | Uint8Array, length?: number): Attestation {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseAttestation();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
+          if (tag != 8) {
+            break;
+          }
+
           message.observed = reader.bool();
-          break;
+          continue;
         case 2:
+          if (tag != 18) {
+            break;
+          }
+
           message.votes.push(reader.string());
-          break;
+          continue;
         case 3:
+          if (tag != 24) {
+            break;
+          }
+
           message.height = reader.uint64() as Long;
-          break;
+          continue;
         case 4:
+          if (tag != 34) {
+            break;
+          }
+
           message.claim = Any.decode(reader, reader.uint32());
-          break;
-        default:
-          reader.skipType(tag & 7);
-          break;
+          continue;
       }
+      if ((tag & 7) == 4 || tag == 0) {
+        break;
+      }
+      reader.skipType(tag & 7);
     }
     return message;
   },
@@ -517,14 +596,18 @@ export const Attestation = {
     return obj;
   },
 
+  create<I extends Exact<DeepPartial<Attestation>, I>>(base?: I): Attestation {
+    return Attestation.fromPartial(base ?? {});
+  },
+
   fromPartial<I extends Exact<DeepPartial<Attestation>, I>>(object: I): Attestation {
     const message = createBaseAttestation();
     message.observed = object.observed ?? false;
     message.votes = object.votes?.map((e) => e) || [];
-    message.height =
-      object.height !== undefined && object.height !== null ? Long.fromValue(object.height) : Long.UZERO;
-    message.claim =
-      object.claim !== undefined && object.claim !== null ? Any.fromPartial(object.claim) : undefined;
+    message.height = (object.height !== undefined && object.height !== null)
+      ? Long.fromValue(object.height)
+      : Long.UZERO;
+    message.claim = (object.claim !== undefined && object.claim !== null) ? Any.fromPartial(object.claim) : undefined;
     return message;
   },
 };
@@ -564,34 +647,59 @@ export const OutgoingTxBatch = {
   },
 
   decode(input: _m0.Reader | Uint8Array, length?: number): OutgoingTxBatch {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseOutgoingTxBatch();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
+          if (tag != 8) {
+            break;
+          }
+
           message.batchNonce = reader.uint64() as Long;
-          break;
+          continue;
         case 2:
+          if (tag != 16) {
+            break;
+          }
+
           message.batchTimeout = reader.uint64() as Long;
-          break;
+          continue;
         case 3:
+          if (tag != 26) {
+            break;
+          }
+
           message.transactions.push(OutgoingTransferTx.decode(reader, reader.uint32()));
-          break;
+          continue;
         case 4:
+          if (tag != 34) {
+            break;
+          }
+
           message.tokenContract = reader.string();
-          break;
+          continue;
         case 5:
+          if (tag != 40) {
+            break;
+          }
+
           message.block = reader.uint64() as Long;
-          break;
+          continue;
         case 6:
+          if (tag != 50) {
+            break;
+          }
+
           message.feeReceive = reader.string();
-          break;
-        default:
-          reader.skipType(tag & 7);
-          break;
+          continue;
       }
+      if ((tag & 7) == 4 || tag == 0) {
+        break;
+      }
+      reader.skipType(tag & 7);
     }
     return message;
   },
@@ -612,10 +720,9 @@ export const OutgoingTxBatch = {
   toJSON(message: OutgoingTxBatch): unknown {
     const obj: any = {};
     message.batchNonce !== undefined && (obj.batchNonce = (message.batchNonce || Long.UZERO).toString());
-    message.batchTimeout !== undefined &&
-      (obj.batchTimeout = (message.batchTimeout || Long.UZERO).toString());
+    message.batchTimeout !== undefined && (obj.batchTimeout = (message.batchTimeout || Long.UZERO).toString());
     if (message.transactions) {
-      obj.transactions = message.transactions.map((e) => (e ? OutgoingTransferTx.toJSON(e) : undefined));
+      obj.transactions = message.transactions.map((e) => e ? OutgoingTransferTx.toJSON(e) : undefined);
     } else {
       obj.transactions = [];
     }
@@ -625,20 +732,21 @@ export const OutgoingTxBatch = {
     return obj;
   },
 
+  create<I extends Exact<DeepPartial<OutgoingTxBatch>, I>>(base?: I): OutgoingTxBatch {
+    return OutgoingTxBatch.fromPartial(base ?? {});
+  },
+
   fromPartial<I extends Exact<DeepPartial<OutgoingTxBatch>, I>>(object: I): OutgoingTxBatch {
     const message = createBaseOutgoingTxBatch();
-    message.batchNonce =
-      object.batchNonce !== undefined && object.batchNonce !== null
-        ? Long.fromValue(object.batchNonce)
-        : Long.UZERO;
-    message.batchTimeout =
-      object.batchTimeout !== undefined && object.batchTimeout !== null
-        ? Long.fromValue(object.batchTimeout)
-        : Long.UZERO;
+    message.batchNonce = (object.batchNonce !== undefined && object.batchNonce !== null)
+      ? Long.fromValue(object.batchNonce)
+      : Long.UZERO;
+    message.batchTimeout = (object.batchTimeout !== undefined && object.batchTimeout !== null)
+      ? Long.fromValue(object.batchTimeout)
+      : Long.UZERO;
     message.transactions = object.transactions?.map((e) => OutgoingTransferTx.fromPartial(e)) || [];
     message.tokenContract = object.tokenContract ?? "";
-    message.block =
-      object.block !== undefined && object.block !== null ? Long.fromValue(object.block) : Long.UZERO;
+    message.block = (object.block !== undefined && object.block !== null) ? Long.fromValue(object.block) : Long.UZERO;
     message.feeReceive = object.feeReceive ?? "";
     return message;
   },
@@ -669,31 +777,52 @@ export const OutgoingTransferTx = {
   },
 
   decode(input: _m0.Reader | Uint8Array, length?: number): OutgoingTransferTx {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseOutgoingTransferTx();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
+          if (tag != 8) {
+            break;
+          }
+
           message.id = reader.uint64() as Long;
-          break;
+          continue;
         case 2:
+          if (tag != 18) {
+            break;
+          }
+
           message.sender = reader.string();
-          break;
+          continue;
         case 3:
+          if (tag != 26) {
+            break;
+          }
+
           message.destAddress = reader.string();
-          break;
+          continue;
         case 4:
+          if (tag != 34) {
+            break;
+          }
+
           message.erc20Token = ERC20Token.decode(reader, reader.uint32());
-          break;
+          continue;
         case 5:
+          if (tag != 42) {
+            break;
+          }
+
           message.erc20Fee = ERC20Token.decode(reader, reader.uint32());
-          break;
-        default:
-          reader.skipType(tag & 7);
-          break;
+          continue;
       }
+      if ((tag & 7) == 4 || tag == 0) {
+        break;
+      }
+      reader.skipType(tag & 7);
     }
     return message;
   },
@@ -720,19 +849,21 @@ export const OutgoingTransferTx = {
     return obj;
   },
 
+  create<I extends Exact<DeepPartial<OutgoingTransferTx>, I>>(base?: I): OutgoingTransferTx {
+    return OutgoingTransferTx.fromPartial(base ?? {});
+  },
+
   fromPartial<I extends Exact<DeepPartial<OutgoingTransferTx>, I>>(object: I): OutgoingTransferTx {
     const message = createBaseOutgoingTransferTx();
-    message.id = object.id !== undefined && object.id !== null ? Long.fromValue(object.id) : Long.UZERO;
+    message.id = (object.id !== undefined && object.id !== null) ? Long.fromValue(object.id) : Long.UZERO;
     message.sender = object.sender ?? "";
     message.destAddress = object.destAddress ?? "";
-    message.erc20Token =
-      object.erc20Token !== undefined && object.erc20Token !== null
-        ? ERC20Token.fromPartial(object.erc20Token)
-        : undefined;
-    message.erc20Fee =
-      object.erc20Fee !== undefined && object.erc20Fee !== null
-        ? ERC20Token.fromPartial(object.erc20Fee)
-        : undefined;
+    message.erc20Token = (object.erc20Token !== undefined && object.erc20Token !== null)
+      ? ERC20Token.fromPartial(object.erc20Token)
+      : undefined;
+    message.erc20Fee = (object.erc20Fee !== undefined && object.erc20Fee !== null)
+      ? ERC20Token.fromPartial(object.erc20Fee)
+      : undefined;
     return message;
   },
 };
@@ -759,28 +890,45 @@ export const BatchFees = {
   },
 
   decode(input: _m0.Reader | Uint8Array, length?: number): BatchFees {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseBatchFees();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
+          if (tag != 10) {
+            break;
+          }
+
           message.tokenContract = reader.string();
-          break;
+          continue;
         case 2:
+          if (tag != 18) {
+            break;
+          }
+
           message.totalFees = reader.string();
-          break;
+          continue;
         case 3:
+          if (tag != 24) {
+            break;
+          }
+
           message.totalTxs = reader.uint64() as Long;
-          break;
+          continue;
         case 4:
+          if (tag != 34) {
+            break;
+          }
+
           message.totalAmount = reader.string();
-          break;
-        default:
-          reader.skipType(tag & 7);
-          break;
+          continue;
       }
+      if ((tag & 7) == 4 || tag == 0) {
+        break;
+      }
+      reader.skipType(tag & 7);
     }
     return message;
   },
@@ -803,14 +951,17 @@ export const BatchFees = {
     return obj;
   },
 
+  create<I extends Exact<DeepPartial<BatchFees>, I>>(base?: I): BatchFees {
+    return BatchFees.fromPartial(base ?? {});
+  },
+
   fromPartial<I extends Exact<DeepPartial<BatchFees>, I>>(object: I): BatchFees {
     const message = createBaseBatchFees();
     message.tokenContract = object.tokenContract ?? "";
     message.totalFees = object.totalFees ?? "";
-    message.totalTxs =
-      object.totalTxs !== undefined && object.totalTxs !== null
-        ? Long.fromValue(object.totalTxs)
-        : Long.UZERO;
+    message.totalTxs = (object.totalTxs !== undefined && object.totalTxs !== null)
+      ? Long.fromValue(object.totalTxs)
+      : Long.UZERO;
     message.totalAmount = object.totalAmount ?? "";
     return message;
   },
@@ -832,22 +983,31 @@ export const MinBatchFee = {
   },
 
   decode(input: _m0.Reader | Uint8Array, length?: number): MinBatchFee {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseMinBatchFee();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
+          if (tag != 10) {
+            break;
+          }
+
           message.tokenContract = reader.string();
-          break;
+          continue;
         case 2:
+          if (tag != 18) {
+            break;
+          }
+
           message.baseFee = reader.string();
-          break;
-        default:
-          reader.skipType(tag & 7);
-          break;
+          continue;
       }
+      if ((tag & 7) == 4 || tag == 0) {
+        break;
+      }
+      reader.skipType(tag & 7);
     }
     return message;
   },
@@ -866,6 +1026,10 @@ export const MinBatchFee = {
     return obj;
   },
 
+  create<I extends Exact<DeepPartial<MinBatchFee>, I>>(base?: I): MinBatchFee {
+    return MinBatchFee.fromPartial(base ?? {});
+  },
+
   fromPartial<I extends Exact<DeepPartial<MinBatchFee>, I>>(object: I): MinBatchFee {
     const message = createBaseMinBatchFee();
     message.tokenContract = object.tokenContract ?? "";
@@ -876,21 +1040,14 @@ export const MinBatchFee = {
 
 type Builtin = Date | Function | Uint8Array | string | number | boolean | undefined;
 
-export type DeepPartial<T> = T extends Builtin
-  ? T
-  : T extends Long
-  ? string | number | Long
-  : T extends Array<infer U>
-  ? Array<DeepPartial<U>>
-  : T extends ReadonlyArray<infer U>
-  ? ReadonlyArray<DeepPartial<U>>
-  : T extends {}
-  ? { [K in keyof T]?: DeepPartial<T[K]> }
+export type DeepPartial<T> = T extends Builtin ? T
+  : T extends Long ? string | number | Long : T extends Array<infer U> ? Array<DeepPartial<U>>
+  : T extends ReadonlyArray<infer U> ? ReadonlyArray<DeepPartial<U>>
+  : T extends {} ? { [K in keyof T]?: DeepPartial<T[K]> }
   : Partial<T>;
 
 type KeysOfUnion<T> = T extends T ? keyof T : never;
-export type Exact<P, I extends P> = P extends Builtin
-  ? P
+export type Exact<P, I extends P> = P extends Builtin ? P
   : P & { [K in keyof P]: Exact<P[K], I[K]> } & { [K in Exclude<keyof I, KeysOfUnion<P>>]: never };
 
 if (_m0.util.Long !== Long) {

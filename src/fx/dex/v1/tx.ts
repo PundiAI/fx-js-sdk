@@ -66,14 +66,16 @@ export interface MsgCreateOrder {
   leverage: Long;
 }
 
-export interface MsgCreateOrderResponse {}
+export interface MsgCreateOrderResponse {
+}
 
 export interface MsgCancelOrder {
   owner: string;
   orderId: string;
 }
 
-export interface MsgCancelOrderResponse {}
+export interface MsgCancelOrderResponse {
+}
 
 export interface MsgAddMargin {
   owner: string;
@@ -82,7 +84,8 @@ export interface MsgAddMargin {
   margin: string;
 }
 
-export interface MsgAddMarginResp {}
+export interface MsgAddMarginResp {
+}
 
 export interface MsgReduceMargin {
   owner: string;
@@ -91,7 +94,8 @@ export interface MsgReduceMargin {
   margin: string;
 }
 
-export interface ReduceMarginResp {}
+export interface ReduceMarginResp {
+}
 
 export interface MsgClosePosition {
   owner: string;
@@ -103,21 +107,24 @@ export interface MsgClosePosition {
   marketClose: boolean;
 }
 
-export interface MsgClosePositionResp {}
+export interface MsgClosePositionResp {
+}
 
 export interface MsgLiquidationPosition {
   liquidator: string;
   positionIds: string[];
 }
 
-export interface MsgLiquidationPositionResp {}
+export interface MsgLiquidationPositionResp {
+}
 
 export interface MsgFundDexPool {
   amount: Coin[];
   depositor: string;
 }
 
-export interface MsgFundDexPoolResp {}
+export interface MsgFundDexPoolResp {
+}
 
 function createBaseMsgCreateOrder(): MsgCreateOrder {
   return { owner: "", pairId: "", direction: 0, price: "", baseQuantity: "", leverage: Long.ZERO };
@@ -147,34 +154,59 @@ export const MsgCreateOrder = {
   },
 
   decode(input: _m0.Reader | Uint8Array, length?: number): MsgCreateOrder {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseMsgCreateOrder();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
+          if (tag != 10) {
+            break;
+          }
+
           message.owner = reader.string();
-          break;
+          continue;
         case 2:
+          if (tag != 18) {
+            break;
+          }
+
           message.pairId = reader.string();
-          break;
+          continue;
         case 3:
+          if (tag != 24) {
+            break;
+          }
+
           message.direction = reader.int32() as any;
-          break;
+          continue;
         case 4:
+          if (tag != 34) {
+            break;
+          }
+
           message.price = reader.string();
-          break;
+          continue;
         case 5:
+          if (tag != 42) {
+            break;
+          }
+
           message.baseQuantity = reader.string();
-          break;
+          continue;
         case 6:
+          if (tag != 48) {
+            break;
+          }
+
           message.leverage = reader.int64() as Long;
-          break;
-        default:
-          reader.skipType(tag & 7);
-          break;
+          continue;
       }
+      if ((tag & 7) == 4 || tag == 0) {
+        break;
+      }
+      reader.skipType(tag & 7);
     }
     return message;
   },
@@ -201,6 +233,10 @@ export const MsgCreateOrder = {
     return obj;
   },
 
+  create<I extends Exact<DeepPartial<MsgCreateOrder>, I>>(base?: I): MsgCreateOrder {
+    return MsgCreateOrder.fromPartial(base ?? {});
+  },
+
   fromPartial<I extends Exact<DeepPartial<MsgCreateOrder>, I>>(object: I): MsgCreateOrder {
     const message = createBaseMsgCreateOrder();
     message.owner = object.owner ?? "";
@@ -208,8 +244,9 @@ export const MsgCreateOrder = {
     message.direction = object.direction ?? 0;
     message.price = object.price ?? "";
     message.baseQuantity = object.baseQuantity ?? "";
-    message.leverage =
-      object.leverage !== undefined && object.leverage !== null ? Long.fromValue(object.leverage) : Long.ZERO;
+    message.leverage = (object.leverage !== undefined && object.leverage !== null)
+      ? Long.fromValue(object.leverage)
+      : Long.ZERO;
     return message;
   },
 };
@@ -224,16 +261,17 @@ export const MsgCreateOrderResponse = {
   },
 
   decode(input: _m0.Reader | Uint8Array, length?: number): MsgCreateOrderResponse {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseMsgCreateOrderResponse();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
-        default:
-          reader.skipType(tag & 7);
-          break;
       }
+      if ((tag & 7) == 4 || tag == 0) {
+        break;
+      }
+      reader.skipType(tag & 7);
     }
     return message;
   },
@@ -245,6 +283,10 @@ export const MsgCreateOrderResponse = {
   toJSON(_: MsgCreateOrderResponse): unknown {
     const obj: any = {};
     return obj;
+  },
+
+  create<I extends Exact<DeepPartial<MsgCreateOrderResponse>, I>>(base?: I): MsgCreateOrderResponse {
+    return MsgCreateOrderResponse.fromPartial(base ?? {});
   },
 
   fromPartial<I extends Exact<DeepPartial<MsgCreateOrderResponse>, I>>(_: I): MsgCreateOrderResponse {
@@ -269,22 +311,31 @@ export const MsgCancelOrder = {
   },
 
   decode(input: _m0.Reader | Uint8Array, length?: number): MsgCancelOrder {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseMsgCancelOrder();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
+          if (tag != 10) {
+            break;
+          }
+
           message.owner = reader.string();
-          break;
+          continue;
         case 2:
+          if (tag != 18) {
+            break;
+          }
+
           message.orderId = reader.string();
-          break;
-        default:
-          reader.skipType(tag & 7);
-          break;
+          continue;
       }
+      if ((tag & 7) == 4 || tag == 0) {
+        break;
+      }
+      reader.skipType(tag & 7);
     }
     return message;
   },
@@ -301,6 +352,10 @@ export const MsgCancelOrder = {
     message.owner !== undefined && (obj.owner = message.owner);
     message.orderId !== undefined && (obj.orderId = message.orderId);
     return obj;
+  },
+
+  create<I extends Exact<DeepPartial<MsgCancelOrder>, I>>(base?: I): MsgCancelOrder {
+    return MsgCancelOrder.fromPartial(base ?? {});
   },
 
   fromPartial<I extends Exact<DeepPartial<MsgCancelOrder>, I>>(object: I): MsgCancelOrder {
@@ -321,16 +376,17 @@ export const MsgCancelOrderResponse = {
   },
 
   decode(input: _m0.Reader | Uint8Array, length?: number): MsgCancelOrderResponse {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseMsgCancelOrderResponse();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
-        default:
-          reader.skipType(tag & 7);
-          break;
       }
+      if ((tag & 7) == 4 || tag == 0) {
+        break;
+      }
+      reader.skipType(tag & 7);
     }
     return message;
   },
@@ -342,6 +398,10 @@ export const MsgCancelOrderResponse = {
   toJSON(_: MsgCancelOrderResponse): unknown {
     const obj: any = {};
     return obj;
+  },
+
+  create<I extends Exact<DeepPartial<MsgCancelOrderResponse>, I>>(base?: I): MsgCancelOrderResponse {
+    return MsgCancelOrderResponse.fromPartial(base ?? {});
   },
 
   fromPartial<I extends Exact<DeepPartial<MsgCancelOrderResponse>, I>>(_: I): MsgCancelOrderResponse {
@@ -372,28 +432,45 @@ export const MsgAddMargin = {
   },
 
   decode(input: _m0.Reader | Uint8Array, length?: number): MsgAddMargin {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseMsgAddMargin();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
+          if (tag != 10) {
+            break;
+          }
+
           message.owner = reader.string();
-          break;
+          continue;
         case 2:
+          if (tag != 18) {
+            break;
+          }
+
           message.pairId = reader.string();
-          break;
+          continue;
         case 3:
+          if (tag != 26) {
+            break;
+          }
+
           message.positionId = reader.string();
-          break;
+          continue;
         case 4:
+          if (tag != 34) {
+            break;
+          }
+
           message.margin = reader.string();
-          break;
-        default:
-          reader.skipType(tag & 7);
-          break;
+          continue;
       }
+      if ((tag & 7) == 4 || tag == 0) {
+        break;
+      }
+      reader.skipType(tag & 7);
     }
     return message;
   },
@@ -416,6 +493,10 @@ export const MsgAddMargin = {
     return obj;
   },
 
+  create<I extends Exact<DeepPartial<MsgAddMargin>, I>>(base?: I): MsgAddMargin {
+    return MsgAddMargin.fromPartial(base ?? {});
+  },
+
   fromPartial<I extends Exact<DeepPartial<MsgAddMargin>, I>>(object: I): MsgAddMargin {
     const message = createBaseMsgAddMargin();
     message.owner = object.owner ?? "";
@@ -436,16 +517,17 @@ export const MsgAddMarginResp = {
   },
 
   decode(input: _m0.Reader | Uint8Array, length?: number): MsgAddMarginResp {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseMsgAddMarginResp();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
-        default:
-          reader.skipType(tag & 7);
-          break;
       }
+      if ((tag & 7) == 4 || tag == 0) {
+        break;
+      }
+      reader.skipType(tag & 7);
     }
     return message;
   },
@@ -457,6 +539,10 @@ export const MsgAddMarginResp = {
   toJSON(_: MsgAddMarginResp): unknown {
     const obj: any = {};
     return obj;
+  },
+
+  create<I extends Exact<DeepPartial<MsgAddMarginResp>, I>>(base?: I): MsgAddMarginResp {
+    return MsgAddMarginResp.fromPartial(base ?? {});
   },
 
   fromPartial<I extends Exact<DeepPartial<MsgAddMarginResp>, I>>(_: I): MsgAddMarginResp {
@@ -487,28 +573,45 @@ export const MsgReduceMargin = {
   },
 
   decode(input: _m0.Reader | Uint8Array, length?: number): MsgReduceMargin {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseMsgReduceMargin();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
+          if (tag != 10) {
+            break;
+          }
+
           message.owner = reader.string();
-          break;
+          continue;
         case 2:
+          if (tag != 18) {
+            break;
+          }
+
           message.pairId = reader.string();
-          break;
+          continue;
         case 3:
+          if (tag != 26) {
+            break;
+          }
+
           message.positionId = reader.string();
-          break;
+          continue;
         case 4:
+          if (tag != 34) {
+            break;
+          }
+
           message.margin = reader.string();
-          break;
-        default:
-          reader.skipType(tag & 7);
-          break;
+          continue;
       }
+      if ((tag & 7) == 4 || tag == 0) {
+        break;
+      }
+      reader.skipType(tag & 7);
     }
     return message;
   },
@@ -531,6 +634,10 @@ export const MsgReduceMargin = {
     return obj;
   },
 
+  create<I extends Exact<DeepPartial<MsgReduceMargin>, I>>(base?: I): MsgReduceMargin {
+    return MsgReduceMargin.fromPartial(base ?? {});
+  },
+
   fromPartial<I extends Exact<DeepPartial<MsgReduceMargin>, I>>(object: I): MsgReduceMargin {
     const message = createBaseMsgReduceMargin();
     message.owner = object.owner ?? "";
@@ -551,16 +658,17 @@ export const ReduceMarginResp = {
   },
 
   decode(input: _m0.Reader | Uint8Array, length?: number): ReduceMarginResp {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseReduceMarginResp();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
-        default:
-          reader.skipType(tag & 7);
-          break;
       }
+      if ((tag & 7) == 4 || tag == 0) {
+        break;
+      }
+      reader.skipType(tag & 7);
     }
     return message;
   },
@@ -574,6 +682,10 @@ export const ReduceMarginResp = {
     return obj;
   },
 
+  create<I extends Exact<DeepPartial<ReduceMarginResp>, I>>(base?: I): ReduceMarginResp {
+    return ReduceMarginResp.fromPartial(base ?? {});
+  },
+
   fromPartial<I extends Exact<DeepPartial<ReduceMarginResp>, I>>(_: I): ReduceMarginResp {
     const message = createBaseReduceMarginResp();
     return message;
@@ -581,15 +693,7 @@ export const ReduceMarginResp = {
 };
 
 function createBaseMsgClosePosition(): MsgClosePosition {
-  return {
-    owner: "",
-    pairId: "",
-    positionId: "",
-    price: "",
-    baseQuantity: "",
-    fullClose: false,
-    marketClose: false,
-  };
+  return { owner: "", pairId: "", positionId: "", price: "", baseQuantity: "", fullClose: false, marketClose: false };
 }
 
 export const MsgClosePosition = {
@@ -619,37 +723,66 @@ export const MsgClosePosition = {
   },
 
   decode(input: _m0.Reader | Uint8Array, length?: number): MsgClosePosition {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseMsgClosePosition();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
+          if (tag != 10) {
+            break;
+          }
+
           message.owner = reader.string();
-          break;
+          continue;
         case 2:
+          if (tag != 18) {
+            break;
+          }
+
           message.pairId = reader.string();
-          break;
+          continue;
         case 3:
+          if (tag != 26) {
+            break;
+          }
+
           message.positionId = reader.string();
-          break;
+          continue;
         case 4:
+          if (tag != 34) {
+            break;
+          }
+
           message.price = reader.string();
-          break;
+          continue;
         case 5:
+          if (tag != 42) {
+            break;
+          }
+
           message.baseQuantity = reader.string();
-          break;
+          continue;
         case 6:
+          if (tag != 48) {
+            break;
+          }
+
           message.fullClose = reader.bool();
-          break;
+          continue;
         case 7:
+          if (tag != 56) {
+            break;
+          }
+
           message.marketClose = reader.bool();
-          break;
-        default:
-          reader.skipType(tag & 7);
-          break;
+          continue;
       }
+      if ((tag & 7) == 4 || tag == 0) {
+        break;
+      }
+      reader.skipType(tag & 7);
     }
     return message;
   },
@@ -678,6 +811,10 @@ export const MsgClosePosition = {
     return obj;
   },
 
+  create<I extends Exact<DeepPartial<MsgClosePosition>, I>>(base?: I): MsgClosePosition {
+    return MsgClosePosition.fromPartial(base ?? {});
+  },
+
   fromPartial<I extends Exact<DeepPartial<MsgClosePosition>, I>>(object: I): MsgClosePosition {
     const message = createBaseMsgClosePosition();
     message.owner = object.owner ?? "";
@@ -701,16 +838,17 @@ export const MsgClosePositionResp = {
   },
 
   decode(input: _m0.Reader | Uint8Array, length?: number): MsgClosePositionResp {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseMsgClosePositionResp();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
-        default:
-          reader.skipType(tag & 7);
-          break;
       }
+      if ((tag & 7) == 4 || tag == 0) {
+        break;
+      }
+      reader.skipType(tag & 7);
     }
     return message;
   },
@@ -722,6 +860,10 @@ export const MsgClosePositionResp = {
   toJSON(_: MsgClosePositionResp): unknown {
     const obj: any = {};
     return obj;
+  },
+
+  create<I extends Exact<DeepPartial<MsgClosePositionResp>, I>>(base?: I): MsgClosePositionResp {
+    return MsgClosePositionResp.fromPartial(base ?? {});
   },
 
   fromPartial<I extends Exact<DeepPartial<MsgClosePositionResp>, I>>(_: I): MsgClosePositionResp {
@@ -746,22 +888,31 @@ export const MsgLiquidationPosition = {
   },
 
   decode(input: _m0.Reader | Uint8Array, length?: number): MsgLiquidationPosition {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseMsgLiquidationPosition();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
+          if (tag != 10) {
+            break;
+          }
+
           message.liquidator = reader.string();
-          break;
+          continue;
         case 2:
+          if (tag != 18) {
+            break;
+          }
+
           message.positionIds.push(reader.string());
-          break;
-        default:
-          reader.skipType(tag & 7);
-          break;
+          continue;
       }
+      if ((tag & 7) == 4 || tag == 0) {
+        break;
+      }
+      reader.skipType(tag & 7);
     }
     return message;
   },
@@ -784,6 +935,10 @@ export const MsgLiquidationPosition = {
     return obj;
   },
 
+  create<I extends Exact<DeepPartial<MsgLiquidationPosition>, I>>(base?: I): MsgLiquidationPosition {
+    return MsgLiquidationPosition.fromPartial(base ?? {});
+  },
+
   fromPartial<I extends Exact<DeepPartial<MsgLiquidationPosition>, I>>(object: I): MsgLiquidationPosition {
     const message = createBaseMsgLiquidationPosition();
     message.liquidator = object.liquidator ?? "";
@@ -802,16 +957,17 @@ export const MsgLiquidationPositionResp = {
   },
 
   decode(input: _m0.Reader | Uint8Array, length?: number): MsgLiquidationPositionResp {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseMsgLiquidationPositionResp();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
-        default:
-          reader.skipType(tag & 7);
-          break;
       }
+      if ((tag & 7) == 4 || tag == 0) {
+        break;
+      }
+      reader.skipType(tag & 7);
     }
     return message;
   },
@@ -823,6 +979,10 @@ export const MsgLiquidationPositionResp = {
   toJSON(_: MsgLiquidationPositionResp): unknown {
     const obj: any = {};
     return obj;
+  },
+
+  create<I extends Exact<DeepPartial<MsgLiquidationPositionResp>, I>>(base?: I): MsgLiquidationPositionResp {
+    return MsgLiquidationPositionResp.fromPartial(base ?? {});
   },
 
   fromPartial<I extends Exact<DeepPartial<MsgLiquidationPositionResp>, I>>(_: I): MsgLiquidationPositionResp {
@@ -847,22 +1007,31 @@ export const MsgFundDexPool = {
   },
 
   decode(input: _m0.Reader | Uint8Array, length?: number): MsgFundDexPool {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseMsgFundDexPool();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
+          if (tag != 10) {
+            break;
+          }
+
           message.amount.push(Coin.decode(reader, reader.uint32()));
-          break;
+          continue;
         case 2:
+          if (tag != 18) {
+            break;
+          }
+
           message.depositor = reader.string();
-          break;
-        default:
-          reader.skipType(tag & 7);
-          break;
+          continue;
       }
+      if ((tag & 7) == 4 || tag == 0) {
+        break;
+      }
+      reader.skipType(tag & 7);
     }
     return message;
   },
@@ -877,12 +1046,16 @@ export const MsgFundDexPool = {
   toJSON(message: MsgFundDexPool): unknown {
     const obj: any = {};
     if (message.amount) {
-      obj.amount = message.amount.map((e) => (e ? Coin.toJSON(e) : undefined));
+      obj.amount = message.amount.map((e) => e ? Coin.toJSON(e) : undefined);
     } else {
       obj.amount = [];
     }
     message.depositor !== undefined && (obj.depositor = message.depositor);
     return obj;
+  },
+
+  create<I extends Exact<DeepPartial<MsgFundDexPool>, I>>(base?: I): MsgFundDexPool {
+    return MsgFundDexPool.fromPartial(base ?? {});
   },
 
   fromPartial<I extends Exact<DeepPartial<MsgFundDexPool>, I>>(object: I): MsgFundDexPool {
@@ -903,16 +1076,17 @@ export const MsgFundDexPoolResp = {
   },
 
   decode(input: _m0.Reader | Uint8Array, length?: number): MsgFundDexPoolResp {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseMsgFundDexPoolResp();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
-        default:
-          reader.skipType(tag & 7);
-          break;
       }
+      if ((tag & 7) == 4 || tag == 0) {
+        break;
+      }
+      reader.skipType(tag & 7);
     }
     return message;
   },
@@ -924,6 +1098,10 @@ export const MsgFundDexPoolResp = {
   toJSON(_: MsgFundDexPoolResp): unknown {
     const obj: any = {};
     return obj;
+  },
+
+  create<I extends Exact<DeepPartial<MsgFundDexPoolResp>, I>>(base?: I): MsgFundDexPoolResp {
+    return MsgFundDexPoolResp.fromPartial(base ?? {});
   },
 
   fromPartial<I extends Exact<DeepPartial<MsgFundDexPoolResp>, I>>(_: I): MsgFundDexPoolResp {
@@ -959,43 +1137,43 @@ export class MsgClientImpl implements Msg {
   CreateOrder(request: MsgCreateOrder): Promise<MsgCreateOrderResponse> {
     const data = MsgCreateOrder.encode(request).finish();
     const promise = this.rpc.request(this.service, "CreateOrder", data);
-    return promise.then((data) => MsgCreateOrderResponse.decode(new _m0.Reader(data)));
+    return promise.then((data) => MsgCreateOrderResponse.decode(_m0.Reader.create(data)));
   }
 
   CancelOrder(request: MsgCancelOrder): Promise<MsgCancelOrderResponse> {
     const data = MsgCancelOrder.encode(request).finish();
     const promise = this.rpc.request(this.service, "CancelOrder", data);
-    return promise.then((data) => MsgCancelOrderResponse.decode(new _m0.Reader(data)));
+    return promise.then((data) => MsgCancelOrderResponse.decode(_m0.Reader.create(data)));
   }
 
   AddMargin(request: MsgAddMargin): Promise<MsgAddMarginResp> {
     const data = MsgAddMargin.encode(request).finish();
     const promise = this.rpc.request(this.service, "AddMargin", data);
-    return promise.then((data) => MsgAddMarginResp.decode(new _m0.Reader(data)));
+    return promise.then((data) => MsgAddMarginResp.decode(_m0.Reader.create(data)));
   }
 
   ReduceMargin(request: MsgReduceMargin): Promise<ReduceMarginResp> {
     const data = MsgReduceMargin.encode(request).finish();
     const promise = this.rpc.request(this.service, "ReduceMargin", data);
-    return promise.then((data) => ReduceMarginResp.decode(new _m0.Reader(data)));
+    return promise.then((data) => ReduceMarginResp.decode(_m0.Reader.create(data)));
   }
 
   ClosePosition(request: MsgClosePosition): Promise<MsgClosePositionResp> {
     const data = MsgClosePosition.encode(request).finish();
     const promise = this.rpc.request(this.service, "ClosePosition", data);
-    return promise.then((data) => MsgClosePositionResp.decode(new _m0.Reader(data)));
+    return promise.then((data) => MsgClosePositionResp.decode(_m0.Reader.create(data)));
   }
 
   LiquidationPosition(request: MsgLiquidationPosition): Promise<MsgLiquidationPositionResp> {
     const data = MsgLiquidationPosition.encode(request).finish();
     const promise = this.rpc.request(this.service, "LiquidationPosition", data);
-    return promise.then((data) => MsgLiquidationPositionResp.decode(new _m0.Reader(data)));
+    return promise.then((data) => MsgLiquidationPositionResp.decode(_m0.Reader.create(data)));
   }
 
   FundDexPool(request: MsgFundDexPool): Promise<MsgFundDexPoolResp> {
     const data = MsgFundDexPool.encode(request).finish();
     const promise = this.rpc.request(this.service, "FundDexPool", data);
-    return promise.then((data) => MsgFundDexPoolResp.decode(new _m0.Reader(data)));
+    return promise.then((data) => MsgFundDexPoolResp.decode(_m0.Reader.create(data)));
   }
 }
 
@@ -1005,21 +1183,14 @@ interface Rpc {
 
 type Builtin = Date | Function | Uint8Array | string | number | boolean | undefined;
 
-export type DeepPartial<T> = T extends Builtin
-  ? T
-  : T extends Long
-  ? string | number | Long
-  : T extends Array<infer U>
-  ? Array<DeepPartial<U>>
-  : T extends ReadonlyArray<infer U>
-  ? ReadonlyArray<DeepPartial<U>>
-  : T extends {}
-  ? { [K in keyof T]?: DeepPartial<T[K]> }
+export type DeepPartial<T> = T extends Builtin ? T
+  : T extends Long ? string | number | Long : T extends Array<infer U> ? Array<DeepPartial<U>>
+  : T extends ReadonlyArray<infer U> ? ReadonlyArray<DeepPartial<U>>
+  : T extends {} ? { [K in keyof T]?: DeepPartial<T[K]> }
   : Partial<T>;
 
 type KeysOfUnion<T> = T extends T ? keyof T : never;
-export type Exact<P, I extends P> = P extends Builtin
-  ? P
+export type Exact<P, I extends P> = P extends Builtin ? P
   : P & { [K in keyof P]: Exact<P[K], I[K]> } & { [K in Exclude<keyof I, KeysOfUnion<P>>]: never };
 
 if (_m0.util.Long !== Long) {

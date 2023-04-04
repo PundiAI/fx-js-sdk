@@ -106,61 +106,122 @@ export const GenesisState = {
   },
 
   decode(input: _m0.Reader | Uint8Array, length?: number): GenesisState {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseGenesisState();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
+          if (tag != 10) {
+            break;
+          }
+
           message.params = Params.decode(reader, reader.uint32());
-          break;
+          continue;
         case 2:
+          if (tag != 16) {
+            break;
+          }
+
           message.lastObservedEventNonce = reader.uint64() as Long;
-          break;
+          continue;
         case 3:
+          if (tag != 26) {
+            break;
+          }
+
           message.lastObservedBlockHeight = LastObservedBlockHeight.decode(reader, reader.uint32());
-          break;
+          continue;
         case 4:
+          if (tag != 34) {
+            break;
+          }
+
           message.oracles.push(Oracle.decode(reader, reader.uint32()));
-          break;
+          continue;
         case 5:
+          if (tag != 42) {
+            break;
+          }
+
           message.oracleSets.push(OracleSet.decode(reader, reader.uint32()));
-          break;
+          continue;
         case 6:
+          if (tag != 50) {
+            break;
+          }
+
           message.bridgeTokens.push(BridgeToken.decode(reader, reader.uint32()));
-          break;
+          continue;
         case 7:
+          if (tag != 58) {
+            break;
+          }
+
           message.unbatchedTransfers.push(OutgoingTransferTx.decode(reader, reader.uint32()));
-          break;
+          continue;
         case 8:
+          if (tag != 66) {
+            break;
+          }
+
           message.batches.push(OutgoingTxBatch.decode(reader, reader.uint32()));
-          break;
+          continue;
         case 9:
+          if (tag != 74) {
+            break;
+          }
+
           message.oracleSetConfirms.push(MsgOracleSetConfirm.decode(reader, reader.uint32()));
-          break;
+          continue;
         case 10:
+          if (tag != 82) {
+            break;
+          }
+
           message.batchConfirms.push(MsgConfirmBatch.decode(reader, reader.uint32()));
-          break;
+          continue;
         case 11:
+          if (tag != 90) {
+            break;
+          }
+
           message.attestations.push(Attestation.decode(reader, reader.uint32()));
-          break;
+          continue;
         case 12:
+          if (tag != 98) {
+            break;
+          }
+
           message.proposalOracle = ProposalOracle.decode(reader, reader.uint32());
-          break;
+          continue;
         case 13:
+          if (tag != 106) {
+            break;
+          }
+
           message.lastObservedOracleSet = OracleSet.decode(reader, reader.uint32());
-          break;
+          continue;
         case 14:
+          if (tag != 112) {
+            break;
+          }
+
           message.lastSlashedBatchBlock = reader.uint64() as Long;
-          break;
+          continue;
         case 15:
+          if (tag != 120) {
+            break;
+          }
+
           message.lastSlashedOracleSetNonce = reader.uint64() as Long;
-          break;
-        default:
-          reader.skipType(tag & 7);
-          break;
+          continue;
       }
+      if ((tag & 7) == 4 || tag == 0) {
+        break;
+      }
+      reader.skipType(tag & 7);
     }
     return message;
   },
@@ -175,18 +236,14 @@ export const GenesisState = {
         ? LastObservedBlockHeight.fromJSON(object.lastObservedBlockHeight)
         : undefined,
       oracles: Array.isArray(object?.oracles) ? object.oracles.map((e: any) => Oracle.fromJSON(e)) : [],
-      oracleSets: Array.isArray(object?.oracleSets)
-        ? object.oracleSets.map((e: any) => OracleSet.fromJSON(e))
-        : [],
+      oracleSets: Array.isArray(object?.oracleSets) ? object.oracleSets.map((e: any) => OracleSet.fromJSON(e)) : [],
       bridgeTokens: Array.isArray(object?.bridgeTokens)
         ? object.bridgeTokens.map((e: any) => BridgeToken.fromJSON(e))
         : [],
       unbatchedTransfers: Array.isArray(object?.unbatchedTransfers)
         ? object.unbatchedTransfers.map((e: any) => OutgoingTransferTx.fromJSON(e))
         : [],
-      batches: Array.isArray(object?.batches)
-        ? object.batches.map((e: any) => OutgoingTxBatch.fromJSON(e))
-        : [],
+      batches: Array.isArray(object?.batches) ? object.batches.map((e: any) => OutgoingTxBatch.fromJSON(e)) : [],
       oracleSetConfirms: Array.isArray(object?.oracleSetConfirms)
         ? object.oracleSetConfirms.map((e: any) => MsgOracleSetConfirm.fromJSON(e))
         : [],
@@ -196,9 +253,7 @@ export const GenesisState = {
       attestations: Array.isArray(object?.attestations)
         ? object.attestations.map((e: any) => Attestation.fromJSON(e))
         : [],
-      proposalOracle: isSet(object.proposalOracle)
-        ? ProposalOracle.fromJSON(object.proposalOracle)
-        : undefined,
+      proposalOracle: isSet(object.proposalOracle) ? ProposalOracle.fromJSON(object.proposalOracle) : undefined,
       lastObservedOracleSet: isSet(object.lastObservedOracleSet)
         ? OracleSet.fromJSON(object.lastObservedOracleSet)
         : undefined,
@@ -216,62 +271,54 @@ export const GenesisState = {
     message.params !== undefined && (obj.params = message.params ? Params.toJSON(message.params) : undefined);
     message.lastObservedEventNonce !== undefined &&
       (obj.lastObservedEventNonce = (message.lastObservedEventNonce || Long.UZERO).toString());
-    message.lastObservedBlockHeight !== undefined &&
-      (obj.lastObservedBlockHeight = message.lastObservedBlockHeight
-        ? LastObservedBlockHeight.toJSON(message.lastObservedBlockHeight)
-        : undefined);
+    message.lastObservedBlockHeight !== undefined && (obj.lastObservedBlockHeight = message.lastObservedBlockHeight
+      ? LastObservedBlockHeight.toJSON(message.lastObservedBlockHeight)
+      : undefined);
     if (message.oracles) {
-      obj.oracles = message.oracles.map((e) => (e ? Oracle.toJSON(e) : undefined));
+      obj.oracles = message.oracles.map((e) => e ? Oracle.toJSON(e) : undefined);
     } else {
       obj.oracles = [];
     }
     if (message.oracleSets) {
-      obj.oracleSets = message.oracleSets.map((e) => (e ? OracleSet.toJSON(e) : undefined));
+      obj.oracleSets = message.oracleSets.map((e) => e ? OracleSet.toJSON(e) : undefined);
     } else {
       obj.oracleSets = [];
     }
     if (message.bridgeTokens) {
-      obj.bridgeTokens = message.bridgeTokens.map((e) => (e ? BridgeToken.toJSON(e) : undefined));
+      obj.bridgeTokens = message.bridgeTokens.map((e) => e ? BridgeToken.toJSON(e) : undefined);
     } else {
       obj.bridgeTokens = [];
     }
     if (message.unbatchedTransfers) {
-      obj.unbatchedTransfers = message.unbatchedTransfers.map((e) =>
-        e ? OutgoingTransferTx.toJSON(e) : undefined,
-      );
+      obj.unbatchedTransfers = message.unbatchedTransfers.map((e) => e ? OutgoingTransferTx.toJSON(e) : undefined);
     } else {
       obj.unbatchedTransfers = [];
     }
     if (message.batches) {
-      obj.batches = message.batches.map((e) => (e ? OutgoingTxBatch.toJSON(e) : undefined));
+      obj.batches = message.batches.map((e) => e ? OutgoingTxBatch.toJSON(e) : undefined);
     } else {
       obj.batches = [];
     }
     if (message.oracleSetConfirms) {
-      obj.oracleSetConfirms = message.oracleSetConfirms.map((e) =>
-        e ? MsgOracleSetConfirm.toJSON(e) : undefined,
-      );
+      obj.oracleSetConfirms = message.oracleSetConfirms.map((e) => e ? MsgOracleSetConfirm.toJSON(e) : undefined);
     } else {
       obj.oracleSetConfirms = [];
     }
     if (message.batchConfirms) {
-      obj.batchConfirms = message.batchConfirms.map((e) => (e ? MsgConfirmBatch.toJSON(e) : undefined));
+      obj.batchConfirms = message.batchConfirms.map((e) => e ? MsgConfirmBatch.toJSON(e) : undefined);
     } else {
       obj.batchConfirms = [];
     }
     if (message.attestations) {
-      obj.attestations = message.attestations.map((e) => (e ? Attestation.toJSON(e) : undefined));
+      obj.attestations = message.attestations.map((e) => e ? Attestation.toJSON(e) : undefined);
     } else {
       obj.attestations = [];
     }
     message.proposalOracle !== undefined &&
-      (obj.proposalOracle = message.proposalOracle
-        ? ProposalOracle.toJSON(message.proposalOracle)
-        : undefined);
-    message.lastObservedOracleSet !== undefined &&
-      (obj.lastObservedOracleSet = message.lastObservedOracleSet
-        ? OracleSet.toJSON(message.lastObservedOracleSet)
-        : undefined);
+      (obj.proposalOracle = message.proposalOracle ? ProposalOracle.toJSON(message.proposalOracle) : undefined);
+    message.lastObservedOracleSet !== undefined && (obj.lastObservedOracleSet = message.lastObservedOracleSet
+      ? OracleSet.toJSON(message.lastObservedOracleSet)
+      : undefined);
     message.lastSlashedBatchBlock !== undefined &&
       (obj.lastSlashedBatchBlock = (message.lastSlashedBatchBlock || Long.UZERO).toString());
     message.lastSlashedOracleSetNonce !== undefined &&
@@ -279,42 +326,44 @@ export const GenesisState = {
     return obj;
   },
 
+  create<I extends Exact<DeepPartial<GenesisState>, I>>(base?: I): GenesisState {
+    return GenesisState.fromPartial(base ?? {});
+  },
+
   fromPartial<I extends Exact<DeepPartial<GenesisState>, I>>(object: I): GenesisState {
     const message = createBaseGenesisState();
-    message.params =
-      object.params !== undefined && object.params !== null ? Params.fromPartial(object.params) : undefined;
+    message.params = (object.params !== undefined && object.params !== null)
+      ? Params.fromPartial(object.params)
+      : undefined;
     message.lastObservedEventNonce =
-      object.lastObservedEventNonce !== undefined && object.lastObservedEventNonce !== null
+      (object.lastObservedEventNonce !== undefined && object.lastObservedEventNonce !== null)
         ? Long.fromValue(object.lastObservedEventNonce)
         : Long.UZERO;
     message.lastObservedBlockHeight =
-      object.lastObservedBlockHeight !== undefined && object.lastObservedBlockHeight !== null
+      (object.lastObservedBlockHeight !== undefined && object.lastObservedBlockHeight !== null)
         ? LastObservedBlockHeight.fromPartial(object.lastObservedBlockHeight)
         : undefined;
     message.oracles = object.oracles?.map((e) => Oracle.fromPartial(e)) || [];
     message.oracleSets = object.oracleSets?.map((e) => OracleSet.fromPartial(e)) || [];
     message.bridgeTokens = object.bridgeTokens?.map((e) => BridgeToken.fromPartial(e)) || [];
-    message.unbatchedTransfers =
-      object.unbatchedTransfers?.map((e) => OutgoingTransferTx.fromPartial(e)) || [];
+    message.unbatchedTransfers = object.unbatchedTransfers?.map((e) => OutgoingTransferTx.fromPartial(e)) || [];
     message.batches = object.batches?.map((e) => OutgoingTxBatch.fromPartial(e)) || [];
-    message.oracleSetConfirms =
-      object.oracleSetConfirms?.map((e) => MsgOracleSetConfirm.fromPartial(e)) || [];
+    message.oracleSetConfirms = object.oracleSetConfirms?.map((e) => MsgOracleSetConfirm.fromPartial(e)) || [];
     message.batchConfirms = object.batchConfirms?.map((e) => MsgConfirmBatch.fromPartial(e)) || [];
     message.attestations = object.attestations?.map((e) => Attestation.fromPartial(e)) || [];
-    message.proposalOracle =
-      object.proposalOracle !== undefined && object.proposalOracle !== null
-        ? ProposalOracle.fromPartial(object.proposalOracle)
-        : undefined;
+    message.proposalOracle = (object.proposalOracle !== undefined && object.proposalOracle !== null)
+      ? ProposalOracle.fromPartial(object.proposalOracle)
+      : undefined;
     message.lastObservedOracleSet =
-      object.lastObservedOracleSet !== undefined && object.lastObservedOracleSet !== null
+      (object.lastObservedOracleSet !== undefined && object.lastObservedOracleSet !== null)
         ? OracleSet.fromPartial(object.lastObservedOracleSet)
         : undefined;
     message.lastSlashedBatchBlock =
-      object.lastSlashedBatchBlock !== undefined && object.lastSlashedBatchBlock !== null
+      (object.lastSlashedBatchBlock !== undefined && object.lastSlashedBatchBlock !== null)
         ? Long.fromValue(object.lastSlashedBatchBlock)
         : Long.UZERO;
     message.lastSlashedOracleSetNonce =
-      object.lastSlashedOracleSetNonce !== undefined && object.lastSlashedOracleSetNonce !== null
+      (object.lastSlashedOracleSetNonce !== undefined && object.lastSlashedOracleSetNonce !== null)
         ? Long.fromValue(object.lastSlashedOracleSetNonce)
         : Long.UZERO;
     return message;
@@ -323,21 +372,14 @@ export const GenesisState = {
 
 type Builtin = Date | Function | Uint8Array | string | number | boolean | undefined;
 
-export type DeepPartial<T> = T extends Builtin
-  ? T
-  : T extends Long
-  ? string | number | Long
-  : T extends Array<infer U>
-  ? Array<DeepPartial<U>>
-  : T extends ReadonlyArray<infer U>
-  ? ReadonlyArray<DeepPartial<U>>
-  : T extends {}
-  ? { [K in keyof T]?: DeepPartial<T[K]> }
+export type DeepPartial<T> = T extends Builtin ? T
+  : T extends Long ? string | number | Long : T extends Array<infer U> ? Array<DeepPartial<U>>
+  : T extends ReadonlyArray<infer U> ? ReadonlyArray<DeepPartial<U>>
+  : T extends {} ? { [K in keyof T]?: DeepPartial<T[K]> }
   : Partial<T>;
 
 type KeysOfUnion<T> = T extends T ? keyof T : never;
-export type Exact<P, I extends P> = P extends Builtin
-  ? P
+export type Exact<P, I extends P> = P extends Builtin ? P
   : P & { [K in keyof P]: Exact<P[K], I[K]> } & { [K in Exclude<keyof I, KeysOfUnion<P>>]: never };
 
 if (_m0.util.Long !== Long) {

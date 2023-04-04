@@ -12,20 +12,7 @@ import {
 } from "../../fx/dex/v1/tx";
 import { toDecString, toProtoString } from "../index";
 
-/* eslint-disable @typescript-eslint/no-use-before-define */
-export function dexAminoConverters(precision: number): Record<string, AminoConverter> {
-  if (precision == undefined || precision <= 0) {
-    throw new Error("invalid params");
-  }
-  return {
-    "/fx.dex.v1.MsgCreateOrder": aminoConverterMsgCreateOrder(precision),
-    "/fx.dex.v1.MsgCancelOrder": aminoConverterMsgCancelOrder(),
-    "/fx.dex.v1.MsgAddMargin": aminoConverterMsgAddMargin(precision),
-    "/fx.dex.v1.MsgClosePosition": aminoConverterMsgClosePosition(precision),
-  };
-}
-
-export interface AminoMsgCreateOrder extends AminoMsg {
+interface AminoMsgCreateOrder extends AminoMsg {
   readonly type: "dex/MsgCreateOrder";
   readonly value: {
     readonly owner: string;
@@ -35,10 +22,6 @@ export interface AminoMsgCreateOrder extends AminoMsg {
     readonly base_quantity: string;
     readonly leverage: string;
   };
-}
-
-export function isAminoMsgCreateOrder(msg: AminoMsg): msg is AminoMsgCreateOrder {
-  return msg.type === "dex/MsgCreateOrder";
 }
 
 function aminoConverterMsgCreateOrder(precision: number): AminoConverter {
@@ -81,16 +64,12 @@ function aminoConverterMsgCreateOrder(precision: number): AminoConverter {
   };
 }
 
-export interface AminoMsgCancelOrder extends AminoMsg {
+interface AminoMsgCancelOrder extends AminoMsg {
   readonly type: "dex/MsgCancelOrder";
   readonly value: {
     readonly owner: string;
     readonly order_id: string;
   };
-}
-
-export function isAminoMsgCancelOrder(msg: AminoMsg): msg is AminoMsgCancelOrder {
-  return msg.type === "dex/MsgCancelOrder";
 }
 
 function aminoConverterMsgCancelOrder(): AminoConverter {
@@ -111,7 +90,7 @@ function aminoConverterMsgCancelOrder(): AminoConverter {
   };
 }
 
-export interface AminoMsgAddMargin extends AminoMsg {
+interface AminoMsgAddMargin extends AminoMsg {
   readonly type: "dex/MsgAddMargin";
   readonly value: {
     readonly owner: string;
@@ -119,10 +98,6 @@ export interface AminoMsgAddMargin extends AminoMsg {
     readonly position_id: string;
     readonly margin: string;
   };
-}
-
-export function isAminoMsgAddMargin(msg: AminoMsg): msg is AminoMsgAddMargin {
-  return msg.type === "dex/MsgAddMargin";
 }
 
 function aminoConverterMsgAddMargin(precision: number): AminoConverter {
@@ -147,7 +122,7 @@ function aminoConverterMsgAddMargin(precision: number): AminoConverter {
   };
 }
 
-export interface AminoMsgClosePosition extends AminoMsg {
+interface AminoMsgClosePosition extends AminoMsg {
   readonly type: "dex/MsgClosePosition";
   readonly value: {
     readonly owner: string;
@@ -158,10 +133,6 @@ export interface AminoMsgClosePosition extends AminoMsg {
     readonly full_close: boolean;
     readonly market_close: boolean;
   };
-}
-
-export function isAminoMsgClosePosition(msg: AminoMsg): msg is AminoMsgClosePosition {
-  return msg.type === "dex/MsgClosePosition";
 }
 
 function aminoConverterMsgClosePosition(precision: number): AminoConverter {
@@ -205,5 +176,17 @@ function aminoConverterMsgClosePosition(precision: number): AminoConverter {
         marketClose: market_close,
       };
     },
+  };
+}
+
+export function dexAminoConverters(precision: number): Record<string, AminoConverter> {
+  if (precision == undefined || precision <= 0) {
+    throw new Error("invalid params");
+  }
+  return {
+    "/fx.dex.v1.MsgCreateOrder": aminoConverterMsgCreateOrder(precision),
+    "/fx.dex.v1.MsgCancelOrder": aminoConverterMsgCancelOrder(),
+    "/fx.dex.v1.MsgAddMargin": aminoConverterMsgAddMargin(precision),
+    "/fx.dex.v1.MsgClosePosition": aminoConverterMsgClosePosition(precision),
   };
 }

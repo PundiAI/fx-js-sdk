@@ -63,7 +63,12 @@ export interface TokenPair {
   contractOwner: Owner;
 }
 
-/** RegisterCoinProposal is a gov Content type to register a token pair */
+/**
+ * Deprecated: Do not use. As of the Cosmos SDK release v0.46.x, there is no
+ * longer a need for an explicit MsgRegisterCoin. register coin
+ * a simple MsgUpdateChainOracles can be invoked from the x/gov
+ * module via a v1 governance proposal.
+ */
 export interface RegisterCoinProposal {
   /** title of the proposal */
   title: string;
@@ -73,7 +78,14 @@ export interface RegisterCoinProposal {
   metadata?: Metadata;
 }
 
-/** RegisterCoinProposal is a gov Content type to register a token pair */
+/**
+ * RegisterCoinProposal is a gov Content type to register a token pair
+ *
+ * Deprecated: Do not use. As of the Cosmos SDK release v0.46.x, there is no
+ * longer a need for an explicit MsgRegisterERC20. register ERC20
+ * a simple MsgUpdateChainOracles can be invoked from the x/gov
+ * module via a v1 governance proposal.
+ */
 export interface RegisterERC20Proposal {
   /** title of the proposal */
   title: string;
@@ -81,11 +93,18 @@ export interface RegisterERC20Proposal {
   description: string;
   /** contract address of ERC20 token */
   erc20address: string;
+  /** aliases is a list of string aliases for the given denom */
+  aliases: string[];
 }
 
 /**
  * ToggleTokenConversionProposal is a gov Content type to toggle the conversion
  * of a token pair.
+ *
+ * Deprecated: Do not use. As of the Cosmos SDK release v0.46.x, there is no
+ * longer a need for an explicit MsgToggleTokenConversion. toggle token
+ * conversion, a simple MsgUpdateChainOracles can be invoked from the x/gov
+ * module via a v1 governance proposal.
  */
 export interface ToggleTokenConversionProposal {
   /** title of the proposal */
@@ -99,7 +118,14 @@ export interface ToggleTokenConversionProposal {
   token: string;
 }
 
-/** UpdateDenomAliasProposal is a gov Content type to update denom alias */
+/**
+ * UpdateDenomAliasProposal is a gov Content type to update denom alias
+ *
+ * Deprecated: Do not use. As of the Cosmos SDK release v0.46.x, there is no
+ * longer a need for an explicit MsgUpdateDenomAlias.update denomAlias
+ * a simple MsgUpdateChainOracles can be invoked from the x/gov
+ * module via a v1 governance proposal.
+ */
 export interface UpdateDenomAliasProposal {
   /** title of the proposal */
   title: string;
@@ -133,28 +159,45 @@ export const TokenPair = {
   },
 
   decode(input: _m0.Reader | Uint8Array, length?: number): TokenPair {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseTokenPair();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
+          if (tag != 10) {
+            break;
+          }
+
           message.erc20Address = reader.string();
-          break;
+          continue;
         case 2:
+          if (tag != 18) {
+            break;
+          }
+
           message.denom = reader.string();
-          break;
+          continue;
         case 3:
+          if (tag != 24) {
+            break;
+          }
+
           message.enabled = reader.bool();
-          break;
+          continue;
         case 4:
+          if (tag != 32) {
+            break;
+          }
+
           message.contractOwner = reader.int32() as any;
-          break;
-        default:
-          reader.skipType(tag & 7);
-          break;
+          continue;
       }
+      if ((tag & 7) == 4 || tag == 0) {
+        break;
+      }
+      reader.skipType(tag & 7);
     }
     return message;
   },
@@ -175,6 +218,10 @@ export const TokenPair = {
     message.enabled !== undefined && (obj.enabled = message.enabled);
     message.contractOwner !== undefined && (obj.contractOwner = ownerToJSON(message.contractOwner));
     return obj;
+  },
+
+  create<I extends Exact<DeepPartial<TokenPair>, I>>(base?: I): TokenPair {
+    return TokenPair.fromPartial(base ?? {});
   },
 
   fromPartial<I extends Exact<DeepPartial<TokenPair>, I>>(object: I): TokenPair {
@@ -206,25 +253,38 @@ export const RegisterCoinProposal = {
   },
 
   decode(input: _m0.Reader | Uint8Array, length?: number): RegisterCoinProposal {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseRegisterCoinProposal();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
+          if (tag != 10) {
+            break;
+          }
+
           message.title = reader.string();
-          break;
+          continue;
         case 2:
+          if (tag != 18) {
+            break;
+          }
+
           message.description = reader.string();
-          break;
+          continue;
         case 3:
+          if (tag != 26) {
+            break;
+          }
+
           message.metadata = Metadata.decode(reader, reader.uint32());
-          break;
-        default:
-          reader.skipType(tag & 7);
-          break;
+          continue;
       }
+      if ((tag & 7) == 4 || tag == 0) {
+        break;
+      }
+      reader.skipType(tag & 7);
     }
     return message;
   },
@@ -241,25 +301,27 @@ export const RegisterCoinProposal = {
     const obj: any = {};
     message.title !== undefined && (obj.title = message.title);
     message.description !== undefined && (obj.description = message.description);
-    message.metadata !== undefined &&
-      (obj.metadata = message.metadata ? Metadata.toJSON(message.metadata) : undefined);
+    message.metadata !== undefined && (obj.metadata = message.metadata ? Metadata.toJSON(message.metadata) : undefined);
     return obj;
+  },
+
+  create<I extends Exact<DeepPartial<RegisterCoinProposal>, I>>(base?: I): RegisterCoinProposal {
+    return RegisterCoinProposal.fromPartial(base ?? {});
   },
 
   fromPartial<I extends Exact<DeepPartial<RegisterCoinProposal>, I>>(object: I): RegisterCoinProposal {
     const message = createBaseRegisterCoinProposal();
     message.title = object.title ?? "";
     message.description = object.description ?? "";
-    message.metadata =
-      object.metadata !== undefined && object.metadata !== null
-        ? Metadata.fromPartial(object.metadata)
-        : undefined;
+    message.metadata = (object.metadata !== undefined && object.metadata !== null)
+      ? Metadata.fromPartial(object.metadata)
+      : undefined;
     return message;
   },
 };
 
 function createBaseRegisterERC20Proposal(): RegisterERC20Proposal {
-  return { title: "", description: "", erc20address: "" };
+  return { title: "", description: "", erc20address: "", aliases: [] };
 }
 
 export const RegisterERC20Proposal = {
@@ -273,29 +335,52 @@ export const RegisterERC20Proposal = {
     if (message.erc20address !== "") {
       writer.uint32(26).string(message.erc20address);
     }
+    for (const v of message.aliases) {
+      writer.uint32(34).string(v!);
+    }
     return writer;
   },
 
   decode(input: _m0.Reader | Uint8Array, length?: number): RegisterERC20Proposal {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseRegisterERC20Proposal();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
+          if (tag != 10) {
+            break;
+          }
+
           message.title = reader.string();
-          break;
+          continue;
         case 2:
+          if (tag != 18) {
+            break;
+          }
+
           message.description = reader.string();
-          break;
+          continue;
         case 3:
+          if (tag != 26) {
+            break;
+          }
+
           message.erc20address = reader.string();
-          break;
-        default:
-          reader.skipType(tag & 7);
-          break;
+          continue;
+        case 4:
+          if (tag != 34) {
+            break;
+          }
+
+          message.aliases.push(reader.string());
+          continue;
       }
+      if ((tag & 7) == 4 || tag == 0) {
+        break;
+      }
+      reader.skipType(tag & 7);
     }
     return message;
   },
@@ -305,6 +390,7 @@ export const RegisterERC20Proposal = {
       title: isSet(object.title) ? String(object.title) : "",
       description: isSet(object.description) ? String(object.description) : "",
       erc20address: isSet(object.erc20address) ? String(object.erc20address) : "",
+      aliases: Array.isArray(object?.aliases) ? object.aliases.map((e: any) => String(e)) : [],
     };
   },
 
@@ -313,7 +399,16 @@ export const RegisterERC20Proposal = {
     message.title !== undefined && (obj.title = message.title);
     message.description !== undefined && (obj.description = message.description);
     message.erc20address !== undefined && (obj.erc20address = message.erc20address);
+    if (message.aliases) {
+      obj.aliases = message.aliases.map((e) => e);
+    } else {
+      obj.aliases = [];
+    }
     return obj;
+  },
+
+  create<I extends Exact<DeepPartial<RegisterERC20Proposal>, I>>(base?: I): RegisterERC20Proposal {
+    return RegisterERC20Proposal.fromPartial(base ?? {});
   },
 
   fromPartial<I extends Exact<DeepPartial<RegisterERC20Proposal>, I>>(object: I): RegisterERC20Proposal {
@@ -321,6 +416,7 @@ export const RegisterERC20Proposal = {
     message.title = object.title ?? "";
     message.description = object.description ?? "";
     message.erc20address = object.erc20address ?? "";
+    message.aliases = object.aliases?.map((e) => e) || [];
     return message;
   },
 };
@@ -344,25 +440,38 @@ export const ToggleTokenConversionProposal = {
   },
 
   decode(input: _m0.Reader | Uint8Array, length?: number): ToggleTokenConversionProposal {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseToggleTokenConversionProposal();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
+          if (tag != 10) {
+            break;
+          }
+
           message.title = reader.string();
-          break;
+          continue;
         case 2:
+          if (tag != 18) {
+            break;
+          }
+
           message.description = reader.string();
-          break;
+          continue;
         case 3:
+          if (tag != 26) {
+            break;
+          }
+
           message.token = reader.string();
-          break;
-        default:
-          reader.skipType(tag & 7);
-          break;
+          continue;
       }
+      if ((tag & 7) == 4 || tag == 0) {
+        break;
+      }
+      reader.skipType(tag & 7);
     }
     return message;
   },
@@ -381,6 +490,10 @@ export const ToggleTokenConversionProposal = {
     message.description !== undefined && (obj.description = message.description);
     message.token !== undefined && (obj.token = message.token);
     return obj;
+  },
+
+  create<I extends Exact<DeepPartial<ToggleTokenConversionProposal>, I>>(base?: I): ToggleTokenConversionProposal {
+    return ToggleTokenConversionProposal.fromPartial(base ?? {});
   },
 
   fromPartial<I extends Exact<DeepPartial<ToggleTokenConversionProposal>, I>>(
@@ -416,28 +529,45 @@ export const UpdateDenomAliasProposal = {
   },
 
   decode(input: _m0.Reader | Uint8Array, length?: number): UpdateDenomAliasProposal {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseUpdateDenomAliasProposal();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
+          if (tag != 10) {
+            break;
+          }
+
           message.title = reader.string();
-          break;
+          continue;
         case 2:
+          if (tag != 18) {
+            break;
+          }
+
           message.description = reader.string();
-          break;
+          continue;
         case 3:
+          if (tag != 26) {
+            break;
+          }
+
           message.denom = reader.string();
-          break;
+          continue;
         case 4:
+          if (tag != 34) {
+            break;
+          }
+
           message.alias = reader.string();
-          break;
-        default:
-          reader.skipType(tag & 7);
-          break;
+          continue;
       }
+      if ((tag & 7) == 4 || tag == 0) {
+        break;
+      }
+      reader.skipType(tag & 7);
     }
     return message;
   },
@@ -460,9 +590,11 @@ export const UpdateDenomAliasProposal = {
     return obj;
   },
 
-  fromPartial<I extends Exact<DeepPartial<UpdateDenomAliasProposal>, I>>(
-    object: I,
-  ): UpdateDenomAliasProposal {
+  create<I extends Exact<DeepPartial<UpdateDenomAliasProposal>, I>>(base?: I): UpdateDenomAliasProposal {
+    return UpdateDenomAliasProposal.fromPartial(base ?? {});
+  },
+
+  fromPartial<I extends Exact<DeepPartial<UpdateDenomAliasProposal>, I>>(object: I): UpdateDenomAliasProposal {
     const message = createBaseUpdateDenomAliasProposal();
     message.title = object.title ?? "";
     message.description = object.description ?? "";
@@ -474,21 +606,14 @@ export const UpdateDenomAliasProposal = {
 
 type Builtin = Date | Function | Uint8Array | string | number | boolean | undefined;
 
-export type DeepPartial<T> = T extends Builtin
-  ? T
-  : T extends Long
-  ? string | number | Long
-  : T extends Array<infer U>
-  ? Array<DeepPartial<U>>
-  : T extends ReadonlyArray<infer U>
-  ? ReadonlyArray<DeepPartial<U>>
-  : T extends {}
-  ? { [K in keyof T]?: DeepPartial<T[K]> }
+export type DeepPartial<T> = T extends Builtin ? T
+  : T extends Long ? string | number | Long : T extends Array<infer U> ? Array<DeepPartial<U>>
+  : T extends ReadonlyArray<infer U> ? ReadonlyArray<DeepPartial<U>>
+  : T extends {} ? { [K in keyof T]?: DeepPartial<T[K]> }
   : Partial<T>;
 
 type KeysOfUnion<T> = T extends T ? keyof T : never;
-export type Exact<P, I extends P> = P extends Builtin
-  ? P
+export type Exact<P, I extends P> = P extends Builtin ? P
   : P & { [K in keyof P]: Exact<P[K], I[K]> } & { [K in Exclude<keyof I, KeysOfUnion<P>>]: never };
 
 if (_m0.util.Long !== Long) {

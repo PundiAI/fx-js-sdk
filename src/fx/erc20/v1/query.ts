@@ -44,7 +44,8 @@ export interface QueryTokenPairResponse {
 }
 
 /** QueryParamsRequest is the request type for the Query/Params RPC method. */
-export interface QueryParamsRequest {}
+export interface QueryParamsRequest {
+}
 
 /**
  * QueryParamsResponse is the response type for the Query/Params RPC
@@ -99,19 +100,24 @@ export const QueryTokenPairsRequest = {
   },
 
   decode(input: _m0.Reader | Uint8Array, length?: number): QueryTokenPairsRequest {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseQueryTokenPairsRequest();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
+          if (tag != 10) {
+            break;
+          }
+
           message.pagination = PageRequest.decode(reader, reader.uint32());
-          break;
-        default:
-          reader.skipType(tag & 7);
-          break;
+          continue;
       }
+      if ((tag & 7) == 4 || tag == 0) {
+        break;
+      }
+      reader.skipType(tag & 7);
     }
     return message;
   },
@@ -127,12 +133,15 @@ export const QueryTokenPairsRequest = {
     return obj;
   },
 
+  create<I extends Exact<DeepPartial<QueryTokenPairsRequest>, I>>(base?: I): QueryTokenPairsRequest {
+    return QueryTokenPairsRequest.fromPartial(base ?? {});
+  },
+
   fromPartial<I extends Exact<DeepPartial<QueryTokenPairsRequest>, I>>(object: I): QueryTokenPairsRequest {
     const message = createBaseQueryTokenPairsRequest();
-    message.pagination =
-      object.pagination !== undefined && object.pagination !== null
-        ? PageRequest.fromPartial(object.pagination)
-        : undefined;
+    message.pagination = (object.pagination !== undefined && object.pagination !== null)
+      ? PageRequest.fromPartial(object.pagination)
+      : undefined;
     return message;
   },
 };
@@ -153,31 +162,38 @@ export const QueryTokenPairsResponse = {
   },
 
   decode(input: _m0.Reader | Uint8Array, length?: number): QueryTokenPairsResponse {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseQueryTokenPairsResponse();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
+          if (tag != 10) {
+            break;
+          }
+
           message.tokenPairs.push(TokenPair.decode(reader, reader.uint32()));
-          break;
+          continue;
         case 2:
+          if (tag != 18) {
+            break;
+          }
+
           message.pagination = PageResponse.decode(reader, reader.uint32());
-          break;
-        default:
-          reader.skipType(tag & 7);
-          break;
+          continue;
       }
+      if ((tag & 7) == 4 || tag == 0) {
+        break;
+      }
+      reader.skipType(tag & 7);
     }
     return message;
   },
 
   fromJSON(object: any): QueryTokenPairsResponse {
     return {
-      tokenPairs: Array.isArray(object?.tokenPairs)
-        ? object.tokenPairs.map((e: any) => TokenPair.fromJSON(e))
-        : [],
+      tokenPairs: Array.isArray(object?.tokenPairs) ? object.tokenPairs.map((e: any) => TokenPair.fromJSON(e)) : [],
       pagination: isSet(object.pagination) ? PageResponse.fromJSON(object.pagination) : undefined,
     };
   },
@@ -185,7 +201,7 @@ export const QueryTokenPairsResponse = {
   toJSON(message: QueryTokenPairsResponse): unknown {
     const obj: any = {};
     if (message.tokenPairs) {
-      obj.tokenPairs = message.tokenPairs.map((e) => (e ? TokenPair.toJSON(e) : undefined));
+      obj.tokenPairs = message.tokenPairs.map((e) => e ? TokenPair.toJSON(e) : undefined);
     } else {
       obj.tokenPairs = [];
     }
@@ -194,13 +210,16 @@ export const QueryTokenPairsResponse = {
     return obj;
   },
 
+  create<I extends Exact<DeepPartial<QueryTokenPairsResponse>, I>>(base?: I): QueryTokenPairsResponse {
+    return QueryTokenPairsResponse.fromPartial(base ?? {});
+  },
+
   fromPartial<I extends Exact<DeepPartial<QueryTokenPairsResponse>, I>>(object: I): QueryTokenPairsResponse {
     const message = createBaseQueryTokenPairsResponse();
     message.tokenPairs = object.tokenPairs?.map((e) => TokenPair.fromPartial(e)) || [];
-    message.pagination =
-      object.pagination !== undefined && object.pagination !== null
-        ? PageResponse.fromPartial(object.pagination)
-        : undefined;
+    message.pagination = (object.pagination !== undefined && object.pagination !== null)
+      ? PageResponse.fromPartial(object.pagination)
+      : undefined;
     return message;
   },
 };
@@ -218,19 +237,24 @@ export const QueryTokenPairRequest = {
   },
 
   decode(input: _m0.Reader | Uint8Array, length?: number): QueryTokenPairRequest {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseQueryTokenPairRequest();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
+          if (tag != 10) {
+            break;
+          }
+
           message.token = reader.string();
-          break;
-        default:
-          reader.skipType(tag & 7);
-          break;
+          continue;
       }
+      if ((tag & 7) == 4 || tag == 0) {
+        break;
+      }
+      reader.skipType(tag & 7);
     }
     return message;
   },
@@ -243,6 +267,10 @@ export const QueryTokenPairRequest = {
     const obj: any = {};
     message.token !== undefined && (obj.token = message.token);
     return obj;
+  },
+
+  create<I extends Exact<DeepPartial<QueryTokenPairRequest>, I>>(base?: I): QueryTokenPairRequest {
+    return QueryTokenPairRequest.fromPartial(base ?? {});
   },
 
   fromPartial<I extends Exact<DeepPartial<QueryTokenPairRequest>, I>>(object: I): QueryTokenPairRequest {
@@ -265,19 +293,24 @@ export const QueryTokenPairResponse = {
   },
 
   decode(input: _m0.Reader | Uint8Array, length?: number): QueryTokenPairResponse {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseQueryTokenPairResponse();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
+          if (tag != 10) {
+            break;
+          }
+
           message.tokenPair = TokenPair.decode(reader, reader.uint32());
-          break;
-        default:
-          reader.skipType(tag & 7);
-          break;
+          continue;
       }
+      if ((tag & 7) == 4 || tag == 0) {
+        break;
+      }
+      reader.skipType(tag & 7);
     }
     return message;
   },
@@ -293,12 +326,15 @@ export const QueryTokenPairResponse = {
     return obj;
   },
 
+  create<I extends Exact<DeepPartial<QueryTokenPairResponse>, I>>(base?: I): QueryTokenPairResponse {
+    return QueryTokenPairResponse.fromPartial(base ?? {});
+  },
+
   fromPartial<I extends Exact<DeepPartial<QueryTokenPairResponse>, I>>(object: I): QueryTokenPairResponse {
     const message = createBaseQueryTokenPairResponse();
-    message.tokenPair =
-      object.tokenPair !== undefined && object.tokenPair !== null
-        ? TokenPair.fromPartial(object.tokenPair)
-        : undefined;
+    message.tokenPair = (object.tokenPair !== undefined && object.tokenPair !== null)
+      ? TokenPair.fromPartial(object.tokenPair)
+      : undefined;
     return message;
   },
 };
@@ -313,16 +349,17 @@ export const QueryParamsRequest = {
   },
 
   decode(input: _m0.Reader | Uint8Array, length?: number): QueryParamsRequest {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseQueryParamsRequest();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
-        default:
-          reader.skipType(tag & 7);
-          break;
       }
+      if ((tag & 7) == 4 || tag == 0) {
+        break;
+      }
+      reader.skipType(tag & 7);
     }
     return message;
   },
@@ -334,6 +371,10 @@ export const QueryParamsRequest = {
   toJSON(_: QueryParamsRequest): unknown {
     const obj: any = {};
     return obj;
+  },
+
+  create<I extends Exact<DeepPartial<QueryParamsRequest>, I>>(base?: I): QueryParamsRequest {
+    return QueryParamsRequest.fromPartial(base ?? {});
   },
 
   fromPartial<I extends Exact<DeepPartial<QueryParamsRequest>, I>>(_: I): QueryParamsRequest {
@@ -355,19 +396,24 @@ export const QueryParamsResponse = {
   },
 
   decode(input: _m0.Reader | Uint8Array, length?: number): QueryParamsResponse {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseQueryParamsResponse();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
+          if (tag != 10) {
+            break;
+          }
+
           message.params = Params.decode(reader, reader.uint32());
-          break;
-        default:
-          reader.skipType(tag & 7);
-          break;
+          continue;
       }
+      if ((tag & 7) == 4 || tag == 0) {
+        break;
+      }
+      reader.skipType(tag & 7);
     }
     return message;
   },
@@ -382,10 +428,15 @@ export const QueryParamsResponse = {
     return obj;
   },
 
+  create<I extends Exact<DeepPartial<QueryParamsResponse>, I>>(base?: I): QueryParamsResponse {
+    return QueryParamsResponse.fromPartial(base ?? {});
+  },
+
   fromPartial<I extends Exact<DeepPartial<QueryParamsResponse>, I>>(object: I): QueryParamsResponse {
     const message = createBaseQueryParamsResponse();
-    message.params =
-      object.params !== undefined && object.params !== null ? Params.fromPartial(object.params) : undefined;
+    message.params = (object.params !== undefined && object.params !== null)
+      ? Params.fromPartial(object.params)
+      : undefined;
     return message;
   },
 };
@@ -403,19 +454,24 @@ export const QueryDenomAliasesRequest = {
   },
 
   decode(input: _m0.Reader | Uint8Array, length?: number): QueryDenomAliasesRequest {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseQueryDenomAliasesRequest();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
+          if (tag != 10) {
+            break;
+          }
+
           message.denom = reader.string();
-          break;
-        default:
-          reader.skipType(tag & 7);
-          break;
+          continue;
       }
+      if ((tag & 7) == 4 || tag == 0) {
+        break;
+      }
+      reader.skipType(tag & 7);
     }
     return message;
   },
@@ -430,9 +486,11 @@ export const QueryDenomAliasesRequest = {
     return obj;
   },
 
-  fromPartial<I extends Exact<DeepPartial<QueryDenomAliasesRequest>, I>>(
-    object: I,
-  ): QueryDenomAliasesRequest {
+  create<I extends Exact<DeepPartial<QueryDenomAliasesRequest>, I>>(base?: I): QueryDenomAliasesRequest {
+    return QueryDenomAliasesRequest.fromPartial(base ?? {});
+  },
+
+  fromPartial<I extends Exact<DeepPartial<QueryDenomAliasesRequest>, I>>(object: I): QueryDenomAliasesRequest {
     const message = createBaseQueryDenomAliasesRequest();
     message.denom = object.denom ?? "";
     return message;
@@ -452,19 +510,24 @@ export const QueryDenomAliasesResponse = {
   },
 
   decode(input: _m0.Reader | Uint8Array, length?: number): QueryDenomAliasesResponse {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseQueryDenomAliasesResponse();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
+          if (tag != 10) {
+            break;
+          }
+
           message.aliases.push(reader.string());
-          break;
-        default:
-          reader.skipType(tag & 7);
-          break;
+          continue;
       }
+      if ((tag & 7) == 4 || tag == 0) {
+        break;
+      }
+      reader.skipType(tag & 7);
     }
     return message;
   },
@@ -483,9 +546,11 @@ export const QueryDenomAliasesResponse = {
     return obj;
   },
 
-  fromPartial<I extends Exact<DeepPartial<QueryDenomAliasesResponse>, I>>(
-    object: I,
-  ): QueryDenomAliasesResponse {
+  create<I extends Exact<DeepPartial<QueryDenomAliasesResponse>, I>>(base?: I): QueryDenomAliasesResponse {
+    return QueryDenomAliasesResponse.fromPartial(base ?? {});
+  },
+
+  fromPartial<I extends Exact<DeepPartial<QueryDenomAliasesResponse>, I>>(object: I): QueryDenomAliasesResponse {
     const message = createBaseQueryDenomAliasesResponse();
     message.aliases = object.aliases?.map((e) => e) || [];
     return message;
@@ -505,19 +570,24 @@ export const QueryAliasDenomRequest = {
   },
 
   decode(input: _m0.Reader | Uint8Array, length?: number): QueryAliasDenomRequest {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseQueryAliasDenomRequest();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
+          if (tag != 10) {
+            break;
+          }
+
           message.alias = reader.string();
-          break;
-        default:
-          reader.skipType(tag & 7);
-          break;
+          continue;
       }
+      if ((tag & 7) == 4 || tag == 0) {
+        break;
+      }
+      reader.skipType(tag & 7);
     }
     return message;
   },
@@ -530,6 +600,10 @@ export const QueryAliasDenomRequest = {
     const obj: any = {};
     message.alias !== undefined && (obj.alias = message.alias);
     return obj;
+  },
+
+  create<I extends Exact<DeepPartial<QueryAliasDenomRequest>, I>>(base?: I): QueryAliasDenomRequest {
+    return QueryAliasDenomRequest.fromPartial(base ?? {});
   },
 
   fromPartial<I extends Exact<DeepPartial<QueryAliasDenomRequest>, I>>(object: I): QueryAliasDenomRequest {
@@ -552,19 +626,24 @@ export const QueryAliasDenomResponse = {
   },
 
   decode(input: _m0.Reader | Uint8Array, length?: number): QueryAliasDenomResponse {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseQueryAliasDenomResponse();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
+          if (tag != 10) {
+            break;
+          }
+
           message.denom = reader.string();
-          break;
-        default:
-          reader.skipType(tag & 7);
-          break;
+          continue;
       }
+      if ((tag & 7) == 4 || tag == 0) {
+        break;
+      }
+      reader.skipType(tag & 7);
     }
     return message;
   },
@@ -577,6 +656,10 @@ export const QueryAliasDenomResponse = {
     const obj: any = {};
     message.denom !== undefined && (obj.denom = message.denom);
     return obj;
+  },
+
+  create<I extends Exact<DeepPartial<QueryAliasDenomResponse>, I>>(base?: I): QueryAliasDenomResponse {
+    return QueryAliasDenomResponse.fromPartial(base ?? {});
   },
 
   fromPartial<I extends Exact<DeepPartial<QueryAliasDenomResponse>, I>>(object: I): QueryAliasDenomResponse {
@@ -615,31 +698,31 @@ export class QueryClientImpl implements Query {
   TokenPairs(request: QueryTokenPairsRequest): Promise<QueryTokenPairsResponse> {
     const data = QueryTokenPairsRequest.encode(request).finish();
     const promise = this.rpc.request(this.service, "TokenPairs", data);
-    return promise.then((data) => QueryTokenPairsResponse.decode(new _m0.Reader(data)));
+    return promise.then((data) => QueryTokenPairsResponse.decode(_m0.Reader.create(data)));
   }
 
   TokenPair(request: QueryTokenPairRequest): Promise<QueryTokenPairResponse> {
     const data = QueryTokenPairRequest.encode(request).finish();
     const promise = this.rpc.request(this.service, "TokenPair", data);
-    return promise.then((data) => QueryTokenPairResponse.decode(new _m0.Reader(data)));
+    return promise.then((data) => QueryTokenPairResponse.decode(_m0.Reader.create(data)));
   }
 
   Params(request: QueryParamsRequest): Promise<QueryParamsResponse> {
     const data = QueryParamsRequest.encode(request).finish();
     const promise = this.rpc.request(this.service, "Params", data);
-    return promise.then((data) => QueryParamsResponse.decode(new _m0.Reader(data)));
+    return promise.then((data) => QueryParamsResponse.decode(_m0.Reader.create(data)));
   }
 
   DenomAliases(request: QueryDenomAliasesRequest): Promise<QueryDenomAliasesResponse> {
     const data = QueryDenomAliasesRequest.encode(request).finish();
     const promise = this.rpc.request(this.service, "DenomAliases", data);
-    return promise.then((data) => QueryDenomAliasesResponse.decode(new _m0.Reader(data)));
+    return promise.then((data) => QueryDenomAliasesResponse.decode(_m0.Reader.create(data)));
   }
 
   AliasDenom(request: QueryAliasDenomRequest): Promise<QueryAliasDenomResponse> {
     const data = QueryAliasDenomRequest.encode(request).finish();
     const promise = this.rpc.request(this.service, "AliasDenom", data);
-    return promise.then((data) => QueryAliasDenomResponse.decode(new _m0.Reader(data)));
+    return promise.then((data) => QueryAliasDenomResponse.decode(_m0.Reader.create(data)));
   }
 }
 
@@ -649,21 +732,14 @@ interface Rpc {
 
 type Builtin = Date | Function | Uint8Array | string | number | boolean | undefined;
 
-export type DeepPartial<T> = T extends Builtin
-  ? T
-  : T extends Long
-  ? string | number | Long
-  : T extends Array<infer U>
-  ? Array<DeepPartial<U>>
-  : T extends ReadonlyArray<infer U>
-  ? ReadonlyArray<DeepPartial<U>>
-  : T extends {}
-  ? { [K in keyof T]?: DeepPartial<T[K]> }
+export type DeepPartial<T> = T extends Builtin ? T
+  : T extends Long ? string | number | Long : T extends Array<infer U> ? Array<DeepPartial<U>>
+  : T extends ReadonlyArray<infer U> ? ReadonlyArray<DeepPartial<U>>
+  : T extends {} ? { [K in keyof T]?: DeepPartial<T[K]> }
   : Partial<T>;
 
 type KeysOfUnion<T> = T extends T ? keyof T : never;
-export type Exact<P, I extends P> = P extends Builtin
-  ? P
+export type Exact<P, I extends P> = P extends Builtin ? P
   : P & { [K in keyof P]: Exact<P[K], I[K]> } & { [K in Exclude<keyof I, KeysOfUnion<P>>]: never };
 
 if (_m0.util.Long !== Long) {

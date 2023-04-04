@@ -92,46 +92,87 @@ export const MsgTransfer = {
   },
 
   decode(input: _m0.Reader | Uint8Array, length?: number): MsgTransfer {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseMsgTransfer();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
+          if (tag != 10) {
+            break;
+          }
+
           message.sourcePort = reader.string();
-          break;
+          continue;
         case 2:
+          if (tag != 18) {
+            break;
+          }
+
           message.sourceChannel = reader.string();
-          break;
+          continue;
         case 3:
+          if (tag != 26) {
+            break;
+          }
+
           message.token = Coin.decode(reader, reader.uint32());
-          break;
+          continue;
         case 4:
+          if (tag != 34) {
+            break;
+          }
+
           message.sender = reader.string();
-          break;
+          continue;
         case 5:
+          if (tag != 42) {
+            break;
+          }
+
           message.receiver = reader.string();
-          break;
+          continue;
         case 6:
+          if (tag != 50) {
+            break;
+          }
+
           message.timeoutHeight = Height.decode(reader, reader.uint32());
-          break;
+          continue;
         case 7:
+          if (tag != 56) {
+            break;
+          }
+
           message.timeoutTimestamp = reader.uint64() as Long;
-          break;
+          continue;
         case 8:
+          if (tag != 66) {
+            break;
+          }
+
           message.router = reader.string();
-          break;
+          continue;
         case 9:
+          if (tag != 74) {
+            break;
+          }
+
           message.fee = Coin.decode(reader, reader.uint32());
-          break;
+          continue;
         case 10:
+          if (tag != 82) {
+            break;
+          }
+
           message.memo = reader.string();
-          break;
-        default:
-          reader.skipType(tag & 7);
-          break;
+          continue;
       }
+      if ((tag & 7) == 4 || tag == 0) {
+        break;
+      }
+      reader.skipType(tag & 7);
     }
     return message;
   },
@@ -168,24 +209,25 @@ export const MsgTransfer = {
     return obj;
   },
 
+  create<I extends Exact<DeepPartial<MsgTransfer>, I>>(base?: I): MsgTransfer {
+    return MsgTransfer.fromPartial(base ?? {});
+  },
+
   fromPartial<I extends Exact<DeepPartial<MsgTransfer>, I>>(object: I): MsgTransfer {
     const message = createBaseMsgTransfer();
     message.sourcePort = object.sourcePort ?? "";
     message.sourceChannel = object.sourceChannel ?? "";
-    message.token =
-      object.token !== undefined && object.token !== null ? Coin.fromPartial(object.token) : undefined;
+    message.token = (object.token !== undefined && object.token !== null) ? Coin.fromPartial(object.token) : undefined;
     message.sender = object.sender ?? "";
     message.receiver = object.receiver ?? "";
-    message.timeoutHeight =
-      object.timeoutHeight !== undefined && object.timeoutHeight !== null
-        ? Height.fromPartial(object.timeoutHeight)
-        : undefined;
-    message.timeoutTimestamp =
-      object.timeoutTimestamp !== undefined && object.timeoutTimestamp !== null
-        ? Long.fromValue(object.timeoutTimestamp)
-        : Long.UZERO;
+    message.timeoutHeight = (object.timeoutHeight !== undefined && object.timeoutHeight !== null)
+      ? Height.fromPartial(object.timeoutHeight)
+      : undefined;
+    message.timeoutTimestamp = (object.timeoutTimestamp !== undefined && object.timeoutTimestamp !== null)
+      ? Long.fromValue(object.timeoutTimestamp)
+      : Long.UZERO;
     message.router = object.router ?? "";
-    message.fee = object.fee !== undefined && object.fee !== null ? Coin.fromPartial(object.fee) : undefined;
+    message.fee = (object.fee !== undefined && object.fee !== null) ? Coin.fromPartial(object.fee) : undefined;
     message.memo = object.memo ?? "";
     return message;
   },
@@ -208,7 +250,7 @@ export class MsgClientImpl implements Msg {
   Transfer(request: MsgTransfer): Promise<MsgTransferResponse> {
     const data = MsgTransfer.encode(request).finish();
     const promise = this.rpc.request(this.service, "Transfer", data);
-    return promise.then((data) => MsgTransferResponse.decode(new _m0.Reader(data)));
+    return promise.then((data) => MsgTransferResponse.decode(_m0.Reader.create(data)));
   }
 }
 
@@ -218,21 +260,14 @@ interface Rpc {
 
 type Builtin = Date | Function | Uint8Array | string | number | boolean | undefined;
 
-export type DeepPartial<T> = T extends Builtin
-  ? T
-  : T extends Long
-  ? string | number | Long
-  : T extends Array<infer U>
-  ? Array<DeepPartial<U>>
-  : T extends ReadonlyArray<infer U>
-  ? ReadonlyArray<DeepPartial<U>>
-  : T extends {}
-  ? { [K in keyof T]?: DeepPartial<T[K]> }
+export type DeepPartial<T> = T extends Builtin ? T
+  : T extends Long ? string | number | Long : T extends Array<infer U> ? Array<DeepPartial<U>>
+  : T extends ReadonlyArray<infer U> ? ReadonlyArray<DeepPartial<U>>
+  : T extends {} ? { [K in keyof T]?: DeepPartial<T[K]> }
   : Partial<T>;
 
 type KeysOfUnion<T> = T extends T ? keyof T : never;
-export type Exact<P, I extends P> = P extends Builtin
-  ? P
+export type Exact<P, I extends P> = P extends Builtin ? P
   : P & { [K in keyof P]: Exact<P[K], I[K]> } & { [K in Exclude<keyof I, KeysOfUnion<P>>]: never };
 
 if (_m0.util.Long !== Long) {

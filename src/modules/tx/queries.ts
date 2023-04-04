@@ -51,8 +51,7 @@ export function setupTxExtension(base: QueryClient): TxExtension {
           // this is not available in Comsos SDK 0.42.
           txBytes: undefined,
         });
-        const response = await queryService.Simulate(request);
-        return response;
+        return await queryService.Simulate(request);
       },
     },
   };

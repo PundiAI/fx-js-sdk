@@ -15,7 +15,8 @@ export interface MsgValsetConfirm {
 }
 
 /** Deprecated: after upgrade v3 */
-export interface MsgValsetConfirmResponse {}
+export interface MsgValsetConfirmResponse {
+}
 
 /** Deprecated: after upgrade v3 */
 export interface MsgSendToEth {
@@ -26,7 +27,8 @@ export interface MsgSendToEth {
 }
 
 /** Deprecated: after upgrade v3 */
-export interface MsgSendToEthResponse {}
+export interface MsgSendToEthResponse {
+}
 
 /** Deprecated: after upgrade v3 */
 export interface MsgRequestBatch {
@@ -38,7 +40,8 @@ export interface MsgRequestBatch {
 }
 
 /** Deprecated: after upgrade v3 */
-export interface MsgRequestBatchResponse {}
+export interface MsgRequestBatchResponse {
+}
 
 /** Deprecated: after upgrade v3 */
 export interface MsgConfirmBatch {
@@ -50,7 +53,8 @@ export interface MsgConfirmBatch {
 }
 
 /** Deprecated: after upgrade v3 */
-export interface MsgConfirmBatchResponse {}
+export interface MsgConfirmBatchResponse {
+}
 
 /** Deprecated: after upgrade v3 */
 export interface MsgDepositClaim {
@@ -65,7 +69,8 @@ export interface MsgDepositClaim {
 }
 
 /** Deprecated: after upgrade v3 */
-export interface MsgDepositClaimResponse {}
+export interface MsgDepositClaimResponse {
+}
 
 /** Deprecated: after upgrade v3 */
 export interface MsgWithdrawClaim {
@@ -77,7 +82,8 @@ export interface MsgWithdrawClaim {
 }
 
 /** Deprecated: after upgrade v3 */
-export interface MsgWithdrawClaimResponse {}
+export interface MsgWithdrawClaimResponse {
+}
 
 /** Deprecated: after upgrade v3 */
 export interface MsgCancelSendToEth {
@@ -86,7 +92,8 @@ export interface MsgCancelSendToEth {
 }
 
 /** Deprecated: after upgrade v3 */
-export interface MsgCancelSendToEthResponse {}
+export interface MsgCancelSendToEthResponse {
+}
 
 /** Deprecated: after upgrade v3 */
 export interface MsgValsetUpdatedClaim {
@@ -98,7 +105,8 @@ export interface MsgValsetUpdatedClaim {
 }
 
 /** Deprecated: after upgrade v3 */
-export interface MsgValsetUpdatedClaimResponse {}
+export interface MsgValsetUpdatedClaimResponse {
+}
 
 /** Deprecated: after upgrade v3 */
 export interface MsgSetOrchestratorAddress {
@@ -108,7 +116,8 @@ export interface MsgSetOrchestratorAddress {
 }
 
 /** Deprecated: after upgrade v3 */
-export interface MsgSetOrchestratorAddressResponse {}
+export interface MsgSetOrchestratorAddressResponse {
+}
 
 /** Deprecated: after upgrade v3 */
 export interface MsgFxOriginatedTokenClaim {
@@ -122,7 +131,8 @@ export interface MsgFxOriginatedTokenClaim {
 }
 
 /** Deprecated: after upgrade v3 */
-export interface MsgFxOriginatedTokenClaimResponse {}
+export interface MsgFxOriginatedTokenClaimResponse {
+}
 
 function createBaseMsgValsetConfirm(): MsgValsetConfirm {
   return { nonce: Long.UZERO, orchestrator: "", ethAddress: "", signature: "" };
@@ -146,28 +156,45 @@ export const MsgValsetConfirm = {
   },
 
   decode(input: _m0.Reader | Uint8Array, length?: number): MsgValsetConfirm {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseMsgValsetConfirm();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
+          if (tag != 8) {
+            break;
+          }
+
           message.nonce = reader.uint64() as Long;
-          break;
+          continue;
         case 2:
+          if (tag != 18) {
+            break;
+          }
+
           message.orchestrator = reader.string();
-          break;
+          continue;
         case 3:
+          if (tag != 26) {
+            break;
+          }
+
           message.ethAddress = reader.string();
-          break;
+          continue;
         case 4:
+          if (tag != 34) {
+            break;
+          }
+
           message.signature = reader.string();
-          break;
-        default:
-          reader.skipType(tag & 7);
-          break;
+          continue;
       }
+      if ((tag & 7) == 4 || tag == 0) {
+        break;
+      }
+      reader.skipType(tag & 7);
     }
     return message;
   },
@@ -190,10 +217,13 @@ export const MsgValsetConfirm = {
     return obj;
   },
 
+  create<I extends Exact<DeepPartial<MsgValsetConfirm>, I>>(base?: I): MsgValsetConfirm {
+    return MsgValsetConfirm.fromPartial(base ?? {});
+  },
+
   fromPartial<I extends Exact<DeepPartial<MsgValsetConfirm>, I>>(object: I): MsgValsetConfirm {
     const message = createBaseMsgValsetConfirm();
-    message.nonce =
-      object.nonce !== undefined && object.nonce !== null ? Long.fromValue(object.nonce) : Long.UZERO;
+    message.nonce = (object.nonce !== undefined && object.nonce !== null) ? Long.fromValue(object.nonce) : Long.UZERO;
     message.orchestrator = object.orchestrator ?? "";
     message.ethAddress = object.ethAddress ?? "";
     message.signature = object.signature ?? "";
@@ -211,16 +241,17 @@ export const MsgValsetConfirmResponse = {
   },
 
   decode(input: _m0.Reader | Uint8Array, length?: number): MsgValsetConfirmResponse {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseMsgValsetConfirmResponse();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
-        default:
-          reader.skipType(tag & 7);
-          break;
       }
+      if ((tag & 7) == 4 || tag == 0) {
+        break;
+      }
+      reader.skipType(tag & 7);
     }
     return message;
   },
@@ -232,6 +263,10 @@ export const MsgValsetConfirmResponse = {
   toJSON(_: MsgValsetConfirmResponse): unknown {
     const obj: any = {};
     return obj;
+  },
+
+  create<I extends Exact<DeepPartial<MsgValsetConfirmResponse>, I>>(base?: I): MsgValsetConfirmResponse {
+    return MsgValsetConfirmResponse.fromPartial(base ?? {});
   },
 
   fromPartial<I extends Exact<DeepPartial<MsgValsetConfirmResponse>, I>>(_: I): MsgValsetConfirmResponse {
@@ -262,28 +297,45 @@ export const MsgSendToEth = {
   },
 
   decode(input: _m0.Reader | Uint8Array, length?: number): MsgSendToEth {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseMsgSendToEth();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
+          if (tag != 10) {
+            break;
+          }
+
           message.sender = reader.string();
-          break;
+          continue;
         case 2:
+          if (tag != 18) {
+            break;
+          }
+
           message.ethDest = reader.string();
-          break;
+          continue;
         case 3:
+          if (tag != 26) {
+            break;
+          }
+
           message.amount = Coin.decode(reader, reader.uint32());
-          break;
+          continue;
         case 4:
+          if (tag != 34) {
+            break;
+          }
+
           message.bridgeFee = Coin.decode(reader, reader.uint32());
-          break;
-        default:
-          reader.skipType(tag & 7);
-          break;
+          continue;
       }
+      if ((tag & 7) == 4 || tag == 0) {
+        break;
+      }
+      reader.skipType(tag & 7);
     }
     return message;
   },
@@ -302,21 +354,24 @@ export const MsgSendToEth = {
     message.sender !== undefined && (obj.sender = message.sender);
     message.ethDest !== undefined && (obj.ethDest = message.ethDest);
     message.amount !== undefined && (obj.amount = message.amount ? Coin.toJSON(message.amount) : undefined);
-    message.bridgeFee !== undefined &&
-      (obj.bridgeFee = message.bridgeFee ? Coin.toJSON(message.bridgeFee) : undefined);
+    message.bridgeFee !== undefined && (obj.bridgeFee = message.bridgeFee ? Coin.toJSON(message.bridgeFee) : undefined);
     return obj;
+  },
+
+  create<I extends Exact<DeepPartial<MsgSendToEth>, I>>(base?: I): MsgSendToEth {
+    return MsgSendToEth.fromPartial(base ?? {});
   },
 
   fromPartial<I extends Exact<DeepPartial<MsgSendToEth>, I>>(object: I): MsgSendToEth {
     const message = createBaseMsgSendToEth();
     message.sender = object.sender ?? "";
     message.ethDest = object.ethDest ?? "";
-    message.amount =
-      object.amount !== undefined && object.amount !== null ? Coin.fromPartial(object.amount) : undefined;
-    message.bridgeFee =
-      object.bridgeFee !== undefined && object.bridgeFee !== null
-        ? Coin.fromPartial(object.bridgeFee)
-        : undefined;
+    message.amount = (object.amount !== undefined && object.amount !== null)
+      ? Coin.fromPartial(object.amount)
+      : undefined;
+    message.bridgeFee = (object.bridgeFee !== undefined && object.bridgeFee !== null)
+      ? Coin.fromPartial(object.bridgeFee)
+      : undefined;
     return message;
   },
 };
@@ -331,16 +386,17 @@ export const MsgSendToEthResponse = {
   },
 
   decode(input: _m0.Reader | Uint8Array, length?: number): MsgSendToEthResponse {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseMsgSendToEthResponse();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
-        default:
-          reader.skipType(tag & 7);
-          break;
       }
+      if ((tag & 7) == 4 || tag == 0) {
+        break;
+      }
+      reader.skipType(tag & 7);
     }
     return message;
   },
@@ -352,6 +408,10 @@ export const MsgSendToEthResponse = {
   toJSON(_: MsgSendToEthResponse): unknown {
     const obj: any = {};
     return obj;
+  },
+
+  create<I extends Exact<DeepPartial<MsgSendToEthResponse>, I>>(base?: I): MsgSendToEthResponse {
+    return MsgSendToEthResponse.fromPartial(base ?? {});
   },
 
   fromPartial<I extends Exact<DeepPartial<MsgSendToEthResponse>, I>>(_: I): MsgSendToEthResponse {
@@ -385,31 +445,52 @@ export const MsgRequestBatch = {
   },
 
   decode(input: _m0.Reader | Uint8Array, length?: number): MsgRequestBatch {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseMsgRequestBatch();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
+          if (tag != 10) {
+            break;
+          }
+
           message.sender = reader.string();
-          break;
+          continue;
         case 2:
+          if (tag != 18) {
+            break;
+          }
+
           message.denom = reader.string();
-          break;
+          continue;
         case 3:
+          if (tag != 26) {
+            break;
+          }
+
           message.minimumFee = reader.string();
-          break;
+          continue;
         case 4:
+          if (tag != 34) {
+            break;
+          }
+
           message.feeReceive = reader.string();
-          break;
+          continue;
         case 5:
+          if (tag != 42) {
+            break;
+          }
+
           message.baseFee = reader.string();
-          break;
-        default:
-          reader.skipType(tag & 7);
-          break;
+          continue;
       }
+      if ((tag & 7) == 4 || tag == 0) {
+        break;
+      }
+      reader.skipType(tag & 7);
     }
     return message;
   },
@@ -434,6 +515,10 @@ export const MsgRequestBatch = {
     return obj;
   },
 
+  create<I extends Exact<DeepPartial<MsgRequestBatch>, I>>(base?: I): MsgRequestBatch {
+    return MsgRequestBatch.fromPartial(base ?? {});
+  },
+
   fromPartial<I extends Exact<DeepPartial<MsgRequestBatch>, I>>(object: I): MsgRequestBatch {
     const message = createBaseMsgRequestBatch();
     message.sender = object.sender ?? "";
@@ -455,16 +540,17 @@ export const MsgRequestBatchResponse = {
   },
 
   decode(input: _m0.Reader | Uint8Array, length?: number): MsgRequestBatchResponse {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseMsgRequestBatchResponse();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
-        default:
-          reader.skipType(tag & 7);
-          break;
       }
+      if ((tag & 7) == 4 || tag == 0) {
+        break;
+      }
+      reader.skipType(tag & 7);
     }
     return message;
   },
@@ -476,6 +562,10 @@ export const MsgRequestBatchResponse = {
   toJSON(_: MsgRequestBatchResponse): unknown {
     const obj: any = {};
     return obj;
+  },
+
+  create<I extends Exact<DeepPartial<MsgRequestBatchResponse>, I>>(base?: I): MsgRequestBatchResponse {
+    return MsgRequestBatchResponse.fromPartial(base ?? {});
   },
 
   fromPartial<I extends Exact<DeepPartial<MsgRequestBatchResponse>, I>>(_: I): MsgRequestBatchResponse {
@@ -509,31 +599,52 @@ export const MsgConfirmBatch = {
   },
 
   decode(input: _m0.Reader | Uint8Array, length?: number): MsgConfirmBatch {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseMsgConfirmBatch();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
+          if (tag != 8) {
+            break;
+          }
+
           message.nonce = reader.uint64() as Long;
-          break;
+          continue;
         case 2:
+          if (tag != 18) {
+            break;
+          }
+
           message.tokenContract = reader.string();
-          break;
+          continue;
         case 3:
+          if (tag != 26) {
+            break;
+          }
+
           message.ethSigner = reader.string();
-          break;
+          continue;
         case 4:
+          if (tag != 34) {
+            break;
+          }
+
           message.orchestrator = reader.string();
-          break;
+          continue;
         case 5:
+          if (tag != 42) {
+            break;
+          }
+
           message.signature = reader.string();
-          break;
-        default:
-          reader.skipType(tag & 7);
-          break;
+          continue;
       }
+      if ((tag & 7) == 4 || tag == 0) {
+        break;
+      }
+      reader.skipType(tag & 7);
     }
     return message;
   },
@@ -558,10 +669,13 @@ export const MsgConfirmBatch = {
     return obj;
   },
 
+  create<I extends Exact<DeepPartial<MsgConfirmBatch>, I>>(base?: I): MsgConfirmBatch {
+    return MsgConfirmBatch.fromPartial(base ?? {});
+  },
+
   fromPartial<I extends Exact<DeepPartial<MsgConfirmBatch>, I>>(object: I): MsgConfirmBatch {
     const message = createBaseMsgConfirmBatch();
-    message.nonce =
-      object.nonce !== undefined && object.nonce !== null ? Long.fromValue(object.nonce) : Long.UZERO;
+    message.nonce = (object.nonce !== undefined && object.nonce !== null) ? Long.fromValue(object.nonce) : Long.UZERO;
     message.tokenContract = object.tokenContract ?? "";
     message.ethSigner = object.ethSigner ?? "";
     message.orchestrator = object.orchestrator ?? "";
@@ -580,16 +694,17 @@ export const MsgConfirmBatchResponse = {
   },
 
   decode(input: _m0.Reader | Uint8Array, length?: number): MsgConfirmBatchResponse {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseMsgConfirmBatchResponse();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
-        default:
-          reader.skipType(tag & 7);
-          break;
       }
+      if ((tag & 7) == 4 || tag == 0) {
+        break;
+      }
+      reader.skipType(tag & 7);
     }
     return message;
   },
@@ -601,6 +716,10 @@ export const MsgConfirmBatchResponse = {
   toJSON(_: MsgConfirmBatchResponse): unknown {
     const obj: any = {};
     return obj;
+  },
+
+  create<I extends Exact<DeepPartial<MsgConfirmBatchResponse>, I>>(base?: I): MsgConfirmBatchResponse {
+    return MsgConfirmBatchResponse.fromPartial(base ?? {});
   },
 
   fromPartial<I extends Exact<DeepPartial<MsgConfirmBatchResponse>, I>>(_: I): MsgConfirmBatchResponse {
@@ -652,40 +771,73 @@ export const MsgDepositClaim = {
   },
 
   decode(input: _m0.Reader | Uint8Array, length?: number): MsgDepositClaim {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseMsgDepositClaim();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
+          if (tag != 8) {
+            break;
+          }
+
           message.eventNonce = reader.uint64() as Long;
-          break;
+          continue;
         case 2:
+          if (tag != 16) {
+            break;
+          }
+
           message.blockHeight = reader.uint64() as Long;
-          break;
+          continue;
         case 3:
+          if (tag != 26) {
+            break;
+          }
+
           message.tokenContract = reader.string();
-          break;
+          continue;
         case 4:
+          if (tag != 34) {
+            break;
+          }
+
           message.amount = reader.string();
-          break;
+          continue;
         case 5:
+          if (tag != 42) {
+            break;
+          }
+
           message.ethSender = reader.string();
-          break;
+          continue;
         case 6:
+          if (tag != 50) {
+            break;
+          }
+
           message.fxReceiver = reader.string();
-          break;
+          continue;
         case 7:
+          if (tag != 58) {
+            break;
+          }
+
           message.targetIbc = reader.string();
-          break;
+          continue;
         case 8:
+          if (tag != 66) {
+            break;
+          }
+
           message.orchestrator = reader.string();
-          break;
-        default:
-          reader.skipType(tag & 7);
-          break;
+          continue;
       }
+      if ((tag & 7) == 4 || tag == 0) {
+        break;
+      }
+      reader.skipType(tag & 7);
     }
     return message;
   },
@@ -716,16 +868,18 @@ export const MsgDepositClaim = {
     return obj;
   },
 
+  create<I extends Exact<DeepPartial<MsgDepositClaim>, I>>(base?: I): MsgDepositClaim {
+    return MsgDepositClaim.fromPartial(base ?? {});
+  },
+
   fromPartial<I extends Exact<DeepPartial<MsgDepositClaim>, I>>(object: I): MsgDepositClaim {
     const message = createBaseMsgDepositClaim();
-    message.eventNonce =
-      object.eventNonce !== undefined && object.eventNonce !== null
-        ? Long.fromValue(object.eventNonce)
-        : Long.UZERO;
-    message.blockHeight =
-      object.blockHeight !== undefined && object.blockHeight !== null
-        ? Long.fromValue(object.blockHeight)
-        : Long.UZERO;
+    message.eventNonce = (object.eventNonce !== undefined && object.eventNonce !== null)
+      ? Long.fromValue(object.eventNonce)
+      : Long.UZERO;
+    message.blockHeight = (object.blockHeight !== undefined && object.blockHeight !== null)
+      ? Long.fromValue(object.blockHeight)
+      : Long.UZERO;
     message.tokenContract = object.tokenContract ?? "";
     message.amount = object.amount ?? "";
     message.ethSender = object.ethSender ?? "";
@@ -746,16 +900,17 @@ export const MsgDepositClaimResponse = {
   },
 
   decode(input: _m0.Reader | Uint8Array, length?: number): MsgDepositClaimResponse {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseMsgDepositClaimResponse();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
-        default:
-          reader.skipType(tag & 7);
-          break;
       }
+      if ((tag & 7) == 4 || tag == 0) {
+        break;
+      }
+      reader.skipType(tag & 7);
     }
     return message;
   },
@@ -767,6 +922,10 @@ export const MsgDepositClaimResponse = {
   toJSON(_: MsgDepositClaimResponse): unknown {
     const obj: any = {};
     return obj;
+  },
+
+  create<I extends Exact<DeepPartial<MsgDepositClaimResponse>, I>>(base?: I): MsgDepositClaimResponse {
+    return MsgDepositClaimResponse.fromPartial(base ?? {});
   },
 
   fromPartial<I extends Exact<DeepPartial<MsgDepositClaimResponse>, I>>(_: I): MsgDepositClaimResponse {
@@ -806,31 +965,52 @@ export const MsgWithdrawClaim = {
   },
 
   decode(input: _m0.Reader | Uint8Array, length?: number): MsgWithdrawClaim {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseMsgWithdrawClaim();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
+          if (tag != 8) {
+            break;
+          }
+
           message.eventNonce = reader.uint64() as Long;
-          break;
+          continue;
         case 2:
+          if (tag != 16) {
+            break;
+          }
+
           message.blockHeight = reader.uint64() as Long;
-          break;
+          continue;
         case 3:
+          if (tag != 24) {
+            break;
+          }
+
           message.batchNonce = reader.uint64() as Long;
-          break;
+          continue;
         case 4:
+          if (tag != 34) {
+            break;
+          }
+
           message.tokenContract = reader.string();
-          break;
+          continue;
         case 5:
+          if (tag != 42) {
+            break;
+          }
+
           message.orchestrator = reader.string();
-          break;
-        default:
-          reader.skipType(tag & 7);
-          break;
+          continue;
       }
+      if ((tag & 7) == 4 || tag == 0) {
+        break;
+      }
+      reader.skipType(tag & 7);
     }
     return message;
   },
@@ -855,20 +1035,21 @@ export const MsgWithdrawClaim = {
     return obj;
   },
 
+  create<I extends Exact<DeepPartial<MsgWithdrawClaim>, I>>(base?: I): MsgWithdrawClaim {
+    return MsgWithdrawClaim.fromPartial(base ?? {});
+  },
+
   fromPartial<I extends Exact<DeepPartial<MsgWithdrawClaim>, I>>(object: I): MsgWithdrawClaim {
     const message = createBaseMsgWithdrawClaim();
-    message.eventNonce =
-      object.eventNonce !== undefined && object.eventNonce !== null
-        ? Long.fromValue(object.eventNonce)
-        : Long.UZERO;
-    message.blockHeight =
-      object.blockHeight !== undefined && object.blockHeight !== null
-        ? Long.fromValue(object.blockHeight)
-        : Long.UZERO;
-    message.batchNonce =
-      object.batchNonce !== undefined && object.batchNonce !== null
-        ? Long.fromValue(object.batchNonce)
-        : Long.UZERO;
+    message.eventNonce = (object.eventNonce !== undefined && object.eventNonce !== null)
+      ? Long.fromValue(object.eventNonce)
+      : Long.UZERO;
+    message.blockHeight = (object.blockHeight !== undefined && object.blockHeight !== null)
+      ? Long.fromValue(object.blockHeight)
+      : Long.UZERO;
+    message.batchNonce = (object.batchNonce !== undefined && object.batchNonce !== null)
+      ? Long.fromValue(object.batchNonce)
+      : Long.UZERO;
     message.tokenContract = object.tokenContract ?? "";
     message.orchestrator = object.orchestrator ?? "";
     return message;
@@ -885,16 +1066,17 @@ export const MsgWithdrawClaimResponse = {
   },
 
   decode(input: _m0.Reader | Uint8Array, length?: number): MsgWithdrawClaimResponse {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseMsgWithdrawClaimResponse();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
-        default:
-          reader.skipType(tag & 7);
-          break;
       }
+      if ((tag & 7) == 4 || tag == 0) {
+        break;
+      }
+      reader.skipType(tag & 7);
     }
     return message;
   },
@@ -906,6 +1088,10 @@ export const MsgWithdrawClaimResponse = {
   toJSON(_: MsgWithdrawClaimResponse): unknown {
     const obj: any = {};
     return obj;
+  },
+
+  create<I extends Exact<DeepPartial<MsgWithdrawClaimResponse>, I>>(base?: I): MsgWithdrawClaimResponse {
+    return MsgWithdrawClaimResponse.fromPartial(base ?? {});
   },
 
   fromPartial<I extends Exact<DeepPartial<MsgWithdrawClaimResponse>, I>>(_: I): MsgWithdrawClaimResponse {
@@ -930,22 +1116,31 @@ export const MsgCancelSendToEth = {
   },
 
   decode(input: _m0.Reader | Uint8Array, length?: number): MsgCancelSendToEth {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseMsgCancelSendToEth();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
+          if (tag != 8) {
+            break;
+          }
+
           message.transactionId = reader.uint64() as Long;
-          break;
+          continue;
         case 2:
+          if (tag != 18) {
+            break;
+          }
+
           message.sender = reader.string();
-          break;
-        default:
-          reader.skipType(tag & 7);
-          break;
+          continue;
       }
+      if ((tag & 7) == 4 || tag == 0) {
+        break;
+      }
+      reader.skipType(tag & 7);
     }
     return message;
   },
@@ -959,18 +1154,20 @@ export const MsgCancelSendToEth = {
 
   toJSON(message: MsgCancelSendToEth): unknown {
     const obj: any = {};
-    message.transactionId !== undefined &&
-      (obj.transactionId = (message.transactionId || Long.UZERO).toString());
+    message.transactionId !== undefined && (obj.transactionId = (message.transactionId || Long.UZERO).toString());
     message.sender !== undefined && (obj.sender = message.sender);
     return obj;
   },
 
+  create<I extends Exact<DeepPartial<MsgCancelSendToEth>, I>>(base?: I): MsgCancelSendToEth {
+    return MsgCancelSendToEth.fromPartial(base ?? {});
+  },
+
   fromPartial<I extends Exact<DeepPartial<MsgCancelSendToEth>, I>>(object: I): MsgCancelSendToEth {
     const message = createBaseMsgCancelSendToEth();
-    message.transactionId =
-      object.transactionId !== undefined && object.transactionId !== null
-        ? Long.fromValue(object.transactionId)
-        : Long.UZERO;
+    message.transactionId = (object.transactionId !== undefined && object.transactionId !== null)
+      ? Long.fromValue(object.transactionId)
+      : Long.UZERO;
     message.sender = object.sender ?? "";
     return message;
   },
@@ -986,16 +1183,17 @@ export const MsgCancelSendToEthResponse = {
   },
 
   decode(input: _m0.Reader | Uint8Array, length?: number): MsgCancelSendToEthResponse {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseMsgCancelSendToEthResponse();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
-        default:
-          reader.skipType(tag & 7);
-          break;
       }
+      if ((tag & 7) == 4 || tag == 0) {
+        break;
+      }
+      reader.skipType(tag & 7);
     }
     return message;
   },
@@ -1009,6 +1207,10 @@ export const MsgCancelSendToEthResponse = {
     return obj;
   },
 
+  create<I extends Exact<DeepPartial<MsgCancelSendToEthResponse>, I>>(base?: I): MsgCancelSendToEthResponse {
+    return MsgCancelSendToEthResponse.fromPartial(base ?? {});
+  },
+
   fromPartial<I extends Exact<DeepPartial<MsgCancelSendToEthResponse>, I>>(_: I): MsgCancelSendToEthResponse {
     const message = createBaseMsgCancelSendToEthResponse();
     return message;
@@ -1016,13 +1218,7 @@ export const MsgCancelSendToEthResponse = {
 };
 
 function createBaseMsgValsetUpdatedClaim(): MsgValsetUpdatedClaim {
-  return {
-    eventNonce: Long.UZERO,
-    blockHeight: Long.UZERO,
-    valsetNonce: Long.UZERO,
-    members: [],
-    orchestrator: "",
-  };
+  return { eventNonce: Long.UZERO, blockHeight: Long.UZERO, valsetNonce: Long.UZERO, members: [], orchestrator: "" };
 }
 
 export const MsgValsetUpdatedClaim = {
@@ -1046,31 +1242,52 @@ export const MsgValsetUpdatedClaim = {
   },
 
   decode(input: _m0.Reader | Uint8Array, length?: number): MsgValsetUpdatedClaim {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseMsgValsetUpdatedClaim();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
+          if (tag != 8) {
+            break;
+          }
+
           message.eventNonce = reader.uint64() as Long;
-          break;
+          continue;
         case 2:
+          if (tag != 16) {
+            break;
+          }
+
           message.blockHeight = reader.uint64() as Long;
-          break;
+          continue;
         case 3:
+          if (tag != 24) {
+            break;
+          }
+
           message.valsetNonce = reader.uint64() as Long;
-          break;
+          continue;
         case 4:
+          if (tag != 34) {
+            break;
+          }
+
           message.members.push(BridgeValidator.decode(reader, reader.uint32()));
-          break;
+          continue;
         case 6:
+          if (tag != 50) {
+            break;
+          }
+
           message.orchestrator = reader.string();
-          break;
-        default:
-          reader.skipType(tag & 7);
-          break;
+          continue;
       }
+      if ((tag & 7) == 4 || tag == 0) {
+        break;
+      }
+      reader.skipType(tag & 7);
     }
     return message;
   },
@@ -1080,9 +1297,7 @@ export const MsgValsetUpdatedClaim = {
       eventNonce: isSet(object.eventNonce) ? Long.fromValue(object.eventNonce) : Long.UZERO,
       blockHeight: isSet(object.blockHeight) ? Long.fromValue(object.blockHeight) : Long.UZERO,
       valsetNonce: isSet(object.valsetNonce) ? Long.fromValue(object.valsetNonce) : Long.UZERO,
-      members: Array.isArray(object?.members)
-        ? object.members.map((e: any) => BridgeValidator.fromJSON(e))
-        : [],
+      members: Array.isArray(object?.members) ? object.members.map((e: any) => BridgeValidator.fromJSON(e)) : [],
       orchestrator: isSet(object.orchestrator) ? String(object.orchestrator) : "",
     };
   },
@@ -1093,7 +1308,7 @@ export const MsgValsetUpdatedClaim = {
     message.blockHeight !== undefined && (obj.blockHeight = (message.blockHeight || Long.UZERO).toString());
     message.valsetNonce !== undefined && (obj.valsetNonce = (message.valsetNonce || Long.UZERO).toString());
     if (message.members) {
-      obj.members = message.members.map((e) => (e ? BridgeValidator.toJSON(e) : undefined));
+      obj.members = message.members.map((e) => e ? BridgeValidator.toJSON(e) : undefined);
     } else {
       obj.members = [];
     }
@@ -1101,20 +1316,21 @@ export const MsgValsetUpdatedClaim = {
     return obj;
   },
 
+  create<I extends Exact<DeepPartial<MsgValsetUpdatedClaim>, I>>(base?: I): MsgValsetUpdatedClaim {
+    return MsgValsetUpdatedClaim.fromPartial(base ?? {});
+  },
+
   fromPartial<I extends Exact<DeepPartial<MsgValsetUpdatedClaim>, I>>(object: I): MsgValsetUpdatedClaim {
     const message = createBaseMsgValsetUpdatedClaim();
-    message.eventNonce =
-      object.eventNonce !== undefined && object.eventNonce !== null
-        ? Long.fromValue(object.eventNonce)
-        : Long.UZERO;
-    message.blockHeight =
-      object.blockHeight !== undefined && object.blockHeight !== null
-        ? Long.fromValue(object.blockHeight)
-        : Long.UZERO;
-    message.valsetNonce =
-      object.valsetNonce !== undefined && object.valsetNonce !== null
-        ? Long.fromValue(object.valsetNonce)
-        : Long.UZERO;
+    message.eventNonce = (object.eventNonce !== undefined && object.eventNonce !== null)
+      ? Long.fromValue(object.eventNonce)
+      : Long.UZERO;
+    message.blockHeight = (object.blockHeight !== undefined && object.blockHeight !== null)
+      ? Long.fromValue(object.blockHeight)
+      : Long.UZERO;
+    message.valsetNonce = (object.valsetNonce !== undefined && object.valsetNonce !== null)
+      ? Long.fromValue(object.valsetNonce)
+      : Long.UZERO;
     message.members = object.members?.map((e) => BridgeValidator.fromPartial(e)) || [];
     message.orchestrator = object.orchestrator ?? "";
     return message;
@@ -1131,16 +1347,17 @@ export const MsgValsetUpdatedClaimResponse = {
   },
 
   decode(input: _m0.Reader | Uint8Array, length?: number): MsgValsetUpdatedClaimResponse {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseMsgValsetUpdatedClaimResponse();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
-        default:
-          reader.skipType(tag & 7);
-          break;
       }
+      if ((tag & 7) == 4 || tag == 0) {
+        break;
+      }
+      reader.skipType(tag & 7);
     }
     return message;
   },
@@ -1154,9 +1371,11 @@ export const MsgValsetUpdatedClaimResponse = {
     return obj;
   },
 
-  fromPartial<I extends Exact<DeepPartial<MsgValsetUpdatedClaimResponse>, I>>(
-    _: I,
-  ): MsgValsetUpdatedClaimResponse {
+  create<I extends Exact<DeepPartial<MsgValsetUpdatedClaimResponse>, I>>(base?: I): MsgValsetUpdatedClaimResponse {
+    return MsgValsetUpdatedClaimResponse.fromPartial(base ?? {});
+  },
+
+  fromPartial<I extends Exact<DeepPartial<MsgValsetUpdatedClaimResponse>, I>>(_: I): MsgValsetUpdatedClaimResponse {
     const message = createBaseMsgValsetUpdatedClaimResponse();
     return message;
   },
@@ -1181,25 +1400,38 @@ export const MsgSetOrchestratorAddress = {
   },
 
   decode(input: _m0.Reader | Uint8Array, length?: number): MsgSetOrchestratorAddress {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseMsgSetOrchestratorAddress();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
+          if (tag != 10) {
+            break;
+          }
+
           message.validator = reader.string();
-          break;
+          continue;
         case 2:
+          if (tag != 18) {
+            break;
+          }
+
           message.orchestrator = reader.string();
-          break;
+          continue;
         case 3:
+          if (tag != 26) {
+            break;
+          }
+
           message.ethAddress = reader.string();
-          break;
-        default:
-          reader.skipType(tag & 7);
-          break;
+          continue;
       }
+      if ((tag & 7) == 4 || tag == 0) {
+        break;
+      }
+      reader.skipType(tag & 7);
     }
     return message;
   },
@@ -1220,9 +1452,11 @@ export const MsgSetOrchestratorAddress = {
     return obj;
   },
 
-  fromPartial<I extends Exact<DeepPartial<MsgSetOrchestratorAddress>, I>>(
-    object: I,
-  ): MsgSetOrchestratorAddress {
+  create<I extends Exact<DeepPartial<MsgSetOrchestratorAddress>, I>>(base?: I): MsgSetOrchestratorAddress {
+    return MsgSetOrchestratorAddress.fromPartial(base ?? {});
+  },
+
+  fromPartial<I extends Exact<DeepPartial<MsgSetOrchestratorAddress>, I>>(object: I): MsgSetOrchestratorAddress {
     const message = createBaseMsgSetOrchestratorAddress();
     message.validator = object.validator ?? "";
     message.orchestrator = object.orchestrator ?? "";
@@ -1241,16 +1475,17 @@ export const MsgSetOrchestratorAddressResponse = {
   },
 
   decode(input: _m0.Reader | Uint8Array, length?: number): MsgSetOrchestratorAddressResponse {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseMsgSetOrchestratorAddressResponse();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
-        default:
-          reader.skipType(tag & 7);
-          break;
       }
+      if ((tag & 7) == 4 || tag == 0) {
+        break;
+      }
+      reader.skipType(tag & 7);
     }
     return message;
   },
@@ -1262,6 +1497,12 @@ export const MsgSetOrchestratorAddressResponse = {
   toJSON(_: MsgSetOrchestratorAddressResponse): unknown {
     const obj: any = {};
     return obj;
+  },
+
+  create<I extends Exact<DeepPartial<MsgSetOrchestratorAddressResponse>, I>>(
+    base?: I,
+  ): MsgSetOrchestratorAddressResponse {
+    return MsgSetOrchestratorAddressResponse.fromPartial(base ?? {});
   },
 
   fromPartial<I extends Exact<DeepPartial<MsgSetOrchestratorAddressResponse>, I>>(
@@ -1311,37 +1552,66 @@ export const MsgFxOriginatedTokenClaim = {
   },
 
   decode(input: _m0.Reader | Uint8Array, length?: number): MsgFxOriginatedTokenClaim {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseMsgFxOriginatedTokenClaim();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
+          if (tag != 8) {
+            break;
+          }
+
           message.eventNonce = reader.uint64() as Long;
-          break;
+          continue;
         case 2:
+          if (tag != 16) {
+            break;
+          }
+
           message.blockHeight = reader.uint64() as Long;
-          break;
+          continue;
         case 3:
+          if (tag != 26) {
+            break;
+          }
+
           message.tokenContract = reader.string();
-          break;
+          continue;
         case 4:
+          if (tag != 34) {
+            break;
+          }
+
           message.name = reader.string();
-          break;
+          continue;
         case 5:
+          if (tag != 42) {
+            break;
+          }
+
           message.symbol = reader.string();
-          break;
+          continue;
         case 6:
+          if (tag != 48) {
+            break;
+          }
+
           message.decimals = reader.uint64() as Long;
-          break;
+          continue;
         case 7:
+          if (tag != 58) {
+            break;
+          }
+
           message.orchestrator = reader.string();
-          break;
-        default:
-          reader.skipType(tag & 7);
-          break;
+          continue;
       }
+      if ((tag & 7) == 4 || tag == 0) {
+        break;
+      }
+      reader.skipType(tag & 7);
     }
     return message;
   },
@@ -1370,25 +1640,24 @@ export const MsgFxOriginatedTokenClaim = {
     return obj;
   },
 
-  fromPartial<I extends Exact<DeepPartial<MsgFxOriginatedTokenClaim>, I>>(
-    object: I,
-  ): MsgFxOriginatedTokenClaim {
+  create<I extends Exact<DeepPartial<MsgFxOriginatedTokenClaim>, I>>(base?: I): MsgFxOriginatedTokenClaim {
+    return MsgFxOriginatedTokenClaim.fromPartial(base ?? {});
+  },
+
+  fromPartial<I extends Exact<DeepPartial<MsgFxOriginatedTokenClaim>, I>>(object: I): MsgFxOriginatedTokenClaim {
     const message = createBaseMsgFxOriginatedTokenClaim();
-    message.eventNonce =
-      object.eventNonce !== undefined && object.eventNonce !== null
-        ? Long.fromValue(object.eventNonce)
-        : Long.UZERO;
-    message.blockHeight =
-      object.blockHeight !== undefined && object.blockHeight !== null
-        ? Long.fromValue(object.blockHeight)
-        : Long.UZERO;
+    message.eventNonce = (object.eventNonce !== undefined && object.eventNonce !== null)
+      ? Long.fromValue(object.eventNonce)
+      : Long.UZERO;
+    message.blockHeight = (object.blockHeight !== undefined && object.blockHeight !== null)
+      ? Long.fromValue(object.blockHeight)
+      : Long.UZERO;
     message.tokenContract = object.tokenContract ?? "";
     message.name = object.name ?? "";
     message.symbol = object.symbol ?? "";
-    message.decimals =
-      object.decimals !== undefined && object.decimals !== null
-        ? Long.fromValue(object.decimals)
-        : Long.UZERO;
+    message.decimals = (object.decimals !== undefined && object.decimals !== null)
+      ? Long.fromValue(object.decimals)
+      : Long.UZERO;
     message.orchestrator = object.orchestrator ?? "";
     return message;
   },
@@ -1404,16 +1673,17 @@ export const MsgFxOriginatedTokenClaimResponse = {
   },
 
   decode(input: _m0.Reader | Uint8Array, length?: number): MsgFxOriginatedTokenClaimResponse {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseMsgFxOriginatedTokenClaimResponse();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
-        default:
-          reader.skipType(tag & 7);
-          break;
       }
+      if ((tag & 7) == 4 || tag == 0) {
+        break;
+      }
+      reader.skipType(tag & 7);
     }
     return message;
   },
@@ -1425,6 +1695,12 @@ export const MsgFxOriginatedTokenClaimResponse = {
   toJSON(_: MsgFxOriginatedTokenClaimResponse): unknown {
     const obj: any = {};
     return obj;
+  },
+
+  create<I extends Exact<DeepPartial<MsgFxOriginatedTokenClaimResponse>, I>>(
+    base?: I,
+  ): MsgFxOriginatedTokenClaimResponse {
+    return MsgFxOriginatedTokenClaimResponse.fromPartial(base ?? {});
   },
 
   fromPartial<I extends Exact<DeepPartial<MsgFxOriginatedTokenClaimResponse>, I>>(
@@ -1473,49 +1749,49 @@ export class MsgClientImpl implements Msg {
   ValsetConfirm(request: MsgValsetConfirm): Promise<MsgValsetConfirmResponse> {
     const data = MsgValsetConfirm.encode(request).finish();
     const promise = this.rpc.request(this.service, "ValsetConfirm", data);
-    return promise.then((data) => MsgValsetConfirmResponse.decode(new _m0.Reader(data)));
+    return promise.then((data) => MsgValsetConfirmResponse.decode(_m0.Reader.create(data)));
   }
 
   SendToEth(request: MsgSendToEth): Promise<MsgSendToEthResponse> {
     const data = MsgSendToEth.encode(request).finish();
     const promise = this.rpc.request(this.service, "SendToEth", data);
-    return promise.then((data) => MsgSendToEthResponse.decode(new _m0.Reader(data)));
+    return promise.then((data) => MsgSendToEthResponse.decode(_m0.Reader.create(data)));
   }
 
   RequestBatch(request: MsgRequestBatch): Promise<MsgRequestBatchResponse> {
     const data = MsgRequestBatch.encode(request).finish();
     const promise = this.rpc.request(this.service, "RequestBatch", data);
-    return promise.then((data) => MsgRequestBatchResponse.decode(new _m0.Reader(data)));
+    return promise.then((data) => MsgRequestBatchResponse.decode(_m0.Reader.create(data)));
   }
 
   ConfirmBatch(request: MsgConfirmBatch): Promise<MsgConfirmBatchResponse> {
     const data = MsgConfirmBatch.encode(request).finish();
     const promise = this.rpc.request(this.service, "ConfirmBatch", data);
-    return promise.then((data) => MsgConfirmBatchResponse.decode(new _m0.Reader(data)));
+    return promise.then((data) => MsgConfirmBatchResponse.decode(_m0.Reader.create(data)));
   }
 
   DepositClaim(request: MsgDepositClaim): Promise<MsgDepositClaimResponse> {
     const data = MsgDepositClaim.encode(request).finish();
     const promise = this.rpc.request(this.service, "DepositClaim", data);
-    return promise.then((data) => MsgDepositClaimResponse.decode(new _m0.Reader(data)));
+    return promise.then((data) => MsgDepositClaimResponse.decode(_m0.Reader.create(data)));
   }
 
   WithdrawClaim(request: MsgWithdrawClaim): Promise<MsgWithdrawClaimResponse> {
     const data = MsgWithdrawClaim.encode(request).finish();
     const promise = this.rpc.request(this.service, "WithdrawClaim", data);
-    return promise.then((data) => MsgWithdrawClaimResponse.decode(new _m0.Reader(data)));
+    return promise.then((data) => MsgWithdrawClaimResponse.decode(_m0.Reader.create(data)));
   }
 
   CancelSendToEth(request: MsgCancelSendToEth): Promise<MsgCancelSendToEthResponse> {
     const data = MsgCancelSendToEth.encode(request).finish();
     const promise = this.rpc.request(this.service, "CancelSendToEth", data);
-    return promise.then((data) => MsgCancelSendToEthResponse.decode(new _m0.Reader(data)));
+    return promise.then((data) => MsgCancelSendToEthResponse.decode(_m0.Reader.create(data)));
   }
 
   ValsetUpdateClaim(request: MsgValsetUpdatedClaim): Promise<MsgValsetUpdatedClaimResponse> {
     const data = MsgValsetUpdatedClaim.encode(request).finish();
     const promise = this.rpc.request(this.service, "ValsetUpdateClaim", data);
-    return promise.then((data) => MsgValsetUpdatedClaimResponse.decode(new _m0.Reader(data)));
+    return promise.then((data) => MsgValsetUpdatedClaimResponse.decode(_m0.Reader.create(data)));
   }
 }
 
@@ -1525,21 +1801,14 @@ interface Rpc {
 
 type Builtin = Date | Function | Uint8Array | string | number | boolean | undefined;
 
-export type DeepPartial<T> = T extends Builtin
-  ? T
-  : T extends Long
-  ? string | number | Long
-  : T extends Array<infer U>
-  ? Array<DeepPartial<U>>
-  : T extends ReadonlyArray<infer U>
-  ? ReadonlyArray<DeepPartial<U>>
-  : T extends {}
-  ? { [K in keyof T]?: DeepPartial<T[K]> }
+export type DeepPartial<T> = T extends Builtin ? T
+  : T extends Long ? string | number | Long : T extends Array<infer U> ? Array<DeepPartial<U>>
+  : T extends ReadonlyArray<infer U> ? ReadonlyArray<DeepPartial<U>>
+  : T extends {} ? { [K in keyof T]?: DeepPartial<T[K]> }
   : Partial<T>;
 
 type KeysOfUnion<T> = T extends T ? keyof T : never;
-export type Exact<P, I extends P> = P extends Builtin
-  ? P
+export type Exact<P, I extends P> = P extends Builtin ? P
   : P & { [K in keyof P]: Exact<P[K], I[K]> } & { [K in Exclude<keyof I, KeysOfUnion<P>>]: never };
 
 if (_m0.util.Long !== Long) {

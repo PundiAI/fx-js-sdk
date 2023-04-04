@@ -1,6 +1,6 @@
 {
   "name": "fx-js-sdk",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "fx js sdk",
   "main": "build/index.js",
   "types": "build/index.d.ts",
@@ -57,9 +57,9 @@
     "prettier": "^2.4.1",
     "ts-jest": "^29.0.3",
     "ts-node": "^10.9.1",
-    "ts-proto": "^1.92.1",
-    "typescript": "~4.9.4",
-    "webpack": "^5.32.0",
+    "ts-proto": "^1.145.0",
+    "typescript": "^4.9.4",
+    "webpack": "^5.76.0",
     "webpack-cli": "^4.6.0"
   },
   "stableVersion": "0.1.0"

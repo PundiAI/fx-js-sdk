@@ -14,12 +14,9 @@ import Long from "long";
 import { EthSecp256k1Wallet } from "./ethsecp256k1wallet";
 import { Direction } from "./fx/dex/v1/tx";
 import { RegisterCoinProposal } from "./fx/erc20/v1/erc20";
+import { MsgRegisterCoin } from "./fx/erc20/v1/tx";
+import { MsgSubmitProposal as MsgSubmitProposalV1 } from "./fx/gov/v1/tx";
 import { fxCoreTxConfig, fxDexTxConfig } from "./index";
-import {
-  createGovSubmitProposalAminoConverters,
-  FxMsgIbcTransferEncodeObject,
-  MsgCreateOrderEncodeObject,
-} from "./modules";
 import { OnlineWallet } from "./onlinewallet";
 import { SigningFxClient } from "./signingfxclient";
 
@@ -52,7 +49,6 @@ describe("denom test", () => {
     const registry = new Registry([...defaultRegistryTypes]);
     const aminoTypes = new AminoTypes({
       ...createBankAminoConverters(),
-      ...createGovSubmitProposalAminoConverters(),
     });
     const options = {
       ...fxCoreTxConfig.options,
@@ -80,6 +76,32 @@ describe("denom test", () => {
           amount: coins("100", "FX"),
         }),
       },
+    ];
+    let gasLimit = await client.simulate(sender, [...sendMsg], undefined);
+    gasLimit = Math.round(gasLimit * 1.3);
+    console.debug("gasLimit", gasLimit);
+    const gasPrice = fxCoreTxConfig.options.gasPrice;
+    const fees: StdFee = {
+      amount: coins(gasPrice.amount.multiply(Uint64.fromNumber(gasLimit)).toString(), gasPrice.denom),
+      gas: gasLimit.toString(),
+    };
+    const result = await client.signAndBroadcast(sender, [...sendMsg], fees);
+    console.debug(result);
+  });
+
+  it("gov v1beta1 MsgSubmitProposal", async () => {
+    const pubkey = "0x0342c931c630cf00eb9429bd2a0a5c6cfba6801fbe867772ece0e12ade462467bf";
+
+    const wallet = new OnlineWallet(pubkey, "fx", onlineFunc);
+    console.debug("address", wallet.address);
+    const sender = wallet.address;
+
+    const options = fxCoreTxConfig.options;
+    const client = await SigningFxClient.connectWithSigner("http://127.0.0.1:26657", wallet, options);
+    const account = await client.getAccount(sender);
+    console.log("account", account);
+
+    const submitProposal: EncodeObject[] = [
       {
         typeUrl: "/cosmos.gov.v1beta1.MsgSubmitProposal",
         value: MsgSubmitProposal.fromPartial({
@@ -114,7 +136,7 @@ describe("denom test", () => {
         }),
       },
     ];
-    let gasLimit = await client.simulate(sender, [...sendMsg], undefined);
+    let gasLimit = await client.simulate(sender, [...submitProposal], undefined);
     gasLimit = Math.round(gasLimit * 1.3);
     console.debug("gasLimit", gasLimit);
     const gasPrice = fxCoreTxConfig.options.gasPrice;
@@ -122,7 +144,68 @@ describe("denom test", () => {
       amount: coins(gasPrice.amount.multiply(Uint64.fromNumber(gasLimit)).toString(), gasPrice.denom),
       gas: gasLimit.toString(),
     };
-    const result = await client.signAndBroadcast(sender, [...sendMsg], fees);
+    const result = await client.signAndBroadcast(sender, [...submitProposal], fees);
+    console.debug(result);
+  });
+
+  it("gov v1 MsgSubmitProposal", async () => {
+    const pubkey = "0x0342c931c630cf00eb9429bd2a0a5c6cfba6801fbe867772ece0e12ade462467bf";
+
+    const wallet = new OnlineWallet(pubkey, "fx", onlineFunc);
+    console.debug("address", wallet.address);
+    const sender = wallet.address;
+
+    const options = fxCoreTxConfig.options;
+    const client = await SigningFxClient.connectWithSigner("http://127.0.0.1:26657", wallet, options);
+    const account = await client.getAccount(sender);
+    console.log("account", account);
+
+    const submitProposal: EncodeObject[] = [
+      {
+        typeUrl: "/cosmos.gov.v1.MsgSubmitProposal",
+        value: MsgSubmitProposalV1.fromPartial({
+          proposer: sender,
+          initialDeposit: coins("1000000000000000000000", "FX"),
+          metadata: btoa(`{"title":"abc","summary":"def","metadata":"zxy"}`),
+          messages: [
+            {
+              typeUrl: "/fx.erc20.v1.MsgRegisterCoin",
+              value: MsgRegisterCoin.encode({
+                authority: "fx10d07y265gmmuvt4z0w9aw880jnsr700jqjzsmz",
+                metadata: {
+                  description: "test desc",
+                  base: "test",
+                  name: "test name",
+                  symbol: "TEST",
+                  display: "test",
+                  denomUnits: [
+                    {
+                      denom: "test",
+                      exponent: 0,
+                      aliases: ["eth0x2870405E4ABF9FcCDc93d9cC83c09788296d8355"],
+                    },
+                    {
+                      denom: "TEST",
+                      exponent: 18,
+                      aliases: [],
+                    },
+                  ],
+                },
+              }).finish(),
+            },
+          ],
+        }),
+      },
+    ];
+    let gasLimit = await client.simulate(sender, [...submitProposal], undefined);
+    gasLimit = Math.round(gasLimit * 1.3);
+    console.debug("gasLimit", gasLimit);
+    const gasPrice = fxCoreTxConfig.options.gasPrice;
+    const fees: StdFee = {
+      amount: coins(gasPrice.amount.multiply(Uint64.fromNumber(gasLimit)).toString(), gasPrice.denom),
+      gas: gasLimit.toString(),
+    };
+    const result = await client.signAndBroadcast(sender, [...submitProposal], fees);
     console.debug(result);
   });
 
@@ -139,7 +222,7 @@ describe("denom test", () => {
       fxDexTxConfig.options,
     );
 
-    const createOrderMsg: MsgCreateOrderEncodeObject = {
+    const createOrderMsg = {
       typeUrl: "/fx.dex.v1.MsgCreateOrder",
       value: {
         owner: wallet.address,
@@ -179,7 +262,7 @@ describe("denom test", () => {
       fxDexTxConfig.options,
     );
 
-    const createOrderMsg: MsgCreateOrderEncodeObject = {
+    const createOrderMsg = {
       typeUrl: "/fx.dex.v1.MsgCreateOrder",
       value: {
         owner: sender,
@@ -222,7 +305,7 @@ describe("denom test", () => {
     const timeout = new Date();
     timeout.setDate(timeout.getDate() + 1);
 
-    const ibcTransferMsg: FxMsgIbcTransferEncodeObject = {
+    const ibcTransferMsg = {
       typeUrl: "/fx.ibc.applications.transfer.v1.MsgTransfer",
       value: {
         sourcePort: "transfer",
@@ -278,7 +361,7 @@ describe("denom test", () => {
     const timeout = new Date();
     timeout.setDate(timeout.getDate() + 1);
 
-    const ibcTransferMsg: FxMsgIbcTransferEncodeObject = {
+    const ibcTransferMsg = {
       typeUrl: "/fx.ibc.applications.transfer.v1.MsgTransfer",
       value: {
         sourcePort: "transfer",

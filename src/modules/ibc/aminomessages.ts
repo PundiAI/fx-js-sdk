@@ -7,13 +7,6 @@ import { MsgTransfer } from "../../fx/ibc/applications/transfer/v1/tx";
 
 // NOTE: ibc client proposal `ClientUpdateProposal` `UpgradeProposal` not support amino encode
 
-/* eslint-disable @typescript-eslint/no-use-before-define */
-export function fxibcAminoConverters(aminoType?: string): Record<string, AminoConverter> {
-  return {
-    "/fx.ibc.applications.transfer.v1.MsgTransfer": aminoConverterFxMsgIbcTransfer(aminoType),
-  };
-}
-
 interface AminoHeight {
   readonly revision_number?: string;
   readonly revision_height?: string;
@@ -35,7 +28,7 @@ function omitDefault<T extends string | number | Long>(input: T): T | undefined 
   throw new Error(`Got unsupported type '${typeof input}'`);
 }
 
-export interface AminoFxMsgIbcTransfer extends AminoMsg {
+interface AminoFxMsgIbcTransfer extends AminoMsg {
   readonly type: "fxtransfer/MsgTransfer";
   readonly value: {
     readonly source_port: string;
@@ -49,10 +42,6 @@ export interface AminoFxMsgIbcTransfer extends AminoMsg {
     readonly fee?: Coin;
     readonly memo?: string;
   };
-}
-
-export function isAminoFxMsgIbcTransfer(msg: AminoMsg): msg is AminoFxMsgIbcTransfer {
-  return msg.type === "fxtransfer/MsgTransfer" || msg.type === "cosmos-sdk/MsgTransfer";
 }
 
 function aminoConverterFxMsgIbcTransfer(aminoType?: string): AminoConverter {
@@ -142,5 +131,11 @@ function aminoConverterFxMsgIbcTransfer(aminoType?: string): AminoConverter {
         memo: memo === undefined ? "" : memo,
       };
     },
+  };
+}
+
+export function fxibcAminoConverters(aminoType?: string): Record<string, AminoConverter> {
+  return {
+    "/fx.ibc.applications.transfer.v1.MsgTransfer": aminoConverterFxMsgIbcTransfer(aminoType),
   };
 }

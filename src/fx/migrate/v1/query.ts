@@ -23,7 +23,8 @@ export interface QueryMigrateCheckAccountRequest {
   to: string;
 }
 
-export interface QueryMigrateCheckAccountResponse {}
+export interface QueryMigrateCheckAccountResponse {
+}
 
 function createBaseQueryMigrateRecordRequest(): QueryMigrateRecordRequest {
   return { address: "" };
@@ -38,19 +39,24 @@ export const QueryMigrateRecordRequest = {
   },
 
   decode(input: _m0.Reader | Uint8Array, length?: number): QueryMigrateRecordRequest {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseQueryMigrateRecordRequest();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
+          if (tag != 10) {
+            break;
+          }
+
           message.address = reader.string();
-          break;
-        default:
-          reader.skipType(tag & 7);
-          break;
+          continue;
       }
+      if ((tag & 7) == 4 || tag == 0) {
+        break;
+      }
+      reader.skipType(tag & 7);
     }
     return message;
   },
@@ -65,9 +71,11 @@ export const QueryMigrateRecordRequest = {
     return obj;
   },
 
-  fromPartial<I extends Exact<DeepPartial<QueryMigrateRecordRequest>, I>>(
-    object: I,
-  ): QueryMigrateRecordRequest {
+  create<I extends Exact<DeepPartial<QueryMigrateRecordRequest>, I>>(base?: I): QueryMigrateRecordRequest {
+    return QueryMigrateRecordRequest.fromPartial(base ?? {});
+  },
+
+  fromPartial<I extends Exact<DeepPartial<QueryMigrateRecordRequest>, I>>(object: I): QueryMigrateRecordRequest {
     const message = createBaseQueryMigrateRecordRequest();
     message.address = object.address ?? "";
     return message;
@@ -90,22 +98,31 @@ export const QueryMigrateRecordResponse = {
   },
 
   decode(input: _m0.Reader | Uint8Array, length?: number): QueryMigrateRecordResponse {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseQueryMigrateRecordResponse();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
+          if (tag != 8) {
+            break;
+          }
+
           message.found = reader.bool();
-          break;
+          continue;
         case 2:
+          if (tag != 18) {
+            break;
+          }
+
           message.migrateRecord = MigrateRecord.decode(reader, reader.uint32());
-          break;
-        default:
-          reader.skipType(tag & 7);
-          break;
+          continue;
       }
+      if ((tag & 7) == 4 || tag == 0) {
+        break;
+      }
+      reader.skipType(tag & 7);
     }
     return message;
   },
@@ -125,15 +142,16 @@ export const QueryMigrateRecordResponse = {
     return obj;
   },
 
-  fromPartial<I extends Exact<DeepPartial<QueryMigrateRecordResponse>, I>>(
-    object: I,
-  ): QueryMigrateRecordResponse {
+  create<I extends Exact<DeepPartial<QueryMigrateRecordResponse>, I>>(base?: I): QueryMigrateRecordResponse {
+    return QueryMigrateRecordResponse.fromPartial(base ?? {});
+  },
+
+  fromPartial<I extends Exact<DeepPartial<QueryMigrateRecordResponse>, I>>(object: I): QueryMigrateRecordResponse {
     const message = createBaseQueryMigrateRecordResponse();
     message.found = object.found ?? false;
-    message.migrateRecord =
-      object.migrateRecord !== undefined && object.migrateRecord !== null
-        ? MigrateRecord.fromPartial(object.migrateRecord)
-        : undefined;
+    message.migrateRecord = (object.migrateRecord !== undefined && object.migrateRecord !== null)
+      ? MigrateRecord.fromPartial(object.migrateRecord)
+      : undefined;
     return message;
   },
 };
@@ -154,31 +172,37 @@ export const QueryMigrateCheckAccountRequest = {
   },
 
   decode(input: _m0.Reader | Uint8Array, length?: number): QueryMigrateCheckAccountRequest {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseQueryMigrateCheckAccountRequest();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
+          if (tag != 10) {
+            break;
+          }
+
           message.from = reader.string();
-          break;
+          continue;
         case 2:
+          if (tag != 18) {
+            break;
+          }
+
           message.to = reader.string();
-          break;
-        default:
-          reader.skipType(tag & 7);
-          break;
+          continue;
       }
+      if ((tag & 7) == 4 || tag == 0) {
+        break;
+      }
+      reader.skipType(tag & 7);
     }
     return message;
   },
 
   fromJSON(object: any): QueryMigrateCheckAccountRequest {
-    return {
-      from: isSet(object.from) ? String(object.from) : "",
-      to: isSet(object.to) ? String(object.to) : "",
-    };
+    return { from: isSet(object.from) ? String(object.from) : "", to: isSet(object.to) ? String(object.to) : "" };
   },
 
   toJSON(message: QueryMigrateCheckAccountRequest): unknown {
@@ -186,6 +210,10 @@ export const QueryMigrateCheckAccountRequest = {
     message.from !== undefined && (obj.from = message.from);
     message.to !== undefined && (obj.to = message.to);
     return obj;
+  },
+
+  create<I extends Exact<DeepPartial<QueryMigrateCheckAccountRequest>, I>>(base?: I): QueryMigrateCheckAccountRequest {
+    return QueryMigrateCheckAccountRequest.fromPartial(base ?? {});
   },
 
   fromPartial<I extends Exact<DeepPartial<QueryMigrateCheckAccountRequest>, I>>(
@@ -208,16 +236,17 @@ export const QueryMigrateCheckAccountResponse = {
   },
 
   decode(input: _m0.Reader | Uint8Array, length?: number): QueryMigrateCheckAccountResponse {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseQueryMigrateCheckAccountResponse();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
-        default:
-          reader.skipType(tag & 7);
-          break;
       }
+      if ((tag & 7) == 4 || tag == 0) {
+        break;
+      }
+      reader.skipType(tag & 7);
     }
     return message;
   },
@@ -229,6 +258,12 @@ export const QueryMigrateCheckAccountResponse = {
   toJSON(_: QueryMigrateCheckAccountResponse): unknown {
     const obj: any = {};
     return obj;
+  },
+
+  create<I extends Exact<DeepPartial<QueryMigrateCheckAccountResponse>, I>>(
+    base?: I,
+  ): QueryMigrateCheckAccountResponse {
+    return QueryMigrateCheckAccountResponse.fromPartial(base ?? {});
   },
 
   fromPartial<I extends Exact<DeepPartial<QueryMigrateCheckAccountResponse>, I>>(
@@ -258,13 +293,13 @@ export class QueryClientImpl implements Query {
   MigrateRecord(request: QueryMigrateRecordRequest): Promise<QueryMigrateRecordResponse> {
     const data = QueryMigrateRecordRequest.encode(request).finish();
     const promise = this.rpc.request(this.service, "MigrateRecord", data);
-    return promise.then((data) => QueryMigrateRecordResponse.decode(new _m0.Reader(data)));
+    return promise.then((data) => QueryMigrateRecordResponse.decode(_m0.Reader.create(data)));
   }
 
   MigrateCheckAccount(request: QueryMigrateCheckAccountRequest): Promise<QueryMigrateCheckAccountResponse> {
     const data = QueryMigrateCheckAccountRequest.encode(request).finish();
     const promise = this.rpc.request(this.service, "MigrateCheckAccount", data);
-    return promise.then((data) => QueryMigrateCheckAccountResponse.decode(new _m0.Reader(data)));
+    return promise.then((data) => QueryMigrateCheckAccountResponse.decode(_m0.Reader.create(data)));
   }
 }
 
@@ -274,21 +309,14 @@ interface Rpc {
 
 type Builtin = Date | Function | Uint8Array | string | number | boolean | undefined;
 
-export type DeepPartial<T> = T extends Builtin
-  ? T
-  : T extends Long
-  ? string | number | Long
-  : T extends Array<infer U>
-  ? Array<DeepPartial<U>>
-  : T extends ReadonlyArray<infer U>
-  ? ReadonlyArray<DeepPartial<U>>
-  : T extends {}
-  ? { [K in keyof T]?: DeepPartial<T[K]> }
+export type DeepPartial<T> = T extends Builtin ? T
+  : T extends Long ? string | number | Long : T extends Array<infer U> ? Array<DeepPartial<U>>
+  : T extends ReadonlyArray<infer U> ? ReadonlyArray<DeepPartial<U>>
+  : T extends {} ? { [K in keyof T]?: DeepPartial<T[K]> }
   : Partial<T>;
 
 type KeysOfUnion<T> = T extends T ? keyof T : never;
-export type Exact<P, I extends P> = P extends Builtin
-  ? P
+export type Exact<P, I extends P> = P extends Builtin ? P
   : P & { [K in keyof P]: Exact<P[K], I[K]> } & { [K in Exclude<keyof I, KeysOfUnion<P>>]: never };
 
 if (_m0.util.Long !== Long) {

@@ -5,14 +5,7 @@ import { AminoConverter } from "@cosmjs/stargate/build/aminotypes";
 import { MsgSendToExternal } from "../../fx/crosschain/v1/tx";
 import { ProposalContentAminoConverter } from "../index";
 
-/* eslint-disable @typescript-eslint/no-use-before-define */
-export function crosschainAminoConverters(): Record<string, ProposalContentAminoConverter> {
-  return {
-    "/fx.gravity.crosschain.v1.MsgSendToExternal": aminoConverterMsgSendToExternal(),
-  };
-}
-
-export interface AminoMsgSendToExternal extends AminoMsg {
+interface AminoMsgSendToExternal extends AminoMsg {
   readonly type: "crosschain/MsgSendToExternal";
   readonly value: {
     readonly chain_name: string;
@@ -21,10 +14,6 @@ export interface AminoMsgSendToExternal extends AminoMsg {
     readonly amount?: Coin;
     readonly bridge_fee?: Coin;
   };
-}
-
-export function isAminoMsgSendToExternal(msg: AminoMsg): msg is AminoMsgSendToExternal {
-  return msg.type === "crosschain/MsgSendToExternal";
 }
 
 function aminoConverterMsgSendToExternal(): AminoConverter {
@@ -60,5 +49,11 @@ function aminoConverterMsgSendToExternal(): AminoConverter {
         bridgeFee: bridge_fee,
       };
     },
+  };
+}
+
+export function crosschainAminoConverters(): Record<string, ProposalContentAminoConverter> {
+  return {
+    "/fx.gravity.crosschain.v1.MsgSendToExternal": aminoConverterMsgSendToExternal(),
   };
 }

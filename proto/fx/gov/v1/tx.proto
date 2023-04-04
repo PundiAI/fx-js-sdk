@@ -1,0 +1,107 @@
+// Since: cosmos-sdk 0.46
+syntax = "proto3";
+package cosmos.gov.v1;
+
+import "cosmos/base/v1beta1/coin.proto";
+import "gogoproto/gogo.proto";
+import "google/protobuf/any.proto";
+
+option go_package = "github.com/cosmos/cosmos-sdk/x/gov/types/v1";
+
+// Msg defines the gov Msg service.
+service Msg {
+  // SubmitProposal defines a method to create new proposal given a content.
+  rpc SubmitProposal(MsgSubmitProposal) returns (MsgSubmitProposalResponse);
+
+  // ExecLegacyContent defines a Msg to be in included in a MsgSubmitProposal
+  // to execute a legacy content-based proposal.
+  rpc ExecLegacyContent(MsgExecLegacyContent) returns (MsgExecLegacyContentResponse);
+
+  // Vote defines a method to add a vote on a specific proposal.
+  rpc Vote(MsgVote) returns (MsgVoteResponse);
+
+  // VoteWeighted defines a method to add a weighted vote on a specific proposal.
+  rpc VoteWeighted(MsgVoteWeighted) returns (MsgVoteWeightedResponse);
+
+  // Deposit defines a method to add deposit on a specific proposal.
+  rpc Deposit(MsgDeposit) returns (MsgDepositResponse);
+}
+
+// MsgSubmitProposal defines an sdk.Msg type that supports submitting arbitrary
+// proposal Content.
+message MsgSubmitProposal {
+  repeated google.protobuf.Any messages             = 1;
+  repeated cosmos.base.v1beta1.Coin initial_deposit = 2 [(gogoproto.nullable) = false];
+  string                            proposer        = 3;
+  // metadata is any arbitrary metadata attached to the proposal.
+  string metadata = 4;
+}
+
+// MsgSubmitProposalResponse defines the Msg/SubmitProposal response type.
+message MsgSubmitProposalResponse {
+  uint64 proposal_id = 1;
+}
+
+// MsgExecLegacyContent is used to wrap the legacy content field into a message.
+// This ensures backwards compatibility with v1beta1.MsgSubmitProposal.
+message MsgExecLegacyContent {
+  // content is the proposal's content.
+  google.protobuf.Any content = 1;
+  // authority must be the gov module address.
+  string authority = 2;
+}
+
+// MsgExecLegacyContentResponse defines the Msg/ExecLegacyContent response type.
+message MsgExecLegacyContentResponse {}
+
+// MsgVote defines a message to cast a vote.
+message MsgVote {
+  uint64     proposal_id = 1 [(gogoproto.jsontag) = "proposal_id"];
+  string     voter       = 2;
+  VoteOption option      = 3;
+  string     metadata    = 4;
+}
+
+// MsgVoteResponse defines the Msg/Vote response type.
+message MsgVoteResponse {}
+
+// MsgVoteWeighted defines a message to cast a vote.
+message MsgVoteWeighted {
+  uint64                      proposal_id = 1 [(gogoproto.jsontag) = "proposal_id"];
+  string                      voter       = 2;
+  repeated WeightedVoteOption options     = 3;
+  string                      metadata    = 4;
+}
+
+// MsgVoteWeightedResponse defines the Msg/VoteWeighted response type.
+message MsgVoteWeightedResponse {}
+
+// MsgDeposit defines a message to submit a deposit to an existing proposal.
+message MsgDeposit {
+  uint64   proposal_id                     = 1 [(gogoproto.jsontag) = "proposal_id"];
+  string   depositor                       = 2;
+  repeated cosmos.base.v1beta1.Coin amount = 3 [(gogoproto.nullable) = false];
+}
+
+// MsgDepositResponse defines the Msg/Deposit response type.
+message MsgDepositResponse {}
+
+// VoteOption enumerates the valid vote options for a given governance proposal.
+enum VoteOption {
+  // VOTE_OPTION_UNSPECIFIED defines a no-op vote option.
+  VOTE_OPTION_UNSPECIFIED = 0;
+  // VOTE_OPTION_YES defines a yes vote option.
+  VOTE_OPTION_YES = 1;
+  // VOTE_OPTION_ABSTAIN defines an abstain vote option.
+  VOTE_OPTION_ABSTAIN = 2;
+  // VOTE_OPTION_NO defines a no vote option.
+  VOTE_OPTION_NO = 3;
+  // VOTE_OPTION_NO_WITH_VETO defines a no with veto vote option.
+  VOTE_OPTION_NO_WITH_VETO = 4;
+}
+
+// WeightedVoteOption defines a unit of vote for vote split.
+message WeightedVoteOption {
+  VoteOption option = 1;
+  string     weight = 2;
+}

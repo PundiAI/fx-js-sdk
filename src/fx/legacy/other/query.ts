@@ -6,7 +6,8 @@ import { Coin } from "cosmjs-types/cosmos/base/v1beta1/coin";
 export const protobufPackage = "fx.other";
 
 /** Deprecated: GasPriceRequest */
-export interface GasPriceRequest {}
+export interface GasPriceRequest {
+}
 
 /** Deprecated: GasPriceResponse */
 export interface GasPriceResponse {
@@ -23,16 +24,17 @@ export const GasPriceRequest = {
   },
 
   decode(input: _m0.Reader | Uint8Array, length?: number): GasPriceRequest {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseGasPriceRequest();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
-        default:
-          reader.skipType(tag & 7);
-          break;
       }
+      if ((tag & 7) == 4 || tag == 0) {
+        break;
+      }
+      reader.skipType(tag & 7);
     }
     return message;
   },
@@ -44,6 +46,10 @@ export const GasPriceRequest = {
   toJSON(_: GasPriceRequest): unknown {
     const obj: any = {};
     return obj;
+  },
+
+  create<I extends Exact<DeepPartial<GasPriceRequest>, I>>(base?: I): GasPriceRequest {
+    return GasPriceRequest.fromPartial(base ?? {});
   },
 
   fromPartial<I extends Exact<DeepPartial<GasPriceRequest>, I>>(_: I): GasPriceRequest {
@@ -65,37 +71,44 @@ export const GasPriceResponse = {
   },
 
   decode(input: _m0.Reader | Uint8Array, length?: number): GasPriceResponse {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseGasPriceResponse();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
+          if (tag != 10) {
+            break;
+          }
+
           message.gasPrices.push(Coin.decode(reader, reader.uint32()));
-          break;
-        default:
-          reader.skipType(tag & 7);
-          break;
+          continue;
       }
+      if ((tag & 7) == 4 || tag == 0) {
+        break;
+      }
+      reader.skipType(tag & 7);
     }
     return message;
   },
 
   fromJSON(object: any): GasPriceResponse {
-    return {
-      gasPrices: Array.isArray(object?.gasPrices) ? object.gasPrices.map((e: any) => Coin.fromJSON(e)) : [],
-    };
+    return { gasPrices: Array.isArray(object?.gasPrices) ? object.gasPrices.map((e: any) => Coin.fromJSON(e)) : [] };
   },
 
   toJSON(message: GasPriceResponse): unknown {
     const obj: any = {};
     if (message.gasPrices) {
-      obj.gasPrices = message.gasPrices.map((e) => (e ? Coin.toJSON(e) : undefined));
+      obj.gasPrices = message.gasPrices.map((e) => e ? Coin.toJSON(e) : undefined);
     } else {
       obj.gasPrices = [];
     }
     return obj;
+  },
+
+  create<I extends Exact<DeepPartial<GasPriceResponse>, I>>(base?: I): GasPriceResponse {
+    return GasPriceResponse.fromPartial(base ?? {});
   },
 
   fromPartial<I extends Exact<DeepPartial<GasPriceResponse>, I>>(object: I): GasPriceResponse {
@@ -125,13 +138,13 @@ export class QueryClientImpl implements Query {
   FxGasPrice(request: GasPriceRequest): Promise<GasPriceResponse> {
     const data = GasPriceRequest.encode(request).finish();
     const promise = this.rpc.request(this.service, "FxGasPrice", data);
-    return promise.then((data) => GasPriceResponse.decode(new _m0.Reader(data)));
+    return promise.then((data) => GasPriceResponse.decode(_m0.Reader.create(data)));
   }
 
   GasPrice(request: GasPriceRequest): Promise<GasPriceResponse> {
     const data = GasPriceRequest.encode(request).finish();
     const promise = this.rpc.request(this.service, "GasPrice", data);
-    return promise.then((data) => GasPriceResponse.decode(new _m0.Reader(data)));
+    return promise.then((data) => GasPriceResponse.decode(_m0.Reader.create(data)));
   }
 }
 
@@ -141,21 +154,14 @@ interface Rpc {
 
 type Builtin = Date | Function | Uint8Array | string | number | boolean | undefined;
 
-export type DeepPartial<T> = T extends Builtin
-  ? T
-  : T extends Long
-  ? string | number | Long
-  : T extends Array<infer U>
-  ? Array<DeepPartial<U>>
-  : T extends ReadonlyArray<infer U>
-  ? ReadonlyArray<DeepPartial<U>>
-  : T extends {}
-  ? { [K in keyof T]?: DeepPartial<T[K]> }
+export type DeepPartial<T> = T extends Builtin ? T
+  : T extends Long ? string | number | Long : T extends Array<infer U> ? Array<DeepPartial<U>>
+  : T extends ReadonlyArray<infer U> ? ReadonlyArray<DeepPartial<U>>
+  : T extends {} ? { [K in keyof T]?: DeepPartial<T[K]> }
   : Partial<T>;
 
 type KeysOfUnion<T> = T extends T ? keyof T : never;
-export type Exact<P, I extends P> = P extends Builtin
-  ? P
+export type Exact<P, I extends P> = P extends Builtin ? P
   : P & { [K in keyof P]: Exact<P[K], I[K]> } & { [K in Exclude<keyof I, KeysOfUnion<P>>]: never };
 
 if (_m0.util.Long !== Long) {

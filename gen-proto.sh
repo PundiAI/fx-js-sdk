@@ -15,23 +15,25 @@ fi
 #perl -pi -e 's|ibc\.applications\.transfer\.v1\.|.ibc.applications.transfer.v1.|g' ./fx-core/proto/fx/ibc/applications/transfer/v1/query.proto
 
 proto_dirs=$(find ./fx-core/proto/fx -path -prune -o -name '*.proto' -print0 | xargs -0 -n1 dirname | sort | uniq)
+proto_dirs="${proto_dirs}
+./proto/fx/dex/v1
+./proto/fx/gov/v1"
 # shellcheck disable=SC2046
 for dir in $proto_dirs; do
   protoc \
     --plugin="$(yarn bin protoc-gen-ts_proto)" \
     --ts_proto_out="$OUT_DIR" \
     --proto_path="./proto" \
-    --proto_path="./fx-core/proto" \
     --proto_path="./cosmos-sdk/proto" \
     --proto_path="./cosmos-sdk/third_party/proto" \
+    --proto_path="./ethermint/proto" \
     --proto_path="./ibc-go/proto" \
+    --proto_path="./fx-core/proto" \
     --ts_proto_opt="esModuleInterop=true,forceLong=long,useOptionals=messages" \
-    "./proto/fx/dex/v1/tx.proto" \
-    "./proto/fx/gov/v1/tx.proto" \
     $(find "${dir}" -maxdepth 1 -name '*.proto')
 done
 
-rm -rf "$OUT_DIR/cosmos" "$OUT_DIR/cosmos_proto" "$OUT_DIR/gogoproto" "$OUT_DIR/google" "$OUT_DIR/ibc"
+rm -rf "$OUT_DIR/cosmos" "$OUT_DIR/cosmos_proto" "$OUT_DIR/gogoproto" "$OUT_DIR/google" "$OUT_DIR/ibc" "$OUT_DIR/ethermint" "$OUT_DIR/fx/evm"
 
 proto_ts_dirs=$(find ./src/fx -path -prune -o -name '*.ts' -print0 | xargs -0 -n1 dirname | sort | uniq)
 for dir in $proto_ts_dirs; do

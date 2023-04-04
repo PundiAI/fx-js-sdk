@@ -4,7 +4,14 @@ import { Registry } from "@cosmjs/proto-signing";
 import { AminoTypes, GasPrice } from "@cosmjs/stargate";
 
 import { accountFromAny } from "./accounts";
-import { dexAminoConverters, dexTypes, fxibcAminoConverters, fxibcTypes } from "./modules";
+import {
+  dexAminoConverters,
+  dexTypes,
+  fxgovSubmitProposalAminoConverters,
+  fxibcAminoConverters,
+  fxibcTypes,
+} from "./modules";
+import { fxgovTypes } from "./modules/gov/messages";
 import { Algo } from "./signer";
 
 export const fxDexTxConfig = {
@@ -34,9 +41,10 @@ export const fxCoreTxConfigClassic = {
     broadcastPollIntervalMs: 300,
     broadcastTimeoutMs: 8_000,
     prefix: "fx",
-    registry: new Registry([...fxibcTypes]),
+    registry: new Registry([...fxibcTypes, ...fxgovTypes]),
     aminoTypes: new AminoTypes({
       ...fxibcAminoConverters(),
+      ...fxgovSubmitProposalAminoConverters(),
     }),
     gasPrice: new GasPrice(Decimal.fromUserInput("4000000000000", 18), "FX"),
     accountParser: accountFromAny,
@@ -52,9 +60,10 @@ export const fxCoreTxConfig = {
     broadcastPollIntervalMs: 300,
     broadcastTimeoutMs: 8_000,
     prefix: "fx",
-    registry: new Registry([...fxibcTypes]),
+    registry: new Registry([...fxibcTypes, ...fxgovTypes]),
     aminoTypes: new AminoTypes({
       ...fxibcAminoConverters(),
+      ...fxgovSubmitProposalAminoConverters(),
     }),
     gasPrice: new GasPrice(Decimal.fromUserInput("4000000000000", 18), "FX"),
     accountParser: accountFromAny,
