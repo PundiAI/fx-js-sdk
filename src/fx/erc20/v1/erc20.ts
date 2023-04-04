@@ -1,7 +1,7 @@
 /* eslint-disable */
 import Long from "long";
 import _m0 from "protobufjs/minimal";
-import { Metadata } from "cosmjs-types/cosmos/bank/v1beta1/bank";
+import { Metadata } from "../../../cosmos/bank/v1beta1/bank";
 
 export const protobufPackage = "fx.erc20.v1";
 

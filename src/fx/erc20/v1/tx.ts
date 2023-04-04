@@ -1,7 +1,7 @@
 /* eslint-disable */
 import Long from "long";
 import _m0 from "protobufjs/minimal";
-import { Metadata } from "cosmjs-types/cosmos/bank/v1beta1/bank";
+import { Metadata } from "../../../cosmos/bank/v1beta1/bank";
 import { Coin } from "cosmjs-types/cosmos/base/v1beta1/coin";
 import { TokenPair } from "./erc20";
 import { Params } from "./genesis";

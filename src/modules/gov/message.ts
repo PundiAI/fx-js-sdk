@@ -1,6 +1,8 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import { Any } from "cosmjs-types/google/protobuf/any";
+import Long from "long";
 
+import { MsgCancelUpgrade, MsgSoftwareUpgrade } from "../../cosmos/upgrade/v1beta1/tx";
 import { MsgUpdateChainOracles, MsgUpdateParams } from "../../fx/crosschain/v1/tx";
 import {
   MsgRegisterCoin,
@@ -93,6 +95,8 @@ export function proposalMessageToAminoConverter(message: Any): any {
           display: msg.metadata?.display,
           name: msg.metadata?.name,
           symbol: msg.metadata?.symbol,
+          uri: msg.metadata?.uri,
+          uri_hash: msg.metadata?.uriHash,
         },
       },
     };
@@ -126,6 +130,30 @@ export function proposalMessageToAminoConverter(message: Any): any {
         authority: msg.authority,
         denom: msg.denom,
         alias: msg.alias,
+      },
+    };
+  }
+  if (message.typeUrl == "/cosmos.upgrade.v1beta1.MsgSoftwareUpgrade") {
+    const msg = MsgSoftwareUpgrade.decode(message.value);
+    return {
+      type: "cosmos-sdk/MsgSoftwareUpgrade",
+      value: {
+        authority: msg.authority,
+        plan: {
+          name: msg.plan?.name,
+          time: "0001-01-01T00:00:00Z",
+          height: msg.plan?.height ? msg.plan.height.toString() : "0",
+          info: msg.plan?.info,
+        },
+      },
+    };
+  }
+  if (message.typeUrl == "/cosmos.upgrade.v1beta1.MsgCancelUpgrade") {
+    const msg = MsgCancelUpgrade.decode(message.value);
+    return {
+      type: "cosmos-sdk/MsgCancelUpgrade",
+      value: {
+        authority: msg.authority,
       },
     };
   }
@@ -200,6 +228,8 @@ export function proposalMessageFromAminoConverter(message: any): Any {
           display: msg.metadata.display,
           name: msg.metadata.name,
           symbol: msg.metadata.symbol,
+          uri: msg.metadata.uri,
+          uriHash: msg.metadata.uri_hash,
         },
       }).finish(),
     };
@@ -233,6 +263,31 @@ export function proposalMessageFromAminoConverter(message: any): Any {
         alias: msg.alias,
         authority: msg.authority,
         denom: msg.denom,
+      }).finish(),
+    };
+  }
+  if (message.type === "cosmos-sdk/MsgSoftwareUpgrade") {
+    const msg = message.value;
+    return {
+      typeUrl: "/cosmos.upgrade.v1beta1.MsgSoftwareUpgrade",
+      value: MsgSoftwareUpgrade.encode({
+        authority: msg.authority,
+        plan: {
+          name: msg.plan.name,
+          time: undefined,
+          height: Long.fromString(msg.plan.height || "0", true),
+          info: msg.plan.info,
+          upgradedClientState: undefined,
+        },
+      }).finish(),
+    };
+  }
+  if (message.type === "cosmos-sdk/MsgCancelUpgrade") {
+    const msg = message.value;
+    return {
+      typeUrl: "cosmos.upgrade.v1beta1.MsgCancelUpgrade",
+      value: MsgCancelUpgrade.encode({
+        authority: msg.authority,
       }).finish(),
     };
   }

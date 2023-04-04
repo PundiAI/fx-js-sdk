@@ -10,14 +10,11 @@ if [ -d "$OUT_DIR/fx" ]; then
   rm -rf "$OUT_DIR/fx"
 fi
 
-#perl -pi -e 's|ibc\.core\.client\.v1\.Height\.|.ibc.core.client.v1.Height.|g' ./fx-core/proto/fx/ibc/applications/transfer/v1/tx.proto
-#perl -pi -e 's|ibc\.applications\.transfer\.v1\.|.ibc.applications.transfer.v1.|g' ./fx-core/proto/fx/ibc/applications/transfer/v1/tx.proto
-#perl -pi -e 's|ibc\.applications\.transfer\.v1\.|.ibc.applications.transfer.v1.|g' ./fx-core/proto/fx/ibc/applications/transfer/v1/query.proto
-
 proto_dirs=$(find ./fx-core/proto/fx -path -prune -o -name '*.proto' -print0 | xargs -0 -n1 dirname | sort | uniq)
 proto_dirs="${proto_dirs}
 ./proto/fx/dex/v1
-./proto/fx/gov/v1"
+./proto/fx/gov/v1
+./cosmos-sdk/proto/cosmos/upgrade/v1beta1"
 # shellcheck disable=SC2046
 for dir in $proto_dirs; do
   protoc \
@@ -33,7 +30,7 @@ for dir in $proto_dirs; do
     $(find "${dir}" -maxdepth 1 -name '*.proto')
 done
 
-rm -rf "$OUT_DIR/cosmos" "$OUT_DIR/cosmos_proto" "$OUT_DIR/gogoproto" "$OUT_DIR/google" "$OUT_DIR/ibc" "$OUT_DIR/ethermint" "$OUT_DIR/fx/evm"
+rm -rf "$OUT_DIR/cosmos/base" "$OUT_DIR/cosmos/msg" "$OUT_DIR/cosmos_proto" "$OUT_DIR/gogoproto" "$OUT_DIR/google" "$OUT_DIR/ibc" "$OUT_DIR/ethermint" "$OUT_DIR/fx/evm"
 
 proto_ts_dirs=$(find ./src/fx -path -prune -o -name '*.ts' -print0 | xargs -0 -n1 dirname | sort | uniq)
 for dir in $proto_ts_dirs; do
@@ -46,3 +43,7 @@ for dir in $proto_ts_dirs; do
       perl -pi -e 's|../cosmjs-types|cosmjs-types|g' "$ts_file"
     done
 done
+
+perl -pi -e 's|cosmjs-types/cosmos/bank|../../../cosmos/bank|g' "./src/fx/erc20/v1/tx.ts"
+perl -pi -e 's|cosmjs-types/cosmos/bank|../../../cosmos/bank|g' "./src/fx/erc20/v1/erc20.ts"
+perl -pi -e 's|../../../google|cosmjs-types/google|g' "./src/cosmos/upgrade/v1beta1/upgrade.ts"

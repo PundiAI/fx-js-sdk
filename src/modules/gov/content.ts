@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/naming-convention */
-import * as console from "console";
 import { CommunityPoolSpendProposal } from "cosmjs-types/cosmos/distribution/v1beta1/distribution";
 import { TextProposal } from "cosmjs-types/cosmos/gov/v1beta1/gov";
 import { ParameterChangeProposal } from "cosmjs-types/cosmos/params/v1beta1/params";
@@ -115,6 +114,8 @@ export function proposalContentToAminoConverter(content: Any | undefined): any {
           display: proposal.metadata?.display,
           name: proposal.metadata?.name,
           symbol: proposal.metadata?.symbol,
+          uri: proposal.metadata?.uri,
+          uri_hash: proposal.metadata?.uriHash,
         },
       },
     };
@@ -231,28 +232,28 @@ export function proposalContentFromAminoConverter(content: any): Any {
   }
   if (content.type === "erc20/RegisterCoinProposal") {
     const proposal = content.value;
-    const xx = {
-      title: proposal.title,
-      description: proposal.description,
-      metadata: {
-        description: proposal.metadata.description,
-        denomUnits: [...proposal.metadata.denom_units].map((v) => {
-          return {
-            denom: v.denom,
-            exponent: v.exponent ? v.exponent : 0,
-            aliases: v.aliases ? v.aliases : [],
-          };
-        }),
-        base: proposal.metadata.base,
-        display: proposal.metadata.display,
-        name: proposal.metadata.name,
-        symbol: proposal.metadata.symbol,
-      },
-    };
-    console.log("----------------,", xx.metadata.denomUnits);
     return Any.fromPartial({
       typeUrl: "/fx.erc20.v1.RegisterCoinProposal",
-      value: RegisterCoinProposal.encode(xx).finish(),
+      value: RegisterCoinProposal.encode({
+        title: proposal.title,
+        description: proposal.description,
+        metadata: {
+          description: proposal.metadata.description,
+          denomUnits: [...proposal.metadata.denom_units].map((v) => {
+            return {
+              denom: v.denom,
+              exponent: v.exponent ? v.exponent : 0,
+              aliases: v.aliases ? v.aliases : [],
+            };
+          }),
+          base: proposal.metadata.base,
+          display: proposal.metadata.display,
+          name: proposal.metadata.name,
+          symbol: proposal.metadata.symbol,
+          uri: proposal.metadata.uri,
+          uriHash: proposal.metadata.uri_hash,
+        },
+      }).finish(),
     });
   }
   if (content.type === "erc20/RegisterERC20Proposal") {
