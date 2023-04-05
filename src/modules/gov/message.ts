@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import { Any } from "cosmjs-types/google/protobuf/any";
+import { Duration } from "cosmjs-types/google/protobuf/duration";
 import Long from "long";
 
 import { MsgCancelUpgrade, MsgSoftwareUpgrade } from "../../cosmos/upgrade/v1beta1/tx";
@@ -11,6 +12,7 @@ import {
   MsgUpdateDenomAlias,
   MsgUpdateParams as MsgUpdateParamsErc20,
 } from "../../fx/erc20/v1/tx";
+import { toDecString, toProtoString } from "../index";
 
 interface AminoDenomUnit {
   readonly denom: string;
@@ -41,16 +43,19 @@ export function proposalMessageToAminoConverter(message: Any): any {
         chain_name: msg.chainName,
         authority: msg.authority,
         params: {
-          average_block_time: msg.params?.averageBlockTime,
-          average_external_block_time: msg.params?.averageExternalBlockTime,
-          delegate_multiple: msg.params?.delegateMultiple,
+          average_block_time: msg.params?.averageBlockTime.toString(),
+          average_external_block_time: msg.params?.averageExternalBlockTime.toString(),
+          delegate_multiple: msg.params?.delegateMultiple.toString(),
           delegate_threshold: msg.params?.delegateThreshold,
-          external_batch_timeout: msg.params?.externalBatchTimeout,
+          external_batch_timeout: msg.params?.externalBatchTimeout.toString(),
           gravity_id: msg.params?.gravityId,
-          ibc_transfer_timeout_height: msg.params?.ibcTransferTimeoutHeight,
-          oracle_set_update_power_change_percent: msg.params?.oracleSetUpdatePowerChangePercent,
-          signed_window: msg.params?.signedWindow,
-          slash_fraction: msg.params?.slashFraction,
+          ibc_transfer_timeout_height: msg.params?.ibcTransferTimeoutHeight.toString(),
+          oracle_set_update_power_change_percent: toDecString(
+            new TextDecoder().decode(msg.params?.oracleSetUpdatePowerChangePercent),
+            18,
+          ),
+          signed_window: msg.params?.signedWindow.toString(),
+          slash_fraction: toDecString(new TextDecoder().decode(msg.params?.slashFraction), 18),
         },
       },
     };
@@ -64,7 +69,7 @@ export function proposalMessageToAminoConverter(message: Any): any {
         params: {
           enable_erc20: msg.params?.enableErc20,
           enable_evm_hook: msg.params?.enableEvmHook,
-          ibc_timeout: msg.params?.ibcTimeout,
+          ibc_timeout: msg.params?.ibcTimeout?.seconds.mul(1e9).add(msg.params?.ibcTimeout?.nanos).toString(),
         },
       },
     };
@@ -181,16 +186,18 @@ export function proposalMessageFromAminoConverter(message: any): Any {
         chainName: msg.chain_name,
         params: {
           gravityId: msg.params.gravity_id,
-          averageBlockTime: msg.params.average_block_time,
-          externalBatchTimeout: msg.params.external_batch_timeout,
-          averageExternalBlockTime: msg.params.average_external_block_time,
-          signedWindow: msg.params.signed_window,
-          slashFraction: msg.params.slash_fraction,
-          oracleSetUpdatePowerChangePercent: msg.params.oracle_set_update_power_change_percent,
-          ibcTransferTimeoutHeight: msg.params.ibc_transfer_timeout_height,
+          averageBlockTime: Long.fromString(msg.params.average_block_time),
+          externalBatchTimeout: Long.fromString(msg.params.external_batch_timeout),
+          averageExternalBlockTime: Long.fromString(msg.params.average_external_block_time),
+          signedWindow: Long.fromString(msg.params.signed_window),
+          slashFraction: new TextEncoder().encode(toProtoString(msg.params.slash_fraction, 18)),
+          oracleSetUpdatePowerChangePercent: new TextEncoder().encode(
+            toProtoString(msg.params.oracle_set_update_power_change_percent, 18),
+          ),
+          ibcTransferTimeoutHeight: Long.fromString(msg.params.ibc_transfer_timeout_height),
           oracles: [],
           delegateThreshold: msg.params.delegate_threshold,
-          delegateMultiple: msg.params.delegate_multiple,
+          delegateMultiple: Long.fromString(msg.params.delegate_multiple),
         },
       }).finish(),
     };
@@ -204,7 +211,15 @@ export function proposalMessageFromAminoConverter(message: any): Any {
         params: {
           enableErc20: msg.params.enable_erc20,
           enableEvmHook: msg.params.enable_evm_hook,
-          ibcTimeout: msg.params.ibc_timeout,
+          ibcTimeout: Duration.fromPartial({
+            seconds: Long.fromString(msg.params.ibc_timeout).div(1e9),
+            nanos: parseInt(
+              msg.params.ibc_timeout.length > 9
+                ? msg.params.ibc_timeout.substring(msg.params.ibc_timeout.length - 9)
+                : msg.params.ibc_timeout,
+              10,
+            ),
+          }),
         },
       }).finish(),
     };
