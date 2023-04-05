@@ -22,7 +22,7 @@ export function proposalMessageToAminoConverter(message: Any): any {
   if (!message.value || !message.typeUrl) {
     throw new Error(`Invalid proposal message type: '${message}'`);
   }
-  if (message.typeUrl == "/fx.crosschain.v1.MsgUpdateChainOracles") {
+  if (message.typeUrl == "/fx.gravity.crosschain.v1.MsgUpdateChainOracles") {
     const msg = MsgUpdateChainOracles.decode(message.value);
     return {
       type: "crosschain/MsgUpdateChainOracles",
@@ -33,7 +33,7 @@ export function proposalMessageToAminoConverter(message: Any): any {
       },
     };
   }
-  if (message.typeUrl == "/fx.crosschain.v1.MsgUpdateParams") {
+  if (message.typeUrl == "/fx.gravity.crosschain.v1.MsgUpdateParams") {
     const msg = MsgUpdateParams.decode(message.value);
     return {
       type: "crosschain/MsgUpdateParams",
@@ -55,10 +55,10 @@ export function proposalMessageToAminoConverter(message: Any): any {
       },
     };
   }
-  if (message.typeUrl == "/fx.erc20.v1.MsgUpdateParamsErc20") {
+  if (message.typeUrl == "/fx.erc20.v1.MsgUpdateParams") {
     const msg = MsgUpdateParamsErc20.decode(message.value);
     return {
-      type: "erc20/MsgUpdateParamsErc20",
+      type: "erc20/MsgUpdateParams",
       value: {
         authority: msg.authority,
         params: {
@@ -164,7 +164,7 @@ export function proposalMessageFromAminoConverter(message: any): Any {
   if (message.type === "crosschain/MsgUpdateChainOracles") {
     const msg = message.value;
     return {
-      typeUrl: "/fx.crosschain.v1.MsgUpdateChainOracles",
+      typeUrl: "/fx.gravity.crosschain.v1.MsgUpdateChainOracles",
       value: MsgUpdateChainOracles.encode({
         authority: msg.authority,
         chainName: msg.chain_name,
@@ -175,7 +175,7 @@ export function proposalMessageFromAminoConverter(message: any): Any {
   if (message.type === "crosschain/MsgUpdateParams") {
     const msg = message.value;
     return {
-      typeUrl: "/fx.crosschain.v1.MsgUpdateParams",
+      typeUrl: "/fx.gravity.crosschain.v1.MsgUpdateParams",
       value: MsgUpdateParams.encode({
         authority: msg.authority,
         chainName: msg.chain_name,
@@ -195,10 +195,10 @@ export function proposalMessageFromAminoConverter(message: any): Any {
       }).finish(),
     };
   }
-  if (message.type === "erc20/MsgUpdateParamsErc20") {
+  if (message.type === "erc20/MsgUpdateParams") {
     const msg = message.value;
     return {
-      typeUrl: "/fx.erc20.v1.MsgUpdateParamsErc20",
+      typeUrl: "/fx.erc20.v1.MsgUpdateParams",
       value: MsgUpdateParamsErc20.encode({
         authority: msg.authority,
         params: {
