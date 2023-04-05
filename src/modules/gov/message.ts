@@ -62,15 +62,16 @@ export function proposalMessageToAminoConverter(message: Any): any {
   }
   if (message.typeUrl == "/fx.erc20.v1.MsgUpdateParams") {
     const msg = MsgUpdateParamsErc20.decode(message.value);
+    const params: any = {
+      ibc_timeout: msg.params?.ibcTimeout?.seconds.mul(1e9).add(msg.params?.ibcTimeout?.nanos).toString(),
+    };
+    if (msg.params?.enableErc20) params.enable_erc20 = msg.params.enableErc20;
+    if (msg.params?.enableEvmHook) params.enable_evm_hook = msg.params.enableEvmHook;
     return {
       type: "erc20/MsgUpdateParams",
       value: {
         authority: msg.authority,
-        params: {
-          enable_erc20: msg.params?.enableErc20,
-          enable_evm_hook: msg.params?.enableEvmHook,
-          ibc_timeout: msg.params?.ibcTimeout?.seconds.mul(1e9).add(msg.params?.ibcTimeout?.nanos).toString(),
-        },
+        params: params,
       },
     };
   }
