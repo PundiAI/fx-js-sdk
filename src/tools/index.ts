@@ -1,7 +1,10 @@
 import { Duration } from "cosmjs-types/google/protobuf/duration";
 import Long from "long";
 
-export function durationToNanos(duration: Duration): string {
+export function durationToNanos(duration: Duration | undefined): string {
+  if (duration === undefined) {
+    return "0";
+  }
   return duration.seconds.mul(1e9).add(duration.nanos).toString();
 }
 

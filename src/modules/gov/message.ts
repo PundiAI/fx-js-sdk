@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import { Any } from "cosmjs-types/google/protobuf/any";
 import Long from "long";
-import { durationToNanos, nanosToDuration } from "../../tools/index";
 
 import { MsgCancelUpgrade, MsgSoftwareUpgrade } from "../../cosmos/upgrade/v1beta1/tx";
 import { MsgUpdateChainOracles, MsgUpdateParams } from "../../fx/crosschain/v1/tx";
@@ -12,8 +11,9 @@ import {
   MsgUpdateDenomAlias,
   MsgUpdateParams as MsgUpdateParamsErc20,
 } from "../../fx/erc20/v1/tx";
-import { MsgUpdateParams as MsgUpdateParamsGov } from "../../fx/gov/v1/tx";
 import { MsgCallContract } from "../../fx/evm/v1/tx";
+import { MsgUpdateParams as MsgUpdateParamsGov } from "../../fx/gov/v1/tx";
+import { durationToNanos, nanosToDuration } from "../../tools";
 import { toDecString, toProtoString } from "../index";
 
 interface AminoDenomUnit {
@@ -166,28 +166,19 @@ export function proposalMessageToAminoConverter(message: Any): any {
   }
   if (message.typeUrl == "/fx.gov.v1.MsgUpdateParams") {
     const msg = MsgUpdateParamsGov.decode(message.value);
-    const params: any = {
-      claim_ratio: msg.params?.claimRatio,
-      erc20_quorum: msg.params?.erc20Quorum,
-      evm_quorum: msg.params?.evmQuorum,
-    };
-    if (msg.params?.minInitialDeposit !== undefined) {
-      params.min_initial_deposit = msg.params.minInitialDeposit;
-    }
-    if (msg.params?.egfDepositThreshold !== undefined) {
-      params.egf_deposit_threshold = msg.params.egfDepositThreshold;
-    }
-    if (msg.params?.egfVotingPeriod !== undefined) {
-      params.egf_voting_period = durationToNanos(msg.params.egfVotingPeriod);
-    }
-    if (msg.params?.evmVotingPeriod !== undefined) {
-      params.evm_voting_period = durationToNanos(msg.params.evmVotingPeriod);
-    }
     return {
       type: "gov/MsgUpdateParams",
       value: {
         authority: msg.authority,
-        params,
+        params: {
+          claim_ratio: msg.params?.claimRatio,
+          erc20_quorum: msg.params?.erc20Quorum,
+          evm_quorum: msg.params?.evmQuorum,
+          min_initial_deposit: msg.params?.minInitialDeposit,
+          egf_deposit_threshold: msg.params?.egfDepositThreshold,
+          egf_voting_period: durationToNanos(msg.params?.egfVotingPeriod),
+          evm_voting_period: durationToNanos(msg.params?.evmVotingPeriod),
+        },
       },
     };
   }
@@ -345,7 +336,11 @@ export function proposalMessageFromAminoConverter(message: any): Any {
       value: MsgUpdateParamsGov.encode({
         authority: msg.authority,
         params: {
-          ...msg.params,
+          minInitialDeposit: msg.params.min_initial_deposit,
+          egfDepositThreshold: msg.params.egf_deposit_threshold,
+          claimRatio: msg.params.claim_ratio,
+          erc20Quorum: msg.params.erc20_quorum,
+          evmQuorum: msg.params.evm_quorum,
           egfVotingPeriod: nanosToDuration(msg.params.egf_voting_period),
           evmVotingPeriod: nanosToDuration(msg.params.evm_voting_period),
         },

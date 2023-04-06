@@ -1,4 +1,4 @@
-import { coins, StdFee, coin } from "@cosmjs/amino";
+import { coin, coins, StdFee } from "@cosmjs/amino";
 import { Sha256 } from "@cosmjs/crypto";
 import { fromHex, fromUtf8, toHex } from "@cosmjs/encoding";
 import { Uint64 } from "@cosmjs/math";
@@ -12,17 +12,18 @@ import { Duration } from "cosmjs-types/google/protobuf/duration";
 import { Wallet } from "ethers";
 import Long from "long";
 
+import { MsgSubmitProposal as MsgSubmitProposalV1 } from "./cosmos/gov/v1/tx";
 import { EthSecp256k1Wallet } from "./ethsecp256k1wallet";
 import { MsgUpdateParams } from "./fx/crosschain/v1/tx";
 import { Direction } from "./fx/dex/v1/tx";
 import { RegisterCoinProposal } from "./fx/erc20/v1/erc20";
 import { MsgRegisterCoin, MsgUpdateParams as MsgUpdateParamsErc20 } from "./fx/erc20/v1/tx";
-import { MsgSubmitProposal as MsgSubmitProposalV1 } from "./cosmos/gov/v1/tx";
+import { MsgCallContract } from "./fx/evm/v1/tx";
+import { MsgUpdateParams as MsgUpdateParamsGov } from "./fx/gov/v1/tx";
 import { fxCoreTxConfig, fxDexTxConfig } from "./index";
+import { toDecString } from "./modules";
 import { OnlineWallet } from "./onlinewallet";
 import { SigningFxClient } from "./signingfxclient";
-import { MsgUpdateParams as MsgUpdateParamsGov } from "./fx/gov/v1/tx";
-import { MsgCallContract } from "./fx/evm/v1/tx";
 
 async function onlineFunc(signer: string, signData: Uint8Array): Promise<string> {
   // walletconnect sign
@@ -289,9 +290,9 @@ describe("denom test", () => {
               value: MsgUpdateParamsGov.encode({
                 authority: "fx10d07y265gmmuvt4z0w9aw880jnsr700jqjzsmz",
                 params: {
-                  claimRatio: "1",
-                  erc20Quorum: "1",
-                  evmQuorum: "1",
+                  claimRatio: toDecString("1", 18),
+                  erc20Quorum: toDecString("1", 18),
+                  evmQuorum: toDecString("1", 18),
                   minInitialDeposit: coin("10000000000000000000", "FX"),
                   egfDepositThreshold: coin("10000000000000000000", "FX"),
                   egfVotingPeriod: Duration.fromPartial({ seconds: 1, nanos: 10 }),
