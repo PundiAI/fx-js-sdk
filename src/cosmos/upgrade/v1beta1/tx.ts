@@ -24,8 +24,7 @@ export interface MsgSoftwareUpgrade {
  *
  * Since: cosmos-sdk 0.46
  */
-export interface MsgSoftwareUpgradeResponse {
-}
+export interface MsgSoftwareUpgradeResponse {}
 
 /**
  * MsgCancelUpgrade is the Msg/CancelUpgrade request type.
@@ -42,8 +41,7 @@ export interface MsgCancelUpgrade {
  *
  * Since: cosmos-sdk 0.46
  */
-export interface MsgCancelUpgradeResponse {
-}
+export interface MsgCancelUpgradeResponse {}
 
 function createBaseMsgSoftwareUpgrade(): MsgSoftwareUpgrade {
   return { authority: "", plan: undefined };
@@ -111,7 +109,8 @@ export const MsgSoftwareUpgrade = {
   fromPartial<I extends Exact<DeepPartial<MsgSoftwareUpgrade>, I>>(object: I): MsgSoftwareUpgrade {
     const message = createBaseMsgSoftwareUpgrade();
     message.authority = object.authority ?? "";
-    message.plan = (object.plan !== undefined && object.plan !== null) ? Plan.fromPartial(object.plan) : undefined;
+    message.plan =
+      object.plan !== undefined && object.plan !== null ? Plan.fromPartial(object.plan) : undefined;
     return message;
   },
 };
@@ -305,14 +304,21 @@ interface Rpc {
 
 type Builtin = Date | Function | Uint8Array | string | number | boolean | undefined;
 
-export type DeepPartial<T> = T extends Builtin ? T
-  : T extends Long ? string | number | Long : T extends Array<infer U> ? Array<DeepPartial<U>>
-  : T extends ReadonlyArray<infer U> ? ReadonlyArray<DeepPartial<U>>
-  : T extends {} ? { [K in keyof T]?: DeepPartial<T[K]> }
+export type DeepPartial<T> = T extends Builtin
+  ? T
+  : T extends Long
+  ? string | number | Long
+  : T extends Array<infer U>
+  ? Array<DeepPartial<U>>
+  : T extends ReadonlyArray<infer U>
+  ? ReadonlyArray<DeepPartial<U>>
+  : T extends {}
+  ? { [K in keyof T]?: DeepPartial<T[K]> }
   : Partial<T>;
 
 type KeysOfUnion<T> = T extends T ? keyof T : never;
-export type Exact<P, I extends P> = P extends Builtin ? P
+export type Exact<P, I extends P> = P extends Builtin
+  ? P
   : P & { [K in keyof P]: Exact<P[K], I[K]> } & { [K in Exclude<keyof I, KeysOfUnion<P>>]: never };
 
 if (_m0.util.Long !== Long) {

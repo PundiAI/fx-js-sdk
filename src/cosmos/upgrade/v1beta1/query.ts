@@ -9,8 +9,7 @@ export const protobufPackage = "cosmos.upgrade.v1beta1";
  * QueryCurrentPlanRequest is the request type for the Query/CurrentPlan RPC
  * method.
  */
-export interface QueryCurrentPlanRequest {
-}
+export interface QueryCurrentPlanRequest {}
 
 /**
  * QueryCurrentPlanResponse is the response type for the Query/CurrentPlan RPC
@@ -95,8 +94,7 @@ export interface QueryModuleVersionsResponse {
  *
  * Since: cosmos-sdk 0.46
  */
-export interface QueryAuthorityRequest {
-}
+export interface QueryAuthorityRequest {}
 
 /**
  * QueryAuthorityResponse is the response type for Query/Authority
@@ -200,9 +198,12 @@ export const QueryCurrentPlanResponse = {
     return QueryCurrentPlanResponse.fromPartial(base ?? {});
   },
 
-  fromPartial<I extends Exact<DeepPartial<QueryCurrentPlanResponse>, I>>(object: I): QueryCurrentPlanResponse {
+  fromPartial<I extends Exact<DeepPartial<QueryCurrentPlanResponse>, I>>(
+    object: I,
+  ): QueryCurrentPlanResponse {
     const message = createBaseQueryCurrentPlanResponse();
-    message.plan = (object.plan !== undefined && object.plan !== null) ? Plan.fromPartial(object.plan) : undefined;
+    message.plan =
+      object.plan !== undefined && object.plan !== null ? Plan.fromPartial(object.plan) : undefined;
     return message;
   },
 };
@@ -312,11 +313,12 @@ export const QueryAppliedPlanResponse = {
     return QueryAppliedPlanResponse.fromPartial(base ?? {});
   },
 
-  fromPartial<I extends Exact<DeepPartial<QueryAppliedPlanResponse>, I>>(object: I): QueryAppliedPlanResponse {
+  fromPartial<I extends Exact<DeepPartial<QueryAppliedPlanResponse>, I>>(
+    object: I,
+  ): QueryAppliedPlanResponse {
     const message = createBaseQueryAppliedPlanResponse();
-    message.height = (object.height !== undefined && object.height !== null)
-      ? Long.fromValue(object.height)
-      : Long.ZERO;
+    message.height =
+      object.height !== undefined && object.height !== null ? Long.fromValue(object.height) : Long.ZERO;
     return message;
   },
 };
@@ -376,9 +378,10 @@ export const QueryUpgradedConsensusStateRequest = {
     object: I,
   ): QueryUpgradedConsensusStateRequest {
     const message = createBaseQueryUpgradedConsensusStateRequest();
-    message.lastHeight = (object.lastHeight !== undefined && object.lastHeight !== null)
-      ? Long.fromValue(object.lastHeight)
-      : Long.ZERO;
+    message.lastHeight =
+      object.lastHeight !== undefined && object.lastHeight !== null
+        ? Long.fromValue(object.lastHeight)
+        : Long.ZERO;
     return message;
   },
 };
@@ -499,7 +502,9 @@ export const QueryModuleVersionsRequest = {
     return QueryModuleVersionsRequest.fromPartial(base ?? {});
   },
 
-  fromPartial<I extends Exact<DeepPartial<QueryModuleVersionsRequest>, I>>(object: I): QueryModuleVersionsRequest {
+  fromPartial<I extends Exact<DeepPartial<QueryModuleVersionsRequest>, I>>(
+    object: I,
+  ): QueryModuleVersionsRequest {
     const message = createBaseQueryModuleVersionsRequest();
     message.moduleName = object.moduleName ?? "";
     return message;
@@ -552,18 +557,22 @@ export const QueryModuleVersionsResponse = {
   toJSON(message: QueryModuleVersionsResponse): unknown {
     const obj: any = {};
     if (message.moduleVersions) {
-      obj.moduleVersions = message.moduleVersions.map((e) => e ? ModuleVersion.toJSON(e) : undefined);
+      obj.moduleVersions = message.moduleVersions.map((e) => (e ? ModuleVersion.toJSON(e) : undefined));
     } else {
       obj.moduleVersions = [];
     }
     return obj;
   },
 
-  create<I extends Exact<DeepPartial<QueryModuleVersionsResponse>, I>>(base?: I): QueryModuleVersionsResponse {
+  create<I extends Exact<DeepPartial<QueryModuleVersionsResponse>, I>>(
+    base?: I,
+  ): QueryModuleVersionsResponse {
     return QueryModuleVersionsResponse.fromPartial(base ?? {});
   },
 
-  fromPartial<I extends Exact<DeepPartial<QueryModuleVersionsResponse>, I>>(object: I): QueryModuleVersionsResponse {
+  fromPartial<I extends Exact<DeepPartial<QueryModuleVersionsResponse>, I>>(
+    object: I,
+  ): QueryModuleVersionsResponse {
     const message = createBaseQueryModuleVersionsResponse();
     message.moduleVersions = object.moduleVersions?.map((e) => ModuleVersion.fromPartial(e)) || [];
     return message;
@@ -686,7 +695,9 @@ export interface Query {
    *
    * @deprecated
    */
-  UpgradedConsensusState(request: QueryUpgradedConsensusStateRequest): Promise<QueryUpgradedConsensusStateResponse>;
+  UpgradedConsensusState(
+    request: QueryUpgradedConsensusStateRequest,
+  ): Promise<QueryUpgradedConsensusStateResponse>;
   /**
    * ModuleVersions queries the list of module versions from state.
    *
@@ -725,7 +736,9 @@ export class QueryClientImpl implements Query {
     return promise.then((data) => QueryAppliedPlanResponse.decode(_m0.Reader.create(data)));
   }
 
-  UpgradedConsensusState(request: QueryUpgradedConsensusStateRequest): Promise<QueryUpgradedConsensusStateResponse> {
+  UpgradedConsensusState(
+    request: QueryUpgradedConsensusStateRequest,
+  ): Promise<QueryUpgradedConsensusStateResponse> {
     const data = QueryUpgradedConsensusStateRequest.encode(request).finish();
     const promise = this.rpc.request(this.service, "UpgradedConsensusState", data);
     return promise.then((data) => QueryUpgradedConsensusStateResponse.decode(_m0.Reader.create(data)));
@@ -794,14 +807,21 @@ function base64FromBytes(arr: Uint8Array): string {
 
 type Builtin = Date | Function | Uint8Array | string | number | boolean | undefined;
 
-export type DeepPartial<T> = T extends Builtin ? T
-  : T extends Long ? string | number | Long : T extends Array<infer U> ? Array<DeepPartial<U>>
-  : T extends ReadonlyArray<infer U> ? ReadonlyArray<DeepPartial<U>>
-  : T extends {} ? { [K in keyof T]?: DeepPartial<T[K]> }
+export type DeepPartial<T> = T extends Builtin
+  ? T
+  : T extends Long
+  ? string | number | Long
+  : T extends Array<infer U>
+  ? Array<DeepPartial<U>>
+  : T extends ReadonlyArray<infer U>
+  ? ReadonlyArray<DeepPartial<U>>
+  : T extends {}
+  ? { [K in keyof T]?: DeepPartial<T[K]> }
   : Partial<T>;
 
 type KeysOfUnion<T> = T extends T ? keyof T : never;
-export type Exact<P, I extends P> = P extends Builtin ? P
+export type Exact<P, I extends P> = P extends Builtin
+  ? P
   : P & { [K in keyof P]: Exact<P[K], I[K]> } & { [K in Exclude<keyof I, KeysOfUnion<P>>]: never };
 
 if (_m0.util.Long !== Long) {

@@ -3,7 +3,7 @@ import { AminoMsg, Coin } from "@cosmjs/amino";
 import { AminoConverters, AminoMsgSubmitProposal } from "@cosmjs/stargate";
 import { MsgSubmitProposal } from "cosmjs-types/cosmos/gov/v1beta1/tx";
 
-import { MsgSubmitProposal as MsgSubmitProposalV1 } from "../../fx/gov/v1/tx";
+import { MsgSubmitProposal as MsgSubmitProposalV1 } from "../../cosmos/gov/v1/tx";
 import { proposalContentFromAminoConverter, proposalContentToAminoConverter } from "./content";
 import { proposalMessageFromAminoConverter, proposalMessageToAminoConverter } from "./message";
 

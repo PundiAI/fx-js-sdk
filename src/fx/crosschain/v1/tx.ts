@@ -15,8 +15,7 @@ export interface MsgBondedOracle {
   delegateAmount?: Coin;
 }
 
-export interface MsgBondedOracleResponse {
-}
+export interface MsgBondedOracleResponse {}
 
 export interface MsgAddDelegate {
   chainName: string;
@@ -24,8 +23,7 @@ export interface MsgAddDelegate {
   amount?: Coin;
 }
 
-export interface MsgAddDelegateResponse {
-}
+export interface MsgAddDelegateResponse {}
 
 export interface MsgReDelegate {
   chainName: string;
@@ -33,8 +31,7 @@ export interface MsgReDelegate {
   validatorAddress: string;
 }
 
-export interface MsgReDelegateResponse {
-}
+export interface MsgReDelegateResponse {}
 
 export interface MsgEditBridger {
   chainName: string;
@@ -42,24 +39,21 @@ export interface MsgEditBridger {
   bridgerAddress: string;
 }
 
-export interface MsgEditBridgerResponse {
-}
+export interface MsgEditBridgerResponse {}
 
 export interface MsgUnbondedOracle {
   chainName: string;
   oracleAddress: string;
 }
 
-export interface MsgUnbondedOracleResponse {
-}
+export interface MsgUnbondedOracleResponse {}
 
 export interface MsgWithdrawReward {
   chainName: string;
   oracleAddress: string;
 }
 
-export interface MsgWithdrawRewardResponse {
-}
+export interface MsgWithdrawRewardResponse {}
 
 /**
  * MsgOracleSetConfirm
@@ -86,8 +80,7 @@ export interface MsgOracleSetConfirm {
   chainName: string;
 }
 
-export interface MsgOracleSetConfirmResponse {
-}
+export interface MsgOracleSetConfirmResponse {}
 
 /**
  * This informs the Cosmos module that a validator
@@ -102,8 +95,7 @@ export interface MsgOracleSetUpdatedClaim {
   chainName: string;
 }
 
-export interface MsgOracleSetUpdatedClaimResponse {
-}
+export interface MsgOracleSetUpdatedClaimResponse {}
 
 /**
  * MsgSendToFxClaim
@@ -124,8 +116,7 @@ export interface MsgSendToFxClaim {
   chainName: string;
 }
 
-export interface MsgSendToFxClaimResponse {
-}
+export interface MsgSendToFxClaimResponse {}
 
 /**
  * MsgSendToExternal
@@ -164,8 +155,7 @@ export interface MsgCancelSendToExternal {
   chainName: string;
 }
 
-export interface MsgCancelSendToExternalResponse {
-}
+export interface MsgCancelSendToExternalResponse {}
 
 /**
  * MsgRequestBatch
@@ -211,8 +201,7 @@ export interface MsgConfirmBatch {
   chainName: string;
 }
 
-export interface MsgConfirmBatchResponse {
-}
+export interface MsgConfirmBatchResponse {}
 
 /**
  * SendToExternalClaim claims that a batch of withdrawal
@@ -227,8 +216,7 @@ export interface MsgSendToExternalClaim {
   chainName: string;
 }
 
-export interface MsgSendToExternalClaimResponse {
-}
+export interface MsgSendToExternalClaimResponse {}
 
 export interface MsgBridgeTokenClaim {
   eventNonce: Long;
@@ -243,8 +231,7 @@ export interface MsgBridgeTokenClaim {
   chainName: string;
 }
 
-export interface MsgBridgeTokenClaimResponse {
-}
+export interface MsgBridgeTokenClaimResponse {}
 
 /** Deprecated: after block 5713000 */
 export interface MsgSetOrchestratorAddress {
@@ -279,8 +266,7 @@ export interface MsgUpdateParams {
  * MsgUpdateParamsResponse defines the response structure for executing a
  * MsgUpdateParams message.
  */
-export interface MsgUpdateParamsResponse {
-}
+export interface MsgUpdateParamsResponse {}
 
 export interface MsgIncreaseBridgeFee {
   chainName: string;
@@ -289,8 +275,7 @@ export interface MsgIncreaseBridgeFee {
   addBridgeFee?: Coin;
 }
 
-export interface MsgIncreaseBridgeFeeResponse {
-}
+export interface MsgIncreaseBridgeFeeResponse {}
 
 export interface MsgUpdateChainOracles {
   chainName: string;
@@ -299,8 +284,7 @@ export interface MsgUpdateChainOracles {
   oracles: string[];
 }
 
-export interface MsgUpdateChainOraclesResponse {
-}
+export interface MsgUpdateChainOraclesResponse {}
 
 function createBaseMsgBondedOracle(): MsgBondedOracle {
   return {
@@ -428,9 +412,10 @@ export const MsgBondedOracle = {
     message.bridgerAddress = object.bridgerAddress ?? "";
     message.externalAddress = object.externalAddress ?? "";
     message.validatorAddress = object.validatorAddress ?? "";
-    message.delegateAmount = (object.delegateAmount !== undefined && object.delegateAmount !== null)
-      ? Coin.fromPartial(object.delegateAmount)
-      : undefined;
+    message.delegateAmount =
+      object.delegateAmount !== undefined && object.delegateAmount !== null
+        ? Coin.fromPartial(object.delegateAmount)
+        : undefined;
     return message;
   },
 };
@@ -558,9 +543,8 @@ export const MsgAddDelegate = {
     const message = createBaseMsgAddDelegate();
     message.chainName = object.chainName ?? "";
     message.oracleAddress = object.oracleAddress ?? "";
-    message.amount = (object.amount !== undefined && object.amount !== null)
-      ? Coin.fromPartial(object.amount)
-      : undefined;
+    message.amount =
+      object.amount !== undefined && object.amount !== null ? Coin.fromPartial(object.amount) : undefined;
     return message;
   },
 };
@@ -1196,7 +1180,8 @@ export const MsgOracleSetConfirm = {
 
   fromPartial<I extends Exact<DeepPartial<MsgOracleSetConfirm>, I>>(object: I): MsgOracleSetConfirm {
     const message = createBaseMsgOracleSetConfirm();
-    message.nonce = (object.nonce !== undefined && object.nonce !== null) ? Long.fromValue(object.nonce) : Long.UZERO;
+    message.nonce =
+      object.nonce !== undefined && object.nonce !== null ? Long.fromValue(object.nonce) : Long.UZERO;
     message.bridgerAddress = object.bridgerAddress ?? "";
     message.externalAddress = object.externalAddress ?? "";
     message.signature = object.signature ?? "";
@@ -1239,11 +1224,15 @@ export const MsgOracleSetConfirmResponse = {
     return obj;
   },
 
-  create<I extends Exact<DeepPartial<MsgOracleSetConfirmResponse>, I>>(base?: I): MsgOracleSetConfirmResponse {
+  create<I extends Exact<DeepPartial<MsgOracleSetConfirmResponse>, I>>(
+    base?: I,
+  ): MsgOracleSetConfirmResponse {
     return MsgOracleSetConfirmResponse.fromPartial(base ?? {});
   },
 
-  fromPartial<I extends Exact<DeepPartial<MsgOracleSetConfirmResponse>, I>>(_: I): MsgOracleSetConfirmResponse {
+  fromPartial<I extends Exact<DeepPartial<MsgOracleSetConfirmResponse>, I>>(
+    _: I,
+  ): MsgOracleSetConfirmResponse {
     const message = createBaseMsgOracleSetConfirmResponse();
     return message;
   },
@@ -1346,7 +1335,9 @@ export const MsgOracleSetUpdatedClaim = {
       eventNonce: isSet(object.eventNonce) ? Long.fromValue(object.eventNonce) : Long.UZERO,
       blockHeight: isSet(object.blockHeight) ? Long.fromValue(object.blockHeight) : Long.UZERO,
       oracleSetNonce: isSet(object.oracleSetNonce) ? Long.fromValue(object.oracleSetNonce) : Long.UZERO,
-      members: Array.isArray(object?.members) ? object.members.map((e: any) => BridgeValidator.fromJSON(e)) : [],
+      members: Array.isArray(object?.members)
+        ? object.members.map((e: any) => BridgeValidator.fromJSON(e))
+        : [],
       bridgerAddress: isSet(object.bridgerAddress) ? String(object.bridgerAddress) : "",
       chainName: isSet(object.chainName) ? String(object.chainName) : "",
     };
@@ -1356,9 +1347,10 @@ export const MsgOracleSetUpdatedClaim = {
     const obj: any = {};
     message.eventNonce !== undefined && (obj.eventNonce = (message.eventNonce || Long.UZERO).toString());
     message.blockHeight !== undefined && (obj.blockHeight = (message.blockHeight || Long.UZERO).toString());
-    message.oracleSetNonce !== undefined && (obj.oracleSetNonce = (message.oracleSetNonce || Long.UZERO).toString());
+    message.oracleSetNonce !== undefined &&
+      (obj.oracleSetNonce = (message.oracleSetNonce || Long.UZERO).toString());
     if (message.members) {
-      obj.members = message.members.map((e) => e ? BridgeValidator.toJSON(e) : undefined);
+      obj.members = message.members.map((e) => (e ? BridgeValidator.toJSON(e) : undefined));
     } else {
       obj.members = [];
     }
@@ -1371,17 +1363,22 @@ export const MsgOracleSetUpdatedClaim = {
     return MsgOracleSetUpdatedClaim.fromPartial(base ?? {});
   },
 
-  fromPartial<I extends Exact<DeepPartial<MsgOracleSetUpdatedClaim>, I>>(object: I): MsgOracleSetUpdatedClaim {
+  fromPartial<I extends Exact<DeepPartial<MsgOracleSetUpdatedClaim>, I>>(
+    object: I,
+  ): MsgOracleSetUpdatedClaim {
     const message = createBaseMsgOracleSetUpdatedClaim();
-    message.eventNonce = (object.eventNonce !== undefined && object.eventNonce !== null)
-      ? Long.fromValue(object.eventNonce)
-      : Long.UZERO;
-    message.blockHeight = (object.blockHeight !== undefined && object.blockHeight !== null)
-      ? Long.fromValue(object.blockHeight)
-      : Long.UZERO;
-    message.oracleSetNonce = (object.oracleSetNonce !== undefined && object.oracleSetNonce !== null)
-      ? Long.fromValue(object.oracleSetNonce)
-      : Long.UZERO;
+    message.eventNonce =
+      object.eventNonce !== undefined && object.eventNonce !== null
+        ? Long.fromValue(object.eventNonce)
+        : Long.UZERO;
+    message.blockHeight =
+      object.blockHeight !== undefined && object.blockHeight !== null
+        ? Long.fromValue(object.blockHeight)
+        : Long.UZERO;
+    message.oracleSetNonce =
+      object.oracleSetNonce !== undefined && object.oracleSetNonce !== null
+        ? Long.fromValue(object.oracleSetNonce)
+        : Long.UZERO;
     message.members = object.members?.map((e) => BridgeValidator.fromPartial(e)) || [];
     message.bridgerAddress = object.bridgerAddress ?? "";
     message.chainName = object.chainName ?? "";
@@ -1596,12 +1593,14 @@ export const MsgSendToFxClaim = {
 
   fromPartial<I extends Exact<DeepPartial<MsgSendToFxClaim>, I>>(object: I): MsgSendToFxClaim {
     const message = createBaseMsgSendToFxClaim();
-    message.eventNonce = (object.eventNonce !== undefined && object.eventNonce !== null)
-      ? Long.fromValue(object.eventNonce)
-      : Long.UZERO;
-    message.blockHeight = (object.blockHeight !== undefined && object.blockHeight !== null)
-      ? Long.fromValue(object.blockHeight)
-      : Long.UZERO;
+    message.eventNonce =
+      object.eventNonce !== undefined && object.eventNonce !== null
+        ? Long.fromValue(object.eventNonce)
+        : Long.UZERO;
+    message.blockHeight =
+      object.blockHeight !== undefined && object.blockHeight !== null
+        ? Long.fromValue(object.blockHeight)
+        : Long.UZERO;
     message.tokenContract = object.tokenContract ?? "";
     message.amount = object.amount ?? "";
     message.sender = object.sender ?? "";
@@ -1747,7 +1746,8 @@ export const MsgSendToExternal = {
     message.sender !== undefined && (obj.sender = message.sender);
     message.dest !== undefined && (obj.dest = message.dest);
     message.amount !== undefined && (obj.amount = message.amount ? Coin.toJSON(message.amount) : undefined);
-    message.bridgeFee !== undefined && (obj.bridgeFee = message.bridgeFee ? Coin.toJSON(message.bridgeFee) : undefined);
+    message.bridgeFee !== undefined &&
+      (obj.bridgeFee = message.bridgeFee ? Coin.toJSON(message.bridgeFee) : undefined);
     message.chainName !== undefined && (obj.chainName = message.chainName);
     return obj;
   },
@@ -1760,12 +1760,12 @@ export const MsgSendToExternal = {
     const message = createBaseMsgSendToExternal();
     message.sender = object.sender ?? "";
     message.dest = object.dest ?? "";
-    message.amount = (object.amount !== undefined && object.amount !== null)
-      ? Coin.fromPartial(object.amount)
-      : undefined;
-    message.bridgeFee = (object.bridgeFee !== undefined && object.bridgeFee !== null)
-      ? Coin.fromPartial(object.bridgeFee)
-      : undefined;
+    message.amount =
+      object.amount !== undefined && object.amount !== null ? Coin.fromPartial(object.amount) : undefined;
+    message.bridgeFee =
+      object.bridgeFee !== undefined && object.bridgeFee !== null
+        ? Coin.fromPartial(object.bridgeFee)
+        : undefined;
     message.chainName = object.chainName ?? "";
     return message;
   },
@@ -1812,7 +1812,8 @@ export const MsgSendToExternalResponse = {
 
   toJSON(message: MsgSendToExternalResponse): unknown {
     const obj: any = {};
-    message.outgoingTxId !== undefined && (obj.outgoingTxId = (message.outgoingTxId || Long.UZERO).toString());
+    message.outgoingTxId !== undefined &&
+      (obj.outgoingTxId = (message.outgoingTxId || Long.UZERO).toString());
     return obj;
   },
 
@@ -1820,11 +1821,14 @@ export const MsgSendToExternalResponse = {
     return MsgSendToExternalResponse.fromPartial(base ?? {});
   },
 
-  fromPartial<I extends Exact<DeepPartial<MsgSendToExternalResponse>, I>>(object: I): MsgSendToExternalResponse {
+  fromPartial<I extends Exact<DeepPartial<MsgSendToExternalResponse>, I>>(
+    object: I,
+  ): MsgSendToExternalResponse {
     const message = createBaseMsgSendToExternalResponse();
-    message.outgoingTxId = (object.outgoingTxId !== undefined && object.outgoingTxId !== null)
-      ? Long.fromValue(object.outgoingTxId)
-      : Long.UZERO;
+    message.outgoingTxId =
+      object.outgoingTxId !== undefined && object.outgoingTxId !== null
+        ? Long.fromValue(object.outgoingTxId)
+        : Long.UZERO;
     return message;
   },
 };
@@ -1894,7 +1898,8 @@ export const MsgCancelSendToExternal = {
 
   toJSON(message: MsgCancelSendToExternal): unknown {
     const obj: any = {};
-    message.transactionId !== undefined && (obj.transactionId = (message.transactionId || Long.UZERO).toString());
+    message.transactionId !== undefined &&
+      (obj.transactionId = (message.transactionId || Long.UZERO).toString());
     message.sender !== undefined && (obj.sender = message.sender);
     message.chainName !== undefined && (obj.chainName = message.chainName);
     return obj;
@@ -1906,9 +1911,10 @@ export const MsgCancelSendToExternal = {
 
   fromPartial<I extends Exact<DeepPartial<MsgCancelSendToExternal>, I>>(object: I): MsgCancelSendToExternal {
     const message = createBaseMsgCancelSendToExternal();
-    message.transactionId = (object.transactionId !== undefined && object.transactionId !== null)
-      ? Long.fromValue(object.transactionId)
-      : Long.UZERO;
+    message.transactionId =
+      object.transactionId !== undefined && object.transactionId !== null
+        ? Long.fromValue(object.transactionId)
+        : Long.UZERO;
     message.sender = object.sender ?? "";
     message.chainName = object.chainName ?? "";
     return message;
@@ -1949,11 +1955,15 @@ export const MsgCancelSendToExternalResponse = {
     return obj;
   },
 
-  create<I extends Exact<DeepPartial<MsgCancelSendToExternalResponse>, I>>(base?: I): MsgCancelSendToExternalResponse {
+  create<I extends Exact<DeepPartial<MsgCancelSendToExternalResponse>, I>>(
+    base?: I,
+  ): MsgCancelSendToExternalResponse {
     return MsgCancelSendToExternalResponse.fromPartial(base ?? {});
   },
 
-  fromPartial<I extends Exact<DeepPartial<MsgCancelSendToExternalResponse>, I>>(_: I): MsgCancelSendToExternalResponse {
+  fromPartial<I extends Exact<DeepPartial<MsgCancelSendToExternalResponse>, I>>(
+    _: I,
+  ): MsgCancelSendToExternalResponse {
     const message = createBaseMsgCancelSendToExternalResponse();
     return message;
   },
@@ -2133,9 +2143,10 @@ export const MsgRequestBatchResponse = {
 
   fromPartial<I extends Exact<DeepPartial<MsgRequestBatchResponse>, I>>(object: I): MsgRequestBatchResponse {
     const message = createBaseMsgRequestBatchResponse();
-    message.batchNonce = (object.batchNonce !== undefined && object.batchNonce !== null)
-      ? Long.fromValue(object.batchNonce)
-      : Long.UZERO;
+    message.batchNonce =
+      object.batchNonce !== undefined && object.batchNonce !== null
+        ? Long.fromValue(object.batchNonce)
+        : Long.UZERO;
     return message;
   },
 };
@@ -2260,7 +2271,8 @@ export const MsgConfirmBatch = {
 
   fromPartial<I extends Exact<DeepPartial<MsgConfirmBatch>, I>>(object: I): MsgConfirmBatch {
     const message = createBaseMsgConfirmBatch();
-    message.nonce = (object.nonce !== undefined && object.nonce !== null) ? Long.fromValue(object.nonce) : Long.UZERO;
+    message.nonce =
+      object.nonce !== undefined && object.nonce !== null ? Long.fromValue(object.nonce) : Long.UZERO;
     message.tokenContract = object.tokenContract ?? "";
     message.bridgerAddress = object.bridgerAddress ?? "";
     message.externalAddress = object.externalAddress ?? "";
@@ -2434,15 +2446,18 @@ export const MsgSendToExternalClaim = {
 
   fromPartial<I extends Exact<DeepPartial<MsgSendToExternalClaim>, I>>(object: I): MsgSendToExternalClaim {
     const message = createBaseMsgSendToExternalClaim();
-    message.eventNonce = (object.eventNonce !== undefined && object.eventNonce !== null)
-      ? Long.fromValue(object.eventNonce)
-      : Long.UZERO;
-    message.blockHeight = (object.blockHeight !== undefined && object.blockHeight !== null)
-      ? Long.fromValue(object.blockHeight)
-      : Long.UZERO;
-    message.batchNonce = (object.batchNonce !== undefined && object.batchNonce !== null)
-      ? Long.fromValue(object.batchNonce)
-      : Long.UZERO;
+    message.eventNonce =
+      object.eventNonce !== undefined && object.eventNonce !== null
+        ? Long.fromValue(object.eventNonce)
+        : Long.UZERO;
+    message.blockHeight =
+      object.blockHeight !== undefined && object.blockHeight !== null
+        ? Long.fromValue(object.blockHeight)
+        : Long.UZERO;
+    message.batchNonce =
+      object.batchNonce !== undefined && object.batchNonce !== null
+        ? Long.fromValue(object.batchNonce)
+        : Long.UZERO;
     message.tokenContract = object.tokenContract ?? "";
     message.bridgerAddress = object.bridgerAddress ?? "";
     message.chainName = object.chainName ?? "";
@@ -2484,11 +2499,15 @@ export const MsgSendToExternalClaimResponse = {
     return obj;
   },
 
-  create<I extends Exact<DeepPartial<MsgSendToExternalClaimResponse>, I>>(base?: I): MsgSendToExternalClaimResponse {
+  create<I extends Exact<DeepPartial<MsgSendToExternalClaimResponse>, I>>(
+    base?: I,
+  ): MsgSendToExternalClaimResponse {
     return MsgSendToExternalClaimResponse.fromPartial(base ?? {});
   },
 
-  fromPartial<I extends Exact<DeepPartial<MsgSendToExternalClaimResponse>, I>>(_: I): MsgSendToExternalClaimResponse {
+  fromPartial<I extends Exact<DeepPartial<MsgSendToExternalClaimResponse>, I>>(
+    _: I,
+  ): MsgSendToExternalClaimResponse {
     const message = createBaseMsgSendToExternalClaimResponse();
     return message;
   },
@@ -2653,18 +2672,21 @@ export const MsgBridgeTokenClaim = {
 
   fromPartial<I extends Exact<DeepPartial<MsgBridgeTokenClaim>, I>>(object: I): MsgBridgeTokenClaim {
     const message = createBaseMsgBridgeTokenClaim();
-    message.eventNonce = (object.eventNonce !== undefined && object.eventNonce !== null)
-      ? Long.fromValue(object.eventNonce)
-      : Long.UZERO;
-    message.blockHeight = (object.blockHeight !== undefined && object.blockHeight !== null)
-      ? Long.fromValue(object.blockHeight)
-      : Long.UZERO;
+    message.eventNonce =
+      object.eventNonce !== undefined && object.eventNonce !== null
+        ? Long.fromValue(object.eventNonce)
+        : Long.UZERO;
+    message.blockHeight =
+      object.blockHeight !== undefined && object.blockHeight !== null
+        ? Long.fromValue(object.blockHeight)
+        : Long.UZERO;
     message.tokenContract = object.tokenContract ?? "";
     message.name = object.name ?? "";
     message.symbol = object.symbol ?? "";
-    message.decimals = (object.decimals !== undefined && object.decimals !== null)
-      ? Long.fromValue(object.decimals)
-      : Long.UZERO;
+    message.decimals =
+      object.decimals !== undefined && object.decimals !== null
+        ? Long.fromValue(object.decimals)
+        : Long.UZERO;
     message.bridgerAddress = object.bridgerAddress ?? "";
     message.channelIbc = object.channelIbc ?? "";
     message.chainName = object.chainName ?? "";
@@ -2706,11 +2728,15 @@ export const MsgBridgeTokenClaimResponse = {
     return obj;
   },
 
-  create<I extends Exact<DeepPartial<MsgBridgeTokenClaimResponse>, I>>(base?: I): MsgBridgeTokenClaimResponse {
+  create<I extends Exact<DeepPartial<MsgBridgeTokenClaimResponse>, I>>(
+    base?: I,
+  ): MsgBridgeTokenClaimResponse {
     return MsgBridgeTokenClaimResponse.fromPartial(base ?? {});
   },
 
-  fromPartial<I extends Exact<DeepPartial<MsgBridgeTokenClaimResponse>, I>>(_: I): MsgBridgeTokenClaimResponse {
+  fromPartial<I extends Exact<DeepPartial<MsgBridgeTokenClaimResponse>, I>>(
+    _: I,
+  ): MsgBridgeTokenClaimResponse {
     const message = createBaseMsgBridgeTokenClaimResponse();
     return message;
   },
@@ -2806,7 +2832,8 @@ export const MsgSetOrchestratorAddress = {
     message.oracleAddress !== undefined && (obj.oracleAddress = message.oracleAddress);
     message.bridgerAddress !== undefined && (obj.bridgerAddress = message.bridgerAddress);
     message.externalAddress !== undefined && (obj.externalAddress = message.externalAddress);
-    message.deposit !== undefined && (obj.deposit = message.deposit ? Coin.toJSON(message.deposit) : undefined);
+    message.deposit !== undefined &&
+      (obj.deposit = message.deposit ? Coin.toJSON(message.deposit) : undefined);
     message.chainName !== undefined && (obj.chainName = message.chainName);
     return obj;
   },
@@ -2815,14 +2842,15 @@ export const MsgSetOrchestratorAddress = {
     return MsgSetOrchestratorAddress.fromPartial(base ?? {});
   },
 
-  fromPartial<I extends Exact<DeepPartial<MsgSetOrchestratorAddress>, I>>(object: I): MsgSetOrchestratorAddress {
+  fromPartial<I extends Exact<DeepPartial<MsgSetOrchestratorAddress>, I>>(
+    object: I,
+  ): MsgSetOrchestratorAddress {
     const message = createBaseMsgSetOrchestratorAddress();
     message.oracleAddress = object.oracleAddress ?? "";
     message.bridgerAddress = object.bridgerAddress ?? "";
     message.externalAddress = object.externalAddress ?? "";
-    message.deposit = (object.deposit !== undefined && object.deposit !== null)
-      ? Coin.fromPartial(object.deposit)
-      : undefined;
+    message.deposit =
+      object.deposit !== undefined && object.deposit !== null ? Coin.fromPartial(object.deposit) : undefined;
     message.chainName = object.chainName ?? "";
     return message;
   },
@@ -2906,9 +2934,8 @@ export const MsgAddOracleDeposit = {
   fromPartial<I extends Exact<DeepPartial<MsgAddOracleDeposit>, I>>(object: I): MsgAddOracleDeposit {
     const message = createBaseMsgAddOracleDeposit();
     message.oracleAddress = object.oracleAddress ?? "";
-    message.amount = (object.amount !== undefined && object.amount !== null)
-      ? Coin.fromPartial(object.amount)
-      : undefined;
+    message.amount =
+      object.amount !== undefined && object.amount !== null ? Coin.fromPartial(object.amount) : undefined;
     message.chainName = object.chainName ?? "";
     return message;
   },
@@ -2993,9 +3020,8 @@ export const MsgUpdateParams = {
     const message = createBaseMsgUpdateParams();
     message.chainName = object.chainName ?? "";
     message.authority = object.authority ?? "";
-    message.params = (object.params !== undefined && object.params !== null)
-      ? Params.fromPartial(object.params)
-      : undefined;
+    message.params =
+      object.params !== undefined && object.params !== null ? Params.fromPartial(object.params) : undefined;
     return message;
   },
 };
@@ -3121,7 +3147,8 @@ export const MsgIncreaseBridgeFee = {
   toJSON(message: MsgIncreaseBridgeFee): unknown {
     const obj: any = {};
     message.chainName !== undefined && (obj.chainName = message.chainName);
-    message.transactionId !== undefined && (obj.transactionId = (message.transactionId || Long.UZERO).toString());
+    message.transactionId !== undefined &&
+      (obj.transactionId = (message.transactionId || Long.UZERO).toString());
     message.sender !== undefined && (obj.sender = message.sender);
     message.addBridgeFee !== undefined &&
       (obj.addBridgeFee = message.addBridgeFee ? Coin.toJSON(message.addBridgeFee) : undefined);
@@ -3135,13 +3162,15 @@ export const MsgIncreaseBridgeFee = {
   fromPartial<I extends Exact<DeepPartial<MsgIncreaseBridgeFee>, I>>(object: I): MsgIncreaseBridgeFee {
     const message = createBaseMsgIncreaseBridgeFee();
     message.chainName = object.chainName ?? "";
-    message.transactionId = (object.transactionId !== undefined && object.transactionId !== null)
-      ? Long.fromValue(object.transactionId)
-      : Long.UZERO;
+    message.transactionId =
+      object.transactionId !== undefined && object.transactionId !== null
+        ? Long.fromValue(object.transactionId)
+        : Long.UZERO;
     message.sender = object.sender ?? "";
-    message.addBridgeFee = (object.addBridgeFee !== undefined && object.addBridgeFee !== null)
-      ? Coin.fromPartial(object.addBridgeFee)
-      : undefined;
+    message.addBridgeFee =
+      object.addBridgeFee !== undefined && object.addBridgeFee !== null
+        ? Coin.fromPartial(object.addBridgeFee)
+        : undefined;
     return message;
   },
 };
@@ -3180,11 +3209,15 @@ export const MsgIncreaseBridgeFeeResponse = {
     return obj;
   },
 
-  create<I extends Exact<DeepPartial<MsgIncreaseBridgeFeeResponse>, I>>(base?: I): MsgIncreaseBridgeFeeResponse {
+  create<I extends Exact<DeepPartial<MsgIncreaseBridgeFeeResponse>, I>>(
+    base?: I,
+  ): MsgIncreaseBridgeFeeResponse {
     return MsgIncreaseBridgeFeeResponse.fromPartial(base ?? {});
   },
 
-  fromPartial<I extends Exact<DeepPartial<MsgIncreaseBridgeFeeResponse>, I>>(_: I): MsgIncreaseBridgeFeeResponse {
+  fromPartial<I extends Exact<DeepPartial<MsgIncreaseBridgeFeeResponse>, I>>(
+    _: I,
+  ): MsgIncreaseBridgeFeeResponse {
     const message = createBaseMsgIncreaseBridgeFeeResponse();
     return message;
   },
@@ -3312,11 +3345,15 @@ export const MsgUpdateChainOraclesResponse = {
     return obj;
   },
 
-  create<I extends Exact<DeepPartial<MsgUpdateChainOraclesResponse>, I>>(base?: I): MsgUpdateChainOraclesResponse {
+  create<I extends Exact<DeepPartial<MsgUpdateChainOraclesResponse>, I>>(
+    base?: I,
+  ): MsgUpdateChainOraclesResponse {
     return MsgUpdateChainOraclesResponse.fromPartial(base ?? {});
   },
 
-  fromPartial<I extends Exact<DeepPartial<MsgUpdateChainOraclesResponse>, I>>(_: I): MsgUpdateChainOraclesResponse {
+  fromPartial<I extends Exact<DeepPartial<MsgUpdateChainOraclesResponse>, I>>(
+    _: I,
+  ): MsgUpdateChainOraclesResponse {
     const message = createBaseMsgUpdateChainOraclesResponse();
     return message;
   },
@@ -3488,14 +3525,21 @@ interface Rpc {
 
 type Builtin = Date | Function | Uint8Array | string | number | boolean | undefined;
 
-export type DeepPartial<T> = T extends Builtin ? T
-  : T extends Long ? string | number | Long : T extends Array<infer U> ? Array<DeepPartial<U>>
-  : T extends ReadonlyArray<infer U> ? ReadonlyArray<DeepPartial<U>>
-  : T extends {} ? { [K in keyof T]?: DeepPartial<T[K]> }
+export type DeepPartial<T> = T extends Builtin
+  ? T
+  : T extends Long
+  ? string | number | Long
+  : T extends Array<infer U>
+  ? Array<DeepPartial<U>>
+  : T extends ReadonlyArray<infer U>
+  ? ReadonlyArray<DeepPartial<U>>
+  : T extends {}
+  ? { [K in keyof T]?: DeepPartial<T[K]> }
   : Partial<T>;
 
 type KeysOfUnion<T> = T extends T ? keyof T : never;
-export type Exact<P, I extends P> = P extends Builtin ? P
+export type Exact<P, I extends P> = P extends Builtin
+  ? P
   : P & { [K in keyof P]: Exact<P[K], I[K]> } & { [K in Exclude<keyof I, KeysOfUnion<P>>]: never };
 
 if (_m0.util.Long !== Long) {

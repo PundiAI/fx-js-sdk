@@ -1,7 +1,7 @@
 import { GeneratedType } from "@cosmjs/proto-signing";
 import { MsgSubmitProposal } from "cosmjs-types/cosmos/gov/v1beta1/tx";
 
-import { MsgSubmitProposal as MsgSubmitProposalV1 } from "../../fx/gov/v1/tx";
+import { MsgSubmitProposal as MsgSubmitProposalV1 } from "../../cosmos/gov/v1/tx";
 
 export const fxgovTypes: ReadonlyArray<[string, GeneratedType]> = [
   ["/cosmos.gov.v1beta1.MsgSubmitProposal", MsgSubmitProposal],

@@ -66,16 +66,14 @@ export interface MsgCreateOrder {
   leverage: Long;
 }
 
-export interface MsgCreateOrderResponse {
-}
+export interface MsgCreateOrderResponse {}
 
 export interface MsgCancelOrder {
   owner: string;
   orderId: string;
 }
 
-export interface MsgCancelOrderResponse {
-}
+export interface MsgCancelOrderResponse {}
 
 export interface MsgAddMargin {
   owner: string;
@@ -84,8 +82,7 @@ export interface MsgAddMargin {
   margin: string;
 }
 
-export interface MsgAddMarginResp {
-}
+export interface MsgAddMarginResp {}
 
 export interface MsgReduceMargin {
   owner: string;
@@ -94,8 +91,7 @@ export interface MsgReduceMargin {
   margin: string;
 }
 
-export interface ReduceMarginResp {
-}
+export interface ReduceMarginResp {}
 
 export interface MsgClosePosition {
   owner: string;
@@ -107,24 +103,21 @@ export interface MsgClosePosition {
   marketClose: boolean;
 }
 
-export interface MsgClosePositionResp {
-}
+export interface MsgClosePositionResp {}
 
 export interface MsgLiquidationPosition {
   liquidator: string;
   positionIds: string[];
 }
 
-export interface MsgLiquidationPositionResp {
-}
+export interface MsgLiquidationPositionResp {}
 
 export interface MsgFundDexPool {
   amount: Coin[];
   depositor: string;
 }
 
-export interface MsgFundDexPoolResp {
-}
+export interface MsgFundDexPoolResp {}
 
 function createBaseMsgCreateOrder(): MsgCreateOrder {
   return { owner: "", pairId: "", direction: 0, price: "", baseQuantity: "", leverage: Long.ZERO };
@@ -244,9 +237,8 @@ export const MsgCreateOrder = {
     message.direction = object.direction ?? 0;
     message.price = object.price ?? "";
     message.baseQuantity = object.baseQuantity ?? "";
-    message.leverage = (object.leverage !== undefined && object.leverage !== null)
-      ? Long.fromValue(object.leverage)
-      : Long.ZERO;
+    message.leverage =
+      object.leverage !== undefined && object.leverage !== null ? Long.fromValue(object.leverage) : Long.ZERO;
     return message;
   },
 };
@@ -693,7 +685,15 @@ export const ReduceMarginResp = {
 };
 
 function createBaseMsgClosePosition(): MsgClosePosition {
-  return { owner: "", pairId: "", positionId: "", price: "", baseQuantity: "", fullClose: false, marketClose: false };
+  return {
+    owner: "",
+    pairId: "",
+    positionId: "",
+    price: "",
+    baseQuantity: "",
+    fullClose: false,
+    marketClose: false,
+  };
 }
 
 export const MsgClosePosition = {
@@ -1046,7 +1046,7 @@ export const MsgFundDexPool = {
   toJSON(message: MsgFundDexPool): unknown {
     const obj: any = {};
     if (message.amount) {
-      obj.amount = message.amount.map((e) => e ? Coin.toJSON(e) : undefined);
+      obj.amount = message.amount.map((e) => (e ? Coin.toJSON(e) : undefined));
     } else {
       obj.amount = [];
     }
@@ -1183,14 +1183,21 @@ interface Rpc {
 
 type Builtin = Date | Function | Uint8Array | string | number | boolean | undefined;
 
-export type DeepPartial<T> = T extends Builtin ? T
-  : T extends Long ? string | number | Long : T extends Array<infer U> ? Array<DeepPartial<U>>
-  : T extends ReadonlyArray<infer U> ? ReadonlyArray<DeepPartial<U>>
-  : T extends {} ? { [K in keyof T]?: DeepPartial<T[K]> }
+export type DeepPartial<T> = T extends Builtin
+  ? T
+  : T extends Long
+  ? string | number | Long
+  : T extends Array<infer U>
+  ? Array<DeepPartial<U>>
+  : T extends ReadonlyArray<infer U>
+  ? ReadonlyArray<DeepPartial<U>>
+  : T extends {}
+  ? { [K in keyof T]?: DeepPartial<T[K]> }
   : Partial<T>;
 
 type KeysOfUnion<T> = T extends T ? keyof T : never;
-export type Exact<P, I extends P> = P extends Builtin ? P
+export type Exact<P, I extends P> = P extends Builtin
+  ? P
   : P & { [K in keyof P]: Exact<P[K], I[K]> } & { [K in Exclude<keyof I, KeysOfUnion<P>>]: never };
 
 if (_m0.util.Long !== Long) {

@@ -22,8 +22,7 @@ export interface MsgConvertCoin {
 }
 
 /** MsgConvertCoinResponse returns no fields */
-export interface MsgConvertCoinResponse {
-}
+export interface MsgConvertCoinResponse {}
 
 /** MsgConvertERC20 defines a Msg to convert an ERC20 token to a Cosmos SDK coin. */
 export interface MsgConvertERC20 {
@@ -38,8 +37,7 @@ export interface MsgConvertERC20 {
 }
 
 /** MsgConvertERC20Response returns no fields */
-export interface MsgConvertERC20Response {
-}
+export interface MsgConvertERC20Response {}
 
 /** MsgConvertDenom defines a Msg to convert an denom to other denom */
 export interface MsgConvertDenom {
@@ -54,8 +52,7 @@ export interface MsgConvertDenom {
 }
 
 /** MsgConvertDenomResponse returns no fields */
-export interface MsgConvertDenomResponse {
-}
+export interface MsgConvertDenomResponse {}
 
 /** MsgUpdateParams is the Msg/UpdateParams request type. */
 export interface MsgUpdateParams {
@@ -73,8 +70,7 @@ export interface MsgUpdateParams {
  * MsgUpdateParamsResponse defines the response structure for executing a
  * MsgUpdateParams message.
  */
-export interface MsgUpdateParamsResponse {
-}
+export interface MsgUpdateParamsResponse {}
 
 export interface MsgRegisterCoin {
   /** authority is the address of the governance account. */
@@ -123,8 +119,7 @@ export interface MsgUpdateDenomAlias {
   alias: string;
 }
 
-export interface MsgUpdateDenomAliasResponse {
-}
+export interface MsgUpdateDenomAliasResponse {}
 
 function createBaseMsgConvertCoin(): MsgConvertCoin {
   return { coin: undefined, receiver: "", sender: "" };
@@ -203,7 +198,8 @@ export const MsgConvertCoin = {
 
   fromPartial<I extends Exact<DeepPartial<MsgConvertCoin>, I>>(object: I): MsgConvertCoin {
     const message = createBaseMsgConvertCoin();
-    message.coin = (object.coin !== undefined && object.coin !== null) ? Coin.fromPartial(object.coin) : undefined;
+    message.coin =
+      object.coin !== undefined && object.coin !== null ? Coin.fromPartial(object.coin) : undefined;
     message.receiver = object.receiver ?? "";
     message.sender = object.sender ?? "";
     return message;
@@ -486,7 +482,8 @@ export const MsgConvertDenom = {
     const message = createBaseMsgConvertDenom();
     message.sender = object.sender ?? "";
     message.receiver = object.receiver ?? "";
-    message.coin = (object.coin !== undefined && object.coin !== null) ? Coin.fromPartial(object.coin) : undefined;
+    message.coin =
+      object.coin !== undefined && object.coin !== null ? Coin.fromPartial(object.coin) : undefined;
     message.target = object.target ?? "";
     return message;
   },
@@ -602,9 +599,8 @@ export const MsgUpdateParams = {
   fromPartial<I extends Exact<DeepPartial<MsgUpdateParams>, I>>(object: I): MsgUpdateParams {
     const message = createBaseMsgUpdateParams();
     message.authority = object.authority ?? "";
-    message.params = (object.params !== undefined && object.params !== null)
-      ? Params.fromPartial(object.params)
-      : undefined;
+    message.params =
+      object.params !== undefined && object.params !== null ? Params.fromPartial(object.params) : undefined;
     return message;
   },
 };
@@ -708,7 +704,8 @@ export const MsgRegisterCoin = {
   toJSON(message: MsgRegisterCoin): unknown {
     const obj: any = {};
     message.authority !== undefined && (obj.authority = message.authority);
-    message.metadata !== undefined && (obj.metadata = message.metadata ? Metadata.toJSON(message.metadata) : undefined);
+    message.metadata !== undefined &&
+      (obj.metadata = message.metadata ? Metadata.toJSON(message.metadata) : undefined);
     return obj;
   },
 
@@ -719,9 +716,10 @@ export const MsgRegisterCoin = {
   fromPartial<I extends Exact<DeepPartial<MsgRegisterCoin>, I>>(object: I): MsgRegisterCoin {
     const message = createBaseMsgRegisterCoin();
     message.authority = object.authority ?? "";
-    message.metadata = (object.metadata !== undefined && object.metadata !== null)
-      ? Metadata.fromPartial(object.metadata)
-      : undefined;
+    message.metadata =
+      object.metadata !== undefined && object.metadata !== null
+        ? Metadata.fromPartial(object.metadata)
+        : undefined;
     return message;
   },
 };
@@ -777,7 +775,8 @@ export const MsgRegisterCoinResponse = {
 
   fromPartial<I extends Exact<DeepPartial<MsgRegisterCoinResponse>, I>>(object: I): MsgRegisterCoinResponse {
     const message = createBaseMsgRegisterCoinResponse();
-    message.pair = (object.pair !== undefined && object.pair !== null) ? TokenPair.fromPartial(object.pair) : undefined;
+    message.pair =
+      object.pair !== undefined && object.pair !== null ? TokenPair.fromPartial(object.pair) : undefined;
     return message;
   },
 };
@@ -919,9 +918,12 @@ export const MsgRegisterERC20Response = {
     return MsgRegisterERC20Response.fromPartial(base ?? {});
   },
 
-  fromPartial<I extends Exact<DeepPartial<MsgRegisterERC20Response>, I>>(object: I): MsgRegisterERC20Response {
+  fromPartial<I extends Exact<DeepPartial<MsgRegisterERC20Response>, I>>(
+    object: I,
+  ): MsgRegisterERC20Response {
     const message = createBaseMsgRegisterERC20Response();
-    message.pair = (object.pair !== undefined && object.pair !== null) ? TokenPair.fromPartial(object.pair) : undefined;
+    message.pair =
+      object.pair !== undefined && object.pair !== null ? TokenPair.fromPartial(object.pair) : undefined;
     return message;
   },
 };
@@ -989,7 +991,9 @@ export const MsgToggleTokenConversion = {
     return MsgToggleTokenConversion.fromPartial(base ?? {});
   },
 
-  fromPartial<I extends Exact<DeepPartial<MsgToggleTokenConversion>, I>>(object: I): MsgToggleTokenConversion {
+  fromPartial<I extends Exact<DeepPartial<MsgToggleTokenConversion>, I>>(
+    object: I,
+  ): MsgToggleTokenConversion {
     const message = createBaseMsgToggleTokenConversion();
     message.authority = object.authority ?? "";
     message.token = object.token ?? "";
@@ -1052,7 +1056,8 @@ export const MsgToggleTokenConversionResponse = {
     object: I,
   ): MsgToggleTokenConversionResponse {
     const message = createBaseMsgToggleTokenConversionResponse();
-    message.pair = (object.pair !== undefined && object.pair !== null) ? TokenPair.fromPartial(object.pair) : undefined;
+    message.pair =
+      object.pair !== undefined && object.pair !== null ? TokenPair.fromPartial(object.pair) : undefined;
     return message;
   },
 };
@@ -1175,11 +1180,15 @@ export const MsgUpdateDenomAliasResponse = {
     return obj;
   },
 
-  create<I extends Exact<DeepPartial<MsgUpdateDenomAliasResponse>, I>>(base?: I): MsgUpdateDenomAliasResponse {
+  create<I extends Exact<DeepPartial<MsgUpdateDenomAliasResponse>, I>>(
+    base?: I,
+  ): MsgUpdateDenomAliasResponse {
     return MsgUpdateDenomAliasResponse.fromPartial(base ?? {});
   },
 
-  fromPartial<I extends Exact<DeepPartial<MsgUpdateDenomAliasResponse>, I>>(_: I): MsgUpdateDenomAliasResponse {
+  fromPartial<I extends Exact<DeepPartial<MsgUpdateDenomAliasResponse>, I>>(
+    _: I,
+  ): MsgUpdateDenomAliasResponse {
     const message = createBaseMsgUpdateDenomAliasResponse();
     return message;
   },
@@ -1280,14 +1289,21 @@ interface Rpc {
 
 type Builtin = Date | Function | Uint8Array | string | number | boolean | undefined;
 
-export type DeepPartial<T> = T extends Builtin ? T
-  : T extends Long ? string | number | Long : T extends Array<infer U> ? Array<DeepPartial<U>>
-  : T extends ReadonlyArray<infer U> ? ReadonlyArray<DeepPartial<U>>
-  : T extends {} ? { [K in keyof T]?: DeepPartial<T[K]> }
+export type DeepPartial<T> = T extends Builtin
+  ? T
+  : T extends Long
+  ? string | number | Long
+  : T extends Array<infer U>
+  ? Array<DeepPartial<U>>
+  : T extends ReadonlyArray<infer U>
+  ? ReadonlyArray<DeepPartial<U>>
+  : T extends {}
+  ? { [K in keyof T]?: DeepPartial<T[K]> }
   : Partial<T>;
 
 type KeysOfUnion<T> = T extends T ? keyof T : never;
-export type Exact<P, I extends P> = P extends Builtin ? P
+export type Exact<P, I extends P> = P extends Builtin
+  ? P
   : P & { [K in keyof P]: Exact<P[K], I[K]> } & { [K in Exclude<keyof I, KeysOfUnion<P>>]: never };
 
 if (_m0.util.Long !== Long) {

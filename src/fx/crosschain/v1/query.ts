@@ -339,9 +339,8 @@ export const QueryParamsResponse = {
 
   fromPartial<I extends Exact<DeepPartial<QueryParamsResponse>, I>>(object: I): QueryParamsResponse {
     const message = createBaseQueryParamsResponse();
-    message.params = (object.params !== undefined && object.params !== null)
-      ? Params.fromPartial(object.params)
-      : undefined;
+    message.params =
+      object.params !== undefined && object.params !== null ? Params.fromPartial(object.params) : undefined;
     return message;
   },
 };
@@ -391,11 +390,15 @@ export const QueryCurrentOracleSetRequest = {
     return obj;
   },
 
-  create<I extends Exact<DeepPartial<QueryCurrentOracleSetRequest>, I>>(base?: I): QueryCurrentOracleSetRequest {
+  create<I extends Exact<DeepPartial<QueryCurrentOracleSetRequest>, I>>(
+    base?: I,
+  ): QueryCurrentOracleSetRequest {
     return QueryCurrentOracleSetRequest.fromPartial(base ?? {});
   },
 
-  fromPartial<I extends Exact<DeepPartial<QueryCurrentOracleSetRequest>, I>>(object: I): QueryCurrentOracleSetRequest {
+  fromPartial<I extends Exact<DeepPartial<QueryCurrentOracleSetRequest>, I>>(
+    object: I,
+  ): QueryCurrentOracleSetRequest {
     const message = createBaseQueryCurrentOracleSetRequest();
     message.chainName = object.chainName ?? "";
     return message;
@@ -448,7 +451,9 @@ export const QueryCurrentOracleSetResponse = {
     return obj;
   },
 
-  create<I extends Exact<DeepPartial<QueryCurrentOracleSetResponse>, I>>(base?: I): QueryCurrentOracleSetResponse {
+  create<I extends Exact<DeepPartial<QueryCurrentOracleSetResponse>, I>>(
+    base?: I,
+  ): QueryCurrentOracleSetResponse {
     return QueryCurrentOracleSetResponse.fromPartial(base ?? {});
   },
 
@@ -456,9 +461,10 @@ export const QueryCurrentOracleSetResponse = {
     object: I,
   ): QueryCurrentOracleSetResponse {
     const message = createBaseQueryCurrentOracleSetResponse();
-    message.oracleSet = (object.oracleSet !== undefined && object.oracleSet !== null)
-      ? OracleSet.fromPartial(object.oracleSet)
-      : undefined;
+    message.oracleSet =
+      object.oracleSet !== undefined && object.oracleSet !== null
+        ? OracleSet.fromPartial(object.oracleSet)
+        : undefined;
     return message;
   },
 };
@@ -522,14 +528,19 @@ export const QueryOracleSetRequestRequest = {
     return obj;
   },
 
-  create<I extends Exact<DeepPartial<QueryOracleSetRequestRequest>, I>>(base?: I): QueryOracleSetRequestRequest {
+  create<I extends Exact<DeepPartial<QueryOracleSetRequestRequest>, I>>(
+    base?: I,
+  ): QueryOracleSetRequestRequest {
     return QueryOracleSetRequestRequest.fromPartial(base ?? {});
   },
 
-  fromPartial<I extends Exact<DeepPartial<QueryOracleSetRequestRequest>, I>>(object: I): QueryOracleSetRequestRequest {
+  fromPartial<I extends Exact<DeepPartial<QueryOracleSetRequestRequest>, I>>(
+    object: I,
+  ): QueryOracleSetRequestRequest {
     const message = createBaseQueryOracleSetRequestRequest();
     message.chainName = object.chainName ?? "";
-    message.nonce = (object.nonce !== undefined && object.nonce !== null) ? Long.fromValue(object.nonce) : Long.UZERO;
+    message.nonce =
+      object.nonce !== undefined && object.nonce !== null ? Long.fromValue(object.nonce) : Long.UZERO;
     return message;
   },
 };
@@ -580,7 +591,9 @@ export const QueryOracleSetRequestResponse = {
     return obj;
   },
 
-  create<I extends Exact<DeepPartial<QueryOracleSetRequestResponse>, I>>(base?: I): QueryOracleSetRequestResponse {
+  create<I extends Exact<DeepPartial<QueryOracleSetRequestResponse>, I>>(
+    base?: I,
+  ): QueryOracleSetRequestResponse {
     return QueryOracleSetRequestResponse.fromPartial(base ?? {});
   },
 
@@ -588,9 +601,10 @@ export const QueryOracleSetRequestResponse = {
     object: I,
   ): QueryOracleSetRequestResponse {
     const message = createBaseQueryOracleSetRequestResponse();
-    message.oracleSet = (object.oracleSet !== undefined && object.oracleSet !== null)
-      ? OracleSet.fromPartial(object.oracleSet)
-      : undefined;
+    message.oracleSet =
+      object.oracleSet !== undefined && object.oracleSet !== null
+        ? OracleSet.fromPartial(object.oracleSet)
+        : undefined;
     return message;
   },
 };
@@ -666,15 +680,20 @@ export const QueryOracleSetConfirmRequest = {
     return obj;
   },
 
-  create<I extends Exact<DeepPartial<QueryOracleSetConfirmRequest>, I>>(base?: I): QueryOracleSetConfirmRequest {
+  create<I extends Exact<DeepPartial<QueryOracleSetConfirmRequest>, I>>(
+    base?: I,
+  ): QueryOracleSetConfirmRequest {
     return QueryOracleSetConfirmRequest.fromPartial(base ?? {});
   },
 
-  fromPartial<I extends Exact<DeepPartial<QueryOracleSetConfirmRequest>, I>>(object: I): QueryOracleSetConfirmRequest {
+  fromPartial<I extends Exact<DeepPartial<QueryOracleSetConfirmRequest>, I>>(
+    object: I,
+  ): QueryOracleSetConfirmRequest {
     const message = createBaseQueryOracleSetConfirmRequest();
     message.chainName = object.chainName ?? "";
     message.bridgerAddress = object.bridgerAddress ?? "";
-    message.nonce = (object.nonce !== undefined && object.nonce !== null) ? Long.fromValue(object.nonce) : Long.UZERO;
+    message.nonce =
+      object.nonce !== undefined && object.nonce !== null ? Long.fromValue(object.nonce) : Long.UZERO;
     return message;
   },
 };
@@ -725,7 +744,9 @@ export const QueryOracleSetConfirmResponse = {
     return obj;
   },
 
-  create<I extends Exact<DeepPartial<QueryOracleSetConfirmResponse>, I>>(base?: I): QueryOracleSetConfirmResponse {
+  create<I extends Exact<DeepPartial<QueryOracleSetConfirmResponse>, I>>(
+    base?: I,
+  ): QueryOracleSetConfirmResponse {
     return QueryOracleSetConfirmResponse.fromPartial(base ?? {});
   },
 
@@ -733,9 +754,10 @@ export const QueryOracleSetConfirmResponse = {
     object: I,
   ): QueryOracleSetConfirmResponse {
     const message = createBaseQueryOracleSetConfirmResponse();
-    message.confirm = (object.confirm !== undefined && object.confirm !== null)
-      ? MsgOracleSetConfirm.fromPartial(object.confirm)
-      : undefined;
+    message.confirm =
+      object.confirm !== undefined && object.confirm !== null
+        ? MsgOracleSetConfirm.fromPartial(object.confirm)
+        : undefined;
     return message;
   },
 };
@@ -745,7 +767,10 @@ function createBaseQueryOracleSetConfirmsByNonceRequest(): QueryOracleSetConfirm
 }
 
 export const QueryOracleSetConfirmsByNonceRequest = {
-  encode(message: QueryOracleSetConfirmsByNonceRequest, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  encode(
+    message: QueryOracleSetConfirmsByNonceRequest,
+    writer: _m0.Writer = _m0.Writer.create(),
+  ): _m0.Writer {
     if (message.chainName !== "") {
       writer.uint32(10).string(message.chainName);
     }
@@ -810,7 +835,8 @@ export const QueryOracleSetConfirmsByNonceRequest = {
   ): QueryOracleSetConfirmsByNonceRequest {
     const message = createBaseQueryOracleSetConfirmsByNonceRequest();
     message.chainName = object.chainName ?? "";
-    message.nonce = (object.nonce !== undefined && object.nonce !== null) ? Long.fromValue(object.nonce) : Long.UZERO;
+    message.nonce =
+      object.nonce !== undefined && object.nonce !== null ? Long.fromValue(object.nonce) : Long.UZERO;
     return message;
   },
 };
@@ -820,7 +846,10 @@ function createBaseQueryOracleSetConfirmsByNonceResponse(): QueryOracleSetConfir
 }
 
 export const QueryOracleSetConfirmsByNonceResponse = {
-  encode(message: QueryOracleSetConfirmsByNonceResponse, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  encode(
+    message: QueryOracleSetConfirmsByNonceResponse,
+    writer: _m0.Writer = _m0.Writer.create(),
+  ): _m0.Writer {
     for (const v of message.confirms) {
       MsgOracleSetConfirm.encode(v!, writer.uint32(10).fork()).ldelim();
     }
@@ -852,14 +881,16 @@ export const QueryOracleSetConfirmsByNonceResponse = {
 
   fromJSON(object: any): QueryOracleSetConfirmsByNonceResponse {
     return {
-      confirms: Array.isArray(object?.confirms) ? object.confirms.map((e: any) => MsgOracleSetConfirm.fromJSON(e)) : [],
+      confirms: Array.isArray(object?.confirms)
+        ? object.confirms.map((e: any) => MsgOracleSetConfirm.fromJSON(e))
+        : [],
     };
   },
 
   toJSON(message: QueryOracleSetConfirmsByNonceResponse): unknown {
     const obj: any = {};
     if (message.confirms) {
-      obj.confirms = message.confirms.map((e) => e ? MsgOracleSetConfirm.toJSON(e) : undefined);
+      obj.confirms = message.confirms.map((e) => (e ? MsgOracleSetConfirm.toJSON(e) : undefined));
     } else {
       obj.confirms = [];
     }
@@ -978,14 +1009,16 @@ export const QueryLastOracleSetRequestsResponse = {
 
   fromJSON(object: any): QueryLastOracleSetRequestsResponse {
     return {
-      oracleSets: Array.isArray(object?.oracleSets) ? object.oracleSets.map((e: any) => OracleSet.fromJSON(e)) : [],
+      oracleSets: Array.isArray(object?.oracleSets)
+        ? object.oracleSets.map((e: any) => OracleSet.fromJSON(e))
+        : [],
     };
   },
 
   toJSON(message: QueryLastOracleSetRequestsResponse): unknown {
     const obj: any = {};
     if (message.oracleSets) {
-      obj.oracleSets = message.oracleSets.map((e) => e ? OracleSet.toJSON(e) : undefined);
+      obj.oracleSets = message.oracleSets.map((e) => (e ? OracleSet.toJSON(e) : undefined));
     } else {
       obj.oracleSets = [];
     }
@@ -1012,7 +1045,10 @@ function createBaseQueryLastPendingOracleSetRequestByAddrRequest(): QueryLastPen
 }
 
 export const QueryLastPendingOracleSetRequestByAddrRequest = {
-  encode(message: QueryLastPendingOracleSetRequestByAddrRequest, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  encode(
+    message: QueryLastPendingOracleSetRequestByAddrRequest,
+    writer: _m0.Writer = _m0.Writer.create(),
+  ): _m0.Writer {
     if (message.chainName !== "") {
       writer.uint32(10).string(message.chainName);
     }
@@ -1122,14 +1158,16 @@ export const QueryLastPendingOracleSetRequestByAddrResponse = {
 
   fromJSON(object: any): QueryLastPendingOracleSetRequestByAddrResponse {
     return {
-      oracleSets: Array.isArray(object?.oracleSets) ? object.oracleSets.map((e: any) => OracleSet.fromJSON(e)) : [],
+      oracleSets: Array.isArray(object?.oracleSets)
+        ? object.oracleSets.map((e: any) => OracleSet.fromJSON(e))
+        : [],
     };
   },
 
   toJSON(message: QueryLastPendingOracleSetRequestByAddrResponse): unknown {
     const obj: any = {};
     if (message.oracleSets) {
-      obj.oracleSets = message.oracleSets.map((e) => e ? OracleSet.toJSON(e) : undefined);
+      obj.oracleSets = message.oracleSets.map((e) => (e ? OracleSet.toJSON(e) : undefined));
     } else {
       obj.oracleSets = [];
     }
@@ -1209,7 +1247,7 @@ export const QueryBatchFeeRequest = {
     const obj: any = {};
     message.chainName !== undefined && (obj.chainName = message.chainName);
     if (message.minBatchFees) {
-      obj.minBatchFees = message.minBatchFees.map((e) => e ? MinBatchFee.toJSON(e) : undefined);
+      obj.minBatchFees = message.minBatchFees.map((e) => (e ? MinBatchFee.toJSON(e) : undefined));
     } else {
       obj.minBatchFees = [];
     }
@@ -1265,14 +1303,16 @@ export const QueryBatchFeeResponse = {
 
   fromJSON(object: any): QueryBatchFeeResponse {
     return {
-      batchFees: Array.isArray(object?.batchFees) ? object.batchFees.map((e: any) => BatchFees.fromJSON(e)) : [],
+      batchFees: Array.isArray(object?.batchFees)
+        ? object.batchFees.map((e: any) => BatchFees.fromJSON(e))
+        : [],
     };
   },
 
   toJSON(message: QueryBatchFeeResponse): unknown {
     const obj: any = {};
     if (message.batchFees) {
-      obj.batchFees = message.batchFees.map((e) => e ? BatchFees.toJSON(e) : undefined);
+      obj.batchFees = message.batchFees.map((e) => (e ? BatchFees.toJSON(e) : undefined));
     } else {
       obj.batchFees = [];
     }
@@ -1295,7 +1335,10 @@ function createBaseQueryLastPendingBatchRequestByAddrRequest(): QueryLastPending
 }
 
 export const QueryLastPendingBatchRequestByAddrRequest = {
-  encode(message: QueryLastPendingBatchRequestByAddrRequest, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  encode(
+    message: QueryLastPendingBatchRequestByAddrRequest,
+    writer: _m0.Writer = _m0.Writer.create(),
+  ): _m0.Writer {
     if (message.chainName !== "") {
       writer.uint32(10).string(message.chainName);
     }
@@ -1370,7 +1413,10 @@ function createBaseQueryLastPendingBatchRequestByAddrResponse(): QueryLastPendin
 }
 
 export const QueryLastPendingBatchRequestByAddrResponse = {
-  encode(message: QueryLastPendingBatchRequestByAddrResponse, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  encode(
+    message: QueryLastPendingBatchRequestByAddrResponse,
+    writer: _m0.Writer = _m0.Writer.create(),
+  ): _m0.Writer {
     if (message.batch !== undefined) {
       OutgoingTxBatch.encode(message.batch, writer.uint32(10).fork()).ldelim();
     }
@@ -1406,7 +1452,8 @@ export const QueryLastPendingBatchRequestByAddrResponse = {
 
   toJSON(message: QueryLastPendingBatchRequestByAddrResponse): unknown {
     const obj: any = {};
-    message.batch !== undefined && (obj.batch = message.batch ? OutgoingTxBatch.toJSON(message.batch) : undefined);
+    message.batch !== undefined &&
+      (obj.batch = message.batch ? OutgoingTxBatch.toJSON(message.batch) : undefined);
     return obj;
   },
 
@@ -1420,9 +1467,10 @@ export const QueryLastPendingBatchRequestByAddrResponse = {
     object: I,
   ): QueryLastPendingBatchRequestByAddrResponse {
     const message = createBaseQueryLastPendingBatchRequestByAddrResponse();
-    message.batch = (object.batch !== undefined && object.batch !== null)
-      ? OutgoingTxBatch.fromPartial(object.batch)
-      : undefined;
+    message.batch =
+      object.batch !== undefined && object.batch !== null
+        ? OutgoingTxBatch.fromPartial(object.batch)
+        : undefined;
     return message;
   },
 };
@@ -1472,7 +1520,9 @@ export const QueryOutgoingTxBatchesRequest = {
     return obj;
   },
 
-  create<I extends Exact<DeepPartial<QueryOutgoingTxBatchesRequest>, I>>(base?: I): QueryOutgoingTxBatchesRequest {
+  create<I extends Exact<DeepPartial<QueryOutgoingTxBatchesRequest>, I>>(
+    base?: I,
+  ): QueryOutgoingTxBatchesRequest {
     return QueryOutgoingTxBatchesRequest.fromPartial(base ?? {});
   },
 
@@ -1522,21 +1572,25 @@ export const QueryOutgoingTxBatchesResponse = {
 
   fromJSON(object: any): QueryOutgoingTxBatchesResponse {
     return {
-      batches: Array.isArray(object?.batches) ? object.batches.map((e: any) => OutgoingTxBatch.fromJSON(e)) : [],
+      batches: Array.isArray(object?.batches)
+        ? object.batches.map((e: any) => OutgoingTxBatch.fromJSON(e))
+        : [],
     };
   },
 
   toJSON(message: QueryOutgoingTxBatchesResponse): unknown {
     const obj: any = {};
     if (message.batches) {
-      obj.batches = message.batches.map((e) => e ? OutgoingTxBatch.toJSON(e) : undefined);
+      obj.batches = message.batches.map((e) => (e ? OutgoingTxBatch.toJSON(e) : undefined));
     } else {
       obj.batches = [];
     }
     return obj;
   },
 
-  create<I extends Exact<DeepPartial<QueryOutgoingTxBatchesResponse>, I>>(base?: I): QueryOutgoingTxBatchesResponse {
+  create<I extends Exact<DeepPartial<QueryOutgoingTxBatchesResponse>, I>>(
+    base?: I,
+  ): QueryOutgoingTxBatchesResponse {
     return QueryOutgoingTxBatchesResponse.fromPartial(base ?? {});
   },
 
@@ -1620,7 +1674,9 @@ export const QueryBatchRequestByNonceRequest = {
     return obj;
   },
 
-  create<I extends Exact<DeepPartial<QueryBatchRequestByNonceRequest>, I>>(base?: I): QueryBatchRequestByNonceRequest {
+  create<I extends Exact<DeepPartial<QueryBatchRequestByNonceRequest>, I>>(
+    base?: I,
+  ): QueryBatchRequestByNonceRequest {
     return QueryBatchRequestByNonceRequest.fromPartial(base ?? {});
   },
 
@@ -1630,7 +1686,8 @@ export const QueryBatchRequestByNonceRequest = {
     const message = createBaseQueryBatchRequestByNonceRequest();
     message.chainName = object.chainName ?? "";
     message.tokenContract = object.tokenContract ?? "";
-    message.nonce = (object.nonce !== undefined && object.nonce !== null) ? Long.fromValue(object.nonce) : Long.UZERO;
+    message.nonce =
+      object.nonce !== undefined && object.nonce !== null ? Long.fromValue(object.nonce) : Long.UZERO;
     return message;
   },
 };
@@ -1676,7 +1733,8 @@ export const QueryBatchRequestByNonceResponse = {
 
   toJSON(message: QueryBatchRequestByNonceResponse): unknown {
     const obj: any = {};
-    message.batch !== undefined && (obj.batch = message.batch ? OutgoingTxBatch.toJSON(message.batch) : undefined);
+    message.batch !== undefined &&
+      (obj.batch = message.batch ? OutgoingTxBatch.toJSON(message.batch) : undefined);
     return obj;
   },
 
@@ -1690,9 +1748,10 @@ export const QueryBatchRequestByNonceResponse = {
     object: I,
   ): QueryBatchRequestByNonceResponse {
     const message = createBaseQueryBatchRequestByNonceResponse();
-    message.batch = (object.batch !== undefined && object.batch !== null)
-      ? OutgoingTxBatch.fromPartial(object.batch)
-      : undefined;
+    message.batch =
+      object.batch !== undefined && object.batch !== null
+        ? OutgoingTxBatch.fromPartial(object.batch)
+        : undefined;
     return message;
   },
 };
@@ -1784,12 +1843,15 @@ export const QueryBatchConfirmRequest = {
     return QueryBatchConfirmRequest.fromPartial(base ?? {});
   },
 
-  fromPartial<I extends Exact<DeepPartial<QueryBatchConfirmRequest>, I>>(object: I): QueryBatchConfirmRequest {
+  fromPartial<I extends Exact<DeepPartial<QueryBatchConfirmRequest>, I>>(
+    object: I,
+  ): QueryBatchConfirmRequest {
     const message = createBaseQueryBatchConfirmRequest();
     message.chainName = object.chainName ?? "";
     message.tokenContract = object.tokenContract ?? "";
     message.bridgerAddress = object.bridgerAddress ?? "";
-    message.nonce = (object.nonce !== undefined && object.nonce !== null) ? Long.fromValue(object.nonce) : Long.UZERO;
+    message.nonce =
+      object.nonce !== undefined && object.nonce !== null ? Long.fromValue(object.nonce) : Long.UZERO;
     return message;
   },
 };
@@ -1844,11 +1906,14 @@ export const QueryBatchConfirmResponse = {
     return QueryBatchConfirmResponse.fromPartial(base ?? {});
   },
 
-  fromPartial<I extends Exact<DeepPartial<QueryBatchConfirmResponse>, I>>(object: I): QueryBatchConfirmResponse {
+  fromPartial<I extends Exact<DeepPartial<QueryBatchConfirmResponse>, I>>(
+    object: I,
+  ): QueryBatchConfirmResponse {
     const message = createBaseQueryBatchConfirmResponse();
-    message.confirm = (object.confirm !== undefined && object.confirm !== null)
-      ? MsgConfirmBatch.fromPartial(object.confirm)
-      : undefined;
+    message.confirm =
+      object.confirm !== undefined && object.confirm !== null
+        ? MsgConfirmBatch.fromPartial(object.confirm)
+        : undefined;
     return message;
   },
 };
@@ -1928,11 +1993,14 @@ export const QueryBatchConfirmsRequest = {
     return QueryBatchConfirmsRequest.fromPartial(base ?? {});
   },
 
-  fromPartial<I extends Exact<DeepPartial<QueryBatchConfirmsRequest>, I>>(object: I): QueryBatchConfirmsRequest {
+  fromPartial<I extends Exact<DeepPartial<QueryBatchConfirmsRequest>, I>>(
+    object: I,
+  ): QueryBatchConfirmsRequest {
     const message = createBaseQueryBatchConfirmsRequest();
     message.chainName = object.chainName ?? "";
     message.tokenContract = object.tokenContract ?? "";
-    message.nonce = (object.nonce !== undefined && object.nonce !== null) ? Long.fromValue(object.nonce) : Long.UZERO;
+    message.nonce =
+      object.nonce !== undefined && object.nonce !== null ? Long.fromValue(object.nonce) : Long.UZERO;
     return message;
   },
 };
@@ -1974,14 +2042,16 @@ export const QueryBatchConfirmsResponse = {
 
   fromJSON(object: any): QueryBatchConfirmsResponse {
     return {
-      confirms: Array.isArray(object?.confirms) ? object.confirms.map((e: any) => MsgConfirmBatch.fromJSON(e)) : [],
+      confirms: Array.isArray(object?.confirms)
+        ? object.confirms.map((e: any) => MsgConfirmBatch.fromJSON(e))
+        : [],
     };
   },
 
   toJSON(message: QueryBatchConfirmsResponse): unknown {
     const obj: any = {};
     if (message.confirms) {
-      obj.confirms = message.confirms.map((e) => e ? MsgConfirmBatch.toJSON(e) : undefined);
+      obj.confirms = message.confirms.map((e) => (e ? MsgConfirmBatch.toJSON(e) : undefined));
     } else {
       obj.confirms = [];
     }
@@ -1992,7 +2062,9 @@ export const QueryBatchConfirmsResponse = {
     return QueryBatchConfirmsResponse.fromPartial(base ?? {});
   },
 
-  fromPartial<I extends Exact<DeepPartial<QueryBatchConfirmsResponse>, I>>(object: I): QueryBatchConfirmsResponse {
+  fromPartial<I extends Exact<DeepPartial<QueryBatchConfirmsResponse>, I>>(
+    object: I,
+  ): QueryBatchConfirmsResponse {
     const message = createBaseQueryBatchConfirmsResponse();
     message.confirms = object.confirms?.map((e) => MsgConfirmBatch.fromPartial(e)) || [];
     return message;
@@ -2129,9 +2201,10 @@ export const QueryLastEventNonceByAddrResponse = {
     object: I,
   ): QueryLastEventNonceByAddrResponse {
     const message = createBaseQueryLastEventNonceByAddrResponse();
-    message.eventNonce = (object.eventNonce !== undefined && object.eventNonce !== null)
-      ? Long.fromValue(object.eventNonce)
-      : Long.UZERO;
+    message.eventNonce =
+      object.eventNonce !== undefined && object.eventNonce !== null
+        ? Long.fromValue(object.eventNonce)
+        : Long.UZERO;
     return message;
   },
 };
@@ -2199,7 +2272,9 @@ export const QueryTokenToDenomRequest = {
     return QueryTokenToDenomRequest.fromPartial(base ?? {});
   },
 
-  fromPartial<I extends Exact<DeepPartial<QueryTokenToDenomRequest>, I>>(object: I): QueryTokenToDenomRequest {
+  fromPartial<I extends Exact<DeepPartial<QueryTokenToDenomRequest>, I>>(
+    object: I,
+  ): QueryTokenToDenomRequest {
     const message = createBaseQueryTokenToDenomRequest();
     message.chainName = object.chainName ?? "";
     message.token = object.token ?? "";
@@ -2256,7 +2331,9 @@ export const QueryTokenToDenomResponse = {
     return QueryTokenToDenomResponse.fromPartial(base ?? {});
   },
 
-  fromPartial<I extends Exact<DeepPartial<QueryTokenToDenomResponse>, I>>(object: I): QueryTokenToDenomResponse {
+  fromPartial<I extends Exact<DeepPartial<QueryTokenToDenomResponse>, I>>(
+    object: I,
+  ): QueryTokenToDenomResponse {
     const message = createBaseQueryTokenToDenomResponse();
     message.denom = object.denom ?? "";
     return message;
@@ -2326,7 +2403,9 @@ export const QueryDenomToTokenRequest = {
     return QueryDenomToTokenRequest.fromPartial(base ?? {});
   },
 
-  fromPartial<I extends Exact<DeepPartial<QueryDenomToTokenRequest>, I>>(object: I): QueryDenomToTokenRequest {
+  fromPartial<I extends Exact<DeepPartial<QueryDenomToTokenRequest>, I>>(
+    object: I,
+  ): QueryDenomToTokenRequest {
     const message = createBaseQueryDenomToTokenRequest();
     message.chainName = object.chainName ?? "";
     message.denom = object.denom ?? "";
@@ -2383,7 +2462,9 @@ export const QueryDenomToTokenResponse = {
     return QueryDenomToTokenResponse.fromPartial(base ?? {});
   },
 
-  fromPartial<I extends Exact<DeepPartial<QueryDenomToTokenResponse>, I>>(object: I): QueryDenomToTokenResponse {
+  fromPartial<I extends Exact<DeepPartial<QueryDenomToTokenResponse>, I>>(
+    object: I,
+  ): QueryDenomToTokenResponse {
     const message = createBaseQueryDenomToTokenResponse();
     message.token = object.token ?? "";
     return message;
@@ -2453,7 +2534,9 @@ export const QueryOracleByAddrRequest = {
     return QueryOracleByAddrRequest.fromPartial(base ?? {});
   },
 
-  fromPartial<I extends Exact<DeepPartial<QueryOracleByAddrRequest>, I>>(object: I): QueryOracleByAddrRequest {
+  fromPartial<I extends Exact<DeepPartial<QueryOracleByAddrRequest>, I>>(
+    object: I,
+  ): QueryOracleByAddrRequest {
     const message = createBaseQueryOracleByAddrRequest();
     message.chainName = object.chainName ?? "";
     message.oracleAddress = object.oracleAddress ?? "";
@@ -2512,9 +2595,8 @@ export const QueryOracleResponse = {
 
   fromPartial<I extends Exact<DeepPartial<QueryOracleResponse>, I>>(object: I): QueryOracleResponse {
     const message = createBaseQueryOracleResponse();
-    message.oracle = (object.oracle !== undefined && object.oracle !== null)
-      ? Oracle.fromPartial(object.oracle)
-      : undefined;
+    message.oracle =
+      object.oracle !== undefined && object.oracle !== null ? Oracle.fromPartial(object.oracle) : undefined;
     return message;
   },
 };
@@ -2653,7 +2735,9 @@ export const QueryOracleByBridgerAddrRequest = {
     return obj;
   },
 
-  create<I extends Exact<DeepPartial<QueryOracleByBridgerAddrRequest>, I>>(base?: I): QueryOracleByBridgerAddrRequest {
+  create<I extends Exact<DeepPartial<QueryOracleByBridgerAddrRequest>, I>>(
+    base?: I,
+  ): QueryOracleByBridgerAddrRequest {
     return QueryOracleByBridgerAddrRequest.fromPartial(base ?? {});
   },
 
@@ -2801,12 +2885,16 @@ export const QueryPendingSendToExternalResponse = {
   toJSON(message: QueryPendingSendToExternalResponse): unknown {
     const obj: any = {};
     if (message.transfersInBatches) {
-      obj.transfersInBatches = message.transfersInBatches.map((e) => e ? OutgoingTransferTx.toJSON(e) : undefined);
+      obj.transfersInBatches = message.transfersInBatches.map((e) =>
+        e ? OutgoingTransferTx.toJSON(e) : undefined,
+      );
     } else {
       obj.transfersInBatches = [];
     }
     if (message.unbatchedTransfers) {
-      obj.unbatchedTransfers = message.unbatchedTransfers.map((e) => e ? OutgoingTransferTx.toJSON(e) : undefined);
+      obj.unbatchedTransfers = message.unbatchedTransfers.map((e) =>
+        e ? OutgoingTransferTx.toJSON(e) : undefined,
+      );
     } else {
       obj.unbatchedTransfers = [];
     }
@@ -2823,8 +2911,10 @@ export const QueryPendingSendToExternalResponse = {
     object: I,
   ): QueryPendingSendToExternalResponse {
     const message = createBaseQueryPendingSendToExternalResponse();
-    message.transfersInBatches = object.transfersInBatches?.map((e) => OutgoingTransferTx.fromPartial(e)) || [];
-    message.unbatchedTransfers = object.unbatchedTransfers?.map((e) => OutgoingTransferTx.fromPartial(e)) || [];
+    message.transfersInBatches =
+      object.transfersInBatches?.map((e) => OutgoingTransferTx.fromPartial(e)) || [];
+    message.unbatchedTransfers =
+      object.unbatchedTransfers?.map((e) => OutgoingTransferTx.fromPartial(e)) || [];
     return message;
   },
 };
@@ -2894,7 +2984,10 @@ function createBaseQueryLastObservedBlockHeightResponse(): QueryLastObservedBloc
 }
 
 export const QueryLastObservedBlockHeightResponse = {
-  encode(message: QueryLastObservedBlockHeightResponse, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  encode(
+    message: QueryLastObservedBlockHeightResponse,
+    writer: _m0.Writer = _m0.Writer.create(),
+  ): _m0.Writer {
     if (!message.externalBlockHeight.isZero()) {
       writer.uint32(8).uint64(message.externalBlockHeight);
     }
@@ -2936,7 +3029,9 @@ export const QueryLastObservedBlockHeightResponse = {
 
   fromJSON(object: any): QueryLastObservedBlockHeightResponse {
     return {
-      externalBlockHeight: isSet(object.externalBlockHeight) ? Long.fromValue(object.externalBlockHeight) : Long.UZERO,
+      externalBlockHeight: isSet(object.externalBlockHeight)
+        ? Long.fromValue(object.externalBlockHeight)
+        : Long.UZERO,
       blockHeight: isSet(object.blockHeight) ? Long.fromValue(object.blockHeight) : Long.UZERO,
     };
   },
@@ -2959,12 +3054,14 @@ export const QueryLastObservedBlockHeightResponse = {
     object: I,
   ): QueryLastObservedBlockHeightResponse {
     const message = createBaseQueryLastObservedBlockHeightResponse();
-    message.externalBlockHeight = (object.externalBlockHeight !== undefined && object.externalBlockHeight !== null)
-      ? Long.fromValue(object.externalBlockHeight)
-      : Long.UZERO;
-    message.blockHeight = (object.blockHeight !== undefined && object.blockHeight !== null)
-      ? Long.fromValue(object.blockHeight)
-      : Long.UZERO;
+    message.externalBlockHeight =
+      object.externalBlockHeight !== undefined && object.externalBlockHeight !== null
+        ? Long.fromValue(object.externalBlockHeight)
+        : Long.UZERO;
+    message.blockHeight =
+      object.blockHeight !== undefined && object.blockHeight !== null
+        ? Long.fromValue(object.blockHeight)
+        : Long.UZERO;
     return message;
   },
 };
@@ -2974,7 +3071,10 @@ function createBaseQueryLastEventBlockHeightByAddrRequest(): QueryLastEventBlock
 }
 
 export const QueryLastEventBlockHeightByAddrRequest = {
-  encode(message: QueryLastEventBlockHeightByAddrRequest, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  encode(
+    message: QueryLastEventBlockHeightByAddrRequest,
+    writer: _m0.Writer = _m0.Writer.create(),
+  ): _m0.Writer {
     if (message.chainName !== "") {
       writer.uint32(10).string(message.chainName);
     }
@@ -3049,7 +3149,10 @@ function createBaseQueryLastEventBlockHeightByAddrResponse(): QueryLastEventBloc
 }
 
 export const QueryLastEventBlockHeightByAddrResponse = {
-  encode(message: QueryLastEventBlockHeightByAddrResponse, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  encode(
+    message: QueryLastEventBlockHeightByAddrResponse,
+    writer: _m0.Writer = _m0.Writer.create(),
+  ): _m0.Writer {
     if (!message.blockHeight.isZero()) {
       writer.uint32(8).uint64(message.blockHeight);
     }
@@ -3099,9 +3202,10 @@ export const QueryLastEventBlockHeightByAddrResponse = {
     object: I,
   ): QueryLastEventBlockHeightByAddrResponse {
     const message = createBaseQueryLastEventBlockHeightByAddrResponse();
-    message.blockHeight = (object.blockHeight !== undefined && object.blockHeight !== null)
-      ? Long.fromValue(object.blockHeight)
-      : Long.UZERO;
+    message.blockHeight =
+      object.blockHeight !== undefined && object.blockHeight !== null
+        ? Long.fromValue(object.blockHeight)
+        : Long.UZERO;
     return message;
   },
 };
@@ -3198,13 +3302,15 @@ export const QueryOraclesResponse = {
   },
 
   fromJSON(object: any): QueryOraclesResponse {
-    return { oracles: Array.isArray(object?.oracles) ? object.oracles.map((e: any) => Oracle.fromJSON(e)) : [] };
+    return {
+      oracles: Array.isArray(object?.oracles) ? object.oracles.map((e: any) => Oracle.fromJSON(e)) : [],
+    };
   },
 
   toJSON(message: QueryOraclesResponse): unknown {
     const obj: any = {};
     if (message.oracles) {
-      obj.oracles = message.oracles.map((e) => e ? Oracle.toJSON(e) : undefined);
+      obj.oracles = message.oracles.map((e) => (e ? Oracle.toJSON(e) : undefined));
     } else {
       obj.oracles = [];
     }
@@ -3227,7 +3333,10 @@ function createBaseQueryProjectedBatchTimeoutHeightRequest(): QueryProjectedBatc
 }
 
 export const QueryProjectedBatchTimeoutHeightRequest = {
-  encode(message: QueryProjectedBatchTimeoutHeightRequest, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  encode(
+    message: QueryProjectedBatchTimeoutHeightRequest,
+    writer: _m0.Writer = _m0.Writer.create(),
+  ): _m0.Writer {
     if (message.chainName !== "") {
       writer.uint32(10).string(message.chainName);
     }
@@ -3287,7 +3396,10 @@ function createBaseQueryProjectedBatchTimeoutHeightResponse(): QueryProjectedBat
 }
 
 export const QueryProjectedBatchTimeoutHeightResponse = {
-  encode(message: QueryProjectedBatchTimeoutHeightResponse, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  encode(
+    message: QueryProjectedBatchTimeoutHeightResponse,
+    writer: _m0.Writer = _m0.Writer.create(),
+  ): _m0.Writer {
     if (!message.timeoutHeight.isZero()) {
       writer.uint32(8).uint64(message.timeoutHeight);
     }
@@ -3323,7 +3435,8 @@ export const QueryProjectedBatchTimeoutHeightResponse = {
 
   toJSON(message: QueryProjectedBatchTimeoutHeightResponse): unknown {
     const obj: any = {};
-    message.timeoutHeight !== undefined && (obj.timeoutHeight = (message.timeoutHeight || Long.UZERO).toString());
+    message.timeoutHeight !== undefined &&
+      (obj.timeoutHeight = (message.timeoutHeight || Long.UZERO).toString());
     return obj;
   },
 
@@ -3337,9 +3450,10 @@ export const QueryProjectedBatchTimeoutHeightResponse = {
     object: I,
   ): QueryProjectedBatchTimeoutHeightResponse {
     const message = createBaseQueryProjectedBatchTimeoutHeightResponse();
-    message.timeoutHeight = (object.timeoutHeight !== undefined && object.timeoutHeight !== null)
-      ? Long.fromValue(object.timeoutHeight)
-      : Long.UZERO;
+    message.timeoutHeight =
+      object.timeoutHeight !== undefined && object.timeoutHeight !== null
+        ? Long.fromValue(object.timeoutHeight)
+        : Long.UZERO;
     return message;
   },
 };
@@ -3393,7 +3507,9 @@ export const QueryBridgeTokensRequest = {
     return QueryBridgeTokensRequest.fromPartial(base ?? {});
   },
 
-  fromPartial<I extends Exact<DeepPartial<QueryBridgeTokensRequest>, I>>(object: I): QueryBridgeTokensRequest {
+  fromPartial<I extends Exact<DeepPartial<QueryBridgeTokensRequest>, I>>(
+    object: I,
+  ): QueryBridgeTokensRequest {
     const message = createBaseQueryBridgeTokensRequest();
     message.chainName = object.chainName ?? "";
     return message;
@@ -3446,7 +3562,7 @@ export const QueryBridgeTokensResponse = {
   toJSON(message: QueryBridgeTokensResponse): unknown {
     const obj: any = {};
     if (message.bridgeTokens) {
-      obj.bridgeTokens = message.bridgeTokens.map((e) => e ? BridgeToken.toJSON(e) : undefined);
+      obj.bridgeTokens = message.bridgeTokens.map((e) => (e ? BridgeToken.toJSON(e) : undefined));
     } else {
       obj.bridgeTokens = [];
     }
@@ -3457,7 +3573,9 @@ export const QueryBridgeTokensResponse = {
     return QueryBridgeTokensResponse.fromPartial(base ?? {});
   },
 
-  fromPartial<I extends Exact<DeepPartial<QueryBridgeTokensResponse>, I>>(object: I): QueryBridgeTokensResponse {
+  fromPartial<I extends Exact<DeepPartial<QueryBridgeTokensResponse>, I>>(
+    object: I,
+  ): QueryBridgeTokensResponse {
     const message = createBaseQueryBridgeTokensResponse();
     message.bridgeTokens = object.bridgeTokens?.map((e) => BridgeToken.fromPartial(e)) || [];
     return message;
@@ -3474,7 +3592,9 @@ export interface Query {
   OracleSetConfirmsByNonce(
     request: QueryOracleSetConfirmsByNonceRequest,
   ): Promise<QueryOracleSetConfirmsByNonceResponse>;
-  LastOracleSetRequests(request: QueryLastOracleSetRequestsRequest): Promise<QueryLastOracleSetRequestsResponse>;
+  LastOracleSetRequests(
+    request: QueryLastOracleSetRequestsRequest,
+  ): Promise<QueryLastOracleSetRequestsResponse>;
   LastPendingOracleSetRequestByAddr(
     request: QueryLastPendingOracleSetRequestByAddrRequest,
   ): Promise<QueryLastPendingOracleSetRequestByAddrResponse>;
@@ -3486,7 +3606,9 @@ export interface Query {
     request: QueryLastEventBlockHeightByAddrRequest,
   ): Promise<QueryLastEventBlockHeightByAddrResponse>;
   BatchFees(request: QueryBatchFeeRequest): Promise<QueryBatchFeeResponse>;
-  LastObservedBlockHeight(request: QueryLastObservedBlockHeightRequest): Promise<QueryLastObservedBlockHeightResponse>;
+  LastObservedBlockHeight(
+    request: QueryLastObservedBlockHeightRequest,
+  ): Promise<QueryLastObservedBlockHeightResponse>;
   OutgoingTxBatches(request: QueryOutgoingTxBatchesRequest): Promise<QueryOutgoingTxBatchesResponse>;
   BatchRequestByNonce(request: QueryBatchRequestByNonceRequest): Promise<QueryBatchRequestByNonceResponse>;
   BatchConfirm(request: QueryBatchConfirmRequest): Promise<QueryBatchConfirmResponse>;
@@ -3496,7 +3618,9 @@ export interface Query {
   GetOracleByAddr(request: QueryOracleByAddrRequest): Promise<QueryOracleResponse>;
   GetOracleByExternalAddr(request: QueryOracleByExternalAddrRequest): Promise<QueryOracleResponse>;
   GetOracleByBridgerAddr(request: QueryOracleByBridgerAddrRequest): Promise<QueryOracleResponse>;
-  GetPendingSendToExternal(request: QueryPendingSendToExternalRequest): Promise<QueryPendingSendToExternalResponse>;
+  GetPendingSendToExternal(
+    request: QueryPendingSendToExternalRequest,
+  ): Promise<QueryPendingSendToExternalResponse>;
   /** Validators queries all oracle that match the given status. */
   Oracles(request: QueryOraclesRequest): Promise<QueryOraclesResponse>;
   ProjectedBatchTimeoutHeight(
@@ -3569,7 +3693,9 @@ export class QueryClientImpl implements Query {
     return promise.then((data) => QueryOracleSetConfirmsByNonceResponse.decode(_m0.Reader.create(data)));
   }
 
-  LastOracleSetRequests(request: QueryLastOracleSetRequestsRequest): Promise<QueryLastOracleSetRequestsResponse> {
+  LastOracleSetRequests(
+    request: QueryLastOracleSetRequestsRequest,
+  ): Promise<QueryLastOracleSetRequestsResponse> {
     const data = QueryLastOracleSetRequestsRequest.encode(request).finish();
     const promise = this.rpc.request(this.service, "LastOracleSetRequests", data);
     return promise.then((data) => QueryLastOracleSetRequestsResponse.decode(_m0.Reader.create(data)));
@@ -3580,7 +3706,9 @@ export class QueryClientImpl implements Query {
   ): Promise<QueryLastPendingOracleSetRequestByAddrResponse> {
     const data = QueryLastPendingOracleSetRequestByAddrRequest.encode(request).finish();
     const promise = this.rpc.request(this.service, "LastPendingOracleSetRequestByAddr", data);
-    return promise.then((data) => QueryLastPendingOracleSetRequestByAddrResponse.decode(_m0.Reader.create(data)));
+    return promise.then((data) =>
+      QueryLastPendingOracleSetRequestByAddrResponse.decode(_m0.Reader.create(data)),
+    );
   }
 
   LastPendingBatchRequestByAddr(
@@ -3591,7 +3719,9 @@ export class QueryClientImpl implements Query {
     return promise.then((data) => QueryLastPendingBatchRequestByAddrResponse.decode(_m0.Reader.create(data)));
   }
 
-  LastEventNonceByAddr(request: QueryLastEventNonceByAddrRequest): Promise<QueryLastEventNonceByAddrResponse> {
+  LastEventNonceByAddr(
+    request: QueryLastEventNonceByAddrRequest,
+  ): Promise<QueryLastEventNonceByAddrResponse> {
     const data = QueryLastEventNonceByAddrRequest.encode(request).finish();
     const promise = this.rpc.request(this.service, "LastEventNonceByAddr", data);
     return promise.then((data) => QueryLastEventNonceByAddrResponse.decode(_m0.Reader.create(data)));
@@ -3611,7 +3741,9 @@ export class QueryClientImpl implements Query {
     return promise.then((data) => QueryBatchFeeResponse.decode(_m0.Reader.create(data)));
   }
 
-  LastObservedBlockHeight(request: QueryLastObservedBlockHeightRequest): Promise<QueryLastObservedBlockHeightResponse> {
+  LastObservedBlockHeight(
+    request: QueryLastObservedBlockHeightRequest,
+  ): Promise<QueryLastObservedBlockHeightResponse> {
     const data = QueryLastObservedBlockHeightRequest.encode(request).finish();
     const promise = this.rpc.request(this.service, "LastObservedBlockHeight", data);
     return promise.then((data) => QueryLastObservedBlockHeightResponse.decode(_m0.Reader.create(data)));
@@ -3671,7 +3803,9 @@ export class QueryClientImpl implements Query {
     return promise.then((data) => QueryOracleResponse.decode(_m0.Reader.create(data)));
   }
 
-  GetPendingSendToExternal(request: QueryPendingSendToExternalRequest): Promise<QueryPendingSendToExternalResponse> {
+  GetPendingSendToExternal(
+    request: QueryPendingSendToExternalRequest,
+  ): Promise<QueryPendingSendToExternalResponse> {
     const data = QueryPendingSendToExternalRequest.encode(request).finish();
     const promise = this.rpc.request(this.service, "GetPendingSendToExternal", data);
     return promise.then((data) => QueryPendingSendToExternalResponse.decode(_m0.Reader.create(data)));
@@ -3704,14 +3838,21 @@ interface Rpc {
 
 type Builtin = Date | Function | Uint8Array | string | number | boolean | undefined;
 
-export type DeepPartial<T> = T extends Builtin ? T
-  : T extends Long ? string | number | Long : T extends Array<infer U> ? Array<DeepPartial<U>>
-  : T extends ReadonlyArray<infer U> ? ReadonlyArray<DeepPartial<U>>
-  : T extends {} ? { [K in keyof T]?: DeepPartial<T[K]> }
+export type DeepPartial<T> = T extends Builtin
+  ? T
+  : T extends Long
+  ? string | number | Long
+  : T extends Array<infer U>
+  ? Array<DeepPartial<U>>
+  : T extends ReadonlyArray<infer U>
+  ? ReadonlyArray<DeepPartial<U>>
+  : T extends {}
+  ? { [K in keyof T]?: DeepPartial<T[K]> }
   : Partial<T>;
 
 type KeysOfUnion<T> = T extends T ? keyof T : never;
-export type Exact<P, I extends P> = P extends Builtin ? P
+export type Exact<P, I extends P> = P extends Builtin
+  ? P
   : P & { [K in keyof P]: Exact<P[K], I[K]> } & { [K in Exclude<keyof I, KeysOfUnion<P>>]: never };
 
 if (_m0.util.Long !== Long) {

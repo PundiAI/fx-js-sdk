@@ -434,14 +434,16 @@ export const Oracle = {
     message.bridgerAddress = object.bridgerAddress ?? "";
     message.externalAddress = object.externalAddress ?? "";
     message.delegateAmount = object.delegateAmount ?? "";
-    message.startHeight = (object.startHeight !== undefined && object.startHeight !== null)
-      ? Long.fromValue(object.startHeight)
-      : Long.ZERO;
+    message.startHeight =
+      object.startHeight !== undefined && object.startHeight !== null
+        ? Long.fromValue(object.startHeight)
+        : Long.ZERO;
     message.online = object.online ?? false;
     message.delegateValidator = object.delegateValidator ?? "";
-    message.slashTimes = (object.slashTimes !== undefined && object.slashTimes !== null)
-      ? Long.fromValue(object.slashTimes)
-      : Long.ZERO;
+    message.slashTimes =
+      object.slashTimes !== undefined && object.slashTimes !== null
+        ? Long.fromValue(object.slashTimes)
+        : Long.ZERO;
     return message;
   },
 };
@@ -511,7 +513,8 @@ export const BridgeValidator = {
 
   fromPartial<I extends Exact<DeepPartial<BridgeValidator>, I>>(object: I): BridgeValidator {
     const message = createBaseBridgeValidator();
-    message.power = (object.power !== undefined && object.power !== null) ? Long.fromValue(object.power) : Long.UZERO;
+    message.power =
+      object.power !== undefined && object.power !== null ? Long.fromValue(object.power) : Long.UZERO;
     message.externalAddress = object.externalAddress ?? "";
     return message;
   },
@@ -575,7 +578,9 @@ export const OracleSet = {
   fromJSON(object: any): OracleSet {
     return {
       nonce: isSet(object.nonce) ? Long.fromValue(object.nonce) : Long.UZERO,
-      members: Array.isArray(object?.members) ? object.members.map((e: any) => BridgeValidator.fromJSON(e)) : [],
+      members: Array.isArray(object?.members)
+        ? object.members.map((e: any) => BridgeValidator.fromJSON(e))
+        : [],
       height: isSet(object.height) ? Long.fromValue(object.height) : Long.UZERO,
     };
   },
@@ -584,7 +589,7 @@ export const OracleSet = {
     const obj: any = {};
     message.nonce !== undefined && (obj.nonce = (message.nonce || Long.UZERO).toString());
     if (message.members) {
-      obj.members = message.members.map((e) => e ? BridgeValidator.toJSON(e) : undefined);
+      obj.members = message.members.map((e) => (e ? BridgeValidator.toJSON(e) : undefined));
     } else {
       obj.members = [];
     }
@@ -598,11 +603,11 @@ export const OracleSet = {
 
   fromPartial<I extends Exact<DeepPartial<OracleSet>, I>>(object: I): OracleSet {
     const message = createBaseOracleSet();
-    message.nonce = (object.nonce !== undefined && object.nonce !== null) ? Long.fromValue(object.nonce) : Long.UZERO;
+    message.nonce =
+      object.nonce !== undefined && object.nonce !== null ? Long.fromValue(object.nonce) : Long.UZERO;
     message.members = object.members?.map((e) => BridgeValidator.fromPartial(e)) || [];
-    message.height = (object.height !== undefined && object.height !== null)
-      ? Long.fromValue(object.height)
-      : Long.UZERO;
+    message.height =
+      object.height !== undefined && object.height !== null ? Long.fromValue(object.height) : Long.UZERO;
     return message;
   },
 };
@@ -654,7 +659,9 @@ export const LastObservedBlockHeight = {
 
   fromJSON(object: any): LastObservedBlockHeight {
     return {
-      externalBlockHeight: isSet(object.externalBlockHeight) ? Long.fromValue(object.externalBlockHeight) : Long.UZERO,
+      externalBlockHeight: isSet(object.externalBlockHeight)
+        ? Long.fromValue(object.externalBlockHeight)
+        : Long.UZERO,
       blockHeight: isSet(object.blockHeight) ? Long.fromValue(object.blockHeight) : Long.UZERO,
     };
   },
@@ -673,12 +680,14 @@ export const LastObservedBlockHeight = {
 
   fromPartial<I extends Exact<DeepPartial<LastObservedBlockHeight>, I>>(object: I): LastObservedBlockHeight {
     const message = createBaseLastObservedBlockHeight();
-    message.externalBlockHeight = (object.externalBlockHeight !== undefined && object.externalBlockHeight !== null)
-      ? Long.fromValue(object.externalBlockHeight)
-      : Long.UZERO;
-    message.blockHeight = (object.blockHeight !== undefined && object.blockHeight !== null)
-      ? Long.fromValue(object.blockHeight)
-      : Long.UZERO;
+    message.externalBlockHeight =
+      object.externalBlockHeight !== undefined && object.externalBlockHeight !== null
+        ? Long.fromValue(object.externalBlockHeight)
+        : Long.UZERO;
+    message.blockHeight =
+      object.blockHeight !== undefined && object.blockHeight !== null
+        ? Long.fromValue(object.blockHeight)
+        : Long.UZERO;
     return message;
   },
 };
@@ -862,10 +871,10 @@ export const Attestation = {
     const message = createBaseAttestation();
     message.observed = object.observed ?? false;
     message.votes = object.votes?.map((e) => e) || [];
-    message.height = (object.height !== undefined && object.height !== null)
-      ? Long.fromValue(object.height)
-      : Long.UZERO;
-    message.claim = (object.claim !== undefined && object.claim !== null) ? Any.fromPartial(object.claim) : undefined;
+    message.height =
+      object.height !== undefined && object.height !== null ? Long.fromValue(object.height) : Long.UZERO;
+    message.claim =
+      object.claim !== undefined && object.claim !== null ? Any.fromPartial(object.claim) : undefined;
     return message;
   },
 };
@@ -978,9 +987,10 @@ export const OutgoingTxBatch = {
   toJSON(message: OutgoingTxBatch): unknown {
     const obj: any = {};
     message.batchNonce !== undefined && (obj.batchNonce = (message.batchNonce || Long.UZERO).toString());
-    message.batchTimeout !== undefined && (obj.batchTimeout = (message.batchTimeout || Long.UZERO).toString());
+    message.batchTimeout !== undefined &&
+      (obj.batchTimeout = (message.batchTimeout || Long.UZERO).toString());
     if (message.transactions) {
-      obj.transactions = message.transactions.map((e) => e ? OutgoingTransferTx.toJSON(e) : undefined);
+      obj.transactions = message.transactions.map((e) => (e ? OutgoingTransferTx.toJSON(e) : undefined));
     } else {
       obj.transactions = [];
     }
@@ -996,15 +1006,18 @@ export const OutgoingTxBatch = {
 
   fromPartial<I extends Exact<DeepPartial<OutgoingTxBatch>, I>>(object: I): OutgoingTxBatch {
     const message = createBaseOutgoingTxBatch();
-    message.batchNonce = (object.batchNonce !== undefined && object.batchNonce !== null)
-      ? Long.fromValue(object.batchNonce)
-      : Long.UZERO;
-    message.batchTimeout = (object.batchTimeout !== undefined && object.batchTimeout !== null)
-      ? Long.fromValue(object.batchTimeout)
-      : Long.UZERO;
+    message.batchNonce =
+      object.batchNonce !== undefined && object.batchNonce !== null
+        ? Long.fromValue(object.batchNonce)
+        : Long.UZERO;
+    message.batchTimeout =
+      object.batchTimeout !== undefined && object.batchTimeout !== null
+        ? Long.fromValue(object.batchTimeout)
+        : Long.UZERO;
     message.transactions = object.transactions?.map((e) => OutgoingTransferTx.fromPartial(e)) || [];
     message.tokenContract = object.tokenContract ?? "";
-    message.block = (object.block !== undefined && object.block !== null) ? Long.fromValue(object.block) : Long.UZERO;
+    message.block =
+      object.block !== undefined && object.block !== null ? Long.fromValue(object.block) : Long.UZERO;
     message.feeReceive = object.feeReceive ?? "";
     return message;
   },
@@ -1111,13 +1124,13 @@ export const OutgoingTransferTx = {
 
   fromPartial<I extends Exact<DeepPartial<OutgoingTransferTx>, I>>(object: I): OutgoingTransferTx {
     const message = createBaseOutgoingTransferTx();
-    message.id = (object.id !== undefined && object.id !== null) ? Long.fromValue(object.id) : Long.UZERO;
+    message.id = object.id !== undefined && object.id !== null ? Long.fromValue(object.id) : Long.UZERO;
     message.sender = object.sender ?? "";
     message.destAddress = object.destAddress ?? "";
-    message.token = (object.token !== undefined && object.token !== null)
-      ? ERC20Token.fromPartial(object.token)
-      : undefined;
-    message.fee = (object.fee !== undefined && object.fee !== null) ? ERC20Token.fromPartial(object.fee) : undefined;
+    message.token =
+      object.token !== undefined && object.token !== null ? ERC20Token.fromPartial(object.token) : undefined;
+    message.fee =
+      object.fee !== undefined && object.fee !== null ? ERC20Token.fromPartial(object.fee) : undefined;
     return message;
   },
 };
@@ -1355,9 +1368,10 @@ export const BatchFees = {
     const message = createBaseBatchFees();
     message.tokenContract = object.tokenContract ?? "";
     message.totalFees = object.totalFees ?? "";
-    message.totalTxs = (object.totalTxs !== undefined && object.totalTxs !== null)
-      ? Long.fromValue(object.totalTxs)
-      : Long.UZERO;
+    message.totalTxs =
+      object.totalTxs !== undefined && object.totalTxs !== null
+        ? Long.fromValue(object.totalTxs)
+        : Long.UZERO;
     message.totalAmount = object.totalAmount ?? "";
     return message;
   },
@@ -1600,7 +1614,9 @@ export const Params = {
         ? Long.fromValue(object.ibcTransferTimeoutHeight)
         : Long.UZERO,
       oracles: Array.isArray(object?.oracles) ? object.oracles.map((e: any) => String(e)) : [],
-      delegateThreshold: isSet(object.delegateThreshold) ? Coin.fromJSON(object.delegateThreshold) : undefined,
+      delegateThreshold: isSet(object.delegateThreshold)
+        ? Coin.fromJSON(object.delegateThreshold)
+        : undefined,
       delegateMultiple: isSet(object.delegateMultiple) ? Long.fromValue(object.delegateMultiple) : Long.ZERO,
     };
   },
@@ -1614,7 +1630,8 @@ export const Params = {
       (obj.externalBatchTimeout = (message.externalBatchTimeout || Long.UZERO).toString());
     message.averageExternalBlockTime !== undefined &&
       (obj.averageExternalBlockTime = (message.averageExternalBlockTime || Long.UZERO).toString());
-    message.signedWindow !== undefined && (obj.signedWindow = (message.signedWindow || Long.UZERO).toString());
+    message.signedWindow !== undefined &&
+      (obj.signedWindow = (message.signedWindow || Long.UZERO).toString());
     message.slashFraction !== undefined &&
       (obj.slashFraction = base64FromBytes(
         message.slashFraction !== undefined ? message.slashFraction : new Uint8Array(),
@@ -1633,7 +1650,9 @@ export const Params = {
       obj.oracles = [];
     }
     message.delegateThreshold !== undefined &&
-      (obj.delegateThreshold = message.delegateThreshold ? Coin.toJSON(message.delegateThreshold) : undefined);
+      (obj.delegateThreshold = message.delegateThreshold
+        ? Coin.toJSON(message.delegateThreshold)
+        : undefined);
     message.delegateMultiple !== undefined &&
       (obj.delegateMultiple = (message.delegateMultiple || Long.ZERO).toString());
     return obj;
@@ -1646,32 +1665,37 @@ export const Params = {
   fromPartial<I extends Exact<DeepPartial<Params>, I>>(object: I): Params {
     const message = createBaseParams();
     message.gravityId = object.gravityId ?? "";
-    message.averageBlockTime = (object.averageBlockTime !== undefined && object.averageBlockTime !== null)
-      ? Long.fromValue(object.averageBlockTime)
-      : Long.UZERO;
-    message.externalBatchTimeout = (object.externalBatchTimeout !== undefined && object.externalBatchTimeout !== null)
-      ? Long.fromValue(object.externalBatchTimeout)
-      : Long.UZERO;
+    message.averageBlockTime =
+      object.averageBlockTime !== undefined && object.averageBlockTime !== null
+        ? Long.fromValue(object.averageBlockTime)
+        : Long.UZERO;
+    message.externalBatchTimeout =
+      object.externalBatchTimeout !== undefined && object.externalBatchTimeout !== null
+        ? Long.fromValue(object.externalBatchTimeout)
+        : Long.UZERO;
     message.averageExternalBlockTime =
-      (object.averageExternalBlockTime !== undefined && object.averageExternalBlockTime !== null)
+      object.averageExternalBlockTime !== undefined && object.averageExternalBlockTime !== null
         ? Long.fromValue(object.averageExternalBlockTime)
         : Long.UZERO;
-    message.signedWindow = (object.signedWindow !== undefined && object.signedWindow !== null)
-      ? Long.fromValue(object.signedWindow)
-      : Long.UZERO;
+    message.signedWindow =
+      object.signedWindow !== undefined && object.signedWindow !== null
+        ? Long.fromValue(object.signedWindow)
+        : Long.UZERO;
     message.slashFraction = object.slashFraction ?? new Uint8Array();
     message.oracleSetUpdatePowerChangePercent = object.oracleSetUpdatePowerChangePercent ?? new Uint8Array();
     message.ibcTransferTimeoutHeight =
-      (object.ibcTransferTimeoutHeight !== undefined && object.ibcTransferTimeoutHeight !== null)
+      object.ibcTransferTimeoutHeight !== undefined && object.ibcTransferTimeoutHeight !== null
         ? Long.fromValue(object.ibcTransferTimeoutHeight)
         : Long.UZERO;
     message.oracles = object.oracles?.map((e) => e) || [];
-    message.delegateThreshold = (object.delegateThreshold !== undefined && object.delegateThreshold !== null)
-      ? Coin.fromPartial(object.delegateThreshold)
-      : undefined;
-    message.delegateMultiple = (object.delegateMultiple !== undefined && object.delegateMultiple !== null)
-      ? Long.fromValue(object.delegateMultiple)
-      : Long.ZERO;
+    message.delegateThreshold =
+      object.delegateThreshold !== undefined && object.delegateThreshold !== null
+        ? Coin.fromPartial(object.delegateThreshold)
+        : undefined;
+    message.delegateMultiple =
+      object.delegateMultiple !== undefined && object.delegateMultiple !== null
+        ? Long.fromValue(object.delegateMultiple)
+        : Long.ZERO;
     return message;
   },
 };
@@ -1759,17 +1783,20 @@ export const InitCrossChainParamsProposal = {
     return obj;
   },
 
-  create<I extends Exact<DeepPartial<InitCrossChainParamsProposal>, I>>(base?: I): InitCrossChainParamsProposal {
+  create<I extends Exact<DeepPartial<InitCrossChainParamsProposal>, I>>(
+    base?: I,
+  ): InitCrossChainParamsProposal {
     return InitCrossChainParamsProposal.fromPartial(base ?? {});
   },
 
-  fromPartial<I extends Exact<DeepPartial<InitCrossChainParamsProposal>, I>>(object: I): InitCrossChainParamsProposal {
+  fromPartial<I extends Exact<DeepPartial<InitCrossChainParamsProposal>, I>>(
+    object: I,
+  ): InitCrossChainParamsProposal {
     const message = createBaseInitCrossChainParamsProposal();
     message.title = object.title ?? "";
     message.description = object.description ?? "";
-    message.params = (object.params !== undefined && object.params !== null)
-      ? Params.fromPartial(object.params)
-      : undefined;
+    message.params =
+      object.params !== undefined && object.params !== null ? Params.fromPartial(object.params) : undefined;
     message.chainName = object.chainName ?? "";
     return message;
   },
@@ -1866,7 +1893,9 @@ export const UpdateChainOraclesProposal = {
     return UpdateChainOraclesProposal.fromPartial(base ?? {});
   },
 
-  fromPartial<I extends Exact<DeepPartial<UpdateChainOraclesProposal>, I>>(object: I): UpdateChainOraclesProposal {
+  fromPartial<I extends Exact<DeepPartial<UpdateChainOraclesProposal>, I>>(
+    object: I,
+  ): UpdateChainOraclesProposal {
     const message = createBaseUpdateChainOraclesProposal();
     message.title = object.title ?? "";
     message.description = object.description ?? "";
@@ -1922,14 +1951,21 @@ function base64FromBytes(arr: Uint8Array): string {
 
 type Builtin = Date | Function | Uint8Array | string | number | boolean | undefined;
 
-export type DeepPartial<T> = T extends Builtin ? T
-  : T extends Long ? string | number | Long : T extends Array<infer U> ? Array<DeepPartial<U>>
-  : T extends ReadonlyArray<infer U> ? ReadonlyArray<DeepPartial<U>>
-  : T extends {} ? { [K in keyof T]?: DeepPartial<T[K]> }
+export type DeepPartial<T> = T extends Builtin
+  ? T
+  : T extends Long
+  ? string | number | Long
+  : T extends Array<infer U>
+  ? Array<DeepPartial<U>>
+  : T extends ReadonlyArray<infer U>
+  ? ReadonlyArray<DeepPartial<U>>
+  : T extends {}
+  ? { [K in keyof T]?: DeepPartial<T[K]> }
   : Partial<T>;
 
 type KeysOfUnion<T> = T extends T ? keyof T : never;
-export type Exact<P, I extends P> = P extends Builtin ? P
+export type Exact<P, I extends P> = P extends Builtin
+  ? P
   : P & { [K in keyof P]: Exact<P[K], I[K]> } & { [K in Exclude<keyof I, KeysOfUnion<P>>]: never };
 
 if (_m0.util.Long !== Long) {

@@ -155,7 +155,16 @@ export const DenomUnit = {
 };
 
 function createBaseMetadata(): Metadata {
-  return { description: "", denomUnits: [], base: "", display: "", name: "", symbol: "", uri: "", uriHash: "" };
+  return {
+    description: "",
+    denomUnits: [],
+    base: "",
+    display: "",
+    name: "",
+    symbol: "",
+    uri: "",
+    uriHash: "",
+  };
 }
 
 export const Metadata = {
@@ -262,7 +271,9 @@ export const Metadata = {
   fromJSON(object: any): Metadata {
     return {
       description: isSet(object.description) ? String(object.description) : "",
-      denomUnits: Array.isArray(object?.denomUnits) ? object.denomUnits.map((e: any) => DenomUnit.fromJSON(e)) : [],
+      denomUnits: Array.isArray(object?.denomUnits)
+        ? object.denomUnits.map((e: any) => DenomUnit.fromJSON(e))
+        : [],
       base: isSet(object.base) ? String(object.base) : "",
       display: isSet(object.display) ? String(object.display) : "",
       name: isSet(object.name) ? String(object.name) : "",
@@ -276,7 +287,7 @@ export const Metadata = {
     const obj: any = {};
     message.description !== undefined && (obj.description = message.description);
     if (message.denomUnits) {
-      obj.denomUnits = message.denomUnits.map((e) => e ? DenomUnit.toJSON(e) : undefined);
+      obj.denomUnits = message.denomUnits.map((e) => (e ? DenomUnit.toJSON(e) : undefined));
     } else {
       obj.denomUnits = [];
     }
@@ -309,14 +320,21 @@ export const Metadata = {
 
 type Builtin = Date | Function | Uint8Array | string | number | boolean | undefined;
 
-export type DeepPartial<T> = T extends Builtin ? T
-  : T extends Long ? string | number | Long : T extends Array<infer U> ? Array<DeepPartial<U>>
-  : T extends ReadonlyArray<infer U> ? ReadonlyArray<DeepPartial<U>>
-  : T extends {} ? { [K in keyof T]?: DeepPartial<T[K]> }
+export type DeepPartial<T> = T extends Builtin
+  ? T
+  : T extends Long
+  ? string | number | Long
+  : T extends Array<infer U>
+  ? Array<DeepPartial<U>>
+  : T extends ReadonlyArray<infer U>
+  ? ReadonlyArray<DeepPartial<U>>
+  : T extends {}
+  ? { [K in keyof T]?: DeepPartial<T[K]> }
   : Partial<T>;
 
 type KeysOfUnion<T> = T extends T ? keyof T : never;
-export type Exact<P, I extends P> = P extends Builtin ? P
+export type Exact<P, I extends P> = P extends Builtin
+  ? P
   : P & { [K in keyof P]: Exact<P[K], I[K]> } & { [K in Exclude<keyof I, KeysOfUnion<P>>]: never };
 
 if (_m0.util.Long !== Long) {

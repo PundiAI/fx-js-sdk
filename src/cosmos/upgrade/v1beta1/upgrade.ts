@@ -166,7 +166,9 @@ export const Plan = {
       time: isSet(object.time) ? fromJsonTimestamp(object.time) : undefined,
       height: isSet(object.height) ? Long.fromValue(object.height) : Long.ZERO,
       info: isSet(object.info) ? String(object.info) : "",
-      upgradedClientState: isSet(object.upgradedClientState) ? Any.fromJSON(object.upgradedClientState) : undefined,
+      upgradedClientState: isSet(object.upgradedClientState)
+        ? Any.fromJSON(object.upgradedClientState)
+        : undefined,
     };
   },
 
@@ -177,7 +179,9 @@ export const Plan = {
     message.height !== undefined && (obj.height = (message.height || Long.ZERO).toString());
     message.info !== undefined && (obj.info = message.info);
     message.upgradedClientState !== undefined &&
-      (obj.upgradedClientState = message.upgradedClientState ? Any.toJSON(message.upgradedClientState) : undefined);
+      (obj.upgradedClientState = message.upgradedClientState
+        ? Any.toJSON(message.upgradedClientState)
+        : undefined);
     return obj;
   },
 
@@ -189,13 +193,13 @@ export const Plan = {
     const message = createBasePlan();
     message.name = object.name ?? "";
     message.time = object.time ?? undefined;
-    message.height = (object.height !== undefined && object.height !== null)
-      ? Long.fromValue(object.height)
-      : Long.ZERO;
+    message.height =
+      object.height !== undefined && object.height !== null ? Long.fromValue(object.height) : Long.ZERO;
     message.info = object.info ?? "";
-    message.upgradedClientState = (object.upgradedClientState !== undefined && object.upgradedClientState !== null)
-      ? Any.fromPartial(object.upgradedClientState)
-      : undefined;
+    message.upgradedClientState =
+      object.upgradedClientState !== undefined && object.upgradedClientState !== null
+        ? Any.fromPartial(object.upgradedClientState)
+        : undefined;
     return message;
   },
 };
@@ -279,7 +283,8 @@ export const SoftwareUpgradeProposal = {
     const message = createBaseSoftwareUpgradeProposal();
     message.title = object.title ?? "";
     message.description = object.description ?? "";
-    message.plan = (object.plan !== undefined && object.plan !== null) ? Plan.fromPartial(object.plan) : undefined;
+    message.plan =
+      object.plan !== undefined && object.plan !== null ? Plan.fromPartial(object.plan) : undefined;
     return message;
   },
 };
@@ -343,7 +348,9 @@ export const CancelSoftwareUpgradeProposal = {
     return obj;
   },
 
-  create<I extends Exact<DeepPartial<CancelSoftwareUpgradeProposal>, I>>(base?: I): CancelSoftwareUpgradeProposal {
+  create<I extends Exact<DeepPartial<CancelSoftwareUpgradeProposal>, I>>(
+    base?: I,
+  ): CancelSoftwareUpgradeProposal {
     return CancelSoftwareUpgradeProposal.fromPartial(base ?? {});
   },
 
@@ -423,23 +430,29 @@ export const ModuleVersion = {
   fromPartial<I extends Exact<DeepPartial<ModuleVersion>, I>>(object: I): ModuleVersion {
     const message = createBaseModuleVersion();
     message.name = object.name ?? "";
-    message.version = (object.version !== undefined && object.version !== null)
-      ? Long.fromValue(object.version)
-      : Long.UZERO;
+    message.version =
+      object.version !== undefined && object.version !== null ? Long.fromValue(object.version) : Long.UZERO;
     return message;
   },
 };
 
 type Builtin = Date | Function | Uint8Array | string | number | boolean | undefined;
 
-export type DeepPartial<T> = T extends Builtin ? T
-  : T extends Long ? string | number | Long : T extends Array<infer U> ? Array<DeepPartial<U>>
-  : T extends ReadonlyArray<infer U> ? ReadonlyArray<DeepPartial<U>>
-  : T extends {} ? { [K in keyof T]?: DeepPartial<T[K]> }
+export type DeepPartial<T> = T extends Builtin
+  ? T
+  : T extends Long
+  ? string | number | Long
+  : T extends Array<infer U>
+  ? Array<DeepPartial<U>>
+  : T extends ReadonlyArray<infer U>
+  ? ReadonlyArray<DeepPartial<U>>
+  : T extends {}
+  ? { [K in keyof T]?: DeepPartial<T[K]> }
   : Partial<T>;
 
 type KeysOfUnion<T> = T extends T ? keyof T : never;
-export type Exact<P, I extends P> = P extends Builtin ? P
+export type Exact<P, I extends P> = P extends Builtin
+  ? P
   : P & { [K in keyof P]: Exact<P[K], I[K]> } & { [K in Exclude<keyof I, KeysOfUnion<P>>]: never };
 
 function toTimestamp(date: Date): Timestamp {

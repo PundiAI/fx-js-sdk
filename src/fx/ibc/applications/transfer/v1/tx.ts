@@ -217,17 +217,20 @@ export const MsgTransfer = {
     const message = createBaseMsgTransfer();
     message.sourcePort = object.sourcePort ?? "";
     message.sourceChannel = object.sourceChannel ?? "";
-    message.token = (object.token !== undefined && object.token !== null) ? Coin.fromPartial(object.token) : undefined;
+    message.token =
+      object.token !== undefined && object.token !== null ? Coin.fromPartial(object.token) : undefined;
     message.sender = object.sender ?? "";
     message.receiver = object.receiver ?? "";
-    message.timeoutHeight = (object.timeoutHeight !== undefined && object.timeoutHeight !== null)
-      ? Height.fromPartial(object.timeoutHeight)
-      : undefined;
-    message.timeoutTimestamp = (object.timeoutTimestamp !== undefined && object.timeoutTimestamp !== null)
-      ? Long.fromValue(object.timeoutTimestamp)
-      : Long.UZERO;
+    message.timeoutHeight =
+      object.timeoutHeight !== undefined && object.timeoutHeight !== null
+        ? Height.fromPartial(object.timeoutHeight)
+        : undefined;
+    message.timeoutTimestamp =
+      object.timeoutTimestamp !== undefined && object.timeoutTimestamp !== null
+        ? Long.fromValue(object.timeoutTimestamp)
+        : Long.UZERO;
     message.router = object.router ?? "";
-    message.fee = (object.fee !== undefined && object.fee !== null) ? Coin.fromPartial(object.fee) : undefined;
+    message.fee = object.fee !== undefined && object.fee !== null ? Coin.fromPartial(object.fee) : undefined;
     message.memo = object.memo ?? "";
     return message;
   },
@@ -260,14 +263,21 @@ interface Rpc {
 
 type Builtin = Date | Function | Uint8Array | string | number | boolean | undefined;
 
-export type DeepPartial<T> = T extends Builtin ? T
-  : T extends Long ? string | number | Long : T extends Array<infer U> ? Array<DeepPartial<U>>
-  : T extends ReadonlyArray<infer U> ? ReadonlyArray<DeepPartial<U>>
-  : T extends {} ? { [K in keyof T]?: DeepPartial<T[K]> }
+export type DeepPartial<T> = T extends Builtin
+  ? T
+  : T extends Long
+  ? string | number | Long
+  : T extends Array<infer U>
+  ? Array<DeepPartial<U>>
+  : T extends ReadonlyArray<infer U>
+  ? ReadonlyArray<DeepPartial<U>>
+  : T extends {}
+  ? { [K in keyof T]?: DeepPartial<T[K]> }
   : Partial<T>;
 
 type KeysOfUnion<T> = T extends T ? keyof T : never;
-export type Exact<P, I extends P> = P extends Builtin ? P
+export type Exact<P, I extends P> = P extends Builtin
+  ? P
   : P & { [K in keyof P]: Exact<P[K], I[K]> } & { [K in Exclude<keyof I, KeysOfUnion<P>>]: never };
 
 if (_m0.util.Long !== Long) {

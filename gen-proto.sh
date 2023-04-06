@@ -13,7 +13,7 @@ fi
 proto_dirs=$(find ./fx-core/proto/fx -path -prune -o -name '*.proto' -print0 | xargs -0 -n1 dirname | sort | uniq)
 proto_dirs="${proto_dirs}
 ./proto/fx/dex/v1
-./proto/fx/gov/v1
+./proto/cosmos/gov/v1
 ./cosmos-sdk/proto/cosmos/upgrade/v1beta1"
 # shellcheck disable=SC2046
 for dir in $proto_dirs; do
@@ -44,6 +44,6 @@ for dir in $proto_ts_dirs; do
     done
 done
 
-perl -pi -e 's|cosmjs-types/cosmos/bank|../../../cosmos/bank|g' "./src/fx/erc20/v1/tx.ts"
-perl -pi -e 's|cosmjs-types/cosmos/bank|../../../cosmos/bank|g' "./src/fx/erc20/v1/erc20.ts"
-perl -pi -e 's|../../../google|cosmjs-types/google|g' "./src/cosmos/upgrade/v1beta1/upgrade.ts"
+perl -pi -e 's|cosmjs-types/cosmos/bank|../../../cosmos/bank|g' "./src/fx/erc20/v1/tx.ts" "./src/fx/erc20/v1/erc20.ts"
+perl -pi -e 's|../../../google|cosmjs-types/google|g' "./src/cosmos/upgrade/v1beta1/upgrade.ts" "./src/cosmos/gov/v1/tx.ts"
+perl -pi -e 's|../../base/v1beta1/coin|cosmjs-types/cosmos/base/v1beta1/coin|g' "./src/cosmos/gov/v1/tx.ts"

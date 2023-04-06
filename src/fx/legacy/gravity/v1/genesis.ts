@@ -273,12 +273,22 @@ export const Params = {
       contractSourceHash: isSet(object.contractSourceHash) ? String(object.contractSourceHash) : "",
       bridgeEthAddress: isSet(object.bridgeEthAddress) ? String(object.bridgeEthAddress) : "",
       bridgeChainId: isSet(object.bridgeChainId) ? Long.fromValue(object.bridgeChainId) : Long.UZERO,
-      signedValsetsWindow: isSet(object.signedValsetsWindow) ? Long.fromValue(object.signedValsetsWindow) : Long.UZERO,
-      signedBatchesWindow: isSet(object.signedBatchesWindow) ? Long.fromValue(object.signedBatchesWindow) : Long.UZERO,
-      signedClaimsWindow: isSet(object.signedClaimsWindow) ? Long.fromValue(object.signedClaimsWindow) : Long.UZERO,
-      targetBatchTimeout: isSet(object.targetBatchTimeout) ? Long.fromValue(object.targetBatchTimeout) : Long.UZERO,
+      signedValsetsWindow: isSet(object.signedValsetsWindow)
+        ? Long.fromValue(object.signedValsetsWindow)
+        : Long.UZERO,
+      signedBatchesWindow: isSet(object.signedBatchesWindow)
+        ? Long.fromValue(object.signedBatchesWindow)
+        : Long.UZERO,
+      signedClaimsWindow: isSet(object.signedClaimsWindow)
+        ? Long.fromValue(object.signedClaimsWindow)
+        : Long.UZERO,
+      targetBatchTimeout: isSet(object.targetBatchTimeout)
+        ? Long.fromValue(object.targetBatchTimeout)
+        : Long.UZERO,
       averageBlockTime: isSet(object.averageBlockTime) ? Long.fromValue(object.averageBlockTime) : Long.UZERO,
-      averageEthBlockTime: isSet(object.averageEthBlockTime) ? Long.fromValue(object.averageEthBlockTime) : Long.UZERO,
+      averageEthBlockTime: isSet(object.averageEthBlockTime)
+        ? Long.fromValue(object.averageEthBlockTime)
+        : Long.UZERO,
       slashFractionValset: isSet(object.slashFractionValset)
         ? bytesFromBase64(object.slashFractionValset)
         : new Uint8Array(),
@@ -308,7 +318,8 @@ export const Params = {
     message.gravityId !== undefined && (obj.gravityId = message.gravityId);
     message.contractSourceHash !== undefined && (obj.contractSourceHash = message.contractSourceHash);
     message.bridgeEthAddress !== undefined && (obj.bridgeEthAddress = message.bridgeEthAddress);
-    message.bridgeChainId !== undefined && (obj.bridgeChainId = (message.bridgeChainId || Long.UZERO).toString());
+    message.bridgeChainId !== undefined &&
+      (obj.bridgeChainId = (message.bridgeChainId || Long.UZERO).toString());
     message.signedValsetsWindow !== undefined &&
       (obj.signedValsetsWindow = (message.signedValsetsWindow || Long.UZERO).toString());
     message.signedBatchesWindow !== undefined &&
@@ -335,7 +346,9 @@ export const Params = {
       ));
     message.slashFractionConflictingClaim !== undefined &&
       (obj.slashFractionConflictingClaim = base64FromBytes(
-        message.slashFractionConflictingClaim !== undefined ? message.slashFractionConflictingClaim : new Uint8Array(),
+        message.slashFractionConflictingClaim !== undefined
+          ? message.slashFractionConflictingClaim
+          : new Uint8Array(),
       ));
     message.unbondSlashingValsetsWindow !== undefined &&
       (obj.unbondSlashingValsetsWindow = (message.unbondSlashingValsetsWindow || Long.UZERO).toString());
@@ -359,37 +372,44 @@ export const Params = {
     message.gravityId = object.gravityId ?? "";
     message.contractSourceHash = object.contractSourceHash ?? "";
     message.bridgeEthAddress = object.bridgeEthAddress ?? "";
-    message.bridgeChainId = (object.bridgeChainId !== undefined && object.bridgeChainId !== null)
-      ? Long.fromValue(object.bridgeChainId)
-      : Long.UZERO;
-    message.signedValsetsWindow = (object.signedValsetsWindow !== undefined && object.signedValsetsWindow !== null)
-      ? Long.fromValue(object.signedValsetsWindow)
-      : Long.UZERO;
-    message.signedBatchesWindow = (object.signedBatchesWindow !== undefined && object.signedBatchesWindow !== null)
-      ? Long.fromValue(object.signedBatchesWindow)
-      : Long.UZERO;
-    message.signedClaimsWindow = (object.signedClaimsWindow !== undefined && object.signedClaimsWindow !== null)
-      ? Long.fromValue(object.signedClaimsWindow)
-      : Long.UZERO;
-    message.targetBatchTimeout = (object.targetBatchTimeout !== undefined && object.targetBatchTimeout !== null)
-      ? Long.fromValue(object.targetBatchTimeout)
-      : Long.UZERO;
-    message.averageBlockTime = (object.averageBlockTime !== undefined && object.averageBlockTime !== null)
-      ? Long.fromValue(object.averageBlockTime)
-      : Long.UZERO;
-    message.averageEthBlockTime = (object.averageEthBlockTime !== undefined && object.averageEthBlockTime !== null)
-      ? Long.fromValue(object.averageEthBlockTime)
-      : Long.UZERO;
+    message.bridgeChainId =
+      object.bridgeChainId !== undefined && object.bridgeChainId !== null
+        ? Long.fromValue(object.bridgeChainId)
+        : Long.UZERO;
+    message.signedValsetsWindow =
+      object.signedValsetsWindow !== undefined && object.signedValsetsWindow !== null
+        ? Long.fromValue(object.signedValsetsWindow)
+        : Long.UZERO;
+    message.signedBatchesWindow =
+      object.signedBatchesWindow !== undefined && object.signedBatchesWindow !== null
+        ? Long.fromValue(object.signedBatchesWindow)
+        : Long.UZERO;
+    message.signedClaimsWindow =
+      object.signedClaimsWindow !== undefined && object.signedClaimsWindow !== null
+        ? Long.fromValue(object.signedClaimsWindow)
+        : Long.UZERO;
+    message.targetBatchTimeout =
+      object.targetBatchTimeout !== undefined && object.targetBatchTimeout !== null
+        ? Long.fromValue(object.targetBatchTimeout)
+        : Long.UZERO;
+    message.averageBlockTime =
+      object.averageBlockTime !== undefined && object.averageBlockTime !== null
+        ? Long.fromValue(object.averageBlockTime)
+        : Long.UZERO;
+    message.averageEthBlockTime =
+      object.averageEthBlockTime !== undefined && object.averageEthBlockTime !== null
+        ? Long.fromValue(object.averageEthBlockTime)
+        : Long.UZERO;
     message.slashFractionValset = object.slashFractionValset ?? new Uint8Array();
     message.slashFractionBatch = object.slashFractionBatch ?? new Uint8Array();
     message.slashFractionClaim = object.slashFractionClaim ?? new Uint8Array();
     message.slashFractionConflictingClaim = object.slashFractionConflictingClaim ?? new Uint8Array();
     message.unbondSlashingValsetsWindow =
-      (object.unbondSlashingValsetsWindow !== undefined && object.unbondSlashingValsetsWindow !== null)
+      object.unbondSlashingValsetsWindow !== undefined && object.unbondSlashingValsetsWindow !== null
         ? Long.fromValue(object.unbondSlashingValsetsWindow)
         : Long.UZERO;
     message.ibcTransferTimeoutHeight =
-      (object.ibcTransferTimeoutHeight !== undefined && object.ibcTransferTimeoutHeight !== null)
+      object.ibcTransferTimeoutHeight !== undefined && object.ibcTransferTimeoutHeight !== null
         ? Long.fromValue(object.ibcTransferTimeoutHeight)
         : Long.UZERO;
     message.valsetUpdatePowerChangePercent = object.valsetUpdatePowerChangePercent ?? new Uint8Array();
@@ -427,7 +447,10 @@ export const GenesisState = {
       writer.uint32(16).uint64(message.lastObservedNonce);
     }
     if (message.lastObservedBlockHeight !== undefined) {
-      LastObservedEthereumBlockHeight.encode(message.lastObservedBlockHeight, writer.uint32(26).fork()).ldelim();
+      LastObservedEthereumBlockHeight.encode(
+        message.lastObservedBlockHeight,
+        writer.uint32(26).fork(),
+      ).ldelim();
     }
     for (const v of message.delegateKeys) {
       MsgSetOrchestratorAddress.encode(v!, writer.uint32(34).fork()).ldelim();
@@ -602,7 +625,9 @@ export const GenesisState = {
   fromJSON(object: any): GenesisState {
     return {
       params: isSet(object.params) ? Params.fromJSON(object.params) : undefined,
-      lastObservedNonce: isSet(object.lastObservedNonce) ? Long.fromValue(object.lastObservedNonce) : Long.UZERO,
+      lastObservedNonce: isSet(object.lastObservedNonce)
+        ? Long.fromValue(object.lastObservedNonce)
+        : Long.UZERO,
       lastObservedBlockHeight: isSet(object.lastObservedBlockHeight)
         ? LastObservedEthereumBlockHeight.fromJSON(object.lastObservedBlockHeight)
         : undefined,
@@ -616,7 +641,9 @@ export const GenesisState = {
       unbatchedTransfers: Array.isArray(object?.unbatchedTransfers)
         ? object.unbatchedTransfers.map((e: any) => OutgoingTransferTx.fromJSON(e))
         : [],
-      batches: Array.isArray(object?.batches) ? object.batches.map((e: any) => OutgoingTxBatch.fromJSON(e)) : [],
+      batches: Array.isArray(object?.batches)
+        ? object.batches.map((e: any) => OutgoingTxBatch.fromJSON(e))
+        : [],
       batchConfirms: Array.isArray(object?.batchConfirms)
         ? object.batchConfirms.map((e: any) => MsgConfirmBatch.fromJSON(e))
         : [],
@@ -626,7 +653,9 @@ export const GenesisState = {
       attestations: Array.isArray(object?.attestations)
         ? object.attestations.map((e: any) => Attestation.fromJSON(e))
         : [],
-      lastObservedValset: isSet(object.lastObservedValset) ? Valset.fromJSON(object.lastObservedValset) : undefined,
+      lastObservedValset: isSet(object.lastObservedValset)
+        ? Valset.fromJSON(object.lastObservedValset)
+        : undefined,
       lastSlashedBatchBlock: isSet(object.lastSlashedBatchBlock)
         ? Long.fromValue(object.lastSlashedBatchBlock)
         : Long.UZERO,
@@ -643,56 +672,64 @@ export const GenesisState = {
     message.params !== undefined && (obj.params = message.params ? Params.toJSON(message.params) : undefined);
     message.lastObservedNonce !== undefined &&
       (obj.lastObservedNonce = (message.lastObservedNonce || Long.UZERO).toString());
-    message.lastObservedBlockHeight !== undefined && (obj.lastObservedBlockHeight = message.lastObservedBlockHeight
-      ? LastObservedEthereumBlockHeight.toJSON(message.lastObservedBlockHeight)
-      : undefined);
+    message.lastObservedBlockHeight !== undefined &&
+      (obj.lastObservedBlockHeight = message.lastObservedBlockHeight
+        ? LastObservedEthereumBlockHeight.toJSON(message.lastObservedBlockHeight)
+        : undefined);
     if (message.delegateKeys) {
-      obj.delegateKeys = message.delegateKeys.map((e) => e ? MsgSetOrchestratorAddress.toJSON(e) : undefined);
+      obj.delegateKeys = message.delegateKeys.map((e) =>
+        e ? MsgSetOrchestratorAddress.toJSON(e) : undefined,
+      );
     } else {
       obj.delegateKeys = [];
     }
     if (message.valsets) {
-      obj.valsets = message.valsets.map((e) => e ? Valset.toJSON(e) : undefined);
+      obj.valsets = message.valsets.map((e) => (e ? Valset.toJSON(e) : undefined));
     } else {
       obj.valsets = [];
     }
     if (message.erc20ToDenoms) {
-      obj.erc20ToDenoms = message.erc20ToDenoms.map((e) => e ? ERC20ToDenom.toJSON(e) : undefined);
+      obj.erc20ToDenoms = message.erc20ToDenoms.map((e) => (e ? ERC20ToDenom.toJSON(e) : undefined));
     } else {
       obj.erc20ToDenoms = [];
     }
     if (message.unbatchedTransfers) {
-      obj.unbatchedTransfers = message.unbatchedTransfers.map((e) => e ? OutgoingTransferTx.toJSON(e) : undefined);
+      obj.unbatchedTransfers = message.unbatchedTransfers.map((e) =>
+        e ? OutgoingTransferTx.toJSON(e) : undefined,
+      );
     } else {
       obj.unbatchedTransfers = [];
     }
     if (message.batches) {
-      obj.batches = message.batches.map((e) => e ? OutgoingTxBatch.toJSON(e) : undefined);
+      obj.batches = message.batches.map((e) => (e ? OutgoingTxBatch.toJSON(e) : undefined));
     } else {
       obj.batches = [];
     }
     if (message.batchConfirms) {
-      obj.batchConfirms = message.batchConfirms.map((e) => e ? MsgConfirmBatch.toJSON(e) : undefined);
+      obj.batchConfirms = message.batchConfirms.map((e) => (e ? MsgConfirmBatch.toJSON(e) : undefined));
     } else {
       obj.batchConfirms = [];
     }
     if (message.valsetConfirms) {
-      obj.valsetConfirms = message.valsetConfirms.map((e) => e ? MsgValsetConfirm.toJSON(e) : undefined);
+      obj.valsetConfirms = message.valsetConfirms.map((e) => (e ? MsgValsetConfirm.toJSON(e) : undefined));
     } else {
       obj.valsetConfirms = [];
     }
     if (message.attestations) {
-      obj.attestations = message.attestations.map((e) => e ? Attestation.toJSON(e) : undefined);
+      obj.attestations = message.attestations.map((e) => (e ? Attestation.toJSON(e) : undefined));
     } else {
       obj.attestations = [];
     }
     message.lastObservedValset !== undefined &&
-      (obj.lastObservedValset = message.lastObservedValset ? Valset.toJSON(message.lastObservedValset) : undefined);
+      (obj.lastObservedValset = message.lastObservedValset
+        ? Valset.toJSON(message.lastObservedValset)
+        : undefined);
     message.lastSlashedBatchBlock !== undefined &&
       (obj.lastSlashedBatchBlock = (message.lastSlashedBatchBlock || Long.UZERO).toString());
     message.lastSlashedValsetNonce !== undefined &&
       (obj.lastSlashedValsetNonce = (message.lastSlashedValsetNonce || Long.UZERO).toString());
-    message.lastTxPoolId !== undefined && (obj.lastTxPoolId = (message.lastTxPoolId || Long.UZERO).toString());
+    message.lastTxPoolId !== undefined &&
+      (obj.lastTxPoolId = (message.lastTxPoolId || Long.UZERO).toString());
     message.lastBatchId !== undefined && (obj.lastBatchId = (message.lastBatchId || Long.UZERO).toString());
     return obj;
   },
@@ -703,41 +740,45 @@ export const GenesisState = {
 
   fromPartial<I extends Exact<DeepPartial<GenesisState>, I>>(object: I): GenesisState {
     const message = createBaseGenesisState();
-    message.params = (object.params !== undefined && object.params !== null)
-      ? Params.fromPartial(object.params)
-      : undefined;
-    message.lastObservedNonce = (object.lastObservedNonce !== undefined && object.lastObservedNonce !== null)
-      ? Long.fromValue(object.lastObservedNonce)
-      : Long.UZERO;
+    message.params =
+      object.params !== undefined && object.params !== null ? Params.fromPartial(object.params) : undefined;
+    message.lastObservedNonce =
+      object.lastObservedNonce !== undefined && object.lastObservedNonce !== null
+        ? Long.fromValue(object.lastObservedNonce)
+        : Long.UZERO;
     message.lastObservedBlockHeight =
-      (object.lastObservedBlockHeight !== undefined && object.lastObservedBlockHeight !== null)
+      object.lastObservedBlockHeight !== undefined && object.lastObservedBlockHeight !== null
         ? LastObservedEthereumBlockHeight.fromPartial(object.lastObservedBlockHeight)
         : undefined;
     message.delegateKeys = object.delegateKeys?.map((e) => MsgSetOrchestratorAddress.fromPartial(e)) || [];
     message.valsets = object.valsets?.map((e) => Valset.fromPartial(e)) || [];
     message.erc20ToDenoms = object.erc20ToDenoms?.map((e) => ERC20ToDenom.fromPartial(e)) || [];
-    message.unbatchedTransfers = object.unbatchedTransfers?.map((e) => OutgoingTransferTx.fromPartial(e)) || [];
+    message.unbatchedTransfers =
+      object.unbatchedTransfers?.map((e) => OutgoingTransferTx.fromPartial(e)) || [];
     message.batches = object.batches?.map((e) => OutgoingTxBatch.fromPartial(e)) || [];
     message.batchConfirms = object.batchConfirms?.map((e) => MsgConfirmBatch.fromPartial(e)) || [];
     message.valsetConfirms = object.valsetConfirms?.map((e) => MsgValsetConfirm.fromPartial(e)) || [];
     message.attestations = object.attestations?.map((e) => Attestation.fromPartial(e)) || [];
-    message.lastObservedValset = (object.lastObservedValset !== undefined && object.lastObservedValset !== null)
-      ? Valset.fromPartial(object.lastObservedValset)
-      : undefined;
+    message.lastObservedValset =
+      object.lastObservedValset !== undefined && object.lastObservedValset !== null
+        ? Valset.fromPartial(object.lastObservedValset)
+        : undefined;
     message.lastSlashedBatchBlock =
-      (object.lastSlashedBatchBlock !== undefined && object.lastSlashedBatchBlock !== null)
+      object.lastSlashedBatchBlock !== undefined && object.lastSlashedBatchBlock !== null
         ? Long.fromValue(object.lastSlashedBatchBlock)
         : Long.UZERO;
     message.lastSlashedValsetNonce =
-      (object.lastSlashedValsetNonce !== undefined && object.lastSlashedValsetNonce !== null)
+      object.lastSlashedValsetNonce !== undefined && object.lastSlashedValsetNonce !== null
         ? Long.fromValue(object.lastSlashedValsetNonce)
         : Long.UZERO;
-    message.lastTxPoolId = (object.lastTxPoolId !== undefined && object.lastTxPoolId !== null)
-      ? Long.fromValue(object.lastTxPoolId)
-      : Long.UZERO;
-    message.lastBatchId = (object.lastBatchId !== undefined && object.lastBatchId !== null)
-      ? Long.fromValue(object.lastBatchId)
-      : Long.UZERO;
+    message.lastTxPoolId =
+      object.lastTxPoolId !== undefined && object.lastTxPoolId !== null
+        ? Long.fromValue(object.lastTxPoolId)
+        : Long.UZERO;
+    message.lastBatchId =
+      object.lastBatchId !== undefined && object.lastBatchId !== null
+        ? Long.fromValue(object.lastBatchId)
+        : Long.UZERO;
     return message;
   },
 };
@@ -788,14 +829,21 @@ function base64FromBytes(arr: Uint8Array): string {
 
 type Builtin = Date | Function | Uint8Array | string | number | boolean | undefined;
 
-export type DeepPartial<T> = T extends Builtin ? T
-  : T extends Long ? string | number | Long : T extends Array<infer U> ? Array<DeepPartial<U>>
-  : T extends ReadonlyArray<infer U> ? ReadonlyArray<DeepPartial<U>>
-  : T extends {} ? { [K in keyof T]?: DeepPartial<T[K]> }
+export type DeepPartial<T> = T extends Builtin
+  ? T
+  : T extends Long
+  ? string | number | Long
+  : T extends Array<infer U>
+  ? Array<DeepPartial<U>>
+  : T extends ReadonlyArray<infer U>
+  ? ReadonlyArray<DeepPartial<U>>
+  : T extends {}
+  ? { [K in keyof T]?: DeepPartial<T[K]> }
   : Partial<T>;
 
 type KeysOfUnion<T> = T extends T ? keyof T : never;
-export type Exact<P, I extends P> = P extends Builtin ? P
+export type Exact<P, I extends P> = P extends Builtin
+  ? P
   : P & { [K in keyof P]: Exact<P[K], I[K]> } & { [K in Exclude<keyof I, KeysOfUnion<P>>]: never };
 
 if (_m0.util.Long !== Long) {

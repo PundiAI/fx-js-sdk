@@ -15,8 +15,7 @@ export interface MsgValsetConfirm {
 }
 
 /** Deprecated: after upgrade v3 */
-export interface MsgValsetConfirmResponse {
-}
+export interface MsgValsetConfirmResponse {}
 
 /** Deprecated: after upgrade v3 */
 export interface MsgSendToEth {
@@ -27,8 +26,7 @@ export interface MsgSendToEth {
 }
 
 /** Deprecated: after upgrade v3 */
-export interface MsgSendToEthResponse {
-}
+export interface MsgSendToEthResponse {}
 
 /** Deprecated: after upgrade v3 */
 export interface MsgRequestBatch {
@@ -40,8 +38,7 @@ export interface MsgRequestBatch {
 }
 
 /** Deprecated: after upgrade v3 */
-export interface MsgRequestBatchResponse {
-}
+export interface MsgRequestBatchResponse {}
 
 /** Deprecated: after upgrade v3 */
 export interface MsgConfirmBatch {
@@ -53,8 +50,7 @@ export interface MsgConfirmBatch {
 }
 
 /** Deprecated: after upgrade v3 */
-export interface MsgConfirmBatchResponse {
-}
+export interface MsgConfirmBatchResponse {}
 
 /** Deprecated: after upgrade v3 */
 export interface MsgDepositClaim {
@@ -69,8 +65,7 @@ export interface MsgDepositClaim {
 }
 
 /** Deprecated: after upgrade v3 */
-export interface MsgDepositClaimResponse {
-}
+export interface MsgDepositClaimResponse {}
 
 /** Deprecated: after upgrade v3 */
 export interface MsgWithdrawClaim {
@@ -82,8 +77,7 @@ export interface MsgWithdrawClaim {
 }
 
 /** Deprecated: after upgrade v3 */
-export interface MsgWithdrawClaimResponse {
-}
+export interface MsgWithdrawClaimResponse {}
 
 /** Deprecated: after upgrade v3 */
 export interface MsgCancelSendToEth {
@@ -92,8 +86,7 @@ export interface MsgCancelSendToEth {
 }
 
 /** Deprecated: after upgrade v3 */
-export interface MsgCancelSendToEthResponse {
-}
+export interface MsgCancelSendToEthResponse {}
 
 /** Deprecated: after upgrade v3 */
 export interface MsgValsetUpdatedClaim {
@@ -105,8 +98,7 @@ export interface MsgValsetUpdatedClaim {
 }
 
 /** Deprecated: after upgrade v3 */
-export interface MsgValsetUpdatedClaimResponse {
-}
+export interface MsgValsetUpdatedClaimResponse {}
 
 /** Deprecated: after upgrade v3 */
 export interface MsgSetOrchestratorAddress {
@@ -116,8 +108,7 @@ export interface MsgSetOrchestratorAddress {
 }
 
 /** Deprecated: after upgrade v3 */
-export interface MsgSetOrchestratorAddressResponse {
-}
+export interface MsgSetOrchestratorAddressResponse {}
 
 /** Deprecated: after upgrade v3 */
 export interface MsgFxOriginatedTokenClaim {
@@ -131,8 +122,7 @@ export interface MsgFxOriginatedTokenClaim {
 }
 
 /** Deprecated: after upgrade v3 */
-export interface MsgFxOriginatedTokenClaimResponse {
-}
+export interface MsgFxOriginatedTokenClaimResponse {}
 
 function createBaseMsgValsetConfirm(): MsgValsetConfirm {
   return { nonce: Long.UZERO, orchestrator: "", ethAddress: "", signature: "" };
@@ -223,7 +213,8 @@ export const MsgValsetConfirm = {
 
   fromPartial<I extends Exact<DeepPartial<MsgValsetConfirm>, I>>(object: I): MsgValsetConfirm {
     const message = createBaseMsgValsetConfirm();
-    message.nonce = (object.nonce !== undefined && object.nonce !== null) ? Long.fromValue(object.nonce) : Long.UZERO;
+    message.nonce =
+      object.nonce !== undefined && object.nonce !== null ? Long.fromValue(object.nonce) : Long.UZERO;
     message.orchestrator = object.orchestrator ?? "";
     message.ethAddress = object.ethAddress ?? "";
     message.signature = object.signature ?? "";
@@ -354,7 +345,8 @@ export const MsgSendToEth = {
     message.sender !== undefined && (obj.sender = message.sender);
     message.ethDest !== undefined && (obj.ethDest = message.ethDest);
     message.amount !== undefined && (obj.amount = message.amount ? Coin.toJSON(message.amount) : undefined);
-    message.bridgeFee !== undefined && (obj.bridgeFee = message.bridgeFee ? Coin.toJSON(message.bridgeFee) : undefined);
+    message.bridgeFee !== undefined &&
+      (obj.bridgeFee = message.bridgeFee ? Coin.toJSON(message.bridgeFee) : undefined);
     return obj;
   },
 
@@ -366,12 +358,12 @@ export const MsgSendToEth = {
     const message = createBaseMsgSendToEth();
     message.sender = object.sender ?? "";
     message.ethDest = object.ethDest ?? "";
-    message.amount = (object.amount !== undefined && object.amount !== null)
-      ? Coin.fromPartial(object.amount)
-      : undefined;
-    message.bridgeFee = (object.bridgeFee !== undefined && object.bridgeFee !== null)
-      ? Coin.fromPartial(object.bridgeFee)
-      : undefined;
+    message.amount =
+      object.amount !== undefined && object.amount !== null ? Coin.fromPartial(object.amount) : undefined;
+    message.bridgeFee =
+      object.bridgeFee !== undefined && object.bridgeFee !== null
+        ? Coin.fromPartial(object.bridgeFee)
+        : undefined;
     return message;
   },
 };
@@ -675,7 +667,8 @@ export const MsgConfirmBatch = {
 
   fromPartial<I extends Exact<DeepPartial<MsgConfirmBatch>, I>>(object: I): MsgConfirmBatch {
     const message = createBaseMsgConfirmBatch();
-    message.nonce = (object.nonce !== undefined && object.nonce !== null) ? Long.fromValue(object.nonce) : Long.UZERO;
+    message.nonce =
+      object.nonce !== undefined && object.nonce !== null ? Long.fromValue(object.nonce) : Long.UZERO;
     message.tokenContract = object.tokenContract ?? "";
     message.ethSigner = object.ethSigner ?? "";
     message.orchestrator = object.orchestrator ?? "";
@@ -874,12 +867,14 @@ export const MsgDepositClaim = {
 
   fromPartial<I extends Exact<DeepPartial<MsgDepositClaim>, I>>(object: I): MsgDepositClaim {
     const message = createBaseMsgDepositClaim();
-    message.eventNonce = (object.eventNonce !== undefined && object.eventNonce !== null)
-      ? Long.fromValue(object.eventNonce)
-      : Long.UZERO;
-    message.blockHeight = (object.blockHeight !== undefined && object.blockHeight !== null)
-      ? Long.fromValue(object.blockHeight)
-      : Long.UZERO;
+    message.eventNonce =
+      object.eventNonce !== undefined && object.eventNonce !== null
+        ? Long.fromValue(object.eventNonce)
+        : Long.UZERO;
+    message.blockHeight =
+      object.blockHeight !== undefined && object.blockHeight !== null
+        ? Long.fromValue(object.blockHeight)
+        : Long.UZERO;
     message.tokenContract = object.tokenContract ?? "";
     message.amount = object.amount ?? "";
     message.ethSender = object.ethSender ?? "";
@@ -1041,15 +1036,18 @@ export const MsgWithdrawClaim = {
 
   fromPartial<I extends Exact<DeepPartial<MsgWithdrawClaim>, I>>(object: I): MsgWithdrawClaim {
     const message = createBaseMsgWithdrawClaim();
-    message.eventNonce = (object.eventNonce !== undefined && object.eventNonce !== null)
-      ? Long.fromValue(object.eventNonce)
-      : Long.UZERO;
-    message.blockHeight = (object.blockHeight !== undefined && object.blockHeight !== null)
-      ? Long.fromValue(object.blockHeight)
-      : Long.UZERO;
-    message.batchNonce = (object.batchNonce !== undefined && object.batchNonce !== null)
-      ? Long.fromValue(object.batchNonce)
-      : Long.UZERO;
+    message.eventNonce =
+      object.eventNonce !== undefined && object.eventNonce !== null
+        ? Long.fromValue(object.eventNonce)
+        : Long.UZERO;
+    message.blockHeight =
+      object.blockHeight !== undefined && object.blockHeight !== null
+        ? Long.fromValue(object.blockHeight)
+        : Long.UZERO;
+    message.batchNonce =
+      object.batchNonce !== undefined && object.batchNonce !== null
+        ? Long.fromValue(object.batchNonce)
+        : Long.UZERO;
     message.tokenContract = object.tokenContract ?? "";
     message.orchestrator = object.orchestrator ?? "";
     return message;
@@ -1154,7 +1152,8 @@ export const MsgCancelSendToEth = {
 
   toJSON(message: MsgCancelSendToEth): unknown {
     const obj: any = {};
-    message.transactionId !== undefined && (obj.transactionId = (message.transactionId || Long.UZERO).toString());
+    message.transactionId !== undefined &&
+      (obj.transactionId = (message.transactionId || Long.UZERO).toString());
     message.sender !== undefined && (obj.sender = message.sender);
     return obj;
   },
@@ -1165,9 +1164,10 @@ export const MsgCancelSendToEth = {
 
   fromPartial<I extends Exact<DeepPartial<MsgCancelSendToEth>, I>>(object: I): MsgCancelSendToEth {
     const message = createBaseMsgCancelSendToEth();
-    message.transactionId = (object.transactionId !== undefined && object.transactionId !== null)
-      ? Long.fromValue(object.transactionId)
-      : Long.UZERO;
+    message.transactionId =
+      object.transactionId !== undefined && object.transactionId !== null
+        ? Long.fromValue(object.transactionId)
+        : Long.UZERO;
     message.sender = object.sender ?? "";
     return message;
   },
@@ -1218,7 +1218,13 @@ export const MsgCancelSendToEthResponse = {
 };
 
 function createBaseMsgValsetUpdatedClaim(): MsgValsetUpdatedClaim {
-  return { eventNonce: Long.UZERO, blockHeight: Long.UZERO, valsetNonce: Long.UZERO, members: [], orchestrator: "" };
+  return {
+    eventNonce: Long.UZERO,
+    blockHeight: Long.UZERO,
+    valsetNonce: Long.UZERO,
+    members: [],
+    orchestrator: "",
+  };
 }
 
 export const MsgValsetUpdatedClaim = {
@@ -1297,7 +1303,9 @@ export const MsgValsetUpdatedClaim = {
       eventNonce: isSet(object.eventNonce) ? Long.fromValue(object.eventNonce) : Long.UZERO,
       blockHeight: isSet(object.blockHeight) ? Long.fromValue(object.blockHeight) : Long.UZERO,
       valsetNonce: isSet(object.valsetNonce) ? Long.fromValue(object.valsetNonce) : Long.UZERO,
-      members: Array.isArray(object?.members) ? object.members.map((e: any) => BridgeValidator.fromJSON(e)) : [],
+      members: Array.isArray(object?.members)
+        ? object.members.map((e: any) => BridgeValidator.fromJSON(e))
+        : [],
       orchestrator: isSet(object.orchestrator) ? String(object.orchestrator) : "",
     };
   },
@@ -1308,7 +1316,7 @@ export const MsgValsetUpdatedClaim = {
     message.blockHeight !== undefined && (obj.blockHeight = (message.blockHeight || Long.UZERO).toString());
     message.valsetNonce !== undefined && (obj.valsetNonce = (message.valsetNonce || Long.UZERO).toString());
     if (message.members) {
-      obj.members = message.members.map((e) => e ? BridgeValidator.toJSON(e) : undefined);
+      obj.members = message.members.map((e) => (e ? BridgeValidator.toJSON(e) : undefined));
     } else {
       obj.members = [];
     }
@@ -1322,15 +1330,18 @@ export const MsgValsetUpdatedClaim = {
 
   fromPartial<I extends Exact<DeepPartial<MsgValsetUpdatedClaim>, I>>(object: I): MsgValsetUpdatedClaim {
     const message = createBaseMsgValsetUpdatedClaim();
-    message.eventNonce = (object.eventNonce !== undefined && object.eventNonce !== null)
-      ? Long.fromValue(object.eventNonce)
-      : Long.UZERO;
-    message.blockHeight = (object.blockHeight !== undefined && object.blockHeight !== null)
-      ? Long.fromValue(object.blockHeight)
-      : Long.UZERO;
-    message.valsetNonce = (object.valsetNonce !== undefined && object.valsetNonce !== null)
-      ? Long.fromValue(object.valsetNonce)
-      : Long.UZERO;
+    message.eventNonce =
+      object.eventNonce !== undefined && object.eventNonce !== null
+        ? Long.fromValue(object.eventNonce)
+        : Long.UZERO;
+    message.blockHeight =
+      object.blockHeight !== undefined && object.blockHeight !== null
+        ? Long.fromValue(object.blockHeight)
+        : Long.UZERO;
+    message.valsetNonce =
+      object.valsetNonce !== undefined && object.valsetNonce !== null
+        ? Long.fromValue(object.valsetNonce)
+        : Long.UZERO;
     message.members = object.members?.map((e) => BridgeValidator.fromPartial(e)) || [];
     message.orchestrator = object.orchestrator ?? "";
     return message;
@@ -1371,11 +1382,15 @@ export const MsgValsetUpdatedClaimResponse = {
     return obj;
   },
 
-  create<I extends Exact<DeepPartial<MsgValsetUpdatedClaimResponse>, I>>(base?: I): MsgValsetUpdatedClaimResponse {
+  create<I extends Exact<DeepPartial<MsgValsetUpdatedClaimResponse>, I>>(
+    base?: I,
+  ): MsgValsetUpdatedClaimResponse {
     return MsgValsetUpdatedClaimResponse.fromPartial(base ?? {});
   },
 
-  fromPartial<I extends Exact<DeepPartial<MsgValsetUpdatedClaimResponse>, I>>(_: I): MsgValsetUpdatedClaimResponse {
+  fromPartial<I extends Exact<DeepPartial<MsgValsetUpdatedClaimResponse>, I>>(
+    _: I,
+  ): MsgValsetUpdatedClaimResponse {
     const message = createBaseMsgValsetUpdatedClaimResponse();
     return message;
   },
@@ -1456,7 +1471,9 @@ export const MsgSetOrchestratorAddress = {
     return MsgSetOrchestratorAddress.fromPartial(base ?? {});
   },
 
-  fromPartial<I extends Exact<DeepPartial<MsgSetOrchestratorAddress>, I>>(object: I): MsgSetOrchestratorAddress {
+  fromPartial<I extends Exact<DeepPartial<MsgSetOrchestratorAddress>, I>>(
+    object: I,
+  ): MsgSetOrchestratorAddress {
     const message = createBaseMsgSetOrchestratorAddress();
     message.validator = object.validator ?? "";
     message.orchestrator = object.orchestrator ?? "";
@@ -1644,20 +1661,25 @@ export const MsgFxOriginatedTokenClaim = {
     return MsgFxOriginatedTokenClaim.fromPartial(base ?? {});
   },
 
-  fromPartial<I extends Exact<DeepPartial<MsgFxOriginatedTokenClaim>, I>>(object: I): MsgFxOriginatedTokenClaim {
+  fromPartial<I extends Exact<DeepPartial<MsgFxOriginatedTokenClaim>, I>>(
+    object: I,
+  ): MsgFxOriginatedTokenClaim {
     const message = createBaseMsgFxOriginatedTokenClaim();
-    message.eventNonce = (object.eventNonce !== undefined && object.eventNonce !== null)
-      ? Long.fromValue(object.eventNonce)
-      : Long.UZERO;
-    message.blockHeight = (object.blockHeight !== undefined && object.blockHeight !== null)
-      ? Long.fromValue(object.blockHeight)
-      : Long.UZERO;
+    message.eventNonce =
+      object.eventNonce !== undefined && object.eventNonce !== null
+        ? Long.fromValue(object.eventNonce)
+        : Long.UZERO;
+    message.blockHeight =
+      object.blockHeight !== undefined && object.blockHeight !== null
+        ? Long.fromValue(object.blockHeight)
+        : Long.UZERO;
     message.tokenContract = object.tokenContract ?? "";
     message.name = object.name ?? "";
     message.symbol = object.symbol ?? "";
-    message.decimals = (object.decimals !== undefined && object.decimals !== null)
-      ? Long.fromValue(object.decimals)
-      : Long.UZERO;
+    message.decimals =
+      object.decimals !== undefined && object.decimals !== null
+        ? Long.fromValue(object.decimals)
+        : Long.UZERO;
     message.orchestrator = object.orchestrator ?? "";
     return message;
   },
@@ -1801,14 +1823,21 @@ interface Rpc {
 
 type Builtin = Date | Function | Uint8Array | string | number | boolean | undefined;
 
-export type DeepPartial<T> = T extends Builtin ? T
-  : T extends Long ? string | number | Long : T extends Array<infer U> ? Array<DeepPartial<U>>
-  : T extends ReadonlyArray<infer U> ? ReadonlyArray<DeepPartial<U>>
-  : T extends {} ? { [K in keyof T]?: DeepPartial<T[K]> }
+export type DeepPartial<T> = T extends Builtin
+  ? T
+  : T extends Long
+  ? string | number | Long
+  : T extends Array<infer U>
+  ? Array<DeepPartial<U>>
+  : T extends ReadonlyArray<infer U>
+  ? ReadonlyArray<DeepPartial<U>>
+  : T extends {}
+  ? { [K in keyof T]?: DeepPartial<T[K]> }
   : Partial<T>;
 
 type KeysOfUnion<T> = T extends T ? keyof T : never;
-export type Exact<P, I extends P> = P extends Builtin ? P
+export type Exact<P, I extends P> = P extends Builtin
+  ? P
   : P & { [K in keyof P]: Exact<P[K], I[K]> } & { [K in Exclude<keyof I, KeysOfUnion<P>>]: never };
 
 if (_m0.util.Long !== Long) {

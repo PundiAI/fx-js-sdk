@@ -8,8 +8,7 @@ import { BatchFees, ERC20ToDenom, MinBatchFee, OutgoingTransferTx, OutgoingTxBat
 export const protobufPackage = "fx.gravity.v1";
 
 /** Deprecated: after upgrade v3 */
-export interface QueryParamsRequest {
-}
+export interface QueryParamsRequest {}
 
 /** Deprecated: after upgrade v3 */
 export interface QueryParamsResponse {
@@ -17,8 +16,7 @@ export interface QueryParamsResponse {
 }
 
 /** Deprecated: after upgrade v3 */
-export interface QueryCurrentValsetRequest {
-}
+export interface QueryCurrentValsetRequest {}
 
 /** Deprecated: after upgrade v3 */
 export interface QueryCurrentValsetResponse {
@@ -57,8 +55,7 @@ export interface QueryValsetConfirmsByNonceResponse {
 }
 
 /** Deprecated: after upgrade v3 */
-export interface QueryLastValsetRequestsRequest {
-}
+export interface QueryLastValsetRequestsRequest {}
 
 /** Deprecated: after upgrade v3 */
 export interface QueryLastValsetRequestsResponse {
@@ -96,8 +93,7 @@ export interface QueryLastPendingBatchRequestByAddrResponse {
 }
 
 /** Deprecated: after upgrade v3 */
-export interface QueryOutgoingTxBatchesRequest {
-}
+export interface QueryOutgoingTxBatchesRequest {}
 
 /** Deprecated: after upgrade v3 */
 export interface QueryOutgoingTxBatchesResponse {
@@ -215,8 +211,7 @@ export interface QueryPendingSendToEthResponse {
 }
 
 /** Deprecated: after upgrade v3 */
-export interface QueryLastObservedBlockHeightRequest {
-}
+export interface QueryLastObservedBlockHeightRequest {}
 
 /** Deprecated: after upgrade v3 */
 export interface QueryLastObservedBlockHeightResponse {
@@ -235,8 +230,7 @@ export interface QueryLastEventBlockHeightByAddrResponse {
 }
 
 /** Deprecated: after upgrade v3 */
-export interface QueryProjectedBatchTimeoutHeightRequest {
-}
+export interface QueryProjectedBatchTimeoutHeightRequest {}
 
 /** Deprecated: after upgrade v3 */
 export interface QueryProjectedBatchTimeoutHeightResponse {
@@ -244,8 +238,7 @@ export interface QueryProjectedBatchTimeoutHeightResponse {
 }
 
 /** Deprecated: after upgrade v3 */
-export interface QueryBridgeTokensRequest {
-}
+export interface QueryBridgeTokensRequest {}
 
 /** Deprecated: after upgrade v3 */
 export interface QueryBridgeTokensResponse {
@@ -347,9 +340,8 @@ export const QueryParamsResponse = {
 
   fromPartial<I extends Exact<DeepPartial<QueryParamsResponse>, I>>(object: I): QueryParamsResponse {
     const message = createBaseQueryParamsResponse();
-    message.params = (object.params !== undefined && object.params !== null)
-      ? Params.fromPartial(object.params)
-      : undefined;
+    message.params =
+      object.params !== undefined && object.params !== null ? Params.fromPartial(object.params) : undefined;
     return message;
   },
 };
@@ -447,11 +439,12 @@ export const QueryCurrentValsetResponse = {
     return QueryCurrentValsetResponse.fromPartial(base ?? {});
   },
 
-  fromPartial<I extends Exact<DeepPartial<QueryCurrentValsetResponse>, I>>(object: I): QueryCurrentValsetResponse {
+  fromPartial<I extends Exact<DeepPartial<QueryCurrentValsetResponse>, I>>(
+    object: I,
+  ): QueryCurrentValsetResponse {
     const message = createBaseQueryCurrentValsetResponse();
-    message.valset = (object.valset !== undefined && object.valset !== null)
-      ? Valset.fromPartial(object.valset)
-      : undefined;
+    message.valset =
+      object.valset !== undefined && object.valset !== null ? Valset.fromPartial(object.valset) : undefined;
     return message;
   },
 };
@@ -505,9 +498,12 @@ export const QueryValsetRequestRequest = {
     return QueryValsetRequestRequest.fromPartial(base ?? {});
   },
 
-  fromPartial<I extends Exact<DeepPartial<QueryValsetRequestRequest>, I>>(object: I): QueryValsetRequestRequest {
+  fromPartial<I extends Exact<DeepPartial<QueryValsetRequestRequest>, I>>(
+    object: I,
+  ): QueryValsetRequestRequest {
     const message = createBaseQueryValsetRequestRequest();
-    message.nonce = (object.nonce !== undefined && object.nonce !== null) ? Long.fromValue(object.nonce) : Long.UZERO;
+    message.nonce =
+      object.nonce !== undefined && object.nonce !== null ? Long.fromValue(object.nonce) : Long.UZERO;
     return message;
   },
 };
@@ -561,11 +557,12 @@ export const QueryValsetRequestResponse = {
     return QueryValsetRequestResponse.fromPartial(base ?? {});
   },
 
-  fromPartial<I extends Exact<DeepPartial<QueryValsetRequestResponse>, I>>(object: I): QueryValsetRequestResponse {
+  fromPartial<I extends Exact<DeepPartial<QueryValsetRequestResponse>, I>>(
+    object: I,
+  ): QueryValsetRequestResponse {
     const message = createBaseQueryValsetRequestResponse();
-    message.valset = (object.valset !== undefined && object.valset !== null)
-      ? Valset.fromPartial(object.valset)
-      : undefined;
+    message.valset =
+      object.valset !== undefined && object.valset !== null ? Valset.fromPartial(object.valset) : undefined;
     return message;
   },
 };
@@ -633,9 +630,12 @@ export const QueryValsetConfirmRequest = {
     return QueryValsetConfirmRequest.fromPartial(base ?? {});
   },
 
-  fromPartial<I extends Exact<DeepPartial<QueryValsetConfirmRequest>, I>>(object: I): QueryValsetConfirmRequest {
+  fromPartial<I extends Exact<DeepPartial<QueryValsetConfirmRequest>, I>>(
+    object: I,
+  ): QueryValsetConfirmRequest {
     const message = createBaseQueryValsetConfirmRequest();
-    message.nonce = (object.nonce !== undefined && object.nonce !== null) ? Long.fromValue(object.nonce) : Long.UZERO;
+    message.nonce =
+      object.nonce !== undefined && object.nonce !== null ? Long.fromValue(object.nonce) : Long.UZERO;
     message.address = object.address ?? "";
     return message;
   },
@@ -691,11 +691,14 @@ export const QueryValsetConfirmResponse = {
     return QueryValsetConfirmResponse.fromPartial(base ?? {});
   },
 
-  fromPartial<I extends Exact<DeepPartial<QueryValsetConfirmResponse>, I>>(object: I): QueryValsetConfirmResponse {
+  fromPartial<I extends Exact<DeepPartial<QueryValsetConfirmResponse>, I>>(
+    object: I,
+  ): QueryValsetConfirmResponse {
     const message = createBaseQueryValsetConfirmResponse();
-    message.confirm = (object.confirm !== undefined && object.confirm !== null)
-      ? MsgValsetConfirm.fromPartial(object.confirm)
-      : undefined;
+    message.confirm =
+      object.confirm !== undefined && object.confirm !== null
+        ? MsgValsetConfirm.fromPartial(object.confirm)
+        : undefined;
     return message;
   },
 };
@@ -755,7 +758,8 @@ export const QueryValsetConfirmsByNonceRequest = {
     object: I,
   ): QueryValsetConfirmsByNonceRequest {
     const message = createBaseQueryValsetConfirmsByNonceRequest();
-    message.nonce = (object.nonce !== undefined && object.nonce !== null) ? Long.fromValue(object.nonce) : Long.UZERO;
+    message.nonce =
+      object.nonce !== undefined && object.nonce !== null ? Long.fromValue(object.nonce) : Long.UZERO;
     return message;
   },
 };
@@ -797,14 +801,16 @@ export const QueryValsetConfirmsByNonceResponse = {
 
   fromJSON(object: any): QueryValsetConfirmsByNonceResponse {
     return {
-      confirms: Array.isArray(object?.confirms) ? object.confirms.map((e: any) => MsgValsetConfirm.fromJSON(e)) : [],
+      confirms: Array.isArray(object?.confirms)
+        ? object.confirms.map((e: any) => MsgValsetConfirm.fromJSON(e))
+        : [],
     };
   },
 
   toJSON(message: QueryValsetConfirmsByNonceResponse): unknown {
     const obj: any = {};
     if (message.confirms) {
-      obj.confirms = message.confirms.map((e) => e ? MsgValsetConfirm.toJSON(e) : undefined);
+      obj.confirms = message.confirms.map((e) => (e ? MsgValsetConfirm.toJSON(e) : undefined));
     } else {
       obj.confirms = [];
     }
@@ -860,11 +866,15 @@ export const QueryLastValsetRequestsRequest = {
     return obj;
   },
 
-  create<I extends Exact<DeepPartial<QueryLastValsetRequestsRequest>, I>>(base?: I): QueryLastValsetRequestsRequest {
+  create<I extends Exact<DeepPartial<QueryLastValsetRequestsRequest>, I>>(
+    base?: I,
+  ): QueryLastValsetRequestsRequest {
     return QueryLastValsetRequestsRequest.fromPartial(base ?? {});
   },
 
-  fromPartial<I extends Exact<DeepPartial<QueryLastValsetRequestsRequest>, I>>(_: I): QueryLastValsetRequestsRequest {
+  fromPartial<I extends Exact<DeepPartial<QueryLastValsetRequestsRequest>, I>>(
+    _: I,
+  ): QueryLastValsetRequestsRequest {
     const message = createBaseQueryLastValsetRequestsRequest();
     return message;
   },
@@ -906,20 +916,24 @@ export const QueryLastValsetRequestsResponse = {
   },
 
   fromJSON(object: any): QueryLastValsetRequestsResponse {
-    return { valsets: Array.isArray(object?.valsets) ? object.valsets.map((e: any) => Valset.fromJSON(e)) : [] };
+    return {
+      valsets: Array.isArray(object?.valsets) ? object.valsets.map((e: any) => Valset.fromJSON(e)) : [],
+    };
   },
 
   toJSON(message: QueryLastValsetRequestsResponse): unknown {
     const obj: any = {};
     if (message.valsets) {
-      obj.valsets = message.valsets.map((e) => e ? Valset.toJSON(e) : undefined);
+      obj.valsets = message.valsets.map((e) => (e ? Valset.toJSON(e) : undefined));
     } else {
       obj.valsets = [];
     }
     return obj;
   },
 
-  create<I extends Exact<DeepPartial<QueryLastValsetRequestsResponse>, I>>(base?: I): QueryLastValsetRequestsResponse {
+  create<I extends Exact<DeepPartial<QueryLastValsetRequestsResponse>, I>>(
+    base?: I,
+  ): QueryLastValsetRequestsResponse {
     return QueryLastValsetRequestsResponse.fromPartial(base ?? {});
   },
 
@@ -937,7 +951,10 @@ function createBaseQueryLastPendingValsetRequestByAddrRequest(): QueryLastPendin
 }
 
 export const QueryLastPendingValsetRequestByAddrRequest = {
-  encode(message: QueryLastPendingValsetRequestByAddrRequest, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  encode(
+    message: QueryLastPendingValsetRequestByAddrRequest,
+    writer: _m0.Writer = _m0.Writer.create(),
+  ): _m0.Writer {
     if (message.address !== "") {
       writer.uint32(10).string(message.address);
     }
@@ -997,7 +1014,10 @@ function createBaseQueryLastPendingValsetRequestByAddrResponse(): QueryLastPendi
 }
 
 export const QueryLastPendingValsetRequestByAddrResponse = {
-  encode(message: QueryLastPendingValsetRequestByAddrResponse, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  encode(
+    message: QueryLastPendingValsetRequestByAddrResponse,
+    writer: _m0.Writer = _m0.Writer.create(),
+  ): _m0.Writer {
     for (const v of message.valsets) {
       Valset.encode(v!, writer.uint32(10).fork()).ldelim();
     }
@@ -1028,13 +1048,15 @@ export const QueryLastPendingValsetRequestByAddrResponse = {
   },
 
   fromJSON(object: any): QueryLastPendingValsetRequestByAddrResponse {
-    return { valsets: Array.isArray(object?.valsets) ? object.valsets.map((e: any) => Valset.fromJSON(e)) : [] };
+    return {
+      valsets: Array.isArray(object?.valsets) ? object.valsets.map((e: any) => Valset.fromJSON(e)) : [],
+    };
   },
 
   toJSON(message: QueryLastPendingValsetRequestByAddrResponse): unknown {
     const obj: any = {};
     if (message.valsets) {
-      obj.valsets = message.valsets.map((e) => e ? Valset.toJSON(e) : undefined);
+      obj.valsets = message.valsets.map((e) => (e ? Valset.toJSON(e) : undefined));
     } else {
       obj.valsets = [];
     }
@@ -1102,7 +1124,7 @@ export const QueryBatchFeeRequest = {
   toJSON(message: QueryBatchFeeRequest): unknown {
     const obj: any = {};
     if (message.minBatchFees) {
-      obj.minBatchFees = message.minBatchFees.map((e) => e ? MinBatchFee.toJSON(e) : undefined);
+      obj.minBatchFees = message.minBatchFees.map((e) => (e ? MinBatchFee.toJSON(e) : undefined));
     } else {
       obj.minBatchFees = [];
     }
@@ -1157,14 +1179,16 @@ export const QueryBatchFeeResponse = {
 
   fromJSON(object: any): QueryBatchFeeResponse {
     return {
-      batchFees: Array.isArray(object?.batchFees) ? object.batchFees.map((e: any) => BatchFees.fromJSON(e)) : [],
+      batchFees: Array.isArray(object?.batchFees)
+        ? object.batchFees.map((e: any) => BatchFees.fromJSON(e))
+        : [],
     };
   },
 
   toJSON(message: QueryBatchFeeResponse): unknown {
     const obj: any = {};
     if (message.batchFees) {
-      obj.batchFees = message.batchFees.map((e) => e ? BatchFees.toJSON(e) : undefined);
+      obj.batchFees = message.batchFees.map((e) => (e ? BatchFees.toJSON(e) : undefined));
     } else {
       obj.batchFees = [];
     }
@@ -1187,7 +1211,10 @@ function createBaseQueryLastPendingBatchRequestByAddrRequest(): QueryLastPending
 }
 
 export const QueryLastPendingBatchRequestByAddrRequest = {
-  encode(message: QueryLastPendingBatchRequestByAddrRequest, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  encode(
+    message: QueryLastPendingBatchRequestByAddrRequest,
+    writer: _m0.Writer = _m0.Writer.create(),
+  ): _m0.Writer {
     if (message.address !== "") {
       writer.uint32(10).string(message.address);
     }
@@ -1247,7 +1274,10 @@ function createBaseQueryLastPendingBatchRequestByAddrResponse(): QueryLastPendin
 }
 
 export const QueryLastPendingBatchRequestByAddrResponse = {
-  encode(message: QueryLastPendingBatchRequestByAddrResponse, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  encode(
+    message: QueryLastPendingBatchRequestByAddrResponse,
+    writer: _m0.Writer = _m0.Writer.create(),
+  ): _m0.Writer {
     if (message.batch !== undefined) {
       OutgoingTxBatch.encode(message.batch, writer.uint32(10).fork()).ldelim();
     }
@@ -1283,7 +1313,8 @@ export const QueryLastPendingBatchRequestByAddrResponse = {
 
   toJSON(message: QueryLastPendingBatchRequestByAddrResponse): unknown {
     const obj: any = {};
-    message.batch !== undefined && (obj.batch = message.batch ? OutgoingTxBatch.toJSON(message.batch) : undefined);
+    message.batch !== undefined &&
+      (obj.batch = message.batch ? OutgoingTxBatch.toJSON(message.batch) : undefined);
     return obj;
   },
 
@@ -1297,9 +1328,10 @@ export const QueryLastPendingBatchRequestByAddrResponse = {
     object: I,
   ): QueryLastPendingBatchRequestByAddrResponse {
     const message = createBaseQueryLastPendingBatchRequestByAddrResponse();
-    message.batch = (object.batch !== undefined && object.batch !== null)
-      ? OutgoingTxBatch.fromPartial(object.batch)
-      : undefined;
+    message.batch =
+      object.batch !== undefined && object.batch !== null
+        ? OutgoingTxBatch.fromPartial(object.batch)
+        : undefined;
     return message;
   },
 };
@@ -1338,11 +1370,15 @@ export const QueryOutgoingTxBatchesRequest = {
     return obj;
   },
 
-  create<I extends Exact<DeepPartial<QueryOutgoingTxBatchesRequest>, I>>(base?: I): QueryOutgoingTxBatchesRequest {
+  create<I extends Exact<DeepPartial<QueryOutgoingTxBatchesRequest>, I>>(
+    base?: I,
+  ): QueryOutgoingTxBatchesRequest {
     return QueryOutgoingTxBatchesRequest.fromPartial(base ?? {});
   },
 
-  fromPartial<I extends Exact<DeepPartial<QueryOutgoingTxBatchesRequest>, I>>(_: I): QueryOutgoingTxBatchesRequest {
+  fromPartial<I extends Exact<DeepPartial<QueryOutgoingTxBatchesRequest>, I>>(
+    _: I,
+  ): QueryOutgoingTxBatchesRequest {
     const message = createBaseQueryOutgoingTxBatchesRequest();
     return message;
   },
@@ -1385,21 +1421,25 @@ export const QueryOutgoingTxBatchesResponse = {
 
   fromJSON(object: any): QueryOutgoingTxBatchesResponse {
     return {
-      batches: Array.isArray(object?.batches) ? object.batches.map((e: any) => OutgoingTxBatch.fromJSON(e)) : [],
+      batches: Array.isArray(object?.batches)
+        ? object.batches.map((e: any) => OutgoingTxBatch.fromJSON(e))
+        : [],
     };
   },
 
   toJSON(message: QueryOutgoingTxBatchesResponse): unknown {
     const obj: any = {};
     if (message.batches) {
-      obj.batches = message.batches.map((e) => e ? OutgoingTxBatch.toJSON(e) : undefined);
+      obj.batches = message.batches.map((e) => (e ? OutgoingTxBatch.toJSON(e) : undefined));
     } else {
       obj.batches = [];
     }
     return obj;
   },
 
-  create<I extends Exact<DeepPartial<QueryOutgoingTxBatchesResponse>, I>>(base?: I): QueryOutgoingTxBatchesResponse {
+  create<I extends Exact<DeepPartial<QueryOutgoingTxBatchesResponse>, I>>(
+    base?: I,
+  ): QueryOutgoingTxBatchesResponse {
     return QueryOutgoingTxBatchesResponse.fromPartial(base ?? {});
   },
 
@@ -1471,7 +1511,9 @@ export const QueryBatchRequestByNonceRequest = {
     return obj;
   },
 
-  create<I extends Exact<DeepPartial<QueryBatchRequestByNonceRequest>, I>>(base?: I): QueryBatchRequestByNonceRequest {
+  create<I extends Exact<DeepPartial<QueryBatchRequestByNonceRequest>, I>>(
+    base?: I,
+  ): QueryBatchRequestByNonceRequest {
     return QueryBatchRequestByNonceRequest.fromPartial(base ?? {});
   },
 
@@ -1479,7 +1521,8 @@ export const QueryBatchRequestByNonceRequest = {
     object: I,
   ): QueryBatchRequestByNonceRequest {
     const message = createBaseQueryBatchRequestByNonceRequest();
-    message.nonce = (object.nonce !== undefined && object.nonce !== null) ? Long.fromValue(object.nonce) : Long.UZERO;
+    message.nonce =
+      object.nonce !== undefined && object.nonce !== null ? Long.fromValue(object.nonce) : Long.UZERO;
     message.tokenContract = object.tokenContract ?? "";
     return message;
   },
@@ -1526,7 +1569,8 @@ export const QueryBatchRequestByNonceResponse = {
 
   toJSON(message: QueryBatchRequestByNonceResponse): unknown {
     const obj: any = {};
-    message.batch !== undefined && (obj.batch = message.batch ? OutgoingTxBatch.toJSON(message.batch) : undefined);
+    message.batch !== undefined &&
+      (obj.batch = message.batch ? OutgoingTxBatch.toJSON(message.batch) : undefined);
     return obj;
   },
 
@@ -1540,9 +1584,10 @@ export const QueryBatchRequestByNonceResponse = {
     object: I,
   ): QueryBatchRequestByNonceResponse {
     const message = createBaseQueryBatchRequestByNonceResponse();
-    message.batch = (object.batch !== undefined && object.batch !== null)
-      ? OutgoingTxBatch.fromPartial(object.batch)
-      : undefined;
+    message.batch =
+      object.batch !== undefined && object.batch !== null
+        ? OutgoingTxBatch.fromPartial(object.batch)
+        : undefined;
     return message;
   },
 };
@@ -1622,9 +1667,12 @@ export const QueryBatchConfirmRequest = {
     return QueryBatchConfirmRequest.fromPartial(base ?? {});
   },
 
-  fromPartial<I extends Exact<DeepPartial<QueryBatchConfirmRequest>, I>>(object: I): QueryBatchConfirmRequest {
+  fromPartial<I extends Exact<DeepPartial<QueryBatchConfirmRequest>, I>>(
+    object: I,
+  ): QueryBatchConfirmRequest {
     const message = createBaseQueryBatchConfirmRequest();
-    message.nonce = (object.nonce !== undefined && object.nonce !== null) ? Long.fromValue(object.nonce) : Long.UZERO;
+    message.nonce =
+      object.nonce !== undefined && object.nonce !== null ? Long.fromValue(object.nonce) : Long.UZERO;
     message.tokenContract = object.tokenContract ?? "";
     message.address = object.address ?? "";
     return message;
@@ -1681,11 +1729,14 @@ export const QueryBatchConfirmResponse = {
     return QueryBatchConfirmResponse.fromPartial(base ?? {});
   },
 
-  fromPartial<I extends Exact<DeepPartial<QueryBatchConfirmResponse>, I>>(object: I): QueryBatchConfirmResponse {
+  fromPartial<I extends Exact<DeepPartial<QueryBatchConfirmResponse>, I>>(
+    object: I,
+  ): QueryBatchConfirmResponse {
     const message = createBaseQueryBatchConfirmResponse();
-    message.confirm = (object.confirm !== undefined && object.confirm !== null)
-      ? MsgConfirmBatch.fromPartial(object.confirm)
-      : undefined;
+    message.confirm =
+      object.confirm !== undefined && object.confirm !== null
+        ? MsgConfirmBatch.fromPartial(object.confirm)
+        : undefined;
     return message;
   },
 };
@@ -1753,9 +1804,12 @@ export const QueryBatchConfirmsRequest = {
     return QueryBatchConfirmsRequest.fromPartial(base ?? {});
   },
 
-  fromPartial<I extends Exact<DeepPartial<QueryBatchConfirmsRequest>, I>>(object: I): QueryBatchConfirmsRequest {
+  fromPartial<I extends Exact<DeepPartial<QueryBatchConfirmsRequest>, I>>(
+    object: I,
+  ): QueryBatchConfirmsRequest {
     const message = createBaseQueryBatchConfirmsRequest();
-    message.nonce = (object.nonce !== undefined && object.nonce !== null) ? Long.fromValue(object.nonce) : Long.UZERO;
+    message.nonce =
+      object.nonce !== undefined && object.nonce !== null ? Long.fromValue(object.nonce) : Long.UZERO;
     message.tokenContract = object.tokenContract ?? "";
     return message;
   },
@@ -1798,14 +1852,16 @@ export const QueryBatchConfirmsResponse = {
 
   fromJSON(object: any): QueryBatchConfirmsResponse {
     return {
-      confirms: Array.isArray(object?.confirms) ? object.confirms.map((e: any) => MsgConfirmBatch.fromJSON(e)) : [],
+      confirms: Array.isArray(object?.confirms)
+        ? object.confirms.map((e: any) => MsgConfirmBatch.fromJSON(e))
+        : [],
     };
   },
 
   toJSON(message: QueryBatchConfirmsResponse): unknown {
     const obj: any = {};
     if (message.confirms) {
-      obj.confirms = message.confirms.map((e) => e ? MsgConfirmBatch.toJSON(e) : undefined);
+      obj.confirms = message.confirms.map((e) => (e ? MsgConfirmBatch.toJSON(e) : undefined));
     } else {
       obj.confirms = [];
     }
@@ -1816,7 +1872,9 @@ export const QueryBatchConfirmsResponse = {
     return QueryBatchConfirmsResponse.fromPartial(base ?? {});
   },
 
-  fromPartial<I extends Exact<DeepPartial<QueryBatchConfirmsResponse>, I>>(object: I): QueryBatchConfirmsResponse {
+  fromPartial<I extends Exact<DeepPartial<QueryBatchConfirmsResponse>, I>>(
+    object: I,
+  ): QueryBatchConfirmsResponse {
     const message = createBaseQueryBatchConfirmsResponse();
     message.confirms = object.confirms?.map((e) => MsgConfirmBatch.fromPartial(e)) || [];
     return message;
@@ -1938,9 +1996,10 @@ export const QueryLastEventNonceByAddrResponse = {
     object: I,
   ): QueryLastEventNonceByAddrResponse {
     const message = createBaseQueryLastEventNonceByAddrResponse();
-    message.eventNonce = (object.eventNonce !== undefined && object.eventNonce !== null)
-      ? Long.fromValue(object.eventNonce)
-      : Long.UZERO;
+    message.eventNonce =
+      object.eventNonce !== undefined && object.eventNonce !== null
+        ? Long.fromValue(object.eventNonce)
+        : Long.UZERO;
     return message;
   },
 };
@@ -1994,7 +2053,9 @@ export const QueryERC20ToDenomRequest = {
     return QueryERC20ToDenomRequest.fromPartial(base ?? {});
   },
 
-  fromPartial<I extends Exact<DeepPartial<QueryERC20ToDenomRequest>, I>>(object: I): QueryERC20ToDenomRequest {
+  fromPartial<I extends Exact<DeepPartial<QueryERC20ToDenomRequest>, I>>(
+    object: I,
+  ): QueryERC20ToDenomRequest {
     const message = createBaseQueryERC20ToDenomRequest();
     message.erc20 = object.erc20 ?? "";
     return message;
@@ -2064,7 +2125,9 @@ export const QueryERC20ToDenomResponse = {
     return QueryERC20ToDenomResponse.fromPartial(base ?? {});
   },
 
-  fromPartial<I extends Exact<DeepPartial<QueryERC20ToDenomResponse>, I>>(object: I): QueryERC20ToDenomResponse {
+  fromPartial<I extends Exact<DeepPartial<QueryERC20ToDenomResponse>, I>>(
+    object: I,
+  ): QueryERC20ToDenomResponse {
     const message = createBaseQueryERC20ToDenomResponse();
     message.denom = object.denom ?? "";
     message.fxOriginated = object.fxOriginated ?? false;
@@ -2121,7 +2184,9 @@ export const QueryDenomToERC20Request = {
     return QueryDenomToERC20Request.fromPartial(base ?? {});
   },
 
-  fromPartial<I extends Exact<DeepPartial<QueryDenomToERC20Request>, I>>(object: I): QueryDenomToERC20Request {
+  fromPartial<I extends Exact<DeepPartial<QueryDenomToERC20Request>, I>>(
+    object: I,
+  ): QueryDenomToERC20Request {
     const message = createBaseQueryDenomToERC20Request();
     message.denom = object.denom ?? "";
     return message;
@@ -2191,7 +2256,9 @@ export const QueryDenomToERC20Response = {
     return QueryDenomToERC20Response.fromPartial(base ?? {});
   },
 
-  fromPartial<I extends Exact<DeepPartial<QueryDenomToERC20Response>, I>>(object: I): QueryDenomToERC20Response {
+  fromPartial<I extends Exact<DeepPartial<QueryDenomToERC20Response>, I>>(
+    object: I,
+  ): QueryDenomToERC20Response {
     const message = createBaseQueryDenomToERC20Response();
     message.erc20 = object.erc20 ?? "";
     message.fxOriginated = object.fxOriginated ?? false;
@@ -2379,11 +2446,15 @@ export const QueryDelegateKeyByEthRequest = {
     return obj;
   },
 
-  create<I extends Exact<DeepPartial<QueryDelegateKeyByEthRequest>, I>>(base?: I): QueryDelegateKeyByEthRequest {
+  create<I extends Exact<DeepPartial<QueryDelegateKeyByEthRequest>, I>>(
+    base?: I,
+  ): QueryDelegateKeyByEthRequest {
     return QueryDelegateKeyByEthRequest.fromPartial(base ?? {});
   },
 
-  fromPartial<I extends Exact<DeepPartial<QueryDelegateKeyByEthRequest>, I>>(object: I): QueryDelegateKeyByEthRequest {
+  fromPartial<I extends Exact<DeepPartial<QueryDelegateKeyByEthRequest>, I>>(
+    object: I,
+  ): QueryDelegateKeyByEthRequest {
     const message = createBaseQueryDelegateKeyByEthRequest();
     message.ethAddress = object.ethAddress ?? "";
     return message;
@@ -2449,7 +2520,9 @@ export const QueryDelegateKeyByEthResponse = {
     return obj;
   },
 
-  create<I extends Exact<DeepPartial<QueryDelegateKeyByEthResponse>, I>>(base?: I): QueryDelegateKeyByEthResponse {
+  create<I extends Exact<DeepPartial<QueryDelegateKeyByEthResponse>, I>>(
+    base?: I,
+  ): QueryDelegateKeyByEthResponse {
     return QueryDelegateKeyByEthResponse.fromPartial(base ?? {});
   },
 
@@ -2468,7 +2541,10 @@ function createBaseQueryDelegateKeyByOrchestratorRequest(): QueryDelegateKeyByOr
 }
 
 export const QueryDelegateKeyByOrchestratorRequest = {
-  encode(message: QueryDelegateKeyByOrchestratorRequest, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  encode(
+    message: QueryDelegateKeyByOrchestratorRequest,
+    writer: _m0.Writer = _m0.Writer.create(),
+  ): _m0.Writer {
     if (message.orchestratorAddress !== "") {
       writer.uint32(10).string(message.orchestratorAddress);
     }
@@ -2499,7 +2575,9 @@ export const QueryDelegateKeyByOrchestratorRequest = {
   },
 
   fromJSON(object: any): QueryDelegateKeyByOrchestratorRequest {
-    return { orchestratorAddress: isSet(object.orchestratorAddress) ? String(object.orchestratorAddress) : "" };
+    return {
+      orchestratorAddress: isSet(object.orchestratorAddress) ? String(object.orchestratorAddress) : "",
+    };
   },
 
   toJSON(message: QueryDelegateKeyByOrchestratorRequest): unknown {
@@ -2528,7 +2606,10 @@ function createBaseQueryDelegateKeyByOrchestratorResponse(): QueryDelegateKeyByO
 }
 
 export const QueryDelegateKeyByOrchestratorResponse = {
-  encode(message: QueryDelegateKeyByOrchestratorResponse, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  encode(
+    message: QueryDelegateKeyByOrchestratorResponse,
+    writer: _m0.Writer = _m0.Writer.create(),
+  ): _m0.Writer {
     if (message.validatorAddress !== "") {
       writer.uint32(10).string(message.validatorAddress);
     }
@@ -2643,11 +2724,15 @@ export const QueryPendingSendToEthRequest = {
     return obj;
   },
 
-  create<I extends Exact<DeepPartial<QueryPendingSendToEthRequest>, I>>(base?: I): QueryPendingSendToEthRequest {
+  create<I extends Exact<DeepPartial<QueryPendingSendToEthRequest>, I>>(
+    base?: I,
+  ): QueryPendingSendToEthRequest {
     return QueryPendingSendToEthRequest.fromPartial(base ?? {});
   },
 
-  fromPartial<I extends Exact<DeepPartial<QueryPendingSendToEthRequest>, I>>(object: I): QueryPendingSendToEthRequest {
+  fromPartial<I extends Exact<DeepPartial<QueryPendingSendToEthRequest>, I>>(
+    object: I,
+  ): QueryPendingSendToEthRequest {
     const message = createBaseQueryPendingSendToEthRequest();
     message.senderAddress = object.senderAddress ?? "";
     return message;
@@ -2713,19 +2798,25 @@ export const QueryPendingSendToEthResponse = {
   toJSON(message: QueryPendingSendToEthResponse): unknown {
     const obj: any = {};
     if (message.transfersInBatches) {
-      obj.transfersInBatches = message.transfersInBatches.map((e) => e ? OutgoingTransferTx.toJSON(e) : undefined);
+      obj.transfersInBatches = message.transfersInBatches.map((e) =>
+        e ? OutgoingTransferTx.toJSON(e) : undefined,
+      );
     } else {
       obj.transfersInBatches = [];
     }
     if (message.unbatchedTransfers) {
-      obj.unbatchedTransfers = message.unbatchedTransfers.map((e) => e ? OutgoingTransferTx.toJSON(e) : undefined);
+      obj.unbatchedTransfers = message.unbatchedTransfers.map((e) =>
+        e ? OutgoingTransferTx.toJSON(e) : undefined,
+      );
     } else {
       obj.unbatchedTransfers = [];
     }
     return obj;
   },
 
-  create<I extends Exact<DeepPartial<QueryPendingSendToEthResponse>, I>>(base?: I): QueryPendingSendToEthResponse {
+  create<I extends Exact<DeepPartial<QueryPendingSendToEthResponse>, I>>(
+    base?: I,
+  ): QueryPendingSendToEthResponse {
     return QueryPendingSendToEthResponse.fromPartial(base ?? {});
   },
 
@@ -2733,8 +2824,10 @@ export const QueryPendingSendToEthResponse = {
     object: I,
   ): QueryPendingSendToEthResponse {
     const message = createBaseQueryPendingSendToEthResponse();
-    message.transfersInBatches = object.transfersInBatches?.map((e) => OutgoingTransferTx.fromPartial(e)) || [];
-    message.unbatchedTransfers = object.unbatchedTransfers?.map((e) => OutgoingTransferTx.fromPartial(e)) || [];
+    message.transfersInBatches =
+      object.transfersInBatches?.map((e) => OutgoingTransferTx.fromPartial(e)) || [];
+    message.unbatchedTransfers =
+      object.unbatchedTransfers?.map((e) => OutgoingTransferTx.fromPartial(e)) || [];
     return message;
   },
 };
@@ -2792,7 +2885,10 @@ function createBaseQueryLastObservedBlockHeightResponse(): QueryLastObservedBloc
 }
 
 export const QueryLastObservedBlockHeightResponse = {
-  encode(message: QueryLastObservedBlockHeightResponse, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  encode(
+    message: QueryLastObservedBlockHeightResponse,
+    writer: _m0.Writer = _m0.Writer.create(),
+  ): _m0.Writer {
     if (!message.ethBlockHeight.isZero()) {
       writer.uint32(8).uint64(message.ethBlockHeight);
     }
@@ -2841,7 +2937,8 @@ export const QueryLastObservedBlockHeightResponse = {
 
   toJSON(message: QueryLastObservedBlockHeightResponse): unknown {
     const obj: any = {};
-    message.ethBlockHeight !== undefined && (obj.ethBlockHeight = (message.ethBlockHeight || Long.UZERO).toString());
+    message.ethBlockHeight !== undefined &&
+      (obj.ethBlockHeight = (message.ethBlockHeight || Long.UZERO).toString());
     message.blockHeight !== undefined && (obj.blockHeight = (message.blockHeight || Long.UZERO).toString());
     return obj;
   },
@@ -2856,12 +2953,14 @@ export const QueryLastObservedBlockHeightResponse = {
     object: I,
   ): QueryLastObservedBlockHeightResponse {
     const message = createBaseQueryLastObservedBlockHeightResponse();
-    message.ethBlockHeight = (object.ethBlockHeight !== undefined && object.ethBlockHeight !== null)
-      ? Long.fromValue(object.ethBlockHeight)
-      : Long.UZERO;
-    message.blockHeight = (object.blockHeight !== undefined && object.blockHeight !== null)
-      ? Long.fromValue(object.blockHeight)
-      : Long.UZERO;
+    message.ethBlockHeight =
+      object.ethBlockHeight !== undefined && object.ethBlockHeight !== null
+        ? Long.fromValue(object.ethBlockHeight)
+        : Long.UZERO;
+    message.blockHeight =
+      object.blockHeight !== undefined && object.blockHeight !== null
+        ? Long.fromValue(object.blockHeight)
+        : Long.UZERO;
     return message;
   },
 };
@@ -2871,7 +2970,10 @@ function createBaseQueryLastEventBlockHeightByAddrRequest(): QueryLastEventBlock
 }
 
 export const QueryLastEventBlockHeightByAddrRequest = {
-  encode(message: QueryLastEventBlockHeightByAddrRequest, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  encode(
+    message: QueryLastEventBlockHeightByAddrRequest,
+    writer: _m0.Writer = _m0.Writer.create(),
+  ): _m0.Writer {
     if (message.address !== "") {
       writer.uint32(10).string(message.address);
     }
@@ -2931,7 +3033,10 @@ function createBaseQueryLastEventBlockHeightByAddrResponse(): QueryLastEventBloc
 }
 
 export const QueryLastEventBlockHeightByAddrResponse = {
-  encode(message: QueryLastEventBlockHeightByAddrResponse, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  encode(
+    message: QueryLastEventBlockHeightByAddrResponse,
+    writer: _m0.Writer = _m0.Writer.create(),
+  ): _m0.Writer {
     if (!message.blockHeight.isZero()) {
       writer.uint32(8).uint64(message.blockHeight);
     }
@@ -2981,9 +3086,10 @@ export const QueryLastEventBlockHeightByAddrResponse = {
     object: I,
   ): QueryLastEventBlockHeightByAddrResponse {
     const message = createBaseQueryLastEventBlockHeightByAddrResponse();
-    message.blockHeight = (object.blockHeight !== undefined && object.blockHeight !== null)
-      ? Long.fromValue(object.blockHeight)
-      : Long.UZERO;
+    message.blockHeight =
+      object.blockHeight !== undefined && object.blockHeight !== null
+        ? Long.fromValue(object.blockHeight)
+        : Long.UZERO;
     return message;
   },
 };
@@ -3041,7 +3147,10 @@ function createBaseQueryProjectedBatchTimeoutHeightResponse(): QueryProjectedBat
 }
 
 export const QueryProjectedBatchTimeoutHeightResponse = {
-  encode(message: QueryProjectedBatchTimeoutHeightResponse, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  encode(
+    message: QueryProjectedBatchTimeoutHeightResponse,
+    writer: _m0.Writer = _m0.Writer.create(),
+  ): _m0.Writer {
     if (!message.timeoutHeight.isZero()) {
       writer.uint32(8).uint64(message.timeoutHeight);
     }
@@ -3077,7 +3186,8 @@ export const QueryProjectedBatchTimeoutHeightResponse = {
 
   toJSON(message: QueryProjectedBatchTimeoutHeightResponse): unknown {
     const obj: any = {};
-    message.timeoutHeight !== undefined && (obj.timeoutHeight = (message.timeoutHeight || Long.UZERO).toString());
+    message.timeoutHeight !== undefined &&
+      (obj.timeoutHeight = (message.timeoutHeight || Long.UZERO).toString());
     return obj;
   },
 
@@ -3091,9 +3201,10 @@ export const QueryProjectedBatchTimeoutHeightResponse = {
     object: I,
   ): QueryProjectedBatchTimeoutHeightResponse {
     const message = createBaseQueryProjectedBatchTimeoutHeightResponse();
-    message.timeoutHeight = (object.timeoutHeight !== undefined && object.timeoutHeight !== null)
-      ? Long.fromValue(object.timeoutHeight)
-      : Long.UZERO;
+    message.timeoutHeight =
+      object.timeoutHeight !== undefined && object.timeoutHeight !== null
+        ? Long.fromValue(object.timeoutHeight)
+        : Long.UZERO;
     return message;
   },
 };
@@ -3188,7 +3299,7 @@ export const QueryBridgeTokensResponse = {
   toJSON(message: QueryBridgeTokensResponse): unknown {
     const obj: any = {};
     if (message.bridgeTokens) {
-      obj.bridgeTokens = message.bridgeTokens.map((e) => e ? ERC20ToDenom.toJSON(e) : undefined);
+      obj.bridgeTokens = message.bridgeTokens.map((e) => (e ? ERC20ToDenom.toJSON(e) : undefined));
     } else {
       obj.bridgeTokens = [];
     }
@@ -3199,7 +3310,9 @@ export const QueryBridgeTokensResponse = {
     return QueryBridgeTokensResponse.fromPartial(base ?? {});
   },
 
-  fromPartial<I extends Exact<DeepPartial<QueryBridgeTokensResponse>, I>>(object: I): QueryBridgeTokensResponse {
+  fromPartial<I extends Exact<DeepPartial<QueryBridgeTokensResponse>, I>>(
+    object: I,
+  ): QueryBridgeTokensResponse {
     const message = createBaseQueryBridgeTokensResponse();
     message.bridgeTokens = object.bridgeTokens?.map((e) => ERC20ToDenom.fromPartial(e)) || [];
     return message;
@@ -3217,7 +3330,9 @@ export interface Query {
   /** Deprecated: Please use crosschain query.OracleSetConfirm */
   ValsetConfirm(request: QueryValsetConfirmRequest): Promise<QueryValsetConfirmResponse>;
   /** Deprecated: Please use crosschain query.OracleSetConfirmsByNonce */
-  ValsetConfirmsByNonce(request: QueryValsetConfirmsByNonceRequest): Promise<QueryValsetConfirmsByNonceResponse>;
+  ValsetConfirmsByNonce(
+    request: QueryValsetConfirmsByNonceRequest,
+  ): Promise<QueryValsetConfirmsByNonceResponse>;
   /** Deprecated: Please use crosschain query.LastOracleSetRequests */
   LastValsetRequests(request: QueryLastValsetRequestsRequest): Promise<QueryLastValsetRequestsResponse>;
   /** Deprecated: Please use crosschain query.LastPendingOracleSetRequestByAddr */
@@ -3237,7 +3352,9 @@ export interface Query {
   /** Deprecated: Please use crosschain query.BatchFees */
   BatchFees(request: QueryBatchFeeRequest): Promise<QueryBatchFeeResponse>;
   /** Deprecated: Please use crosschain query.LastObservedBlockHeight */
-  LastObservedBlockHeight(request: QueryLastObservedBlockHeightRequest): Promise<QueryLastObservedBlockHeightResponse>;
+  LastObservedBlockHeight(
+    request: QueryLastObservedBlockHeightRequest,
+  ): Promise<QueryLastObservedBlockHeightResponse>;
   /** Deprecated: Please use crosschain query.OutgoingTxBatches */
   OutgoingTxBatches(request: QueryOutgoingTxBatchesRequest): Promise<QueryOutgoingTxBatchesResponse>;
   /** Deprecated: Please use crosschain query.BatchRequestByNonce */
@@ -3251,7 +3368,9 @@ export interface Query {
   /** Deprecated: Please use crosschain query.DenomToToken */
   DenomToERC20(request: QueryDenomToERC20Request): Promise<QueryDenomToERC20Response>;
   /** Deprecated: Please use crosschain query.GetOracleByAddr */
-  GetDelegateKeyByValidator(request: QueryDelegateKeyByValidatorRequest): Promise<QueryDelegateKeyByValidatorResponse>;
+  GetDelegateKeyByValidator(
+    request: QueryDelegateKeyByValidatorRequest,
+  ): Promise<QueryDelegateKeyByValidatorResponse>;
   /** Deprecated: Please use crosschain query.GetOracleByExternalAddr */
   GetDelegateKeyByEth(request: QueryDelegateKeyByEthRequest): Promise<QueryDelegateKeyByEthResponse>;
   /** Deprecated: Please use crosschain query.GetOracleByBridgerAddr */
@@ -3323,7 +3442,9 @@ export class QueryClientImpl implements Query {
     return promise.then((data) => QueryValsetConfirmResponse.decode(_m0.Reader.create(data)));
   }
 
-  ValsetConfirmsByNonce(request: QueryValsetConfirmsByNonceRequest): Promise<QueryValsetConfirmsByNonceResponse> {
+  ValsetConfirmsByNonce(
+    request: QueryValsetConfirmsByNonceRequest,
+  ): Promise<QueryValsetConfirmsByNonceResponse> {
     const data = QueryValsetConfirmsByNonceRequest.encode(request).finish();
     const promise = this.rpc.request(this.service, "ValsetConfirmsByNonce", data);
     return promise.then((data) => QueryValsetConfirmsByNonceResponse.decode(_m0.Reader.create(data)));
@@ -3340,7 +3461,9 @@ export class QueryClientImpl implements Query {
   ): Promise<QueryLastPendingValsetRequestByAddrResponse> {
     const data = QueryLastPendingValsetRequestByAddrRequest.encode(request).finish();
     const promise = this.rpc.request(this.service, "LastPendingValsetRequestByAddr", data);
-    return promise.then((data) => QueryLastPendingValsetRequestByAddrResponse.decode(_m0.Reader.create(data)));
+    return promise.then((data) =>
+      QueryLastPendingValsetRequestByAddrResponse.decode(_m0.Reader.create(data)),
+    );
   }
 
   LastPendingBatchRequestByAddr(
@@ -3351,7 +3474,9 @@ export class QueryClientImpl implements Query {
     return promise.then((data) => QueryLastPendingBatchRequestByAddrResponse.decode(_m0.Reader.create(data)));
   }
 
-  LastEventNonceByAddr(request: QueryLastEventNonceByAddrRequest): Promise<QueryLastEventNonceByAddrResponse> {
+  LastEventNonceByAddr(
+    request: QueryLastEventNonceByAddrRequest,
+  ): Promise<QueryLastEventNonceByAddrResponse> {
     const data = QueryLastEventNonceByAddrRequest.encode(request).finish();
     const promise = this.rpc.request(this.service, "LastEventNonceByAddr", data);
     return promise.then((data) => QueryLastEventNonceByAddrResponse.decode(_m0.Reader.create(data)));
@@ -3371,7 +3496,9 @@ export class QueryClientImpl implements Query {
     return promise.then((data) => QueryBatchFeeResponse.decode(_m0.Reader.create(data)));
   }
 
-  LastObservedBlockHeight(request: QueryLastObservedBlockHeightRequest): Promise<QueryLastObservedBlockHeightResponse> {
+  LastObservedBlockHeight(
+    request: QueryLastObservedBlockHeightRequest,
+  ): Promise<QueryLastObservedBlockHeightResponse> {
     const data = QueryLastObservedBlockHeightRequest.encode(request).finish();
     const promise = this.rpc.request(this.service, "LastObservedBlockHeight", data);
     return promise.then((data) => QueryLastObservedBlockHeightResponse.decode(_m0.Reader.create(data)));
@@ -3413,7 +3540,9 @@ export class QueryClientImpl implements Query {
     return promise.then((data) => QueryDenomToERC20Response.decode(_m0.Reader.create(data)));
   }
 
-  GetDelegateKeyByValidator(request: QueryDelegateKeyByValidatorRequest): Promise<QueryDelegateKeyByValidatorResponse> {
+  GetDelegateKeyByValidator(
+    request: QueryDelegateKeyByValidatorRequest,
+  ): Promise<QueryDelegateKeyByValidatorResponse> {
     const data = QueryDelegateKeyByValidatorRequest.encode(request).finish();
     const promise = this.rpc.request(this.service, "GetDelegateKeyByValidator", data);
     return promise.then((data) => QueryDelegateKeyByValidatorResponse.decode(_m0.Reader.create(data)));
@@ -3460,14 +3589,21 @@ interface Rpc {
 
 type Builtin = Date | Function | Uint8Array | string | number | boolean | undefined;
 
-export type DeepPartial<T> = T extends Builtin ? T
-  : T extends Long ? string | number | Long : T extends Array<infer U> ? Array<DeepPartial<U>>
-  : T extends ReadonlyArray<infer U> ? ReadonlyArray<DeepPartial<U>>
-  : T extends {} ? { [K in keyof T]?: DeepPartial<T[K]> }
+export type DeepPartial<T> = T extends Builtin
+  ? T
+  : T extends Long
+  ? string | number | Long
+  : T extends Array<infer U>
+  ? Array<DeepPartial<U>>
+  : T extends ReadonlyArray<infer U>
+  ? ReadonlyArray<DeepPartial<U>>
+  : T extends {}
+  ? { [K in keyof T]?: DeepPartial<T[K]> }
   : Partial<T>;
 
 type KeysOfUnion<T> = T extends T ? keyof T : never;
-export type Exact<P, I extends P> = P extends Builtin ? P
+export type Exact<P, I extends P> = P extends Builtin
+  ? P
   : P & { [K in keyof P]: Exact<P[K], I[K]> } & { [K in Exclude<keyof I, KeysOfUnion<P>>]: never };
 
 if (_m0.util.Long !== Long) {

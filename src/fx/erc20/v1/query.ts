@@ -44,8 +44,7 @@ export interface QueryTokenPairResponse {
 }
 
 /** QueryParamsRequest is the request type for the Query/Params RPC method. */
-export interface QueryParamsRequest {
-}
+export interface QueryParamsRequest {}
 
 /**
  * QueryParamsResponse is the response type for the Query/Params RPC
@@ -139,9 +138,10 @@ export const QueryTokenPairsRequest = {
 
   fromPartial<I extends Exact<DeepPartial<QueryTokenPairsRequest>, I>>(object: I): QueryTokenPairsRequest {
     const message = createBaseQueryTokenPairsRequest();
-    message.pagination = (object.pagination !== undefined && object.pagination !== null)
-      ? PageRequest.fromPartial(object.pagination)
-      : undefined;
+    message.pagination =
+      object.pagination !== undefined && object.pagination !== null
+        ? PageRequest.fromPartial(object.pagination)
+        : undefined;
     return message;
   },
 };
@@ -193,7 +193,9 @@ export const QueryTokenPairsResponse = {
 
   fromJSON(object: any): QueryTokenPairsResponse {
     return {
-      tokenPairs: Array.isArray(object?.tokenPairs) ? object.tokenPairs.map((e: any) => TokenPair.fromJSON(e)) : [],
+      tokenPairs: Array.isArray(object?.tokenPairs)
+        ? object.tokenPairs.map((e: any) => TokenPair.fromJSON(e))
+        : [],
       pagination: isSet(object.pagination) ? PageResponse.fromJSON(object.pagination) : undefined,
     };
   },
@@ -201,7 +203,7 @@ export const QueryTokenPairsResponse = {
   toJSON(message: QueryTokenPairsResponse): unknown {
     const obj: any = {};
     if (message.tokenPairs) {
-      obj.tokenPairs = message.tokenPairs.map((e) => e ? TokenPair.toJSON(e) : undefined);
+      obj.tokenPairs = message.tokenPairs.map((e) => (e ? TokenPair.toJSON(e) : undefined));
     } else {
       obj.tokenPairs = [];
     }
@@ -217,9 +219,10 @@ export const QueryTokenPairsResponse = {
   fromPartial<I extends Exact<DeepPartial<QueryTokenPairsResponse>, I>>(object: I): QueryTokenPairsResponse {
     const message = createBaseQueryTokenPairsResponse();
     message.tokenPairs = object.tokenPairs?.map((e) => TokenPair.fromPartial(e)) || [];
-    message.pagination = (object.pagination !== undefined && object.pagination !== null)
-      ? PageResponse.fromPartial(object.pagination)
-      : undefined;
+    message.pagination =
+      object.pagination !== undefined && object.pagination !== null
+        ? PageResponse.fromPartial(object.pagination)
+        : undefined;
     return message;
   },
 };
@@ -332,9 +335,10 @@ export const QueryTokenPairResponse = {
 
   fromPartial<I extends Exact<DeepPartial<QueryTokenPairResponse>, I>>(object: I): QueryTokenPairResponse {
     const message = createBaseQueryTokenPairResponse();
-    message.tokenPair = (object.tokenPair !== undefined && object.tokenPair !== null)
-      ? TokenPair.fromPartial(object.tokenPair)
-      : undefined;
+    message.tokenPair =
+      object.tokenPair !== undefined && object.tokenPair !== null
+        ? TokenPair.fromPartial(object.tokenPair)
+        : undefined;
     return message;
   },
 };
@@ -434,9 +438,8 @@ export const QueryParamsResponse = {
 
   fromPartial<I extends Exact<DeepPartial<QueryParamsResponse>, I>>(object: I): QueryParamsResponse {
     const message = createBaseQueryParamsResponse();
-    message.params = (object.params !== undefined && object.params !== null)
-      ? Params.fromPartial(object.params)
-      : undefined;
+    message.params =
+      object.params !== undefined && object.params !== null ? Params.fromPartial(object.params) : undefined;
     return message;
   },
 };
@@ -490,7 +493,9 @@ export const QueryDenomAliasesRequest = {
     return QueryDenomAliasesRequest.fromPartial(base ?? {});
   },
 
-  fromPartial<I extends Exact<DeepPartial<QueryDenomAliasesRequest>, I>>(object: I): QueryDenomAliasesRequest {
+  fromPartial<I extends Exact<DeepPartial<QueryDenomAliasesRequest>, I>>(
+    object: I,
+  ): QueryDenomAliasesRequest {
     const message = createBaseQueryDenomAliasesRequest();
     message.denom = object.denom ?? "";
     return message;
@@ -550,7 +555,9 @@ export const QueryDenomAliasesResponse = {
     return QueryDenomAliasesResponse.fromPartial(base ?? {});
   },
 
-  fromPartial<I extends Exact<DeepPartial<QueryDenomAliasesResponse>, I>>(object: I): QueryDenomAliasesResponse {
+  fromPartial<I extends Exact<DeepPartial<QueryDenomAliasesResponse>, I>>(
+    object: I,
+  ): QueryDenomAliasesResponse {
     const message = createBaseQueryDenomAliasesResponse();
     message.aliases = object.aliases?.map((e) => e) || [];
     return message;
@@ -732,14 +739,21 @@ interface Rpc {
 
 type Builtin = Date | Function | Uint8Array | string | number | boolean | undefined;
 
-export type DeepPartial<T> = T extends Builtin ? T
-  : T extends Long ? string | number | Long : T extends Array<infer U> ? Array<DeepPartial<U>>
-  : T extends ReadonlyArray<infer U> ? ReadonlyArray<DeepPartial<U>>
-  : T extends {} ? { [K in keyof T]?: DeepPartial<T[K]> }
+export type DeepPartial<T> = T extends Builtin
+  ? T
+  : T extends Long
+  ? string | number | Long
+  : T extends Array<infer U>
+  ? Array<DeepPartial<U>>
+  : T extends ReadonlyArray<infer U>
+  ? ReadonlyArray<DeepPartial<U>>
+  : T extends {}
+  ? { [K in keyof T]?: DeepPartial<T[K]> }
   : Partial<T>;
 
 type KeysOfUnion<T> = T extends T ? keyof T : never;
-export type Exact<P, I extends P> = P extends Builtin ? P
+export type Exact<P, I extends P> = P extends Builtin
+  ? P
   : P & { [K in keyof P]: Exact<P[K], I[K]> } & { [K in Exclude<keyof I, KeysOfUnion<P>>]: never };
 
 if (_m0.util.Long !== Long) {

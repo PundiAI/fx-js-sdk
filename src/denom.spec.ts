@@ -17,7 +17,7 @@ import { MsgUpdateParams } from "./fx/crosschain/v1/tx";
 import { Direction } from "./fx/dex/v1/tx";
 import { RegisterCoinProposal } from "./fx/erc20/v1/erc20";
 import { MsgRegisterCoin, MsgUpdateParams as MsgUpdateParamsErc20 } from "./fx/erc20/v1/tx";
-import { MsgSubmitProposal as MsgSubmitProposalV1 } from "./fx/gov/v1/tx";
+import { MsgSubmitProposal as MsgSubmitProposalV1 } from "./cosmos/gov/v1/tx";
 import { fxCoreTxConfig, fxDexTxConfig } from "./index";
 import { OnlineWallet } from "./onlinewallet";
 import { SigningFxClient } from "./signingfxclient";
