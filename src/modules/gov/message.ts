@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import { Any } from "cosmjs-types/google/protobuf/any";
-import { Duration } from "cosmjs-types/google/protobuf/duration";
 import Long from "long";
+import { durationToNanos, nanosToDuration } from "../../tools/index";
 
 import { MsgCancelUpgrade, MsgSoftwareUpgrade } from "../../cosmos/upgrade/v1beta1/tx";
 import { MsgUpdateChainOracles, MsgUpdateParams } from "../../fx/crosschain/v1/tx";
@@ -12,6 +12,8 @@ import {
   MsgUpdateDenomAlias,
   MsgUpdateParams as MsgUpdateParamsErc20,
 } from "../../fx/erc20/v1/tx";
+import { MsgUpdateParams as MsgUpdateParamsGov } from "../../fx/gov/v1/tx";
+import { MsgCallContract } from "../../fx/evm/v1/tx";
 import { toDecString, toProtoString } from "../index";
 
 interface AminoDenomUnit {
@@ -62,9 +64,8 @@ export function proposalMessageToAminoConverter(message: Any): any {
   }
   if (message.typeUrl == "/fx.erc20.v1.MsgUpdateParams") {
     const msg = MsgUpdateParamsErc20.decode(message.value);
-    const params: any = {
-      ibc_timeout: msg.params?.ibcTimeout?.seconds.mul(1e9).add(msg.params?.ibcTimeout?.nanos).toString(),
-    };
+    const params: any = {};
+    if (msg.params?.ibcTimeout) params.ibc_timeout = durationToNanos(msg.params.ibcTimeout);
     if (msg.params?.enableErc20) params.enable_erc20 = msg.params.enableErc20;
     if (msg.params?.enableEvmHook) params.enable_evm_hook = msg.params.enableEvmHook;
     return {
@@ -163,6 +164,44 @@ export function proposalMessageToAminoConverter(message: Any): any {
       },
     };
   }
+  if (message.typeUrl == "/fx.gov.v1.MsgUpdateParams") {
+    const msg = MsgUpdateParamsGov.decode(message.value);
+    const params: any = {
+      claim_ratio: msg.params?.claimRatio,
+      erc20_quorum: msg.params?.erc20Quorum,
+      evm_quorum: msg.params?.evmQuorum,
+    };
+    if (msg.params?.minInitialDeposit !== undefined) {
+      params.min_initial_deposit = msg.params.minInitialDeposit;
+    }
+    if (msg.params?.egfDepositThreshold !== undefined) {
+      params.egf_deposit_threshold = msg.params.egfDepositThreshold;
+    }
+    if (msg.params?.egfVotingPeriod !== undefined) {
+      params.egf_voting_period = durationToNanos(msg.params.egfVotingPeriod);
+    }
+    if (msg.params?.evmVotingPeriod !== undefined) {
+      params.evm_voting_period = durationToNanos(msg.params.evmVotingPeriod);
+    }
+    return {
+      type: "gov/MsgUpdateParams",
+      value: {
+        authority: msg.authority,
+        params,
+      },
+    };
+  }
+  if (message.typeUrl == "/fx.evm.v1.MsgCallContract") {
+    const msg = MsgCallContract.decode(message.value);
+    return {
+      type: "evm/MsgCallContract",
+      value: {
+        authority: msg.authority,
+        contract_address: msg.contractAddress,
+        data: msg.data,
+      },
+    };
+  }
   throw new Error("not support type");
 }
 
@@ -212,15 +251,7 @@ export function proposalMessageFromAminoConverter(message: any): Any {
         params: {
           enableErc20: msg.params.enable_erc20,
           enableEvmHook: msg.params.enable_evm_hook,
-          ibcTimeout: Duration.fromPartial({
-            seconds: Long.fromString(msg.params.ibc_timeout).div(1e9),
-            nanos: parseInt(
-              msg.params.ibc_timeout.length > 9
-                ? msg.params.ibc_timeout.substring(msg.params.ibc_timeout.length - 9)
-                : msg.params.ibc_timeout,
-              10,
-            ),
-          }),
+          ibcTimeout: nanosToDuration(msg.params.ibc_timeout),
         },
       }).finish(),
     };
@@ -304,6 +335,31 @@ export function proposalMessageFromAminoConverter(message: any): Any {
       typeUrl: "cosmos.upgrade.v1beta1.MsgCancelUpgrade",
       value: MsgCancelUpgrade.encode({
         authority: msg.authority,
+      }).finish(),
+    };
+  }
+  if (message.type == "gov/MsgUpdateParams") {
+    const msg = message.value;
+    return {
+      typeUrl: "/fx.gov.v1.MsgUpdateParams",
+      value: MsgUpdateParamsGov.encode({
+        authority: msg.authority,
+        params: {
+          ...msg.params,
+          egfVotingPeriod: nanosToDuration(msg.params.egf_voting_period),
+          evmVotingPeriod: nanosToDuration(msg.params.evm_voting_period),
+        },
+      }).finish(),
+    };
+  }
+  if (message.type == "evm/MsgCallContract") {
+    const msg = message.value;
+    return {
+      typeUrl: "/fx.evm.v1.MsgCallContract",
+      value: MsgCallContract.encode({
+        authority: msg.authority,
+        contractAddress: msg.contract_address,
+        data: msg.data,
       }).finish(),
     };
   }

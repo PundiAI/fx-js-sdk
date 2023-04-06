@@ -1,4 +1,4 @@
-import { coins, StdFee } from "@cosmjs/amino";
+import { coins, StdFee, coin } from "@cosmjs/amino";
 import { Sha256 } from "@cosmjs/crypto";
 import { fromHex, fromUtf8, toHex } from "@cosmjs/encoding";
 import { Uint64 } from "@cosmjs/math";
@@ -21,6 +21,8 @@ import { MsgSubmitProposal as MsgSubmitProposalV1 } from "./cosmos/gov/v1/tx";
 import { fxCoreTxConfig, fxDexTxConfig } from "./index";
 import { OnlineWallet } from "./onlinewallet";
 import { SigningFxClient } from "./signingfxclient";
+import { MsgUpdateParams as MsgUpdateParamsGov } from "./fx/gov/v1/tx";
+import { MsgCallContract } from "./fx/evm/v1/tx";
 
 async function onlineFunc(signer: string, signData: Uint8Array): Promise<string> {
   // walletconnect sign
@@ -244,6 +246,101 @@ describe("denom test", () => {
                   enableEvmHook: true,
                   ibcTimeout: Duration.fromPartial({ seconds: 1, nanos: 0 }),
                 },
+              }).finish(),
+            },
+          ],
+        }),
+      },
+    ];
+    let gasLimit = await client.simulate(sender, [...submitProposal], undefined);
+    gasLimit = Math.round(gasLimit * 1.3);
+    console.debug("gasLimit", gasLimit);
+    const gasPrice = fxCoreTxConfig.options.gasPrice;
+    const fees: StdFee = {
+      amount: coins(gasPrice.amount.multiply(Uint64.fromNumber(gasLimit)).toString(), gasPrice.denom),
+      gas: gasLimit.toString(),
+    };
+    const result = await client.signAndBroadcast(sender, [...submitProposal], fees);
+    console.debug(result);
+  });
+
+  it("gov v1 MsgSubmitProposal gov MsgUpdateParams", async () => {
+    const pubkey = "0x0342c931c630cf00eb9429bd2a0a5c6cfba6801fbe867772ece0e12ade462467bf";
+
+    const wallet = new OnlineWallet(pubkey, "fx", onlineFunc);
+    console.debug("address", wallet.address);
+    const sender = wallet.address;
+
+    const options = fxCoreTxConfig.options;
+    const client = await SigningFxClient.connectWithSigner("http://127.0.0.1:26657", wallet, options);
+    const account = await client.getAccount(sender);
+    console.log("account", account);
+
+    const submitProposal: EncodeObject[] = [
+      {
+        typeUrl: "/cosmos.gov.v1.MsgSubmitProposal",
+        value: MsgSubmitProposalV1.fromPartial({
+          proposer: sender,
+          initialDeposit: coins("1000000000000000000000", "FX"),
+          metadata: btoa(`{"title":"abc","summary":"def","metadata":""}`),
+          messages: [
+            {
+              typeUrl: "/fx.gov.v1.MsgUpdateParams",
+              value: MsgUpdateParamsGov.encode({
+                authority: "fx10d07y265gmmuvt4z0w9aw880jnsr700jqjzsmz",
+                params: {
+                  claimRatio: "1",
+                  erc20Quorum: "1",
+                  evmQuorum: "1",
+                  minInitialDeposit: coin("10000000000000000000", "FX"),
+                  egfDepositThreshold: coin("10000000000000000000", "FX"),
+                  egfVotingPeriod: Duration.fromPartial({ seconds: 1, nanos: 10 }),
+                  evmVotingPeriod: Duration.fromPartial({ seconds: 1, nanos: 10 }),
+                },
+              }).finish(),
+            },
+          ],
+        }),
+      },
+    ];
+    let gasLimit = await client.simulate(sender, [...submitProposal], undefined);
+    gasLimit = Math.round(gasLimit * 1.3);
+    console.debug("gasLimit", gasLimit);
+    const gasPrice = fxCoreTxConfig.options.gasPrice;
+    const fees: StdFee = {
+      amount: coins(gasPrice.amount.multiply(Uint64.fromNumber(gasLimit)).toString(), gasPrice.denom),
+      gas: gasLimit.toString(),
+    };
+    const result = await client.signAndBroadcast(sender, [...submitProposal], fees);
+    console.debug(result);
+  });
+
+  it("gov v1 MsgSubmitProposal evm MsgCallContract", async () => {
+    const pubkey = "0x0342c931c630cf00eb9429bd2a0a5c6cfba6801fbe867772ece0e12ade462467bf";
+
+    const wallet = new OnlineWallet(pubkey, "fx", onlineFunc);
+    console.debug("address", wallet.address);
+    const sender = wallet.address;
+
+    const options = fxCoreTxConfig.options;
+    const client = await SigningFxClient.connectWithSigner("http://127.0.0.1:26657", wallet, options);
+    const account = await client.getAccount(sender);
+    console.log("account", account);
+
+    const submitProposal: EncodeObject[] = [
+      {
+        typeUrl: "/cosmos.gov.v1.MsgSubmitProposal",
+        value: MsgSubmitProposalV1.fromPartial({
+          proposer: sender,
+          initialDeposit: coins("1000000000000000000000", "FX"),
+          metadata: btoa(`{"title":"abc","summary":"def","metadata":""}`),
+          messages: [
+            {
+              typeUrl: "/fx.evm.v1.MsgCallContract",
+              value: MsgCallContract.encode({
+                authority: "fx10d07y265gmmuvt4z0w9aw880jnsr700jqjzsmz",
+                contractAddress: "0x56047F2c3E45aDCA58f58082D4EDe581A7264E94",
+                data: "test",
               }).finish(),
             },
           ],
