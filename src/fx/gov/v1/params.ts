@@ -8,49 +8,59 @@ export const protobufPackage = "fx.gov.v1";
 
 /** Params defines the fx x/gov module params */
 export interface Params {
+  msgType: string;
+  minDeposit: Coin[];
   minInitialDeposit?: Coin;
+  votingPeriod?: Duration;
+  quorum: string;
+  maxDepositPeriod?: Duration;
+  threshold: string;
+  vetoThreshold: string;
+}
+
+export interface EGFParams {
   egfDepositThreshold?: Coin;
   claimRatio: string;
-  erc20Quorum: string;
-  evmQuorum: string;
-  egfVotingPeriod?: Duration;
-  evmVotingPeriod?: Duration;
 }
 
 function createBaseParams(): Params {
   return {
+    msgType: "",
+    minDeposit: [],
     minInitialDeposit: undefined,
-    egfDepositThreshold: undefined,
-    claimRatio: "",
-    erc20Quorum: "",
-    evmQuorum: "",
-    egfVotingPeriod: undefined,
-    evmVotingPeriod: undefined,
+    votingPeriod: undefined,
+    quorum: "",
+    maxDepositPeriod: undefined,
+    threshold: "",
+    vetoThreshold: "",
   };
 }
 
 export const Params = {
   encode(message: Params, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    if (message.msgType !== "") {
+      writer.uint32(10).string(message.msgType);
+    }
+    for (const v of message.minDeposit) {
+      Coin.encode(v!, writer.uint32(18).fork()).ldelim();
+    }
     if (message.minInitialDeposit !== undefined) {
-      Coin.encode(message.minInitialDeposit, writer.uint32(10).fork()).ldelim();
+      Coin.encode(message.minInitialDeposit, writer.uint32(26).fork()).ldelim();
     }
-    if (message.egfDepositThreshold !== undefined) {
-      Coin.encode(message.egfDepositThreshold, writer.uint32(18).fork()).ldelim();
+    if (message.votingPeriod !== undefined) {
+      Duration.encode(message.votingPeriod, writer.uint32(34).fork()).ldelim();
     }
-    if (message.claimRatio !== "") {
-      writer.uint32(26).string(message.claimRatio);
+    if (message.quorum !== "") {
+      writer.uint32(42).string(message.quorum);
     }
-    if (message.erc20Quorum !== "") {
-      writer.uint32(34).string(message.erc20Quorum);
+    if (message.maxDepositPeriod !== undefined) {
+      Duration.encode(message.maxDepositPeriod, writer.uint32(50).fork()).ldelim();
     }
-    if (message.evmQuorum !== "") {
-      writer.uint32(42).string(message.evmQuorum);
+    if (message.threshold !== "") {
+      writer.uint32(58).string(message.threshold);
     }
-    if (message.egfVotingPeriod !== undefined) {
-      Duration.encode(message.egfVotingPeriod, writer.uint32(50).fork()).ldelim();
-    }
-    if (message.evmVotingPeriod !== undefined) {
-      Duration.encode(message.evmVotingPeriod, writer.uint32(58).fork()).ldelim();
+    if (message.vetoThreshold !== "") {
+      writer.uint32(66).string(message.vetoThreshold);
     }
     return writer;
   },
@@ -67,49 +77,56 @@ export const Params = {
             break;
           }
 
-          message.minInitialDeposit = Coin.decode(reader, reader.uint32());
+          message.msgType = reader.string();
           continue;
         case 2:
           if (tag != 18) {
             break;
           }
 
-          message.egfDepositThreshold = Coin.decode(reader, reader.uint32());
+          message.minDeposit.push(Coin.decode(reader, reader.uint32()));
           continue;
         case 3:
           if (tag != 26) {
             break;
           }
 
-          message.claimRatio = reader.string();
+          message.minInitialDeposit = Coin.decode(reader, reader.uint32());
           continue;
         case 4:
           if (tag != 34) {
             break;
           }
 
-          message.erc20Quorum = reader.string();
+          message.votingPeriod = Duration.decode(reader, reader.uint32());
           continue;
         case 5:
           if (tag != 42) {
             break;
           }
 
-          message.evmQuorum = reader.string();
+          message.quorum = reader.string();
           continue;
         case 6:
           if (tag != 50) {
             break;
           }
 
-          message.egfVotingPeriod = Duration.decode(reader, reader.uint32());
+          message.maxDepositPeriod = Duration.decode(reader, reader.uint32());
           continue;
         case 7:
           if (tag != 58) {
             break;
           }
 
-          message.evmVotingPeriod = Duration.decode(reader, reader.uint32());
+          message.threshold = reader.string();
+          continue;
+        case 8:
+          if (tag != 66) {
+            break;
+          }
+
+          message.vetoThreshold = reader.string();
           continue;
       }
       if ((tag & 7) == 4 || tag == 0) {
@@ -122,37 +139,44 @@ export const Params = {
 
   fromJSON(object: any): Params {
     return {
+      msgType: isSet(object.msgType) ? String(object.msgType) : "",
+      minDeposit: Array.isArray(object?.minDeposit)
+        ? object.minDeposit.map((e: any) => Coin.fromJSON(e))
+        : [],
       minInitialDeposit: isSet(object.minInitialDeposit)
         ? Coin.fromJSON(object.minInitialDeposit)
         : undefined,
-      egfDepositThreshold: isSet(object.egfDepositThreshold)
-        ? Coin.fromJSON(object.egfDepositThreshold)
+      votingPeriod: isSet(object.votingPeriod) ? Duration.fromJSON(object.votingPeriod) : undefined,
+      quorum: isSet(object.quorum) ? String(object.quorum) : "",
+      maxDepositPeriod: isSet(object.maxDepositPeriod)
+        ? Duration.fromJSON(object.maxDepositPeriod)
         : undefined,
-      claimRatio: isSet(object.claimRatio) ? String(object.claimRatio) : "",
-      erc20Quorum: isSet(object.erc20Quorum) ? String(object.erc20Quorum) : "",
-      evmQuorum: isSet(object.evmQuorum) ? String(object.evmQuorum) : "",
-      egfVotingPeriod: isSet(object.egfVotingPeriod) ? Duration.fromJSON(object.egfVotingPeriod) : undefined,
-      evmVotingPeriod: isSet(object.evmVotingPeriod) ? Duration.fromJSON(object.evmVotingPeriod) : undefined,
+      threshold: isSet(object.threshold) ? String(object.threshold) : "",
+      vetoThreshold: isSet(object.vetoThreshold) ? String(object.vetoThreshold) : "",
     };
   },
 
   toJSON(message: Params): unknown {
     const obj: any = {};
+    message.msgType !== undefined && (obj.msgType = message.msgType);
+    if (message.minDeposit) {
+      obj.minDeposit = message.minDeposit.map((e) => (e ? Coin.toJSON(e) : undefined));
+    } else {
+      obj.minDeposit = [];
+    }
     message.minInitialDeposit !== undefined &&
       (obj.minInitialDeposit = message.minInitialDeposit
         ? Coin.toJSON(message.minInitialDeposit)
         : undefined);
-    message.egfDepositThreshold !== undefined &&
-      (obj.egfDepositThreshold = message.egfDepositThreshold
-        ? Coin.toJSON(message.egfDepositThreshold)
+    message.votingPeriod !== undefined &&
+      (obj.votingPeriod = message.votingPeriod ? Duration.toJSON(message.votingPeriod) : undefined);
+    message.quorum !== undefined && (obj.quorum = message.quorum);
+    message.maxDepositPeriod !== undefined &&
+      (obj.maxDepositPeriod = message.maxDepositPeriod
+        ? Duration.toJSON(message.maxDepositPeriod)
         : undefined);
-    message.claimRatio !== undefined && (obj.claimRatio = message.claimRatio);
-    message.erc20Quorum !== undefined && (obj.erc20Quorum = message.erc20Quorum);
-    message.evmQuorum !== undefined && (obj.evmQuorum = message.evmQuorum);
-    message.egfVotingPeriod !== undefined &&
-      (obj.egfVotingPeriod = message.egfVotingPeriod ? Duration.toJSON(message.egfVotingPeriod) : undefined);
-    message.evmVotingPeriod !== undefined &&
-      (obj.evmVotingPeriod = message.evmVotingPeriod ? Duration.toJSON(message.evmVotingPeriod) : undefined);
+    message.threshold !== undefined && (obj.threshold = message.threshold);
+    message.vetoThreshold !== undefined && (obj.vetoThreshold = message.vetoThreshold);
     return obj;
   },
 
@@ -162,25 +186,102 @@ export const Params = {
 
   fromPartial<I extends Exact<DeepPartial<Params>, I>>(object: I): Params {
     const message = createBaseParams();
+    message.msgType = object.msgType ?? "";
+    message.minDeposit = object.minDeposit?.map((e) => Coin.fromPartial(e)) || [];
     message.minInitialDeposit =
       object.minInitialDeposit !== undefined && object.minInitialDeposit !== null
         ? Coin.fromPartial(object.minInitialDeposit)
         : undefined;
+    message.votingPeriod =
+      object.votingPeriod !== undefined && object.votingPeriod !== null
+        ? Duration.fromPartial(object.votingPeriod)
+        : undefined;
+    message.quorum = object.quorum ?? "";
+    message.maxDepositPeriod =
+      object.maxDepositPeriod !== undefined && object.maxDepositPeriod !== null
+        ? Duration.fromPartial(object.maxDepositPeriod)
+        : undefined;
+    message.threshold = object.threshold ?? "";
+    message.vetoThreshold = object.vetoThreshold ?? "";
+    return message;
+  },
+};
+
+function createBaseEGFParams(): EGFParams {
+  return { egfDepositThreshold: undefined, claimRatio: "" };
+}
+
+export const EGFParams = {
+  encode(message: EGFParams, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    if (message.egfDepositThreshold !== undefined) {
+      Coin.encode(message.egfDepositThreshold, writer.uint32(10).fork()).ldelim();
+    }
+    if (message.claimRatio !== "") {
+      writer.uint32(18).string(message.claimRatio);
+    }
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): EGFParams {
+    const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseEGFParams();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          if (tag != 10) {
+            break;
+          }
+
+          message.egfDepositThreshold = Coin.decode(reader, reader.uint32());
+          continue;
+        case 2:
+          if (tag != 18) {
+            break;
+          }
+
+          message.claimRatio = reader.string();
+          continue;
+      }
+      if ((tag & 7) == 4 || tag == 0) {
+        break;
+      }
+      reader.skipType(tag & 7);
+    }
+    return message;
+  },
+
+  fromJSON(object: any): EGFParams {
+    return {
+      egfDepositThreshold: isSet(object.egfDepositThreshold)
+        ? Coin.fromJSON(object.egfDepositThreshold)
+        : undefined,
+      claimRatio: isSet(object.claimRatio) ? String(object.claimRatio) : "",
+    };
+  },
+
+  toJSON(message: EGFParams): unknown {
+    const obj: any = {};
+    message.egfDepositThreshold !== undefined &&
+      (obj.egfDepositThreshold = message.egfDepositThreshold
+        ? Coin.toJSON(message.egfDepositThreshold)
+        : undefined);
+    message.claimRatio !== undefined && (obj.claimRatio = message.claimRatio);
+    return obj;
+  },
+
+  create<I extends Exact<DeepPartial<EGFParams>, I>>(base?: I): EGFParams {
+    return EGFParams.fromPartial(base ?? {});
+  },
+
+  fromPartial<I extends Exact<DeepPartial<EGFParams>, I>>(object: I): EGFParams {
+    const message = createBaseEGFParams();
     message.egfDepositThreshold =
       object.egfDepositThreshold !== undefined && object.egfDepositThreshold !== null
         ? Coin.fromPartial(object.egfDepositThreshold)
         : undefined;
     message.claimRatio = object.claimRatio ?? "";
-    message.erc20Quorum = object.erc20Quorum ?? "";
-    message.evmQuorum = object.evmQuorum ?? "";
-    message.egfVotingPeriod =
-      object.egfVotingPeriod !== undefined && object.egfVotingPeriod !== null
-        ? Duration.fromPartial(object.egfVotingPeriod)
-        : undefined;
-    message.evmVotingPeriod =
-      object.evmVotingPeriod !== undefined && object.evmVotingPeriod !== null
-        ? Duration.fromPartial(object.evmVotingPeriod)
-        : undefined;
     return message;
   },
 };

@@ -121,9 +121,9 @@ export const GasPriceResponse = {
 
 /** Deprecated: Query */
 export interface Query {
-  /** Deprecated: Please use base query.GetGasPrice */
+  /** Deprecated: please use cosmos.base.node.v1beta1.Service.Config */
   FxGasPrice(request: GasPriceRequest): Promise<GasPriceResponse>;
-  /** Deprecated: Please use base query.GetGasPrice */
+  /** Deprecated: please use cosmos.base.node.v1beta1.Service.Config */
   GasPrice(request: GasPriceRequest): Promise<GasPriceResponse>;
 }
 

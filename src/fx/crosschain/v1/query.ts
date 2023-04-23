@@ -1,6 +1,7 @@
 /* eslint-disable */
 import Long from "long";
 import _m0 from "protobufjs/minimal";
+import { Coin } from "cosmjs-types/cosmos/base/v1beta1/coin";
 import { MsgConfirmBatch, MsgOracleSetConfirm } from "./tx";
 import {
   BatchFees,
@@ -230,6 +231,21 @@ export interface QueryBridgeTokensRequest {
 
 export interface QueryBridgeTokensResponse {
   bridgeTokens: BridgeToken[];
+}
+
+export interface QueryBridgeCoinByDenomRequest {
+  chainName: string;
+  denom: string;
+}
+
+export interface QueryBridgeCoinByDenomResponse {
+  coin?: Coin;
+}
+
+export interface QueryBridgeChainListRequest {}
+
+export interface QueryBridgeChainListResponse {
+  chainNames: string[];
 }
 
 function createBaseQueryParamsRequest(): QueryParamsRequest {
@@ -3582,6 +3598,256 @@ export const QueryBridgeTokensResponse = {
   },
 };
 
+function createBaseQueryBridgeCoinByDenomRequest(): QueryBridgeCoinByDenomRequest {
+  return { chainName: "", denom: "" };
+}
+
+export const QueryBridgeCoinByDenomRequest = {
+  encode(message: QueryBridgeCoinByDenomRequest, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    if (message.chainName !== "") {
+      writer.uint32(10).string(message.chainName);
+    }
+    if (message.denom !== "") {
+      writer.uint32(18).string(message.denom);
+    }
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): QueryBridgeCoinByDenomRequest {
+    const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseQueryBridgeCoinByDenomRequest();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          if (tag != 10) {
+            break;
+          }
+
+          message.chainName = reader.string();
+          continue;
+        case 2:
+          if (tag != 18) {
+            break;
+          }
+
+          message.denom = reader.string();
+          continue;
+      }
+      if ((tag & 7) == 4 || tag == 0) {
+        break;
+      }
+      reader.skipType(tag & 7);
+    }
+    return message;
+  },
+
+  fromJSON(object: any): QueryBridgeCoinByDenomRequest {
+    return {
+      chainName: isSet(object.chainName) ? String(object.chainName) : "",
+      denom: isSet(object.denom) ? String(object.denom) : "",
+    };
+  },
+
+  toJSON(message: QueryBridgeCoinByDenomRequest): unknown {
+    const obj: any = {};
+    message.chainName !== undefined && (obj.chainName = message.chainName);
+    message.denom !== undefined && (obj.denom = message.denom);
+    return obj;
+  },
+
+  create<I extends Exact<DeepPartial<QueryBridgeCoinByDenomRequest>, I>>(
+    base?: I,
+  ): QueryBridgeCoinByDenomRequest {
+    return QueryBridgeCoinByDenomRequest.fromPartial(base ?? {});
+  },
+
+  fromPartial<I extends Exact<DeepPartial<QueryBridgeCoinByDenomRequest>, I>>(
+    object: I,
+  ): QueryBridgeCoinByDenomRequest {
+    const message = createBaseQueryBridgeCoinByDenomRequest();
+    message.chainName = object.chainName ?? "";
+    message.denom = object.denom ?? "";
+    return message;
+  },
+};
+
+function createBaseQueryBridgeCoinByDenomResponse(): QueryBridgeCoinByDenomResponse {
+  return { coin: undefined };
+}
+
+export const QueryBridgeCoinByDenomResponse = {
+  encode(message: QueryBridgeCoinByDenomResponse, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    if (message.coin !== undefined) {
+      Coin.encode(message.coin, writer.uint32(10).fork()).ldelim();
+    }
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): QueryBridgeCoinByDenomResponse {
+    const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseQueryBridgeCoinByDenomResponse();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          if (tag != 10) {
+            break;
+          }
+
+          message.coin = Coin.decode(reader, reader.uint32());
+          continue;
+      }
+      if ((tag & 7) == 4 || tag == 0) {
+        break;
+      }
+      reader.skipType(tag & 7);
+    }
+    return message;
+  },
+
+  fromJSON(object: any): QueryBridgeCoinByDenomResponse {
+    return { coin: isSet(object.coin) ? Coin.fromJSON(object.coin) : undefined };
+  },
+
+  toJSON(message: QueryBridgeCoinByDenomResponse): unknown {
+    const obj: any = {};
+    message.coin !== undefined && (obj.coin = message.coin ? Coin.toJSON(message.coin) : undefined);
+    return obj;
+  },
+
+  create<I extends Exact<DeepPartial<QueryBridgeCoinByDenomResponse>, I>>(
+    base?: I,
+  ): QueryBridgeCoinByDenomResponse {
+    return QueryBridgeCoinByDenomResponse.fromPartial(base ?? {});
+  },
+
+  fromPartial<I extends Exact<DeepPartial<QueryBridgeCoinByDenomResponse>, I>>(
+    object: I,
+  ): QueryBridgeCoinByDenomResponse {
+    const message = createBaseQueryBridgeCoinByDenomResponse();
+    message.coin =
+      object.coin !== undefined && object.coin !== null ? Coin.fromPartial(object.coin) : undefined;
+    return message;
+  },
+};
+
+function createBaseQueryBridgeChainListRequest(): QueryBridgeChainListRequest {
+  return {};
+}
+
+export const QueryBridgeChainListRequest = {
+  encode(_: QueryBridgeChainListRequest, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): QueryBridgeChainListRequest {
+    const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseQueryBridgeChainListRequest();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+      }
+      if ((tag & 7) == 4 || tag == 0) {
+        break;
+      }
+      reader.skipType(tag & 7);
+    }
+    return message;
+  },
+
+  fromJSON(_: any): QueryBridgeChainListRequest {
+    return {};
+  },
+
+  toJSON(_: QueryBridgeChainListRequest): unknown {
+    const obj: any = {};
+    return obj;
+  },
+
+  create<I extends Exact<DeepPartial<QueryBridgeChainListRequest>, I>>(
+    base?: I,
+  ): QueryBridgeChainListRequest {
+    return QueryBridgeChainListRequest.fromPartial(base ?? {});
+  },
+
+  fromPartial<I extends Exact<DeepPartial<QueryBridgeChainListRequest>, I>>(
+    _: I,
+  ): QueryBridgeChainListRequest {
+    const message = createBaseQueryBridgeChainListRequest();
+    return message;
+  },
+};
+
+function createBaseQueryBridgeChainListResponse(): QueryBridgeChainListResponse {
+  return { chainNames: [] };
+}
+
+export const QueryBridgeChainListResponse = {
+  encode(message: QueryBridgeChainListResponse, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    for (const v of message.chainNames) {
+      writer.uint32(10).string(v!);
+    }
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): QueryBridgeChainListResponse {
+    const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseQueryBridgeChainListResponse();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          if (tag != 10) {
+            break;
+          }
+
+          message.chainNames.push(reader.string());
+          continue;
+      }
+      if ((tag & 7) == 4 || tag == 0) {
+        break;
+      }
+      reader.skipType(tag & 7);
+    }
+    return message;
+  },
+
+  fromJSON(object: any): QueryBridgeChainListResponse {
+    return {
+      chainNames: Array.isArray(object?.chainNames) ? object.chainNames.map((e: any) => String(e)) : [],
+    };
+  },
+
+  toJSON(message: QueryBridgeChainListResponse): unknown {
+    const obj: any = {};
+    if (message.chainNames) {
+      obj.chainNames = message.chainNames.map((e) => e);
+    } else {
+      obj.chainNames = [];
+    }
+    return obj;
+  },
+
+  create<I extends Exact<DeepPartial<QueryBridgeChainListResponse>, I>>(
+    base?: I,
+  ): QueryBridgeChainListResponse {
+    return QueryBridgeChainListResponse.fromPartial(base ?? {});
+  },
+
+  fromPartial<I extends Exact<DeepPartial<QueryBridgeChainListResponse>, I>>(
+    object: I,
+  ): QueryBridgeChainListResponse {
+    const message = createBaseQueryBridgeChainListResponse();
+    message.chainNames = object.chainNames?.map((e) => e) || [];
+    return message;
+  },
+};
+
 /** Query defines the gRPC querier service */
 export interface Query {
   /** Deployments queries deployments */
@@ -3627,6 +3893,8 @@ export interface Query {
     request: QueryProjectedBatchTimeoutHeightRequest,
   ): Promise<QueryProjectedBatchTimeoutHeightResponse>;
   BridgeTokens(request: QueryBridgeTokensRequest): Promise<QueryBridgeTokensResponse>;
+  BridgeCoinByDenom(request: QueryBridgeCoinByDenomRequest): Promise<QueryBridgeCoinByDenomResponse>;
+  BridgeChainList(request: QueryBridgeChainListRequest): Promise<QueryBridgeChainListResponse>;
 }
 
 export class QueryClientImpl implements Query {
@@ -3660,6 +3928,8 @@ export class QueryClientImpl implements Query {
     this.Oracles = this.Oracles.bind(this);
     this.ProjectedBatchTimeoutHeight = this.ProjectedBatchTimeoutHeight.bind(this);
     this.BridgeTokens = this.BridgeTokens.bind(this);
+    this.BridgeCoinByDenom = this.BridgeCoinByDenom.bind(this);
+    this.BridgeChainList = this.BridgeChainList.bind(this);
   }
   Params(request: QueryParamsRequest): Promise<QueryParamsResponse> {
     const data = QueryParamsRequest.encode(request).finish();
@@ -3829,6 +4099,18 @@ export class QueryClientImpl implements Query {
     const data = QueryBridgeTokensRequest.encode(request).finish();
     const promise = this.rpc.request(this.service, "BridgeTokens", data);
     return promise.then((data) => QueryBridgeTokensResponse.decode(_m0.Reader.create(data)));
+  }
+
+  BridgeCoinByDenom(request: QueryBridgeCoinByDenomRequest): Promise<QueryBridgeCoinByDenomResponse> {
+    const data = QueryBridgeCoinByDenomRequest.encode(request).finish();
+    const promise = this.rpc.request(this.service, "BridgeCoinByDenom", data);
+    return promise.then((data) => QueryBridgeCoinByDenomResponse.decode(_m0.Reader.create(data)));
+  }
+
+  BridgeChainList(request: QueryBridgeChainListRequest): Promise<QueryBridgeChainListResponse> {
+    const data = QueryBridgeChainListRequest.encode(request).finish();
+    const promise = this.rpc.request(this.service, "BridgeChainList", data);
+    return promise.then((data) => QueryBridgeChainListResponse.decode(_m0.Reader.create(data)));
   }
 }
 

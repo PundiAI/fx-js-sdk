@@ -1,7 +1,7 @@
 /* eslint-disable */
 import Long from "long";
 import _m0 from "protobufjs/minimal";
-import { Params } from "./params";
+import { EGFParams, Params } from "./params";
 
 export const protobufPackage = "fx.gov.v1";
 
@@ -18,6 +18,20 @@ export interface MsgUpdateParams {
  * MsgUpdateParams message.
  */
 export interface MsgUpdateParamsResponse {}
+
+/** MsgUpdateBaseParams is the Msg/UpdateParams request type. */
+export interface MsgUpdateEGFParams {
+  /** authority is the address of the governance account. */
+  authority: string;
+  /** NOTE: All parameters must be supplied. */
+  params?: EGFParams;
+}
+
+/**
+ * MsgUpdateBaseParamsResponse defines the response structure for executing a
+ * MsgUpdateParams message.
+ */
+export interface MsgUpdateEGFParamsResponse {}
 
 function createBaseMsgUpdateParams(): MsgUpdateParams {
   return { authority: "", params: undefined };
@@ -135,13 +149,129 @@ export const MsgUpdateParamsResponse = {
   },
 };
 
-/** Msg defines the erc20 Msg service. */
+function createBaseMsgUpdateEGFParams(): MsgUpdateEGFParams {
+  return { authority: "", params: undefined };
+}
+
+export const MsgUpdateEGFParams = {
+  encode(message: MsgUpdateEGFParams, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    if (message.authority !== "") {
+      writer.uint32(10).string(message.authority);
+    }
+    if (message.params !== undefined) {
+      EGFParams.encode(message.params, writer.uint32(18).fork()).ldelim();
+    }
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): MsgUpdateEGFParams {
+    const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseMsgUpdateEGFParams();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          if (tag != 10) {
+            break;
+          }
+
+          message.authority = reader.string();
+          continue;
+        case 2:
+          if (tag != 18) {
+            break;
+          }
+
+          message.params = EGFParams.decode(reader, reader.uint32());
+          continue;
+      }
+      if ((tag & 7) == 4 || tag == 0) {
+        break;
+      }
+      reader.skipType(tag & 7);
+    }
+    return message;
+  },
+
+  fromJSON(object: any): MsgUpdateEGFParams {
+    return {
+      authority: isSet(object.authority) ? String(object.authority) : "",
+      params: isSet(object.params) ? EGFParams.fromJSON(object.params) : undefined,
+    };
+  },
+
+  toJSON(message: MsgUpdateEGFParams): unknown {
+    const obj: any = {};
+    message.authority !== undefined && (obj.authority = message.authority);
+    message.params !== undefined &&
+      (obj.params = message.params ? EGFParams.toJSON(message.params) : undefined);
+    return obj;
+  },
+
+  create<I extends Exact<DeepPartial<MsgUpdateEGFParams>, I>>(base?: I): MsgUpdateEGFParams {
+    return MsgUpdateEGFParams.fromPartial(base ?? {});
+  },
+
+  fromPartial<I extends Exact<DeepPartial<MsgUpdateEGFParams>, I>>(object: I): MsgUpdateEGFParams {
+    const message = createBaseMsgUpdateEGFParams();
+    message.authority = object.authority ?? "";
+    message.params =
+      object.params !== undefined && object.params !== null
+        ? EGFParams.fromPartial(object.params)
+        : undefined;
+    return message;
+  },
+};
+
+function createBaseMsgUpdateEGFParamsResponse(): MsgUpdateEGFParamsResponse {
+  return {};
+}
+
+export const MsgUpdateEGFParamsResponse = {
+  encode(_: MsgUpdateEGFParamsResponse, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): MsgUpdateEGFParamsResponse {
+    const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseMsgUpdateEGFParamsResponse();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+      }
+      if ((tag & 7) == 4 || tag == 0) {
+        break;
+      }
+      reader.skipType(tag & 7);
+    }
+    return message;
+  },
+
+  fromJSON(_: any): MsgUpdateEGFParamsResponse {
+    return {};
+  },
+
+  toJSON(_: MsgUpdateEGFParamsResponse): unknown {
+    const obj: any = {};
+    return obj;
+  },
+
+  create<I extends Exact<DeepPartial<MsgUpdateEGFParamsResponse>, I>>(base?: I): MsgUpdateEGFParamsResponse {
+    return MsgUpdateEGFParamsResponse.fromPartial(base ?? {});
+  },
+
+  fromPartial<I extends Exact<DeepPartial<MsgUpdateEGFParamsResponse>, I>>(_: I): MsgUpdateEGFParamsResponse {
+    const message = createBaseMsgUpdateEGFParamsResponse();
+    return message;
+  },
+};
+
+/** Msg defines the fx/x/gov Msg service. */
 export interface Msg {
-  /**
-   * UpdateParams defines a governance operation for updating the x/erc20 module
-   * parameters. The authority is hard-coded to the x/gov module account.
-   */
   UpdateParams(request: MsgUpdateParams): Promise<MsgUpdateParamsResponse>;
+  UpdateEGFParams(request: MsgUpdateEGFParams): Promise<MsgUpdateEGFParamsResponse>;
 }
 
 export class MsgClientImpl implements Msg {
@@ -151,11 +281,18 @@ export class MsgClientImpl implements Msg {
     this.service = opts?.service || "fx.gov.v1.Msg";
     this.rpc = rpc;
     this.UpdateParams = this.UpdateParams.bind(this);
+    this.UpdateEGFParams = this.UpdateEGFParams.bind(this);
   }
   UpdateParams(request: MsgUpdateParams): Promise<MsgUpdateParamsResponse> {
     const data = MsgUpdateParams.encode(request).finish();
     const promise = this.rpc.request(this.service, "UpdateParams", data);
     return promise.then((data) => MsgUpdateParamsResponse.decode(_m0.Reader.create(data)));
+  }
+
+  UpdateEGFParams(request: MsgUpdateEGFParams): Promise<MsgUpdateEGFParamsResponse> {
+    const data = MsgUpdateEGFParams.encode(request).finish();
+    const promise = this.rpc.request(this.service, "UpdateEGFParams", data);
+    return promise.then((data) => MsgUpdateEGFParamsResponse.decode(_m0.Reader.create(data)));
   }
 }
 

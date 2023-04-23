@@ -1,27 +1,43 @@
 /* eslint-disable */
 import Long from "long";
 import _m0 from "protobufjs/minimal";
-import { Params } from "./params";
+import { EGFParams, Params } from "./params";
 
 export const protobufPackage = "fx.gov.v1";
 
-/** QueryParamsRequest is the request type for the Query/Params RPC method. */
-export interface QueryParamsRequest {}
+/** QueryBaseParamsRequest is the request type for the Query/BaseParams RPC method. */
+export interface QueryParamsRequest {
+  msgType: string;
+}
 
 /**
- * QueryParamsResponse is the response type for the Query/Params RPC
+ * QueryBaseParamsResponse is the response type for the Query/BaseParams RPC
  * method.
  */
 export interface QueryParamsResponse {
   params?: Params;
 }
 
+/** QueryEGFParamsRequest is the request type for the Query/EGFParams RPC method. */
+export interface QueryEGFParamsRequest {}
+
+/**
+ * QueryEGFParamsResponse is the response type for the Query/EGFParams RPC
+ * method.
+ */
+export interface QueryEGFParamsResponse {
+  params?: EGFParams;
+}
+
 function createBaseQueryParamsRequest(): QueryParamsRequest {
-  return {};
+  return { msgType: "" };
 }
 
 export const QueryParamsRequest = {
-  encode(_: QueryParamsRequest, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  encode(message: QueryParamsRequest, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    if (message.msgType !== "") {
+      writer.uint32(10).string(message.msgType);
+    }
     return writer;
   },
 
@@ -32,6 +48,13 @@ export const QueryParamsRequest = {
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
+        case 1:
+          if (tag != 10) {
+            break;
+          }
+
+          message.msgType = reader.string();
+          continue;
       }
       if ((tag & 7) == 4 || tag == 0) {
         break;
@@ -41,12 +64,13 @@ export const QueryParamsRequest = {
     return message;
   },
 
-  fromJSON(_: any): QueryParamsRequest {
-    return {};
+  fromJSON(object: any): QueryParamsRequest {
+    return { msgType: isSet(object.msgType) ? String(object.msgType) : "" };
   },
 
-  toJSON(_: QueryParamsRequest): unknown {
+  toJSON(message: QueryParamsRequest): unknown {
     const obj: any = {};
+    message.msgType !== undefined && (obj.msgType = message.msgType);
     return obj;
   },
 
@@ -54,8 +78,9 @@ export const QueryParamsRequest = {
     return QueryParamsRequest.fromPartial(base ?? {});
   },
 
-  fromPartial<I extends Exact<DeepPartial<QueryParamsRequest>, I>>(_: I): QueryParamsRequest {
+  fromPartial<I extends Exact<DeepPartial<QueryParamsRequest>, I>>(object: I): QueryParamsRequest {
     const message = createBaseQueryParamsRequest();
+    message.msgType = object.msgType ?? "";
     return message;
   },
 };
@@ -117,10 +142,114 @@ export const QueryParamsResponse = {
   },
 };
 
-/** Query defines the gRPC querier service for gov module */
+function createBaseQueryEGFParamsRequest(): QueryEGFParamsRequest {
+  return {};
+}
+
+export const QueryEGFParamsRequest = {
+  encode(_: QueryEGFParamsRequest, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): QueryEGFParamsRequest {
+    const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseQueryEGFParamsRequest();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+      }
+      if ((tag & 7) == 4 || tag == 0) {
+        break;
+      }
+      reader.skipType(tag & 7);
+    }
+    return message;
+  },
+
+  fromJSON(_: any): QueryEGFParamsRequest {
+    return {};
+  },
+
+  toJSON(_: QueryEGFParamsRequest): unknown {
+    const obj: any = {};
+    return obj;
+  },
+
+  create<I extends Exact<DeepPartial<QueryEGFParamsRequest>, I>>(base?: I): QueryEGFParamsRequest {
+    return QueryEGFParamsRequest.fromPartial(base ?? {});
+  },
+
+  fromPartial<I extends Exact<DeepPartial<QueryEGFParamsRequest>, I>>(_: I): QueryEGFParamsRequest {
+    const message = createBaseQueryEGFParamsRequest();
+    return message;
+  },
+};
+
+function createBaseQueryEGFParamsResponse(): QueryEGFParamsResponse {
+  return { params: undefined };
+}
+
+export const QueryEGFParamsResponse = {
+  encode(message: QueryEGFParamsResponse, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    if (message.params !== undefined) {
+      EGFParams.encode(message.params, writer.uint32(10).fork()).ldelim();
+    }
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): QueryEGFParamsResponse {
+    const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseQueryEGFParamsResponse();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          if (tag != 10) {
+            break;
+          }
+
+          message.params = EGFParams.decode(reader, reader.uint32());
+          continue;
+      }
+      if ((tag & 7) == 4 || tag == 0) {
+        break;
+      }
+      reader.skipType(tag & 7);
+    }
+    return message;
+  },
+
+  fromJSON(object: any): QueryEGFParamsResponse {
+    return { params: isSet(object.params) ? EGFParams.fromJSON(object.params) : undefined };
+  },
+
+  toJSON(message: QueryEGFParamsResponse): unknown {
+    const obj: any = {};
+    message.params !== undefined &&
+      (obj.params = message.params ? EGFParams.toJSON(message.params) : undefined);
+    return obj;
+  },
+
+  create<I extends Exact<DeepPartial<QueryEGFParamsResponse>, I>>(base?: I): QueryEGFParamsResponse {
+    return QueryEGFParamsResponse.fromPartial(base ?? {});
+  },
+
+  fromPartial<I extends Exact<DeepPartial<QueryEGFParamsResponse>, I>>(object: I): QueryEGFParamsResponse {
+    const message = createBaseQueryEGFParamsResponse();
+    message.params =
+      object.params !== undefined && object.params !== null
+        ? EGFParams.fromPartial(object.params)
+        : undefined;
+    return message;
+  },
+};
+
+/** Query defines the gRPC querier service for fx/x/gov module */
 export interface Query {
-  /** Params retrieves the erc20 module params */
   Params(request: QueryParamsRequest): Promise<QueryParamsResponse>;
+  EGFParams(request: QueryEGFParamsRequest): Promise<QueryEGFParamsResponse>;
 }
 
 export class QueryClientImpl implements Query {
@@ -130,11 +259,18 @@ export class QueryClientImpl implements Query {
     this.service = opts?.service || "fx.gov.v1.Query";
     this.rpc = rpc;
     this.Params = this.Params.bind(this);
+    this.EGFParams = this.EGFParams.bind(this);
   }
   Params(request: QueryParamsRequest): Promise<QueryParamsResponse> {
     const data = QueryParamsRequest.encode(request).finish();
     const promise = this.rpc.request(this.service, "Params", data);
     return promise.then((data) => QueryParamsResponse.decode(_m0.Reader.create(data)));
+  }
+
+  EGFParams(request: QueryEGFParamsRequest): Promise<QueryEGFParamsResponse> {
+    const data = QueryEGFParamsRequest.encode(request).finish();
+    const promise = this.rpc.request(this.service, "EGFParams", data);
+    return promise.then((data) => QueryEGFParamsResponse.decode(_m0.Reader.create(data)));
   }
 }
 

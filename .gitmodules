@@ -1,7 +1,7 @@
 [submodule "fx-core"]
 	path = fx-core
 	url = https://github.com/functionx/fx-core.git
-	branch = zakir/v4
+	branch = release/v4.0.x
 [submodule "cosmos-sdk"]
 	path = cosmos-sdk
 	url = https://github.com/cosmos/cosmos-sdk.git

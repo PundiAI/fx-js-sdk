@@ -20,18 +20,17 @@ describe("address", () => {
   });
 
   it("mnemonic to private key ", () => {
-    const mnemonic =
-      "victory chief couch wedding salt mention pen airport young color claw wait genius coffee nominee eight motor screen require home budget enjoy copy tornado";
+    const mnemonic = "test test test test test test test test test test test junk";
     const ethWallet = Wallet.fromMnemonic(mnemonic);
     const publicKey = Secp256k1.compressPubkey(arrayify(ethWallet.publicKey));
 
-    expect(ethWallet.privateKey).toBe("0x91630c1f3b8a8648fc96761685f0106f68a2d9a2fb32a065a7417967cda8583c");
+    expect(ethWallet.privateKey).toBe("0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80");
 
-    expect(hexlify(publicKey)).toBe("0x0342c931c630cf00eb9429bd2a0a5c6cfba6801fbe867772ece0e12ade462467bf");
+    expect(hexlify(publicKey)).toBe("0x038318535b54105d4a7aae60c08fc45f9687181b4fdfc625bd1a753fa7397fed75");
 
-    expect(pubKeyToAddress(publicKey, "0x")).toBe("0xEF209001c404Cf1c9Cd5fd740c288D1826fCC5d3");
-    expect(pubKeyToAddress(publicKey, "fx")).toBe("fx1ausfqqwyqn83e8x4l46qc2ydrqn0e3wnep02fs");
+    expect(pubKeyToAddress(publicKey, "0x")).toBe("0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266");
+    expect(pubKeyToAddress(publicKey, "fx")).toBe("fx17w0adeg64ky0daxwd2ugyuneellmjgnxed28x3");
 
-    expect(toBase64(publicKey)).toBe("A0LJMcYwzwDrlCm9KgpcbPumgB++hndy7ODhKt5GJGe/");
+    expect(toBase64(publicKey)).toBe("A4MYU1tUEF1Keq5gwI/EX5aHGBtP38YlvRp1P6c5f+11");
   });
 });

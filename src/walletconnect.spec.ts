@@ -3,7 +3,7 @@ import { Sha256 } from "@cosmjs/crypto";
 import { fromHex, fromUtf8, toHex } from "@cosmjs/encoding";
 import { Uint64 } from "@cosmjs/math";
 import { EncodeObject, Registry } from "@cosmjs/proto-signing";
-import { AminoTypes, createBankAminoConverters, defaultRegistryTypes } from "@cosmjs/stargate";
+import { AminoTypes, createBankAminoConverters, defaultRegistryTypes, GasPrice } from "@cosmjs/stargate";
 import { keccak256 } from "@ethersproject/keccak256";
 import { SigningKey } from "@ethersproject/signing-key";
 import { MsgSend } from "cosmjs-types/cosmos/bank/v1beta1/tx";
@@ -12,14 +12,17 @@ import { fxCoreTxConfig } from "./index";
 import { OnlineWallet } from "./onlinewallet";
 import { SigningFxClient } from "./signingfxclient";
 
-async function onlineFunc(signer: string, signData: Uint8Array): Promise<string> {
+export const testPrivateKeyHex = "ac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80";
+export const testPublicKeyHex = "0x038318535b54105d4a7aae60c08fc45f9687181b4fdfc625bd1a753fa7397fed75";
+
+export async function onlineFunc(signer: string, signData: Uint8Array): Promise<string> {
   // 2. walletconnect sign: functionx_wc_sign_tx_v1
   console.debug("signData", fromUtf8(signData));
 
   // private key simulation
   const msgHash = new Sha256(signData).digest();
   console.debug("msgHash", toHex(msgHash));
-  const testPrivateKey = fromHex("91630c1f3b8a8648fc96761685f0106f68a2d9a2fb32a065a7417967cda8583c");
+  const testPrivateKey = fromHex(testPrivateKeyHex);
   const privateKey = new SigningKey(testPrivateKey);
   const signature = privateKey.signDigest(keccak256(signData));
   return toHex(
@@ -27,14 +30,28 @@ async function onlineFunc(signer: string, signData: Uint8Array): Promise<string>
   );
 }
 
+export async function signAndBroadcast(
+  client: SigningFxClient,
+  sender: string,
+  messages: readonly EncodeObject[],
+  gasPrice: GasPrice = fxCoreTxConfig.options.gasPrice,
+): Promise<number> {
+  let gasLimit = await client.simulate(sender, messages, undefined);
+  gasLimit = Math.round(gasLimit * 1.3);
+  console.debug("gasLimit", gasLimit);
+  const fees: StdFee = {
+    amount: coins(gasPrice.amount.multiply(Uint64.fromNumber(gasLimit)).toString(), gasPrice.denom),
+    gas: gasLimit.toString(),
+  };
+  const result = await client.signAndBroadcast(sender, messages, fees);
+  console.debug(result);
+  return result.code;
+}
+
 describe("walletconnect denom", () => {
   it("transfer tx", async () => {
     // 1 get account: functionx_wc_accounts_v1
-    // public key simulation
-    const pubkey = "0x0342c931c630cf00eb9429bd2a0a5c6cfba6801fbe867772ece0e12ade462467bf";
-    console.debug("pubkey", pubkey);
-
-    const wallet = new OnlineWallet(pubkey, "fx", onlineFunc, fxCoreTxConfig.algo);
+    const wallet = new OnlineWallet(testPublicKeyHex, "fx", onlineFunc, fxCoreTxConfig.algo);
     console.debug("address", wallet.address);
     const sender = wallet.address;
 
@@ -61,15 +78,7 @@ describe("walletconnect denom", () => {
         }),
       },
     ];
-    let gasLimit = await client.simulate(sender, [...sendMsg], undefined);
-    gasLimit = Math.round(gasLimit * 1.3);
-    console.debug("gasLimit", gasLimit);
-    const gasPrice = fxCoreTxConfig.options.gasPrice;
-    const fees: StdFee = {
-      amount: coins(gasPrice.amount.multiply(Uint64.fromNumber(gasLimit)).toString(), gasPrice.denom),
-      gas: gasLimit.toString(),
-    };
-    const result = await client.signAndBroadcast(sender, [...sendMsg], fees);
-    console.debug(result);
+    const code = await signAndBroadcast(client, sender, sendMsg);
+    expect(code).toEqual(0);
   });
 });

@@ -30,7 +30,8 @@ for dir in $proto_dirs; do
     $(find "${dir}" -maxdepth 1 -name '*.proto')
 done
 
-rm -rf "$OUT_DIR/cosmos/base" "$OUT_DIR/cosmos/msg" "$OUT_DIR/cosmos_proto" "$OUT_DIR/gogoproto" "$OUT_DIR/google" "$OUT_DIR/ibc" "$OUT_DIR/ethermint"
+rm -rf "$OUT_DIR/cosmos/base" "$OUT_DIR/cosmos/msg" "$OUT_DIR/cosmos/staking"
+rm -rf "$OUT_DIR/cosmos_proto" "$OUT_DIR/gogoproto" "$OUT_DIR/google" "$OUT_DIR/ibc" "$OUT_DIR/ethermint" "$OUT_DIR/tendermint"
 
 proto_ts_dirs=$(find ./src/fx -path -prune -o -name '*.ts' -print0 | xargs -0 -n1 dirname | sort | uniq)
 for dir in $proto_ts_dirs; do

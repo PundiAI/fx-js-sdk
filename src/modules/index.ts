@@ -1,7 +1,6 @@
 import { Any } from "cosmjs-types/google/protobuf/any";
 
 /* eslint-disable import/no-cycle */
-export { setupBaseExtension } from "./base/queries";
 export { crosschainAminoConverters } from "./crosschain/aminomessages";
 export { setupCrosschainExtension } from "./crosschain/queries";
 export { dexAminoConverters } from "./dex/aminomessages";

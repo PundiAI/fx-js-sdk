@@ -12,7 +12,7 @@ import {
   MsgUpdateParams as MsgUpdateParamsErc20,
 } from "../../fx/erc20/v1/tx";
 import { MsgCallContract } from "../../fx/evm/v1/tx";
-import { MsgUpdateParams as MsgUpdateParamsGov } from "../../fx/gov/v1/tx";
+import { MsgUpdateEGFParams, MsgUpdateParams as MsgUpdateParamsGov } from "../../fx/gov/v1/tx";
 import { durationToNanos, nanosToDuration } from "../../tools";
 import { toDecString, toProtoString } from "../index";
 
@@ -78,33 +78,38 @@ export function proposalMessageToAminoConverter(message: Any): any {
   }
   if (message.typeUrl == "/fx.erc20.v1.MsgRegisterCoin") {
     const msg = MsgRegisterCoin.decode(message.value);
+    const metadata: any = {
+      description: msg.metadata?.description,
+      denom_units: msg.metadata?.denomUnits.map((v) => {
+        const denomUnit: AminoDenomUnit = {
+          denom: v.denom,
+          exponent: v.exponent,
+          aliases: v.aliases,
+        };
+        if (denomUnit.aliases?.length === 0) {
+          delete denomUnit.aliases;
+        }
+        if (denomUnit.exponent === 0) {
+          delete denomUnit.exponent;
+        }
+        return denomUnit;
+      }),
+      base: msg.metadata?.base,
+      display: msg.metadata?.display,
+      name: msg.metadata?.name,
+      symbol: msg.metadata?.symbol,
+    };
+    if (msg.metadata?.uri) {
+      metadata.uri = msg.metadata?.uri;
+    }
+    if (msg.metadata?.uriHash) {
+      metadata.uri_hash = msg.metadata?.uriHash;
+    }
     return {
       type: "erc20/MsgRegisterCoin",
       value: {
         authority: msg.authority,
-        metadata: {
-          description: msg.metadata?.description,
-          denom_units: msg.metadata?.denomUnits.map((v) => {
-            const denomUnit: AminoDenomUnit = {
-              denom: v.denom,
-              exponent: v.exponent,
-              aliases: v.aliases,
-            };
-            if (denomUnit.aliases?.length === 0) {
-              delete denomUnit.aliases;
-            }
-            if (denomUnit.exponent === 0) {
-              delete denomUnit.exponent;
-            }
-            return denomUnit;
-          }),
-          base: msg.metadata?.base,
-          display: msg.metadata?.display,
-          name: msg.metadata?.name,
-          symbol: msg.metadata?.symbol,
-          uri: msg.metadata?.uri,
-          uri_hash: msg.metadata?.uriHash,
-        },
+        metadata: metadata,
       },
     };
   }
@@ -140,6 +145,49 @@ export function proposalMessageToAminoConverter(message: Any): any {
       },
     };
   }
+  if (message.typeUrl == "/fx.evm.v1.MsgCallContract") {
+    const msg = MsgCallContract.decode(message.value);
+    return {
+      type: "evm/MsgCallContract",
+      value: {
+        authority: msg.authority,
+        contract_address: msg.contractAddress,
+        data: msg.data,
+      },
+    };
+  }
+  if (message.typeUrl == "/fx.gov.v1.MsgUpdateParams") {
+    const msg = MsgUpdateParamsGov.decode(message.value);
+    return {
+      type: "gov/MsgUpdateParams",
+      value: {
+        authority: msg.authority,
+        params: {
+          msg_type: msg.params?.msgType,
+          min_deposit: msg.params?.minDeposit,
+          min_initial_deposit: msg.params?.minInitialDeposit,
+          voting_period: durationToNanos(msg.params?.votingPeriod),
+          quorum: msg.params?.quorum,
+          max_deposit_period: durationToNanos(msg.params?.maxDepositPeriod),
+          threshold: msg.params?.threshold,
+          veto_threshold: msg.params?.vetoThreshold,
+        },
+      },
+    };
+  }
+  if (message.typeUrl == "/fx.gov.v1.MsgUpdateEGFParams") {
+    const msg = MsgUpdateEGFParams.decode(message.value);
+    return {
+      type: "gov/MsgUpdateEGFParams",
+      value: {
+        authority: msg.authority,
+        params: {
+          efg_deposit_threshold: msg.params?.egfDepositThreshold,
+          claim_ratio: msg.params?.claimRatio,
+        },
+      },
+    };
+  }
   if (message.typeUrl == "/cosmos.upgrade.v1beta1.MsgSoftwareUpgrade") {
     const msg = MsgSoftwareUpgrade.decode(message.value);
     return {
@@ -161,35 +209,6 @@ export function proposalMessageToAminoConverter(message: Any): any {
       type: "cosmos-sdk/MsgCancelUpgrade",
       value: {
         authority: msg.authority,
-      },
-    };
-  }
-  if (message.typeUrl == "/fx.gov.v1.MsgUpdateParams") {
-    const msg = MsgUpdateParamsGov.decode(message.value);
-    return {
-      type: "gov/MsgUpdateParams",
-      value: {
-        authority: msg.authority,
-        params: {
-          claim_ratio: msg.params?.claimRatio,
-          erc20_quorum: msg.params?.erc20Quorum,
-          evm_quorum: msg.params?.evmQuorum,
-          min_initial_deposit: msg.params?.minInitialDeposit,
-          egf_deposit_threshold: msg.params?.egfDepositThreshold,
-          egf_voting_period: durationToNanos(msg.params?.egfVotingPeriod),
-          evm_voting_period: durationToNanos(msg.params?.evmVotingPeriod),
-        },
-      },
-    };
-  }
-  if (message.typeUrl == "/fx.evm.v1.MsgCallContract") {
-    const msg = MsgCallContract.decode(message.value);
-    return {
-      type: "evm/MsgCallContract",
-      value: {
-        authority: msg.authority,
-        contract_address: msg.contractAddress,
-        data: msg.data,
       },
     };
   }
@@ -266,8 +285,8 @@ export function proposalMessageFromAminoConverter(message: any): Any {
           display: msg.metadata.display,
           name: msg.metadata.name,
           symbol: msg.metadata.symbol,
-          uri: msg.metadata.uri,
-          uriHash: msg.metadata.uri_hash,
+          uri: msg.metadata.uri ? msg.metadata.uri : "",
+          uriHash: msg.metadata.uri_hash ? msg.metadata.uri_hash : "",
         },
       }).finish(),
     };
@@ -277,9 +296,9 @@ export function proposalMessageFromAminoConverter(message: any): Any {
     return {
       typeUrl: "/fx.erc20.v1.MsgRegisterERC20",
       value: MsgRegisterERC20.encode({
-        aliases: msg.aliases,
         authority: msg.authority,
         erc20address: msg.erc20address,
+        aliases: msg.aliases,
       }).finish(),
     };
   }
@@ -298,9 +317,52 @@ export function proposalMessageFromAminoConverter(message: any): Any {
     return {
       typeUrl: "/fx.erc20.v1.MsgUpdateDenomAlias",
       value: MsgUpdateDenomAlias.encode({
-        alias: msg.alias,
         authority: msg.authority,
         denom: msg.denom,
+        alias: msg.alias,
+      }).finish(),
+    };
+  }
+  if (message.type == "evm/MsgCallContract") {
+    const msg = message.value;
+    return {
+      typeUrl: "/fx.evm.v1.MsgCallContract",
+      value: MsgCallContract.encode({
+        authority: msg.authority,
+        contractAddress: msg.contract_address,
+        data: msg.data,
+      }).finish(),
+    };
+  }
+  if (message.type == "gov/MsgUpdateParams") {
+    const msg = message.value;
+    return {
+      typeUrl: "/fx.gov.v1.MsgUpdateParams",
+      value: MsgUpdateParamsGov.encode({
+        authority: msg.authority,
+        params: {
+          msgType: msg.params.msg_type,
+          minDeposit: msg.params.min_deposit,
+          minInitialDeposit: msg.params.min_initial_deposit,
+          votingPeriod: nanosToDuration(msg.params.voting_period),
+          quorum: msg.params.quorum,
+          maxDepositPeriod: nanosToDuration(msg.params.max_deposit_period),
+          threshold: msg.params.threshold,
+          vetoThreshold: msg.params.veto_threshold,
+        },
+      }).finish(),
+    };
+  }
+  if (message.type == "gov/MsgUpdateEGFParams") {
+    const msg = message.value;
+    return {
+      typeUrl: "/fx.gov.v1.MsgUpdateEGFParams",
+      value: MsgUpdateEGFParams.encode({
+        authority: msg.authority,
+        params: {
+          egfDepositThreshold: msg.params.efg_deposit_threshold,
+          claimRatio: msg.params.claim_ratio,
+        },
       }).finish(),
     };
   }
@@ -323,38 +385,9 @@ export function proposalMessageFromAminoConverter(message: any): Any {
   if (message.type === "cosmos-sdk/MsgCancelUpgrade") {
     const msg = message.value;
     return {
-      typeUrl: "cosmos.upgrade.v1beta1.MsgCancelUpgrade",
+      typeUrl: "/cosmos.upgrade.v1beta1.MsgCancelUpgrade",
       value: MsgCancelUpgrade.encode({
         authority: msg.authority,
-      }).finish(),
-    };
-  }
-  if (message.type == "gov/MsgUpdateParams") {
-    const msg = message.value;
-    return {
-      typeUrl: "/fx.gov.v1.MsgUpdateParams",
-      value: MsgUpdateParamsGov.encode({
-        authority: msg.authority,
-        params: {
-          minInitialDeposit: msg.params.min_initial_deposit,
-          egfDepositThreshold: msg.params.egf_deposit_threshold,
-          claimRatio: msg.params.claim_ratio,
-          erc20Quorum: msg.params.erc20_quorum,
-          evmQuorum: msg.params.evm_quorum,
-          egfVotingPeriod: nanosToDuration(msg.params.egf_voting_period),
-          evmVotingPeriod: nanosToDuration(msg.params.evm_voting_period),
-        },
-      }).finish(),
-    };
-  }
-  if (message.type == "evm/MsgCallContract") {
-    const msg = message.value;
-    return {
-      typeUrl: "/fx.evm.v1.MsgCallContract",
-      value: MsgCallContract.encode({
-        authority: msg.authority,
-        contractAddress: msg.contract_address,
-        data: msg.data,
       }).finish(),
     };
   }

@@ -5,8 +5,10 @@ import { Coin } from "cosmjs-types/cosmos/base/v1beta1/coin";
 
 export const protobufPackage = "fx.base.v1";
 
+/** Deprecated: after upgrade v4 */
 export interface GetGasPriceRequest {}
 
+/** Deprecated: after upgrade v4 */
 export interface GetGasPriceResponse {
   gasPrices: Coin[];
 }
@@ -117,7 +119,9 @@ export const GetGasPriceResponse = {
   },
 };
 
+/** Deprecated: after upgrade v4 */
 export interface Query {
+  /** Deprecated: please use cosmos.base.node.v1beta1.Service.Config */
   GetGasPrice(request: GetGasPriceRequest): Promise<GetGasPriceResponse>;
 }
 

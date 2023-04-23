@@ -7,7 +7,6 @@ import {
   SoftwareUpgradeProposal,
 } from "cosmjs-types/cosmos/upgrade/v1beta1/upgrade";
 import { Any } from "cosmjs-types/google/protobuf/any";
-import { Timestamp } from "cosmjs-types/google/protobuf/timestamp";
 import Long from "long";
 
 import { UpdateChainOraclesProposal } from "../../fx/crosschain/v1/types";
@@ -89,34 +88,39 @@ export function proposalContentToAminoConverter(content: Any | undefined): any {
   }
   if (content.typeUrl === "/fx.erc20.v1.RegisterCoinProposal") {
     const proposal = RegisterCoinProposal.decode(content.value);
+    const metadata: any = {
+      description: proposal.metadata?.description,
+      denom_units: proposal.metadata?.denomUnits.map((v) => {
+        const denomUnit: AminoDenomUnit = {
+          denom: v.denom,
+          exponent: v.exponent,
+          aliases: v.aliases,
+        };
+        if (denomUnit.aliases?.length === 0) {
+          delete denomUnit.aliases;
+        }
+        if (denomUnit.exponent === 0) {
+          delete denomUnit.exponent;
+        }
+        return denomUnit;
+      }),
+      base: proposal.metadata?.base,
+      display: proposal.metadata?.display,
+      name: proposal.metadata?.name,
+      symbol: proposal.metadata?.symbol,
+    };
+    if (proposal.metadata?.uri) {
+      metadata.uri = proposal.metadata.uri;
+    }
+    if (proposal.metadata?.uriHash) {
+      metadata.uri_hash = proposal.metadata.uriHash;
+    }
     return {
       type: "erc20/RegisterCoinProposal",
       value: {
         title: proposal.title,
         description: proposal.description,
-        metadata: {
-          description: proposal.metadata?.description,
-          denom_units: proposal.metadata?.denomUnits.map((v) => {
-            const denomUnit: AminoDenomUnit = {
-              denom: v.denom,
-              exponent: v.exponent,
-              aliases: v.aliases,
-            };
-            if (denomUnit.aliases?.length === 0) {
-              delete denomUnit.aliases;
-            }
-            if (denomUnit.exponent === 0) {
-              delete denomUnit.exponent;
-            }
-            return denomUnit;
-          }),
-          base: proposal.metadata?.base,
-          display: proposal.metadata?.display,
-          name: proposal.metadata?.name,
-          symbol: proposal.metadata?.symbol,
-          uri: proposal.metadata?.uri,
-          uri_hash: proposal.metadata?.uriHash,
-        },
+        metadata: metadata,
       },
     };
   }
@@ -189,7 +193,7 @@ export function proposalContentFromAminoConverter(content: any): Any {
         description: proposal.description,
         plan: {
           name: proposal.plan.name,
-          time: Timestamp.fromPartial({}),
+          time: undefined,
           height: Long.fromString(proposal.plan.height || "0", true),
           info: proposal.plan.info,
           upgradedClientState: undefined,
@@ -250,8 +254,8 @@ export function proposalContentFromAminoConverter(content: any): Any {
           display: proposal.metadata.display,
           name: proposal.metadata.name,
           symbol: proposal.metadata.symbol,
-          uri: proposal.metadata.uri,
-          uriHash: proposal.metadata.uri_hash,
+          uri: proposal.metadata.uri ? proposal.metadata.uri : "",
+          uriHash: proposal.metadata.uri_hash ? proposal.metadata.uri_hash : "",
         },
       }).finish(),
     });
