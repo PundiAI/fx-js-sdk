@@ -1,6 +1,6 @@
 {
   "name": "@functionx_io/fx-js-sdk",
-  "version": "0.2.7",
+  "version": "0.2.8",
   "description": "fxcore js sdk",
   "main": "build/index.js",
   "types": "build/index.d.ts",
