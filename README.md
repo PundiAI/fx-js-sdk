@@ -38,7 +38,9 @@ yarn codegen
 ### Test
 
 ```shell
-./run_fxcore.sh init
+wget https://raw.githubusercontent.com/functionx/fx-core/main/develop/run_fxcore.sh
+chmod +x run_fxcore.sh
+export FX_DEBUG=true ./run_fxcore.sh init
 yarn test
 ```
 

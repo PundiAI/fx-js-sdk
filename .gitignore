@@ -38,3 +38,4 @@ coverage/
 
 build
 dist
+run_fxcore.sh

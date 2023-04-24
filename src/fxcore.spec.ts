@@ -161,7 +161,7 @@ describe("fxcore test", () => {
               title: "CommunityPoolSpendProposal",
               description: "test ...",
               recipient: sender,
-              amount: coins("1000000000000000000000", "FX"),
+              amount: coins("1000000000000000000", "FX"),
             }).finish(),
           },
         }),
