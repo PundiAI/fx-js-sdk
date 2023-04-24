@@ -182,7 +182,7 @@ export function proposalMessageToAminoConverter(message: Any): any {
       value: {
         authority: msg.authority,
         params: {
-          efg_deposit_threshold: msg.params?.egfDepositThreshold,
+          egf_deposit_threshold: msg.params?.egfDepositThreshold,
           claim_ratio: msg.params?.claimRatio,
         },
       },
@@ -360,7 +360,7 @@ export function proposalMessageFromAminoConverter(message: any): Any {
       value: MsgUpdateEGFParams.encode({
         authority: msg.authority,
         params: {
-          egfDepositThreshold: msg.params.efg_deposit_threshold,
+          egfDepositThreshold: msg.params.egf_deposit_threshold,
           claimRatio: msg.params.claim_ratio,
         },
       }).finish(),
