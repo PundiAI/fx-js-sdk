@@ -19,6 +19,9 @@ jobs:
           registry-url: https://registry.npmjs.org/
       - run: yarn
       - run: yarn build
+      - run: yarn pack-web
+        env:
+          SKIP_BUILD: 1
       - run: npm publish
         env:
           NODE_AUTH_TOKEN: ${{secrets.npm_token}}

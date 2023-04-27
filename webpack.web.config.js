@@ -3,16 +3,15 @@ const glob = require("glob");
 const path = require("path");
 const webpack = require("webpack");
 
-const target = "web";
-const distdir = path.join(__dirname, "dist", "web");
+const distdir = path.join(__dirname, "dist");
 
 module.exports = [
   {
-    target: target,
+    target: "web",
     entry: glob.sync("./build/**/*.js"),
     output: {
       path: distdir,
-      filename: "fx-js-sdk.js",
+      filename: "index.min.js",
     },
     plugins: [
       new webpack.EnvironmentPlugin({
