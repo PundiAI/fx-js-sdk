@@ -4,7 +4,7 @@ set -o errexit -o nounset -o pipefail
 
 command -v shellcheck >/dev/null && shellcheck "$0"
 
-OUT_DIR="./src"
+OUT_DIR="./src/types"
 
 if [ -d "$OUT_DIR/fx" ]; then
   rm -rf "$OUT_DIR/fx"
@@ -33,7 +33,7 @@ done
 rm -rf "$OUT_DIR/cosmos/base" "$OUT_DIR/cosmos/msg" "$OUT_DIR/cosmos/staking"
 rm -rf "$OUT_DIR/cosmos_proto" "$OUT_DIR/gogoproto" "$OUT_DIR/google" "$OUT_DIR/ibc" "$OUT_DIR/ethermint" "$OUT_DIR/tendermint"
 
-proto_ts_dirs=$(find ./src/fx -path -prune -o -name '*.ts' -print0 | xargs -0 -n1 dirname | sort | uniq)
+proto_ts_dirs=$(find "$OUT_DIR/fx" -path -prune -o -name '*.ts' -print0 | xargs -0 -n1 dirname | sort | uniq)
 for dir in $proto_ts_dirs; do
     ts_files=$(find "${dir}" -maxdepth 1 -name '*.ts')
     for ts_file in $ts_files; do
@@ -45,6 +45,6 @@ for dir in $proto_ts_dirs; do
     done
 done
 
-perl -pi -e 's|cosmjs-types/cosmos/bank|../../../cosmos/bank|g' "./src/fx/erc20/v1/tx.ts" "./src/fx/erc20/v1/erc20.ts"
-perl -pi -e 's|../../../google|cosmjs-types/google|g' "./src/cosmos/upgrade/v1beta1/upgrade.ts" "./src/cosmos/gov/v1/tx.ts"
-perl -pi -e 's|../../base/v1beta1/coin|cosmjs-types/cosmos/base/v1beta1/coin|g' "./src/cosmos/gov/v1/tx.ts"
+perl -pi -e 's|cosmjs-types/cosmos/bank|../../../cosmos/bank|g' "$OUT_DIR/fx/erc20/v1/tx.ts" "$OUT_DIR/fx/erc20/v1/erc20.ts"
+perl -pi -e 's|../../../google|cosmjs-types/google|g' "$OUT_DIR/cosmos/upgrade/v1beta1/upgrade.ts" "$OUT_DIR/cosmos/gov/v1/tx.ts"
+perl -pi -e 's|../../base/v1beta1/coin|cosmjs-types/cosmos/base/v1beta1/coin|g' "$OUT_DIR/cosmos/gov/v1/tx.ts"

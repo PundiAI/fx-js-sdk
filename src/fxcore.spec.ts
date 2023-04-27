@@ -9,23 +9,26 @@ import { ParameterChangeProposal } from "cosmjs-types/cosmos/params/v1beta1/para
 import { Duration } from "cosmjs-types/google/protobuf/duration";
 import Long from "long";
 
-import { MsgSubmitProposal as MsgSubmitProposalV1 } from "./cosmos/gov/v1/tx";
-import { MsgCancelUpgrade, MsgSoftwareUpgrade } from "./cosmos/upgrade/v1beta1/tx";
-import { CancelSoftwareUpgradeProposal, SoftwareUpgradeProposal } from "./cosmos/upgrade/v1beta1/upgrade";
-import { MsgUpdateChainOracles, MsgUpdateParams } from "./fx/crosschain/v1/tx";
+import { fxCoreTxConfig } from "./index";
+import { toDecString } from "./modules";
+import { OnlineWallet } from "./onlinewallet";
+import { SigningFxClient } from "./signingfxclient";
+import { MsgSubmitProposal as MsgSubmitProposalV1 } from "./types/cosmos/gov/v1/tx";
+import { MsgCancelUpgrade, MsgSoftwareUpgrade } from "./types/cosmos/upgrade/v1beta1/tx";
+import {
+  CancelSoftwareUpgradeProposal,
+  SoftwareUpgradeProposal,
+} from "./types/cosmos/upgrade/v1beta1/upgrade";
+import { MsgUpdateChainOracles, MsgUpdateParams } from "./types/fx/crosschain/v1/tx";
 import {
   MsgRegisterCoin,
   MsgRegisterERC20,
   MsgToggleTokenConversion,
   MsgUpdateDenomAlias,
   MsgUpdateParams as MsgUpdateParamsErc20,
-} from "./fx/erc20/v1/tx";
-import { MsgCallContract } from "./fx/evm/v1/tx";
-import { MsgUpdateEGFParams, MsgUpdateParams as MsgUpdateParamsGov } from "./fx/gov/v1/tx";
-import { fxCoreTxConfig } from "./index";
-import { toDecString } from "./modules";
-import { OnlineWallet } from "./onlinewallet";
-import { SigningFxClient } from "./signingfxclient";
+} from "./types/fx/erc20/v1/tx";
+import { MsgCallContract } from "./types/fx/evm/v1/tx";
+import { MsgUpdateEGFParams, MsgUpdateParams as MsgUpdateParamsGov } from "./types/fx/gov/v1/tx";
 import { onlineFunc, signAndBroadcast, testPublicKeyHex } from "./walletconnect.spec";
 
 describe("fxcore test", () => {

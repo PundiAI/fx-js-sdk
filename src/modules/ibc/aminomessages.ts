@@ -3,7 +3,7 @@ import { AminoMsg, Coin } from "@cosmjs/amino";
 import { AminoConverter } from "@cosmjs/stargate/build/aminotypes";
 import Long from "long";
 
-import { MsgTransfer } from "../../fx/ibc/applications/transfer/v1/tx";
+import { MsgTransfer } from "../../types/fx/ibc/applications/transfer/v1/tx";
 
 // NOTE: ibc client proposal `ClientUpdateProposal` `UpgradeProposal` not support amino encode
 

@@ -1,6 +1,6 @@
 import { GeneratedType } from "@cosmjs/proto-signing";
 
-import { MsgAddMargin, MsgCancelOrder, MsgClosePosition, MsgCreateOrder } from "../../fx/dex/v1/tx";
+import { MsgAddMargin, MsgCancelOrder, MsgClosePosition, MsgCreateOrder } from "../../types/fx/dex/v1/tx";
 
 export const dexTypes: ReadonlyArray<[string, GeneratedType]> = [
   ["/fx.dex.v1.MsgCreateOrder", MsgCreateOrder],

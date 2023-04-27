@@ -9,7 +9,7 @@ import {
   MsgCancelOrder,
   MsgClosePosition,
   MsgCreateOrder,
-} from "../../fx/dex/v1/tx";
+} from "../../types/fx/dex/v1/tx";
 import { toDecString, toProtoString } from "../index";
 
 interface AminoMsgCreateOrder extends AminoMsg {

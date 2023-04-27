@@ -2,10 +2,10 @@ import { Wallet } from "ethers";
 import Long from "long";
 
 import { EthSecp256k1Wallet } from "./ethsecp256k1wallet";
-import { Direction } from "./fx/dex/v1/tx";
 import { fxCoreTxConfig, fxDexTxConfig } from "./index";
 import { OnlineWallet } from "./onlinewallet";
 import { SigningFxClient } from "./signingfxclient";
+import { Direction } from "./types/fx/dex/v1/tx";
 import { onlineFunc, signAndBroadcast, testPublicKeyHex } from "./walletconnect.spec";
 
 describe("fxdex test", () => {

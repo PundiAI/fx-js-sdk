@@ -1,8 +1,8 @@
 import { createProtobufRpcClient, QueryClient } from "@cosmjs/stargate";
 import { PageRequest } from "cosmjs-types/cosmos/base/query/v1beta1/pagination";
 
-import { TokenPair } from "../../fx/erc20/v1/erc20";
-import { QueryClientImpl, QueryTokenPairsResponse } from "../../fx/erc20/v1/query";
+import { TokenPair } from "../../types/fx/erc20/v1/erc20";
+import { QueryClientImpl, QueryTokenPairsResponse } from "../../types/fx/erc20/v1/query";
 
 export interface Erc20Extension {
   readonly erc20: {

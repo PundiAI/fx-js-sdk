@@ -2,18 +2,18 @@
 import { Any } from "cosmjs-types/google/protobuf/any";
 import Long from "long";
 
-import { MsgCancelUpgrade, MsgSoftwareUpgrade } from "../../cosmos/upgrade/v1beta1/tx";
-import { MsgUpdateChainOracles, MsgUpdateParams } from "../../fx/crosschain/v1/tx";
+import { durationToNanos, nanosToDuration } from "../../tools";
+import { MsgCancelUpgrade, MsgSoftwareUpgrade } from "../../types/cosmos/upgrade/v1beta1/tx";
+import { MsgUpdateChainOracles, MsgUpdateParams } from "../../types/fx/crosschain/v1/tx";
 import {
   MsgRegisterCoin,
   MsgRegisterERC20,
   MsgToggleTokenConversion,
   MsgUpdateDenomAlias,
   MsgUpdateParams as MsgUpdateParamsErc20,
-} from "../../fx/erc20/v1/tx";
-import { MsgCallContract } from "../../fx/evm/v1/tx";
-import { MsgUpdateEGFParams, MsgUpdateParams as MsgUpdateParamsGov } from "../../fx/gov/v1/tx";
-import { durationToNanos, nanosToDuration } from "../../tools";
+} from "../../types/fx/erc20/v1/tx";
+import { MsgCallContract } from "../../types/fx/evm/v1/tx";
+import { MsgUpdateEGFParams, MsgUpdateParams as MsgUpdateParamsGov } from "../../types/fx/gov/v1/tx";
 import { toDecString, toProtoString } from "../index";
 
 interface AminoDenomUnit {

@@ -2,7 +2,7 @@
 import { AminoMsg, Coin } from "@cosmjs/amino";
 import { AminoConverter } from "@cosmjs/stargate/build/aminotypes";
 
-import { MsgSendToExternal } from "../../fx/crosschain/v1/tx";
+import { MsgSendToExternal } from "../../types/fx/crosschain/v1/tx";
 import { ProposalContentAminoConverter } from "../index";
 
 interface AminoMsgSendToExternal extends AminoMsg {

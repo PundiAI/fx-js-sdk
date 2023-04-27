@@ -9,13 +9,13 @@ import {
 import { Any } from "cosmjs-types/google/protobuf/any";
 import Long from "long";
 
-import { UpdateChainOraclesProposal } from "../../fx/crosschain/v1/types";
+import { UpdateChainOraclesProposal } from "../../types/fx/crosschain/v1/types";
 import {
   RegisterCoinProposal,
   RegisterERC20Proposal,
   ToggleTokenConversionProposal,
   UpdateDenomAliasProposal,
-} from "../../fx/erc20/v1/erc20";
+} from "../../types/fx/erc20/v1/erc20";
 
 interface AminoDenomUnit {
   readonly denom: string;

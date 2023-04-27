@@ -4,8 +4,8 @@ import {
   QueryClientImpl,
   QueryDenomToTokenResponse,
   QueryTokenToDenomResponse,
-} from "../../fx/crosschain/v1/query";
-import { BridgeToken } from "../../fx/crosschain/v1/types";
+} from "../../types/fx/crosschain/v1/query";
+import { BridgeToken } from "../../types/fx/crosschain/v1/types";
 
 export interface CrosschainExtension {
   readonly crosschain: {
