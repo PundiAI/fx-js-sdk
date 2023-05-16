@@ -13,7 +13,12 @@ import { fxCoreTxConfig } from "./index";
 import { toDecString } from "./modules";
 import { OnlineWallet } from "./onlinewallet";
 import { SigningFxClient } from "./signingfxclient";
-import { MsgSubmitProposal as MsgSubmitProposalV1 } from "./types/cosmos/gov/v1/tx";
+import {
+  MsgDeposit,
+  MsgSubmitProposal as MsgSubmitProposalV1,
+  MsgVote,
+  VoteOption,
+} from "./types/cosmos/gov/v1/tx";
 import { MsgCancelUpgrade, MsgSoftwareUpgrade } from "./types/cosmos/upgrade/v1beta1/tx";
 import {
   CancelSoftwareUpgradeProposal,
@@ -512,6 +517,53 @@ describe("fxcore test", () => {
               }).finish(),
             },
           ],
+        }),
+      },
+    ];
+    const code = await signAndBroadcast(client, sender, [...submitProposal]);
+    expect(code).toEqual(0);
+  });
+
+  it("gov v1 MsgSubmitProposal MsgDeposit MsgVote", async () => {
+    const wallet = new OnlineWallet(testPublicKeyHex, "fx", onlineFunc);
+    console.debug("address", wallet.address);
+    const sender = wallet.address;
+
+    const options = fxCoreTxConfig.options;
+    const client = await SigningFxClient.connectWithSigner("http://127.0.0.1:26657", wallet, options);
+    const account = await client.getAccount(sender);
+    console.log("account", account);
+
+    const submitProposal: EncodeObject[] = [
+      {
+        typeUrl: "/cosmos.gov.v1beta1.MsgSubmitProposal",
+        value: MsgSubmitProposal.fromPartial({
+          proposer: sender,
+          initialDeposit: coins("1000000000000000000000", "FX"),
+          content: {
+            typeUrl: "/cosmos.gov.v1beta1.TextProposal",
+            value: TextProposal.encode({
+              title: "TextProposal",
+              description: "test ...",
+            }).finish(),
+          },
+        }),
+      },
+      {
+        typeUrl: "/cosmos.gov.v1.MsgDeposit",
+        value: MsgDeposit.fromPartial({
+          depositor: sender,
+          proposalId: Long.fromValue(1),
+          amount: coins("10000000000000000000000", "FX"),
+        }),
+      },
+      {
+        typeUrl: "/cosmos.gov.v1.MsgVote",
+        value: MsgVote.fromPartial({
+          voter: sender,
+          proposalId: Long.fromValue(1),
+          option: VoteOption.VOTE_OPTION_YES,
+          metadata: "test",
         }),
       },
     ];

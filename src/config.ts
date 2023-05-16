@@ -7,7 +7,7 @@ import { accountFromAny } from "./accounts";
 import {
   dexAminoConverters,
   dexTypes,
-  fxgovSubmitProposalAminoConverters,
+  fxgovAminoConverters,
   fxibcAminoConverters,
   fxibcTypes,
 } from "./modules";
@@ -44,7 +44,7 @@ export const fxCoreTxConfigClassic = {
     registry: new Registry([...fxibcTypes, ...fxgovTypes]),
     aminoTypes: new AminoTypes({
       ...fxibcAminoConverters(),
-      ...fxgovSubmitProposalAminoConverters(),
+      ...fxgovAminoConverters(),
     }),
     gasPrice: new GasPrice(Decimal.fromUserInput("4000000000000", 18), "FX"),
     accountParser: accountFromAny,
@@ -63,7 +63,7 @@ export const fxCoreTxConfig = {
     registry: new Registry([...fxibcTypes, ...fxgovTypes]),
     aminoTypes: new AminoTypes({
       ...fxibcAminoConverters(),
-      ...fxgovSubmitProposalAminoConverters(),
+      ...fxgovAminoConverters(),
     }),
     gasPrice: new GasPrice(Decimal.fromUserInput("4000000000000", 18), "FX"),
     accountParser: accountFromAny,

@@ -11,7 +11,7 @@ npm install @functionx_io/fx-js-sdk
 ## Usage
 
 ```js
-import { FxSDK } from '@functionx_io/fx-js-sdk';
+import fxsdk from '@functionx_io/fx-js-sdk';
 ```
 
 ## Development

@@ -1,6 +1,6 @@
 {
   "name": "@functionx_io/fx-js-sdk",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "fxcore js sdk",
   "main": "build/index.js",
   "types": "build/index.d.ts",
@@ -29,7 +29,7 @@
     "build": "rm -rf ./build && tsc",
     "test": "npx jest --config jest.config.js --testPathIgnorePatterns=fxdex",
     "build-or-skip": "[ -n \"$SKIP_BUILD\" ] || yarn build",
-    "pack-web": "yarn build-or-skip && webpack --mode development --config webpack.web.config.js"
+    "pack-web": "yarn build-or-skip && webpack --mode production"
   },
   "dependencies": {
     "@cosmjs/amino": "^0.30.1",
@@ -48,6 +48,8 @@
     "@types/node": "^18.11.11",
     "@typescript-eslint/eslint-plugin": "^5.15.0",
     "@typescript-eslint/parser": "^5.15.0",
+    "buffer": "^6.0.3",
+    "crypto-browserify": "^3.12.0",
     "eslint": "^8.29.0",
     "eslint-config-prettier": "^8.3.0",
     "eslint-import-resolver-node": "^0.3.4",
@@ -56,7 +58,9 @@
     "eslint-plugin-simple-import-sort": "^8.0.0",
     "glob": "^8.0.3",
     "jest": "^29.3.1",
+    "path-browserify": "^1.0.1",
     "prettier": "^2.4.1",
+    "stream-browserify": "^3.0.0",
     "ts-jest": "^29.0.3",
     "ts-node": "^10.9.1",
     "ts-proto": "^1.145.0",

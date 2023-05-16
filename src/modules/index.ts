@@ -6,7 +6,7 @@ export { setupCrosschainExtension } from "./crosschain/queries";
 export { dexAminoConverters } from "./dex/aminomessages";
 export { dexTypes } from "./dex/messages";
 export { setupErc20Extension } from "./erc20/queries";
-export { fxgovSubmitProposalAminoConverters } from "./gov/aminomessages";
+export { fxgovAminoConverters } from "./gov/aminomessages";
 export { fxibcAminoConverters } from "./ibc/aminomessages";
 export { fxibcTypes } from "./ibc/messages";
 export { setupFxIbcExtension } from "./ibc/queries";
