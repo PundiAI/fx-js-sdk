@@ -563,7 +563,7 @@ describe("fxcore test", () => {
           voter: sender,
           proposalId: Long.fromValue(1),
           option: VoteOption.VOTE_OPTION_YES,
-          metadata: "test",
+          metadata: "",
         }),
       },
     ];

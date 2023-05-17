@@ -32,7 +32,7 @@ export interface AminoMsgVoteV1 extends AminoMsg {
     readonly proposal_id: string;
     readonly voter: string;
     readonly option: number;
-    readonly metadata: string;
+    readonly metadata?: string;
   };
 }
 
@@ -67,19 +67,22 @@ export function fxgovAminoConverters(): AminoConverters {
     "/cosmos.gov.v1.MsgVote": {
       aminoType: "cosmos-sdk/v1/MsgVote",
       toAmino: ({ option, proposalId, voter, metadata }: MsgVote): AminoMsgVoteV1["value"] => {
-        return {
+        const msg: any = {
           option: option,
           proposal_id: proposalId.toString(),
           voter: voter,
-          metadata: metadata,
         };
+        if (metadata) {
+          msg.metadata = metadata;
+        }
+        return msg;
       },
       fromAmino: ({ option, proposal_id, voter, metadata }: AminoMsgVoteV1["value"]): MsgVote => {
         return {
           option: voteOptionFromJSON(option),
           proposalId: Long.fromString(proposal_id),
           voter: voter,
-          metadata: metadata,
+          metadata: metadata ?? "",
         };
       },
     },
