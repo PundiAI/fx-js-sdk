@@ -36,6 +36,27 @@ export const fxDexTxConfig = {
   precision: 6,
 };
 
+export const marginxTxConfig = {
+  options: {
+    broadcastPollIntervalMs: 300,
+    broadcastTimeoutMs: 8_000,
+    prefix: "mx",
+    registry: new Registry([...dexTypes, ...fxibcTypes]),
+    aminoTypes: new AminoTypes({
+      ...dexAminoConverters(6),
+      ...fxibcAminoConverters("cosmos-sdk/MsgTransfer"),
+    }),
+    gasPrice: GasPrice.fromString("0.005cusd"),
+    accountParser: accountFromAny,
+  },
+  algo: "eth_secp256k1",
+  fees: {
+    amount: coins("3000", "cusd"),
+    gas: "5000000",
+  },
+  precision: 6,
+};
+
 export const fxCoreTxConfigClassic = {
   options: {
     broadcastPollIntervalMs: 300,

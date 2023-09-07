@@ -38,7 +38,7 @@ export async function signAndBroadcast(
   gasLimit = Math.round(gasLimit * 1.3);
   console.debug("gasLimit", gasLimit);
   const fees: StdFee = {
-    amount: coins(gasPrice.amount.multiply(Uint64.fromNumber(gasLimit)).toString(), gasPrice.denom),
+    amount: coins(gasPrice.amount.multiply(Uint64.fromNumber(gasLimit)).ceil().toString(), gasPrice.denom),
     gas: gasLimit.toString(),
   };
   const result = await client.signAndBroadcast(sender, messages, fees);

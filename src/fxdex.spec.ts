@@ -41,8 +41,7 @@ describe("fxdex test", () => {
   });
 
   it("create order tx by mnemonic", async () => {
-    const mnemonic =
-      "dune antenna hood magic kit blouse film video another pioneer dilemma hobby message rug sail gas culture upgrade twin flag joke people general aunt";
+    const mnemonic = "test test test test test test test test test test test junk";
     const ethWallet = Wallet.fromMnemonic(mnemonic);
     const sender = ethWallet.address;
     console.debug("address", sender);

@@ -35,7 +35,12 @@ import {
   ibcTypes,
   stakingTypes,
 } from "@cosmjs/stargate/build/modules";
-import { Tendermint34Client } from "@cosmjs/tendermint-rpc";
+import {
+  HttpEndpoint,
+  Tendermint34Client,
+  Tendermint37Client,
+  TendermintClient,
+} from "@cosmjs/tendermint-rpc";
 import { assert, assertDefined } from "@cosmjs/utils";
 import { Coin } from "cosmjs-types/cosmos/base/v1beta1/coin";
 import { SignMode } from "cosmjs-types/cosmos/tx/signing/v1beta1/signing";
@@ -78,11 +83,32 @@ export class SigningFxClient extends FxClient {
   private readonly gasPrice: GasPrice | undefined;
 
   public static async connectWithSigner(
-    endpoint: string,
+    endpoint: string | HttpEndpoint,
     signer: Signer,
     options: SigningStargateClientOptions = {},
   ): Promise<SigningFxClient> {
-    const tmClient = await Tendermint34Client.connect(endpoint);
+    let tmClient: TendermintClient;
+    const tm37Client = await Tendermint37Client.connect(endpoint);
+    const version = (await tm37Client.status()).nodeInfo.version;
+    if (version.startsWith("0.37.") || version.startsWith("0.38.")) {
+      tmClient = tm37Client;
+    } else {
+      tm37Client.disconnect();
+      tmClient = await Tendermint34Client.connect(endpoint);
+    }
+
+    return SigningFxClient.createWithSigner(tmClient, signer, options);
+  }
+
+  /**
+   * Creates an instance from a manually created Tendermint client.
+   * Use this to use `Tendermint37Client` instead of `Tendermint34Client`.
+   */
+  public static async createWithSigner(
+    tmClient: TendermintClient,
+    signer: Signer,
+    options: SigningStargateClientOptions = {},
+  ): Promise<SigningFxClient> {
     return new SigningFxClient(tmClient, signer, options);
   }
 
@@ -103,7 +129,7 @@ export class SigningFxClient extends FxClient {
   }
 
   protected constructor(
-    tmClient: Tendermint34Client | undefined,
+    tmClient: TendermintClient | undefined,
     signer: Signer,
     options: SigningStargateClientOptions,
   ) {
