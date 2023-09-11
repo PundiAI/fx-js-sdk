@@ -54,7 +54,7 @@ export class FxClient {
     let tmClient: TendermintClient;
     const tm37Client = await Tendermint37Client.connect(endpoint);
     const version = (await tm37Client.status()).nodeInfo.version;
-    if (version.startsWith("0.37.")) {
+    if (version.startsWith("0.37.") || version.startsWith("0.38.")) {
       tmClient = tm37Client;
     } else {
       tm37Client.disconnect();
